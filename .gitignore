@@ -16,3 +16,4 @@ libglfw3.a
 libglad.a
 *.exe
 .vscode
+*.a

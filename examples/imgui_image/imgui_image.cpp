@@ -47,7 +47,6 @@ int main() {
 
     glfwMakeContextCurrent(window);
 
-    // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
