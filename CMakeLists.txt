@@ -21,7 +21,8 @@ add_subdirectory(glad)
 
 set(SOURCES src/Renderer.cpp
             src/Image.cpp
-            src/Application.cpp)
+            src/Application.cpp
+            src/Camera.cpp)
 
 add_library(ptrace STATIC ${SOURCES} ${IMGUI_SOURCES})
 target_include_directories(ptrace PRIVATE ${GLAD_INCLUDE_DIR} ${IMGUI_DIR} ${GLFW_INCLUDE_DIR})
