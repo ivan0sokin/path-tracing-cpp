@@ -72,7 +72,7 @@ namespace Utilities {
 
 	constexpr float PowFast(float x, float exp) {
 		constexpr float oneAsUint = 0x3f800000u;
-		return AsFloat((int)(exp * (AsUint(x) - oneAsUint)) + oneAsUint);
+		return AsFloat(int(exp * (AsUint(x) - oneAsUint)) + oneAsUint);
 	}
 
 	constexpr uint32_t ConvertColorToRGBA(glm::vec4 color) noexcept {
