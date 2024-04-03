@@ -2,10 +2,11 @@
 #define _CAMERA_H
 
 #include "../glm/include/glm/vec3.hpp"
+#include "../glm/include/glm/trigonometric.hpp"
 
 class Camera {
 public:
-    Camera(int viewportWidth, int viewportHeight, glm::vec3 position = {0.f, 0.f, 0.f}, glm::vec3 target = {0.f, 0.f, -1.f}, glm::vec3 up = {0.f, 1.f, 0.f}, float verticalFov = 90.f) noexcept;
+    Camera(int viewportWidth, int viewportHeight, glm::vec3 position = {0.f, 0.f, 0.f}, glm::vec3 target = {0.f, 0.f, -1.f}, glm::vec3 up = {0.f, 1.f, 0.f}, float verticalFovInRadians = glm::radians(30.f)) noexcept;
 
     ~Camera() noexcept;
 

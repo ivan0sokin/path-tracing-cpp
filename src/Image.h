@@ -12,10 +12,13 @@ public:
 
     ~Image() noexcept;
 
-    unsigned int GetDescriptor() const noexcept {
+    void UpdateData(const uint32_t *data) noexcept;
+
+    constexpr unsigned int GetDescriptor() const noexcept {
         return m_Descriptor;
     }
 private:
+    int m_Width, m_Height;
     unsigned int m_Descriptor;
 };
 

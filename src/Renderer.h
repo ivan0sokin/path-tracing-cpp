@@ -5,6 +5,7 @@
 
 #include "Image.h"
 #include "Camera.h"
+#include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
 
@@ -12,12 +13,27 @@ class Renderer {
 public:
     Renderer() = delete;
     
-    inline Renderer(int width, int height, int maxRayDepth = 5) noexcept :
-        m_Width(width), m_Height(height), m_MaxRayDepth(maxRayDepth), m_Camera(width, height) {}
+    Renderer(int width, int height, int maxRayDepth = 5) noexcept;
 
     ~Renderer() noexcept;
 
-    Image* Render() noexcept;
+    void Render(const Camera &camera, const Scene &scene) noexcept;
+
+    constexpr void Accumulate() noexcept {
+        m_Accumulate = true;
+    }
+
+    constexpr void DontAccumulate() noexcept {
+        m_Accumulate = false;
+    }
+
+    constexpr int GetFrameIndex() const noexcept {
+        return m_FrameIndex;
+    }
+
+    Image* GetImage() const noexcept {
+        return m_Image;
+    }
 
     void OnResize(int width, int height) noexcept;
 
@@ -37,7 +53,12 @@ private:
 
     int m_MaxRayDepth;
 
-    Camera m_Camera;
+    const Camera *m_Camera = nullptr;
+    const Scene *m_Scene = nullptr;
+
+    bool m_Accumulate = false;
+    glm::vec4 *m_AccumulationData = nullptr;
+    int m_FrameIndex = 1;
 };
 
 #endif
