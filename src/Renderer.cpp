@@ -75,7 +75,7 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
             m_AccumulationData[m_Width * i + j] += PixelProgram(i, j);
 
             glm::vec4 color = m_AccumulationData[m_Width * i + j] * inverseFrameIndex;
-            color = glm::pow(color, glm::vec4(inverseGamma, inverseGamma, inverseGamma, 1.f));
+            color = Utilities::CorrectGammaFast(color, inverseGamma);
             color = glm::clamp(color, 0.f, 1.f);
             m_ImageData[m_Width * i + j] = Utilities::ConvertColorToRGBA(color);
         }
@@ -107,7 +107,7 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         contribution *= m_Scene->materials[m_Scene->spheres[payload.objectIndex].materialIndex].albedo;
 
         ray.origin = payload.point + payload.normal * 0.00001f;
-        ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVector());
+        ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVectorFast());
     }
 
     return {color, 1.f};
