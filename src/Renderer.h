@@ -35,7 +35,17 @@ public:
         return m_Image;
     }
 
+    void SaveImage(const char *filename) const noexcept;
+
     void OnResize(int width, int height) noexcept;
+
+    constexpr float GetGamma() noexcept {
+        return m_Gamma;
+    }
+
+    void SetGamma(float gamma) noexcept {
+        m_Gamma = gamma;
+    }
 
 private:
     glm::vec4 PixelProgram(int x, int y) const noexcept;
@@ -59,6 +69,8 @@ private:
     bool m_Accumulate = false;
     glm::vec4 *m_AccumulationData = nullptr;
     int m_FrameIndex = 1;
+
+    float m_Gamma = 2.f;
 };
 
 #endif

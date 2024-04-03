@@ -29,6 +29,11 @@ int main() {
     float lastRenderTime = 0.f;
     float totalRenderTime = 0.f;
 
+    char *filename = new char[128];
+    memset(filename, 0, sizeof(char) * sizeof(filename));
+
+    float gamma = renderer.GetGamma();
+
     app.SetOnUpdate([&](){
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
         ImGuiWindowFlags frameFlags = ImGuiViewportFlags_IsPlatformWindow
@@ -84,7 +89,7 @@ int main() {
 
                         Material &material = scene.materials[i];
                         ImGui::Text("Material %d:", i);
-                        ImGui::InputFloat3("Albedo", glm::value_ptr(material.albedo));
+                        ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo), ImGuiColorEditFlags_AlphaPreview);
 
                         ImGui::PopID();
                     }
@@ -116,6 +121,16 @@ int main() {
                 } else {
                     totalRenderTime = 0.f;
                 }
+            }
+
+            if (ImGui::InputFloat("Gamma", &gamma)) {
+                renderer.SetGamma(gamma);
+            }
+
+            ImGui::InputText("##filename.png", filename, 128);
+            ImGui::SameLine();
+            if (ImGui::Button("Save image")) {
+                renderer.SaveImage(filename);
             }
 
             ImGui::Text("Last render time: %fms", lastRenderTime);

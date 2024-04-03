@@ -1,6 +1,9 @@
 #include "Renderer.h"
 #include "Utilities.hpp"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "../stb-master/stb_image_write.h"
+
 #include "../glm/include/glm/vec3.hpp"
 #include "../glm/include/glm/geometric.hpp"
 
@@ -24,6 +27,10 @@ Renderer::~Renderer() noexcept {
     if (m_AccumulationData != nullptr) {
         delete m_AccumulationData;
     }
+}
+
+void Renderer::SaveImage(const char *filename) const noexcept {
+    stbi_write_png(filename, m_Width, m_Height, 4, m_ImageData, m_Width * 4);
 }
 
 void Renderer::OnResize(int width, int height) noexcept {
@@ -61,13 +68,15 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     }
 
     float inverseFrameIndex = 1.f / m_FrameIndex;
+    float inverseGamma = 1.f / m_Gamma;
 
     for (int i = 0; i < m_Height; ++i) {
         for (int j = 0; j < m_Width; ++j) {
             m_AccumulationData[m_Width * i + j] += PixelProgram(i, j);
 
-            glm::vec4 color = m_AccumulationData[m_Width * i + j];
-            color = glm::clamp(color * inverseFrameIndex, 0.f, 1.f);
+            glm::vec4 color = m_AccumulationData[m_Width * i + j] * inverseFrameIndex;
+            color = glm::pow(color, glm::vec4(inverseGamma, inverseGamma, inverseGamma, 1.f));
+            color = glm::clamp(color, 0.f, 1.f);
             m_ImageData[m_Width * i + j] = Utilities::ConvertColorToRGBA(color);
         }
     }
