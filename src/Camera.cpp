@@ -33,7 +33,7 @@ void Camera::ComputeRayDirections() noexcept {
     float viewportWorldHeight = 2.f * tan(m_VerticalFovInRadians * 0.5f) * focalLength;
     float viewportWorldWidth = (viewportWorldHeight * m_ViewportWidth) / m_ViewportHeight;
 
-    glm::vec3 w = glm::normalize(forward);
+    glm::vec3 w = glm::normalize(forward);  
     glm::vec3 u = glm::normalize(glm::cross(w, m_Up));
     glm::vec3 v = glm::cross(w, u);
 
@@ -45,7 +45,7 @@ void Camera::ComputeRayDirections() noexcept {
         for (int j = 0; j < m_ViewportWidth; ++j) {
             float uScale = (float)(j + Utilities::RandomFloatInNegativeHalfToHalf()) / (m_ViewportWidth - 1);
             float vScale = (float)(i + Utilities::RandomFloatInNegativeHalfToHalf()) / (m_ViewportHeight - 1);
-            m_RayDirections[m_ViewportWidth * i + j] = leftUpper + horizontal * uScale + vertical * vScale;
+            m_RayDirections[m_ViewportWidth * i + j] = glm::normalize(leftUpper + horizontal * uScale + vertical * vScale);
         }
     }
 }

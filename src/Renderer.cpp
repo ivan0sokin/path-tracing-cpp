@@ -10,8 +10,8 @@
 #include <algorithm>
 #include <cstring>
 
-Renderer::Renderer(int width, int height, int maxRayDepth) noexcept :
-    m_Width(width), m_Height(height), m_MaxRayDepth(maxRayDepth) {
+Renderer::Renderer(int width, int height) noexcept :
+    m_Width(width), m_Height(height) {
     m_ImageData = new uint32_t[m_Width * m_Height];
     m_Image = new Image(m_Width, m_Height, m_ImageData);
     m_AccumulationData = new glm::vec4[m_Width * m_Height];
@@ -93,24 +93,28 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
 
-    glm::vec3 color(0.f);
+    glm::vec3 light(0.f);
     glm::vec3 contribution(1.f);
     for (int i = 0; i < m_MaxRayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
 
         if (payload.t < 0.f) {
             glm::vec3 skyColor(0.6f, 0.7f, 0.9f);
-            color += skyColor * contribution;
+            // light += skyColor * contribution;
             break;
         }
 
-        contribution *= m_Scene->materials[m_Scene->spheres[payload.objectIndex].materialIndex].albedo;
+        const Sphere &sphere = m_Scene->spheres[payload.objectIndex];
+        const Material &material = m_Scene->materials[sphere.materialIndex];
 
-        ray.origin = payload.point + payload.normal * 0.00001f;
-        ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVectorFast());
+        light += material.GetEmission() * contribution;
+        contribution *= material.albedo;
+
+        ray.origin = payload.point + payload.normal * 0.0001f;
+        ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVector());
     }
 
-    return {color, 1.f};
+    return {light, 1.f};
 }
 
 HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {

@@ -9,21 +9,28 @@
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
-    Application app(1580, 720, "Red sphere");
+    Application app(1580, 720, "With the lights out");
 
     Scene scene;
     Camera camera(1580, 720, {0.f, -0.5f, 2.f});
     Renderer renderer(1580, 720);
 
-    Material redColor;
-    redColor.albedo = glm::vec3(1.f, 0.1f, 0.2f);
+    Material redWithLight;
+    redWithLight.albedo = glm::vec3(1.f, 0.647f, 0.851f);
 
-    Material greenColor;
-    greenColor.albedo = glm::vec3(0.1f, 0.5f, 0.7f);
+    Material purpleWithLight;
+    purpleWithLight.albedo = glm::vec3(0.941f, 0.757f, 0.027f);
+    purpleWithLight.emissionColor = glm::vec3(0.941f, 0.757f, 0.027f);
+    purpleWithLight.emissionPower = 1.2f;
 
-    scene.spheres.emplace_back(glm::vec3(0.f, -0.5f, 0.f), 0.5f, 0);
-    scene.spheres.emplace_back(glm::vec3(0.f, -1001.f, 0.f), 1000.f, 1);
-    scene.materials.assign({redColor, greenColor});
+    Material blueColor;
+    blueColor.albedo = glm::vec3(0.1f, 0.5f, 0.7f);
+
+    scene.spheres.emplace_back(glm::vec3(-0.55f, -0.5f, 0.f), 0.5f, 0);
+    scene.spheres.emplace_back(glm::vec3(0.55f, -0.5f, 0.f), 0.5f, 1);
+    scene.spheres.emplace_back(glm::vec3(0.f, -1001.f, 0.f), 1000.f, 2);
+
+    scene.materials.assign({redWithLight, purpleWithLight, blueColor});
 
     bool accumulate = false;
     float lastRenderTime = 0.f;
@@ -32,6 +39,7 @@ int main() {
     char *filename = new char[128];
     memset(filename, 0, sizeof(char) * sizeof(filename));
 
+    int rayDepth = renderer.GetMaxRayDepth();
     float gamma = renderer.GetGamma();
 
     app.SetOnUpdate([&](){
@@ -106,6 +114,10 @@ int main() {
                 } else {
                     renderer.DontAccumulate();
                 }
+            }
+
+            if (ImGui::InputInt("Ray depth", &rayDepth)) {
+                renderer.SetMaxRayDepth(rayDepth);
             }
 
             if (ImGui::InputFloat("Gamma", &gamma)) {

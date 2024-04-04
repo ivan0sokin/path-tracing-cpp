@@ -13,7 +13,7 @@ class Renderer {
 public:
     Renderer() = delete;
     
-    Renderer(int width, int height, int maxRayDepth = 5) noexcept;
+    Renderer(int width, int height) noexcept;
 
     ~Renderer() noexcept;
 
@@ -39,11 +39,19 @@ public:
 
     void OnResize(int width, int height) noexcept;
 
-    constexpr float GetGamma() noexcept {
+    constexpr int GetMaxRayDepth() const noexcept {
+        return m_MaxRayDepth;
+    }
+
+    inline void SetMaxRayDepth(int maxRayDepth) noexcept {
+        m_MaxRayDepth = maxRayDepth;
+    }
+
+    constexpr float GetGamma() const noexcept {
         return m_Gamma;
     }
 
-    void SetGamma(float gamma) noexcept {
+    inline void SetGamma(float gamma) noexcept {
         m_Gamma = gamma;
     }
 
@@ -61,7 +69,7 @@ private:
     Image *m_Image = nullptr;
     uint32_t *m_ImageData = nullptr;
 
-    int m_MaxRayDepth;
+    int m_MaxRayDepth = 5;
 
     const Camera *m_Camera = nullptr;
     const Scene *m_Scene = nullptr;
