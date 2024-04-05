@@ -3,6 +3,7 @@
 
 #include <random>
 #include <chrono>
+#include <numbers>
 
 #include "../glm/include/glm/vec3.hpp"
 #include "../glm/include/glm/vec4.hpp"

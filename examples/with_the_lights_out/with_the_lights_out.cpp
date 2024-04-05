@@ -100,6 +100,8 @@ int main() {
                         ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo));
                         ImGui::ColorEdit3("Emission color", glm::value_ptr(material.emissionColor));
                         ImGui::InputFloat("Emission power", &material.emissionPower);
+                        ImGui::InputFloat("Reflectance", &material.reflectance);
+                        ImGui::InputFloat("Fuzziness", &material.fuzziness);
 
                         ImGui::PopID();
                     }

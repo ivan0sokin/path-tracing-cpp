@@ -100,18 +100,22 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
 
         if (payload.t < 0.f) {
             glm::vec3 skyColor(0.6f, 0.7f, 0.9f);
-            // light += skyColor * contribution;
+            light += skyColor * contribution;
             break;
         }
 
         const Sphere &sphere = m_Scene->spheres[payload.objectIndex];
         const Material &material = m_Scene->materials[sphere.materialIndex];
-
+        
         light += material.GetEmission() * contribution;
         contribution *= material.albedo;
 
         ray.origin = payload.point + payload.normal * 0.0001f;
-        ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVector());
+        if (Utilities::RandomFloatInZeroToOne() < material.reflectance) {
+            ray.direction = glm::normalize(glm::reflect(ray.direction, payload.normal) + material.fuzziness * Utilities::RandomUnitVectorFast());
+        } else {
+            ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVectorFast());
+        }
     }
 
     return {light, 1.f};

@@ -4,6 +4,7 @@
 #include "../glm/include/glm/vec3.hpp"
 
 struct HitPayload {
+    bool isSphere;
     int objectIndex;
     float t;
     glm::vec3 point;
