@@ -9,7 +9,7 @@
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
-    Application app(1580, 720, "Triangles");
+    Application app(1580, 720, "Cornell box");
 
     glm::vec3 position(-277.5f, 277.5f, 800.f);
     glm::vec3 target(-277.5f, 277.5f, 0.f);
