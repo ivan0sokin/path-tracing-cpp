@@ -9,7 +9,7 @@
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
-    Application app(1580, 720, "With the lights out");
+    Application app(1580, 720, "Triangles");
 
     glm::vec3 position(-277.5f, 277.5f, 800.f);
     glm::vec3 target(-277.5f, 277.5f, 0.f);
@@ -178,7 +178,7 @@ int main() {
                 }
             }
 
-            if (ImGui::InputInt("Used threads", &usedThreads, 1, renderer.GetAvailableThreadCount())) {
+            if (ImGui::InputInt("Used threads", &usedThreads)) {
                 renderer.SetUsedThreadCount(usedThreads);
                 usedThreads = renderer.GetUsedThreadCount();
             }
