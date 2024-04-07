@@ -18,6 +18,7 @@ int main() {
     Camera camera(1580, 720, position, target, glm::radians(verticalFovInDegrees), up);
     
     Renderer renderer(1580, 720);
+    renderer.OnRayMiss([](const Ray&){ return glm::vec3(0.1f, 0.2f, 0.5f);});
 
     Scene scene;
     scene.triangles.emplace_back(glm::vec3{-555.f, 0.f, 0.f}, glm::vec3{-555.f, 555.f, 0.f}, glm::vec3{-555.f, 0.f, -555.f}, 0);
@@ -66,8 +67,8 @@ int main() {
     memset(filename, 0, sizeof(char) * sizeof(filename));
 
     int rayDepth = renderer.GetMaxRayDepth();
+    int usedThreads = renderer.GetUsedThreadCount();
     float gamma = renderer.GetGamma();
-
 
     app.SetOnUpdate([&](){
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -175,6 +176,11 @@ int main() {
                 } else {
                     renderer.DontAccumulate();
                 }
+            }
+
+            if (ImGui::InputInt("Used threads", &usedThreads, 1, renderer.GetAvailableThreadCount())) {
+                renderer.SetUsedThreadCount(usedThreads);
+                usedThreads = renderer.GetUsedThreadCount();
             }
 
             if (ImGui::InputInt("Ray depth", &rayDepth)) {

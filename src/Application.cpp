@@ -113,6 +113,4 @@ int Application::Run() noexcept {
 void Application::OnWindowResize(int width, int height) noexcept {
     m_WindowWidth = width;
     m_WindowHeight = height;
-
-    m_OnWindowResize();
 }

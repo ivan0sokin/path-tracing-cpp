@@ -102,6 +102,11 @@ namespace Utilities {
 			color.a
 		};
 	}
+
+	constexpr bool AlmostZero(const glm::vec3 &v) {
+		constexpr float epsilon = std::numeric_limits<float>::epsilon();
+		return glm::abs(v.x) < epsilon && glm::abs(v.y) < epsilon && glm::abs(v.z) < epsilon;
+	}
 }
 
 #endif

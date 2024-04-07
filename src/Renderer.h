@@ -10,6 +10,9 @@
 #include "Ray.h"
 #include "Primitive.h"
 
+#include <algorithm>
+#include <functional>
+
 class Renderer {
 public:
     Renderer() = delete;
@@ -40,6 +43,23 @@ public:
 
     void OnResize(int width, int height) noexcept;
 
+    constexpr int GetAvailableThreadCount() const noexcept {
+        return m_AvailableThreads;
+    }
+
+    constexpr int GetUsedThreadCount() const noexcept {
+        return m_UsedThreads;
+    }
+
+    constexpr void SetUsedThreadCount(int usedThreads) noexcept {
+        m_UsedThreads = std::max(1, std::min(m_AvailableThreads, usedThreads));
+        m_LinesPerThread = (m_Height + m_UsedThreads - 1) / m_UsedThreads;
+    }
+
+    inline void OnRayMiss(std::function<glm::vec3(const Ray&)> onRayMiss) noexcept {
+        m_OnRayMiss = onRayMiss;
+    }
+
     constexpr int GetMaxRayDepth() const noexcept {
         return m_MaxRayDepth;
     }
@@ -69,6 +89,12 @@ private:
     int m_Width, m_Height;
     Image *m_Image = nullptr;
     uint32_t *m_ImageData = nullptr;
+
+    std::function<glm::vec3(const Ray&)> m_OnRayMiss = [](const Ray&){ return glm::vec3(0.f, 0.f, 0.f); };
+
+    int m_AvailableThreads;
+    int m_UsedThreads;
+    int m_LinesPerThread;
 
     int m_MaxRayDepth = 5;
 

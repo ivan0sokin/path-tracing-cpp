@@ -13,10 +13,6 @@ public:
         m_OnUpdate = onUpdate;
     }
 
-    inline void SetOnWindowResize(std::function<void()> onWindowResize) noexcept {
-        m_OnWindowResize = onWindowResize;
-    }
-
     int Run() noexcept;
 
     inline  int GetWindowWidth() const {
@@ -35,7 +31,6 @@ private:
     std::string m_WindowTitle;
 
     std::function<void()> m_OnUpdate = [](){};
-    std::function<void()> m_OnWindowResize = [](){};
 };
 
 #endif

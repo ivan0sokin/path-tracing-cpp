@@ -7,7 +7,10 @@
 #include "../glm/include/glm/vec3.hpp"
 #include "../glm/include/glm/geometric.hpp"
 
-#include <algorithm>
+#include <vector>
+#include <numeric>
+#include <execution>
+#include <thread>
 #include <cstring>
 
 Renderer::Renderer(int width, int height) noexcept :
@@ -15,6 +18,10 @@ Renderer::Renderer(int width, int height) noexcept :
     m_ImageData = new uint32_t[m_Width * m_Height];
     m_Image = new Image(m_Width, m_Height, m_ImageData);
     m_AccumulationData = new glm::vec4[m_Width * m_Height];
+
+    m_AvailableThreads = std::thread::hardware_concurrency();
+    m_UsedThreads = 1;
+    m_LinesPerThread = (m_Height + m_UsedThreads - 1) / m_UsedThreads;
 }
 
 Renderer::~Renderer() noexcept {
@@ -22,10 +29,10 @@ Renderer::~Renderer() noexcept {
         delete m_Image;
     }
     if (m_ImageData != nullptr) {
-        delete m_ImageData;
+        delete[] m_ImageData;
     }
     if (m_AccumulationData != nullptr) {
-        delete m_AccumulationData;
+        delete[] m_AccumulationData;
     }
 }
 
@@ -70,21 +77,34 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     float inverseFrameIndex = 1.f / m_FrameIndex;
     float inverseGamma = 1.f / m_Gamma;
 
-    for (int i = 0; i < m_Height; ++i) {
-        for (int j = 0; j < m_Width; ++j) {
-            m_AccumulationData[m_Width * i + j] += PixelProgram(i, j);
+    std::vector<std::thread> handles;
+    handles.reserve(m_UsedThreads);
 
-            glm::vec4 color = m_AccumulationData[m_Width * i + j];
+    for (int i = 0; i < m_Height; i += m_LinesPerThread) {
+        handles.emplace_back([this, i, inverseFrameIndex, inverseGamma]() {
+            int nextBlock = i + m_LinesPerThread;
+            int limit = nextBlock < m_Height ? nextBlock : m_Height;
+            for (int t = i; t < limit; ++t) {
+                for (int j = 0; j < m_Width; ++j) {
+                    m_AccumulationData[m_Width * t + j] += PixelProgram(t, j);
 
-            if (color.r != color.r) color.r = 0.f;
-            if (color.g != color.g) color.g = 0.f;
-            if (color.b != color.b) color.b = 0.f;
+                    glm::vec4 color = m_AccumulationData[m_Width * t + j];
+                    if (color.r != color.r) color.r = 0.f;
+                    if (color.g != color.g) color.g = 0.f;
+                    if (color.b != color.b) color.b = 0.f;
 
-            color *= inverseFrameIndex;
-            // color = Utilities::CorrectGammaFast(color, inverseGamma);
-            color = glm::clamp(color, 0.f, 1.f);
-            m_ImageData[m_Width * i + j] = Utilities::ConvertColorToRGBA(color);
-        }
+                    color *= inverseFrameIndex;
+                    color = Utilities::CorrectGammaFast(color, inverseGamma);
+                    color = glm::clamp(color, 0.f, 1.f);
+
+                    m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
+                }
+            }
+        });
+    }
+
+    for (auto &handle : handles) {
+        handle.join();
     }
 
     m_Image->UpdateData(m_ImageData);
@@ -105,8 +125,7 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         HitPayload payload = TraceRay(ray);
 
         if (payload.t < 0.f) {
-            glm::vec3 skyColor(0.6f, 0.7f, 0.9f);
-            // light += skyColor * contribution;
+            light += m_OnRayMiss(ray) * contribution;
             break;
         }
 
@@ -132,7 +151,13 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         if (Utilities::RandomFloatInZeroToOne() < material.reflectance) {
             ray.direction = glm::normalize(glm::reflect(ray.direction, payload.normal) + material.fuzziness * Utilities::RandomUnitVectorFast());
         } else {
-            ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVectorFast());
+            ray.direction = payload.normal + Utilities::RandomUnitVectorFast();
+
+            if (Utilities::AlmostZero(ray.direction)) {
+                ray.direction = payload.normal;
+            } else {
+                ray.direction = glm::normalize(ray.direction);
+            }
         }
     }
 
@@ -219,8 +244,8 @@ HitPayload Renderer::ClosestHit(const Ray &ray, float t, Primitive primitive, in
     payload.primitive = primitive;
     payload.objectIndex = objectIndex;
     payload.t = t;
-
     payload.point = ray.origin + ray.direction * t;
+
     switch (primitive) {
     case Primitive::Sphere: {
         const Sphere &sphere = m_Scene->spheres[objectIndex];
@@ -239,6 +264,7 @@ HitPayload Renderer::ClosestHit(const Ray &ray, float t, Primitive primitive, in
     default:
         break;
     }
+    
     return payload;
 }
 

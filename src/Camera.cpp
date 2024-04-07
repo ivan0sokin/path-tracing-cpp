@@ -20,7 +20,7 @@ void Camera::OnViewportResize(int viewportWidth, int viewportHeight) noexcept {
     m_ViewportHeight = viewportHeight;
 
     if (m_RayDirections != nullptr) {
-        delete m_RayDirections;
+        delete[] m_RayDirections;
     }
     m_RayDirections = new glm::vec3[m_ViewportWidth * m_ViewportHeight];
 
@@ -52,6 +52,6 @@ void Camera::ComputeRayDirections() noexcept {
 
 Camera::~Camera() noexcept {
     if (m_RayDirections != nullptr) {
-        delete m_RayDirections;
+        delete[] m_RayDirections;
     }
 }
