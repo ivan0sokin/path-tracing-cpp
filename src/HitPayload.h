@@ -1,10 +1,12 @@
 #ifndef _HIT_PAYLOAD_H
 #define _HIT_PAYLOAD_H
 
+#include "Primitive.h"
+
 #include "../glm/include/glm/vec3.hpp"
 
 struct HitPayload {
-    bool isSphere;
+    Primitive primitive;
     int objectIndex;
     float t;
     glm::vec3 point;

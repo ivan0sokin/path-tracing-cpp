@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
+#include "Primitive.h"
 
 class Renderer {
 public:
@@ -60,7 +61,7 @@ private:
 
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
-    HitPayload ClosestHit(const Ray &ray, float t, int objectIndex) const noexcept;
+    HitPayload ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex) const noexcept;
 
     HitPayload Miss(const Ray &ray) const noexcept;
 

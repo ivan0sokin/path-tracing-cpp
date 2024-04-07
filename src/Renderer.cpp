@@ -74,8 +74,14 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
         for (int j = 0; j < m_Width; ++j) {
             m_AccumulationData[m_Width * i + j] += PixelProgram(i, j);
 
-            glm::vec4 color = m_AccumulationData[m_Width * i + j] * inverseFrameIndex;
-            color = Utilities::CorrectGammaFast(color, inverseGamma);
+            glm::vec4 color = m_AccumulationData[m_Width * i + j];
+
+            if (color.r != color.r) color.r = 0.f;
+            if (color.g != color.g) color.g = 0.f;
+            if (color.b != color.b) color.b = 0.f;
+
+            color *= inverseFrameIndex;
+            // color = Utilities::CorrectGammaFast(color, inverseGamma);
             color = glm::clamp(color, 0.f, 1.f);
             m_ImageData[m_Width * i + j] = Utilities::ConvertColorToRGBA(color);
         }
@@ -100,17 +106,29 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
 
         if (payload.t < 0.f) {
             glm::vec3 skyColor(0.6f, 0.7f, 0.9f);
-            light += skyColor * contribution;
+            // light += skyColor * contribution;
             break;
         }
 
-        const Sphere &sphere = m_Scene->spheres[payload.objectIndex];
-        const Material &material = m_Scene->materials[sphere.materialIndex];
+        int materialIndex = -1;
+        switch (payload.primitive)
+        {
+        case Primitive::Sphere:
+            materialIndex = m_Scene->spheres[payload.objectIndex].materialIndex;
+            break;
+        case Primitive::Triangle:
+            materialIndex = m_Scene->triangles[payload.objectIndex].materialIndex;
+            break;        
+        default:
+            break;
+        }
+
+        const Material &material = m_Scene->materials[materialIndex];
         
         light += material.GetEmission() * contribution;
         contribution *= material.albedo;
 
-        ray.origin = payload.point + payload.normal * 0.0001f;
+        ray.origin = payload.point + payload.normal * 0.00001f;
         if (Utilities::RandomFloatInZeroToOne() < material.reflectance) {
             ray.direction = glm::normalize(glm::reflect(ray.direction, payload.normal) + material.fuzziness * Utilities::RandomUnitVectorFast());
         } else {
@@ -122,6 +140,7 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
 }
 
 HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
+    Primitive primitive = Primitive::None;
     int objectIndex = -1;
     float closestT = std::numeric_limits<float>::max();
 
@@ -144,6 +163,46 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
 
         if (t > 0.f && t < closestT) {
             closestT = t;
+            primitive = Primitive::Sphere;
+            objectIndex = i;
+        }
+    }
+
+    objectCount = (int)m_Scene->triangles.size();
+    for (int i = 0; i < objectCount; ++i) {
+        const Triangle &triangle = m_Scene->triangles[i];
+
+        constexpr float epsilon = std::numeric_limits<float>::epsilon();
+
+        glm::vec3 edge1 = triangle.edges[0];
+        glm::vec3 edge2 = triangle.edges[1];
+        glm::vec3 rayCrossEdge2 = glm::cross(ray.direction, edge2);
+        float determinant = glm::dot(edge1, rayCrossEdge2);
+
+        if (glm::abs(determinant) < epsilon) {
+            continue;
+        }
+
+        float inverseDeterminant = 1.0 / determinant;
+        glm::vec3 s = ray.origin - triangle.vertices[0];
+        float u = inverseDeterminant * glm::dot(s, rayCrossEdge2);
+
+        if (u < 0.f || u > 1.f) {
+            continue;
+        }
+
+        glm::vec3 sCrossEdge1 = glm::cross(s, edge1);
+        float v = inverseDeterminant * glm::dot(ray.direction, sCrossEdge1);
+
+        if (v < 0.f || u + v > 1.f) {
+            continue;
+        }
+
+        float t = inverseDeterminant * glm::dot(edge2, sCrossEdge1);
+
+        if (t > 0.f && t < closestT) {
+            closestT = t;
+            primitive = Primitive::Triangle;
             objectIndex = i;
         }
     }
@@ -152,19 +211,34 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
         return Miss(ray);
     }
 
-    return ClosestHit(ray, closestT, objectIndex);
+    return ClosestHit(ray, closestT, primitive, objectIndex);
 }
 
-HitPayload Renderer::ClosestHit(const Ray &ray, float t, int objectIndex) const noexcept {
+HitPayload Renderer::ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex) const noexcept {
     HitPayload payload;
+    payload.primitive = primitive;
     payload.objectIndex = objectIndex;
     payload.t = t;
 
-    const Sphere &sphere = m_Scene->spheres[objectIndex];
-
     payload.point = ray.origin + ray.direction * t;
-    payload.normal = (payload.point - sphere.center) * sphere.inverseRadius;
-
+    switch (primitive) {
+    case Primitive::Sphere: {
+        const Sphere &sphere = m_Scene->spheres[objectIndex];
+        payload.normal = (payload.point - sphere.center) * sphere.inverseRadius;
+        break;       
+    }
+    case Primitive::Triangle: {
+        const Triangle &triangle = m_Scene->triangles[objectIndex];
+        payload.normal = triangle.normal;
+        if (glm::dot(ray.direction, payload.normal) > 0) {
+            payload.normal = -payload.normal;
+        }
+        payload.normal = glm::normalize(payload.normal);
+        break;
+    }
+    default:
+        break;
+    }
     return payload;
 }
 

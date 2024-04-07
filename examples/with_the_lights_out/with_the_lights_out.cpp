@@ -91,6 +91,21 @@ int main() {
                     }
                 }
 
+                if (ImGui::CollapsingHeader("Triangles", nullptr)) {
+                    for (int i = 0; i < (int)scene.triangles.size(); ++i) {
+                        ImGui::PushID(i);
+
+                        Triangle &triangle = scene.triangles[i];
+                        ImGui::Text("Triangle %d:", i);
+                        ImGui::InputFloat3("Vertex 0", glm::value_ptr(triangle.vertices[0]));
+                        ImGui::InputFloat3("Vertex 1", glm::value_ptr(triangle.vertices[1]));
+                        ImGui::InputFloat3("Vertex 2", glm::value_ptr(triangle.vertices[2]));
+                        ImGui::InputInt("Material index", &triangle.materialIndex);
+
+                        ImGui::PopID();
+                    }
+                }
+
                 if (ImGui::CollapsingHeader("Materials", nullptr)) {
                     for (int i = 0; i < (int)scene.materials.size(); ++i) {
                         ImGui::PushID(i);
