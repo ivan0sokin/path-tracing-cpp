@@ -4,8 +4,6 @@
 #include <chrono>
 #include <algorithm>
 
-#include <glm/gtc/type_ptr.hpp>
-
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
@@ -16,13 +14,13 @@ int main() {
     Renderer renderer(1580, 720);
 
     Material redColor;
-    redColor.albedo = glm::vec3(1.f, 0.1f, 0.2f);
+    redColor.albedo = Math::Vector3f(1.f, 0.1f, 0.2f);
 
     Material greenColor;
-    greenColor.albedo = glm::vec3(0.1f, 0.5f, 0.7f);
+    greenColor.albedo = Math::Vector3f(0.1f, 0.5f, 0.7f);
 
-    scene.spheres.emplace_back(glm::vec3(0.f, -0.5f, 0.f), 0.5f, 0);
-    scene.spheres.emplace_back(glm::vec3(0.f, -1001.f, 0.f), 1000.f, 1);
+    scene.spheres.emplace_back(Math::Vector3f(0.f, -0.5f, 0.f), 0.5f, 0);
+    scene.spheres.emplace_back(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 1);
     scene.materials.assign({redColor, greenColor});
 
     bool accumulate = false;
@@ -76,7 +74,7 @@ int main() {
                             sphere.radiusSquared = sphere.radius * sphere.radius;
                             sphere.inverseRadius = 1.f / sphere.inverseRadius;
                         }
-                        ImGui::InputFloat3("Position", glm::value_ptr(sphere.center));
+                        ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center));
                         ImGui::InputInt("Material index", &sphere.materialIndex);
 
                         ImGui::PopID();
@@ -89,8 +87,8 @@ int main() {
 
                         Material &material = scene.materials[i];
                         ImGui::Text("Material %d:", i);
-                        ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo));
-                        ImGui::ColorEdit3("Emission color", glm::value_ptr(material.emissionColor));
+                        ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+                        ImGui::ColorEdit3("Emission color", Math::ValuePointer(material.emissionColor));
                         ImGui::InputFloat("Emission power", &material.emissionPower);
 
                         ImGui::PopID();

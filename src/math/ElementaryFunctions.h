@@ -1,0 +1,114 @@
+#ifndef _ELEMENTARY_FUNCTIONS_H
+#define _ELEMENTARY_FUNCTIONS_H
+
+#include "Vector.h"
+
+#include <cmath>
+
+namespace Math {
+    template<typename T>
+    constexpr T Abs(T value) noexcept {
+        return std::abs(value);
+    }
+
+    template<typename T>
+    constexpr T Min(T a, T b) noexcept {
+        return a < b ? a : b;
+    }
+
+    template<typename T>
+    constexpr T Max(T a, T b) noexcept {
+        return a > b ? a : b;
+    }
+
+    template<typename T>
+    constexpr T Clamp(T value, T min, T max) noexcept {
+        return Max(min, Min(max, value));
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 2> Clamp(const Types::Vector<T, 2> &v, float min, float max) noexcept {
+        return {
+            Clamp(v.x, min, max),
+            Clamp(v.y, min, max)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Clamp(const Types::Vector<T, 3> &v, float min, float max) noexcept {
+        return {
+            Clamp(v.x, min, max),
+            Clamp(v.y, min, max),
+            Clamp(v.z, min, max)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 4> Clamp(const Types::Vector<T, 4> &v, float min, float max) noexcept {
+        return {
+            Clamp(v.x, min, max),
+            Clamp(v.y, min, max),
+            Clamp(v.z, min, max),
+            Clamp(v.w, min, max)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 2> Clamp(const Types::Vector<T, 2> &v, const Types::Vector<T, 2> &min, const Types::Vector<T, 2> &max) noexcept {
+        return {
+            Clamp(v.x, min.x, max.x),
+            Clamp(v.y, min.y, max.y)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Clamp(const Types::Vector<T, 3> &v, const Types::Vector<T, 3> &min, const Types::Vector<T, 2> &max) noexcept {
+        return {
+            Clamp(v.x, min.x, max.x),
+            Clamp(v.y, min.y, max.y),
+            Clamp(v.y, min.z, max.z)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 4> Clamp(const Types::Vector<T, 4> &v, const Types::Vector<T, 4> &min, const Types::Vector<T, 2> &max) noexcept {
+        return {
+            Clamp(v.x, min.x, max.x),
+            Clamp(v.y, min.y, max.y),
+            Clamp(v.y, min.z, max.z),
+            Clamp(v.w, min.w, max.w)
+        };
+    }
+
+    template<typename T>
+    constexpr T Lerp(T a, T b, T t) noexcept {
+        return a * (static_cast<T>(1) - t) + b * t;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 2> Lerp(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b, T t) noexcept {
+        return a * (static_cast<T>(1) - t) + b * t;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Lerp(const Types::Vector<T, 3> &a, const Types::Vector<T, 3> &b, T t) noexcept {
+        return a * (static_cast<T>(1) - t) + b * t;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 4> Lerp(const Types::Vector<T, 4> &a, const Types::Vector<T, 4> &b, T t) noexcept {
+        return a * (static_cast<T>(1) - t) + b * t;
+    }
+    
+    template<typename T>
+    constexpr T Sqrt(T value) noexcept {
+        return std::sqrt(value);
+    }
+
+    template<typename T>
+    constexpr T Pow(T base, T exponent) noexcept {
+        return std::pow(base, exponent);
+    }
+}
+
+#endif

@@ -4,12 +4,12 @@
 #include "Primitive.h"
 #include "Material.h"
 
-#include "../glm/include/glm/vec3.hpp"
+#include "math/Math.h"
 
 struct HitPayload {
     float t;
-    glm::vec3 point;
-    glm::vec3 normal;
+    Math::Vector3f point;
+    Math::Vector3f normal;
     Material material;
 };
 

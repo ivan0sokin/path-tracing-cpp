@@ -4,8 +4,6 @@
 #include <chrono>
 #include <algorithm>
 
-#include <glm/gtc/type_ptr.hpp>
-
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
@@ -16,19 +14,19 @@ int main() {
     Renderer renderer(1580, 720);
 
     Material redWithLight;
-    redWithLight.albedo = glm::vec3(1.f, 0.647f, 0.851f);
+    redWithLight.albedo = Math::Vector3f(1.f, 0.647f, 0.851f);
 
     Material purpleWithLight;
-    purpleWithLight.albedo = glm::vec3(0.941f, 0.757f, 0.027f);
-    purpleWithLight.emissionColor = glm::vec3(0.941f, 0.757f, 0.027f);
+    purpleWithLight.albedo = Math::Vector3f(0.941f, 0.757f, 0.027f);
+    purpleWithLight.emissionColor = Math::Vector3f(0.941f, 0.757f, 0.027f);
     purpleWithLight.emissionPower = 1.2f;
 
     Material blueColor;
-    blueColor.albedo = glm::vec3(0.1f, 0.5f, 0.7f);
+    blueColor.albedo = Math::Vector3f(0.1f, 0.5f, 0.7f);
 
-    scene.spheres.emplace_back(glm::vec3(-0.55f, -0.5f, 0.f), 0.5f, 0);
-    scene.spheres.emplace_back(glm::vec3(0.55f, -0.5f, 0.f), 0.5f, 1);
-    scene.spheres.emplace_back(glm::vec3(0.f, -1001.f, 0.f), 1000.f, 2);
+    scene.spheres.emplace_back(Math::Vector3f(-0.55f, -0.5f, 0.f), 0.5f, 0);
+    scene.spheres.emplace_back(Math::Vector3f(0.55f, -0.5f, 0.f), 0.5f, 1);
+    scene.spheres.emplace_back(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 2);
 
     scene.materials.assign({redWithLight, purpleWithLight, blueColor});
 
@@ -84,7 +82,7 @@ int main() {
                             sphere.radiusSquared = sphere.radius * sphere.radius;
                             sphere.inverseRadius = 1.f / sphere.inverseRadius;
                         }
-                        ImGui::InputFloat3("Position", glm::value_ptr(sphere.center));
+                        ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center));
                         ImGui::InputInt("Material index", &sphere.materialIndex);
 
                         ImGui::PopID();
@@ -97,9 +95,9 @@ int main() {
 
                         Triangle &triangle = scene.triangles[i];
                         ImGui::Text("Triangle %d:", i);
-                        ImGui::InputFloat3("Vertex 0", glm::value_ptr(triangle.vertices[0]));
-                        ImGui::InputFloat3("Vertex 1", glm::value_ptr(triangle.vertices[1]));
-                        ImGui::InputFloat3("Vertex 2", glm::value_ptr(triangle.vertices[2]));
+                        ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]));
+                        ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]));
+                        ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]));
                         ImGui::InputInt("Material index", &triangle.materialIndex);
 
                         ImGui::PopID();
@@ -112,8 +110,8 @@ int main() {
 
                         Material &material = scene.materials[i];
                         ImGui::Text("Material %d:", i);
-                        ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo));
-                        ImGui::ColorEdit3("Emission color", glm::value_ptr(material.emissionColor));
+                        ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+                        ImGui::ColorEdit3("Emission color", Math::ValuePointer(material.emissionColor));
                         ImGui::InputFloat("Emission power", &material.emissionPower);
                         ImGui::InputFloat("Reflectance", &material.metallic);
                         ImGui::InputFloat("Fuzziness", &material.roughness);

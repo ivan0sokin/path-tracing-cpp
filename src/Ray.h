@@ -1,10 +1,10 @@
 #ifndef _RAY_H
 #define _RAY_H
 
-#include "../glm/include/glm/vec3.hpp"
+#include "math/Math.h"
 
 struct Ray {
-    glm::vec3 origin, direction;
+    Math::Vector3f origin, direction;
 };
 
 #endif

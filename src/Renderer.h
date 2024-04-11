@@ -1,8 +1,6 @@
 #ifndef _RENDERER_H
 #define _RENDERER_H
 
-#include "../glm/include/glm/vec4.hpp"
-
 #include "Image.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -10,7 +8,8 @@
 #include "Ray.h"
 #include "Primitive.h"
 
-#include <algorithm>
+#include "math/Math.h"
+
 #include <functional>
 
 class Renderer {
@@ -52,11 +51,11 @@ public:
     }
 
     constexpr void SetUsedThreadCount(int usedThreads) noexcept {
-        m_UsedThreads = std::max(1, std::min(m_AvailableThreads, usedThreads));
+        m_UsedThreads = Math::Clamp(usedThreads, 1, m_AvailableThreads);
         m_LinesPerThread = (m_Height + m_UsedThreads - 1) / m_UsedThreads;
     }
 
-    inline void OnRayMiss(std::function<glm::vec3(const Ray&)> onRayMiss) noexcept {
+    inline void OnRayMiss(std::function<Math::Vector3f(const Ray&)> onRayMiss) noexcept {
         m_OnRayMiss = onRayMiss;
     }
 
@@ -77,9 +76,7 @@ public:
     }
 
 private:
-    glm::vec4 PixelProgram(int x, int y) const noexcept;
-
-    glm::vec3 ColorRecursive(Ray ray, int depth = 0) const noexcept;
+    Math::Vector4f PixelProgram(int x, int y) const noexcept;
 
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
@@ -92,7 +89,7 @@ private:
     Image *m_Image = nullptr;
     uint32_t *m_ImageData = nullptr;
 
-    std::function<glm::vec3(const Ray&)> m_OnRayMiss = [](const Ray&){ return glm::vec3(0.f, 0.f, 0.f); };
+    std::function<Math::Vector3f(const Ray&)> m_OnRayMiss = [](const Ray&){ return Math::Vector3f(0.f, 0.f, 0.f); };
 
     int m_AvailableThreads;
     int m_UsedThreads;
@@ -104,7 +101,7 @@ private:
     const Scene *m_Scene = nullptr;
 
     bool m_Accumulate = false;
-    glm::vec4 *m_AccumulationData = nullptr;
+    Math::Vector4f *m_AccumulationData = nullptr;
     int m_FrameIndex = 1;
 
     float m_Gamma = 2.f;

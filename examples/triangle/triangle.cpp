@@ -4,37 +4,37 @@
 #include <chrono>
 #include <algorithm>
 
-#include <glm/gtc/type_ptr.hpp>
+#include <math/Math.h>
 
 #define dbg(msg) fprintf(stdout, (msg));
 
 int main() {
     Application app(1580, 720, "Cornell box");
 
-    glm::vec3 position(-277.5f, 277.5f, 800.f);
-    glm::vec3 target(-277.5f, 277.5f, 0.f);
+    Math::Vector3f position(-277.5f, 277.5f, 800.f);
+    Math::Vector3f target(-277.5f, 277.5f, 0.f);
     float verticalFovInDegrees = 40.f;
-    glm::vec3 up(0.f, 1.f, 0.f);
-    Camera camera(1580, 720, position, target, glm::radians(verticalFovInDegrees), up);
+    Math::Vector3f up(0.f, 1.f, 0.f);
+    Camera camera(1580, 720, position, target, Math::ToRadians(verticalFovInDegrees), up);
     
     Renderer renderer(1580, 720);
-    // renderer.OnRayMiss([](const Ray&){ return glm::vec3(0.1f, 0.2f, 0.5f);});
+    // renderer.OnRayMiss([](const Ray&){ return Math::Vector3f(0.1f, 0.2f, 0.5f);});
 
     Scene scene;
-    scene.triangles.emplace_back(glm::vec3{-555.f, 0.f, 0.f}, glm::vec3{-555.f, 555.f, 0.f}, glm::vec3{-555.f, 0.f, -555.f}, 0);
-    scene.triangles.emplace_back(glm::vec3{-555.f, 555.f, 0.f}, glm::vec3{-555.f, 555.f, -555.f}, glm::vec3{-555.f, 0.f, -555.f}, 0); // left
-    scene.triangles.emplace_back(glm::vec3{-555.f, 0.f, 0.f}, glm::vec3{-555.f, 0.f, -555.f}, glm::vec3{0.f, 0.f, -555.f}, 1);
-    scene.triangles.emplace_back(glm::vec3{0.f, 0.f, -555.f}, glm::vec3{0.f, 0.f, 0.f}, glm::vec3{-555.f, 0.f, 0.f}, 1); // bottom
-    scene.triangles.emplace_back(glm::vec3{-555.f, 0.f, -555.f}, glm::vec3{-555.f, 555.f, -555.f}, glm::vec3{0.f, 555.f, -555.f}, 1);
-    scene.triangles.emplace_back(glm::vec3{0.f, 555.f, -555.f}, glm::vec3{0.f, 0.f, -555.f}, glm::vec3{-555.f, 0.f, -555.f}, 1); // forward
-    scene.triangles.emplace_back(glm::vec3{-555.f, 555.f, 0.f}, glm::vec3{-555.f, 555.f, -555.f}, glm::vec3{0.f, 555.f, -555.f}, 1);
-    scene.triangles.emplace_back(glm::vec3{0.f, 555.f, -555.f}, glm::vec3{0.f, 555.f, 0.f}, glm::vec3{-555.f, 555.f, 0.f}, 1); // up
-    scene.triangles.emplace_back(glm::vec3{0.f, 0.f, 0.f}, glm::vec3{0.f, 0.f, -555.f}, glm::vec3{0.f, 555.f, -555.f}, 2);
-    scene.triangles.emplace_back(glm::vec3{0.f, 555.f, -555.f}, glm::vec3{0.f, 555.f, 0.f}, glm::vec3{0.f, 0.f, 0.f}, 2); // right
-    scene.triangles.emplace_back(glm::vec3{-343.f, 554.f, -332.f + 105.f}, glm::vec3{-343.f, 554.f, -332.f}, glm::vec3{-343.f + 130.f, 554.f, -332.f}, 3);
-    scene.triangles.emplace_back(glm::vec3{-343.f + 130.f, 554.f, -332.f}, glm::vec3{-343.f + 130.f, 554.f, -332.f + 105.f}, glm::vec3{-343.f, 554.f, -332.f + 105.f}, 3); // top light
+    scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0);
+    scene.triangles.emplace_back(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0); // left
+    scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, 1);
+    scene.triangles.emplace_back(Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, 0.f}, 1); // bottom
+    scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1);
+    scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 1); // forward
+    scene.triangles.emplace_back(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1);
+    scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, 1); // up
+    scene.triangles.emplace_back(Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 2);
+    scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{0.f, 0.f, 0.f}, 2); // right
+    scene.triangles.emplace_back(Math::Vector3f{-343.f, 554.f, -332.f + 105.f}, Math::Vector3f{-343.f, 554.f, -332.f}, Math::Vector3f{-343.f + 130.f, 554.f, -332.f}, 3);
+    scene.triangles.emplace_back(Math::Vector3f{-343.f + 130.f, 554.f, -332.f}, Math::Vector3f{-343.f + 130.f, 554.f, -332.f + 105.f}, Math::Vector3f{-343.f, 554.f, -332.f + 105.f}, 3); // top light
 
-    scene.spheres.emplace_back(glm::vec3{-400.0, 50.5, -400.5}, 100.f, 4);
+    scene.spheres.emplace_back(Math::Vector3f{-400.0, 50.5, -400.5}, 100.f, 4);
 
     Material green;
     green.albedo = {0.12f, 0.45f, 0.15f};
@@ -104,16 +104,16 @@ int main() {
         ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar);
         {
             if (ImGui::CollapsingHeader("Camera", nullptr)) {
-                if (ImGui::InputFloat3("Position", glm::value_ptr(position))) {
+                if (ImGui::InputFloat3("Position", Math::ValuePointer(position))) {
                     camera.SetPosition(position);
                 }
-                if (ImGui::InputFloat3("Target", glm::value_ptr(target))) {
+                if (ImGui::InputFloat3("Target", Math::ValuePointer(target))) {
                     camera.SetTarget(target);
                 }
                 if (ImGui::InputFloat("Vertical FOV", &verticalFovInDegrees)) {
-                    camera.SetVerticalFovInRadians(glm::radians(verticalFovInDegrees));
+                    camera.SetVerticalFovInRadians(Math::ToRadians(verticalFovInDegrees));
                 }
-                if (ImGui::InputFloat3("Up", glm::value_ptr(up))) {
+                if (ImGui::InputFloat3("Up", Math::ValuePointer(up))) {
                     camera.SetUp(up);
                 }
             }
@@ -129,7 +129,7 @@ int main() {
                             sphere.radiusSquared = sphere.radius * sphere.radius;
                             sphere.inverseRadius = 1.f / sphere.inverseRadius;
                         }
-                        ImGui::InputFloat3("Position", glm::value_ptr(sphere.center));
+                        ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center));
                         ImGui::InputInt("Material index", &sphere.materialIndex);
 
                         ImGui::PopID();
@@ -142,9 +142,9 @@ int main() {
 
                         Triangle &triangle = scene.triangles[i];
                         ImGui::Text("Triangle %d:", i);
-                        ImGui::InputFloat3("Vertex 0", glm::value_ptr(triangle.vertices[0]));
-                        ImGui::InputFloat3("Vertex 1", glm::value_ptr(triangle.vertices[1]));
-                        ImGui::InputFloat3("Vertex 2", glm::value_ptr(triangle.vertices[2]));
+                        ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]));
+                        ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]));
+                        ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]));
                         ImGui::InputInt("Material index", &triangle.materialIndex);
 
                         ImGui::PopID();
@@ -157,8 +157,8 @@ int main() {
 
                         Material &material = scene.materials[i];
                         ImGui::Text("Material %d:", i);
-                        ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo));
-                        ImGui::ColorEdit3("Emission color", glm::value_ptr(material.emissionColor));
+                        ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+                        ImGui::ColorEdit3("Emission color", Math::ValuePointer(material.emissionColor));
                         ImGui::InputFloat("Emission power", &material.emissionPower);
                         ImGui::InputFloat("Metallic", &material.metallic);
                         ImGui::InputFloat("Roughness", &material.roughness);

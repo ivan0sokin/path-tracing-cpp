@@ -1,17 +1,16 @@
 #ifndef _TRIANGLE_H
 #define _TRIANGLE_H
 
-#include "../glm/include/glm/vec3.hpp"
-#include "../glm/include/glm/geometric.hpp"
+#include "math/Math.h"
 
 struct Triangle {
-    glm::vec3 vertices[3];
-    glm::vec3 edges[2];
-    glm::vec3 normal;
+    Math::Vector3f vertices[3];
+    Math::Vector3f edges[2];
+    Math::Vector3f normal;
     int materialIndex;
 
-    constexpr Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c, int materialIndex) noexcept :
-        vertices{a, b, c}, edges{b - a, c - a}, normal(glm::cross(edges[0], edges[1])), materialIndex(materialIndex) {}
+    constexpr Triangle(const Math::Vector3f &a, const Math::Vector3f &b, const Math::Vector3f &c, int materialIndex) noexcept :
+        vertices{a, b, c}, edges{b - a, c - a}, normal(Math::Cross(edges[0], edges[1])), materialIndex(materialIndex) {}
 };
 
 #endif

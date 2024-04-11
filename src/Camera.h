@@ -1,12 +1,11 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
-#include "../glm/include/glm/vec3.hpp"
-#include "../glm/include/glm/trigonometric.hpp"
+#include "math/Math.h"
 
 class Camera {
 public:
-    Camera(int viewportWidth, int viewportHeight, glm::vec3 position = {0.f, 0.f, 0.f}, glm::vec3 target = {0.f, 0.f, -1.f}, float verticalFovInRadians = glm::radians(20.f), glm::vec3 up = {0.f, 1.f, 0.f}) noexcept;
+    Camera(int viewportWidth, int viewportHeight, const Math::Vector3f &position = {0.f, 0.f, 0.f}, const Math::Vector3f &target = {0.f, 0.f, -1.f}, float verticalFovInRadians = Math::ToRadians(20.f), const Math::Vector3f &up = {0.f, 1.f, 0.f}) noexcept;
 
     ~Camera() noexcept;
 
@@ -14,31 +13,31 @@ public:
 
     void ComputeRayDirections() noexcept;
 
-    constexpr glm::vec3* GetRayDirections() const noexcept {
+    constexpr Math::Vector3f* GetRayDirections() const noexcept {
         return m_RayDirections;
     }
  
-    constexpr glm::vec3 GetPosition() const noexcept {
+    constexpr Math::Vector3f GetPosition() const noexcept {
         return m_Position;
     }
 
-    constexpr void SetPosition(const glm::vec3 &position) noexcept {
+    constexpr void SetPosition(const Math::Vector3f &position) noexcept {
         m_Position = position;
     }
 
-    constexpr glm::vec3 GetTarget() const noexcept {
+    constexpr Math::Vector3f GetTarget() const noexcept {
         return m_Target;
     }
 
-    constexpr void SetTarget(const glm::vec3 &target) noexcept {
+    constexpr void SetTarget(const Math::Vector3f &target) noexcept {
         m_Target = target;
     }
 
-    constexpr glm::vec3 GetUp() const noexcept {
+    constexpr Math::Vector3f GetUp() const noexcept {
         return m_Up;
     }
 
-    constexpr void SetUp(const glm::vec3 &up) noexcept {
+    constexpr void SetUp(const Math::Vector3f &up) noexcept {
         m_Up = up;
     }
 
@@ -51,13 +50,13 @@ public:
     }
 
 private:
-    glm::vec3 m_Position;
-    glm::vec3 m_Target;
-    glm::vec3 m_Up;
+    Math::Vector3f m_Position;
+    Math::Vector3f m_Target;
+    Math::Vector3f m_Up;
     float m_VerticalFovInRadians;
     int m_ViewportWidth, m_ViewportHeight;
 
-    glm::vec3 *m_RayDirections = nullptr;
+    Math::Vector3f *m_RayDirections = nullptr;
 };
 
 #endif

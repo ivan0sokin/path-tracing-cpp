@@ -1,16 +1,13 @@
 #ifndef _UTILITIES_HPP
 #define _UTILITIES_HPP
 
-#include <random>
 #include <chrono>
 #include <numbers>
 
-#include "../glm/include/glm/vec3.hpp"
-#include "../glm/include/glm/vec4.hpp"
-#include "../glm/include/glm/geometric.hpp"
+#include "math/Math.h"
 
 namespace Utilities {
-	thread_local static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	thread_local inline static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 	
 	inline uint32_t RandomUint() {
 		uint32_t state = s_RandomEngineState;
@@ -31,23 +28,22 @@ namespace Utilities {
 		return RandomFloatInZeroToOne() * 2.f - 1.f;
 	}
 
-	inline glm::vec3 RandomInUnitSphere() noexcept {
+	inline Math::Vector3f RandomInUnitSphere() noexcept {
 		while (true) {
-			glm::vec3 result(RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne());
-			if (glm::dot(result, result) < 1.f) {
+			Math::Vector3f result(RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne());
+			if (Math::Dot(result, result) < 1.f) {
 				return result;
 			}
 		}
 	}
 
-	inline glm::vec3 RandomUnitVector() noexcept {
-		glm::vec3 v = RandomInUnitSphere();
-		return v * (1.f / glm::sqrt(glm::dot(v, v)));
+	inline Math::Vector3f RandomUnitVector() noexcept {
+		return Math::Normalize(RandomInUnitSphere());
 	}
 
-	inline glm::vec3 RandomInHemisphere(const glm::vec3 &normal) {
-    	glm::vec3 randomUnitVector = RandomUnitVector();
-		if (glm::dot(randomUnitVector, normal) < 0.f) {
+	inline Math::Vector3f RandomInHemisphere(const Math::Vector3f &normal) {
+    	Math::Vector3f randomUnitVector = RandomUnitVector();
+		if (Math::Dot(randomUnitVector, normal) < 0.f) {
 			return -randomUnitVector;
 		}
 
@@ -67,21 +63,21 @@ namespace Utilities {
 		return x;
 	}
 
-	inline glm::vec3 RandomUnitVectorFast() noexcept {
-		glm::vec3 v = RandomInUnitSphere();
-		return v * InverseSqrtFast(glm::dot(v, v));
+	inline Math::Vector3f RandomUnitVectorFast() noexcept {
+		Math::Vector3f v = RandomInUnitSphere();
+		return v * InverseSqrtFast(Math::Dot(v, v));
 	}
 
-	inline glm::vec3 RandomInHemisphereFast(const glm::vec3 &normal) {
-    	glm::vec3 randomUnitVector = RandomUnitVectorFast();
-		if (glm::dot(randomUnitVector, normal) < 0.f) {
+	inline Math::Vector3f RandomInHemisphereFast(const Math::Vector3f &normal) {
+    	Math::Vector3f randomUnitVector = RandomUnitVectorFast();
+		if (Math::Dot(randomUnitVector, normal) < 0.f) {
 			return -randomUnitVector;
 		}
 
 		return randomUnitVector;
 	}
 
-	inline glm::vec3 RandomCosineDirection() {
+	inline Math::Vector3f RandomCosineDirection() {
 		float r1 = RandomFloatInZeroToOne();
 		float r2 = RandomFloatInZeroToOne();
 
@@ -108,12 +104,12 @@ namespace Utilities {
 		return AsFloat(int(exp * (AsUint(x) - oneAsUint)) + oneAsUint);
 	}
 
-	constexpr bool AlmostZero(const glm::vec3 &v) {
+	constexpr bool AlmostZero(const Math::Vector3f &v) {
 		constexpr float epsilon = std::numeric_limits<float>::epsilon();
-		return glm::abs(v.x) < epsilon && glm::abs(v.y) < epsilon && glm::abs(v.z) < epsilon;
+		return Math::Abs(v.x) < epsilon && Math::Abs(v.y) < epsilon && Math::Abs(v.z) < epsilon;
 	}
 
-	constexpr uint32_t ConvertColorToRGBA(glm::vec4 color) noexcept {
+	constexpr uint32_t ConvertColorToRGBA(const Math::Vector4f &color) noexcept {
         uint8_t r = (uint8_t)(color.r * 255.0f);
 		uint8_t g = (uint8_t)(color.g * 255.0f);
 		uint8_t b = (uint8_t)(color.b * 255.0f);
@@ -122,16 +118,16 @@ namespace Utilities {
 		return (a << 24) | (b << 16) | (g << 8) | r;
     }
 
-	constexpr glm::vec4 CorrectGamma(const glm::vec4 &color, float inverseGamma) {
+	constexpr Math::Vector4f CorrectGamma(const Math::Vector4f &color, float inverseGamma) {
 		return {
-			glm::pow(color.r, inverseGamma),
-			glm::pow(color.g, inverseGamma),
-			glm::pow(color.b, inverseGamma),
+			Math::Pow(color.r, inverseGamma),
+			Math::Pow(color.g, inverseGamma),
+			Math::Pow(color.b, inverseGamma),
 			color.a
 		};
 	}
 
-	constexpr glm::vec4 CorrectGammaFast(const glm::vec4 &color, float inverseGamma) {
+	constexpr Math::Vector4f CorrectGammaFast(const Math::Vector4f &color, float inverseGamma) {
 		return {
 			PowFast(color.r, inverseGamma),
 			PowFast(color.g, inverseGamma),

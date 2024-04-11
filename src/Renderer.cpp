@@ -4,10 +4,6 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../stb-master/stb_image_write.h"
 
-#include "../glm/include/glm/vec2.hpp"
-#include "../glm/include/glm/vec3.hpp"
-#include "../glm/include/glm/geometric.hpp"
-
 #include <vector>
 #include <numeric>
 #include <execution>
@@ -18,7 +14,7 @@ Renderer::Renderer(int width, int height) noexcept :
     m_Width(width), m_Height(height) {
     m_ImageData = new uint32_t[m_Width * m_Height];
     m_Image = new Image(m_Width, m_Height, m_ImageData);
-    m_AccumulationData = new glm::vec4[m_Width * m_Height];
+    m_AccumulationData = new Math::Vector4f[m_Width * m_Height];
 
     m_AvailableThreads = std::thread::hardware_concurrency();
     m_UsedThreads = 1;
@@ -59,7 +55,7 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
     if (m_AccumulationData != nullptr) {
         delete m_AccumulationData;
-        m_AccumulationData = new glm::vec4[m_Width * m_Height];
+        m_AccumulationData = new Math::Vector4f[m_Width * m_Height];
     }
 }
 
@@ -72,7 +68,7 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     }
 
     if (m_FrameIndex == 1) {
-        memset(m_AccumulationData, 0, m_Width * m_Height * sizeof(glm::vec4));
+        memset(m_AccumulationData, 0, m_Width * m_Height * sizeof(Math::Vector4f));
     }
 
     float inverseFrameIndex = 1.f / m_FrameIndex;
@@ -89,14 +85,14 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
                 for (int j = 0; j < m_Width; ++j) {
                     m_AccumulationData[m_Width * t + j] += PixelProgram(t, j);
 
-                    glm::vec4 color = m_AccumulationData[m_Width * t + j];
+                    Math::Vector4f color = m_AccumulationData[m_Width * t + j];
                     if (color.r != color.r) color.r = 0.f;
                     if (color.g != color.g) color.g = 0.f;
                     if (color.b != color.b) color.b = 0.f;
 
                     color *= inverseFrameIndex;
                     color = Utilities::CorrectGamma(color, inverseGamma);
-                    color = glm::clamp(color, 0.f, 1.f);
+                    color = Math::Clamp(color, 0.f, 1.f);
 
                     m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
                 }
@@ -115,71 +111,68 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     }
 }
 
-glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
+Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     Ray ray;
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
 
-    glm::vec3 light(0.f), energy(1.f);
+    Math::Vector3f light(0.f), energy(1.f);
     for (int i = 0; i < m_MaxRayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
         if (payload.t < 0.f) {
             light += energy * m_OnRayMiss(ray);
             break;
         }
-
-
-        // const Material &material = m_Scene->materials[materialIndex];
         
         const Material &material = payload.material;
 
         float diffuseRatio = 0.5 * (1.0 - material.metallic);
         float specularRatio = 1 - diffuseRatio;
 
-        glm::vec3 V = glm::normalize(-ray.direction);
+        Math::Vector3f V = Math::Normalize(-ray.direction);
 
-        glm::vec3 reflectionDirection;
+        Math::Vector3f reflectionDirection;
         if (Utilities::RandomFloatInZeroToOne() < diffuseRatio) {
             reflectionDirection = Utilities::RandomInHemisphere(payload.normal);
         } else {
-            glm::vec3 halfVec;
+            Math::Vector3f halfVec;
             {
-                glm::vec2 Xi{Utilities::RandomFloatInZeroToOne(), Utilities::RandomFloatInZeroToOne()};
-                glm::vec3 N = payload.normal;
+                Math::Vector2f Xi{Utilities::RandomFloatInZeroToOne(), Utilities::RandomFloatInZeroToOne()};
+                Math::Vector3f N = payload.normal;
 
                 float a = material.roughness * material.roughness;
 
-                float phi = 2.f * std::numbers::pi * Xi.x;
+                float phi = Math::Constants::Tau<float> * Xi.x;
                 float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
                 float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
 
                 // from spherical coordinates to cartesian coordinates
-                glm::vec3 H;
+                Math::Vector3f H;
                 H.x = cos(phi) * sinTheta;
                 H.y = sin(phi) * sinTheta;
                 H.z = cosTheta;
 
                 // from tangent-space vector to world-space sample vector
-                glm::vec3 up = abs(N.z) < 0.999f ? glm::vec3(0.0, 0.0, 1.0) : glm::vec3(1.0, 0.0, 0.0);
-                glm::vec3 tangent = glm::normalize(glm::cross(up, N));
-                glm::vec3 bitangent = glm::cross(N, tangent);
+                Math::Vector3f up = Math::Abs(N.z) < 0.999f ? Math::Vector3f(0.0, 0.0, 1.0) : Math::Vector3f(1.0, 0.0, 0.0);
+                Math::Vector3f tangent = Math::Normalize(Math::Cross(up, N));
+                Math::Vector3f bitangent = Math::Cross(N, tangent);
 
                 halfVec = tangent * H.x + bitangent * H.y + N * H.z;
-                halfVec = glm::normalize(halfVec);
+                halfVec = Math::Normalize(halfVec);
             }
 
-            reflectionDirection = glm::normalize(2.f * glm::dot(V, halfVec) * halfVec - V);
+            reflectionDirection = 2.f * Math::Dot(V, halfVec) * halfVec - V;
         }
 
-        auto DistributionGGX = [](const glm::vec3 &N, const glm::vec3 &H, float roughness) {
+        auto DistributionGGX = [](const Math::Vector3f &N, const Math::Vector3f &H, float roughness) {
             float a = roughness * roughness;
             float a2 = a * a;
-            float NdotH = std::max(glm::dot(N, H), 0.f);
+            float NdotH = Math::Max(Math::Dot(N, H), 0.f);
             float NdotH2 = NdotH * NdotH;
 
             float nom = a2;
             float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-            denom = std::numbers::pi * denom * denom;
+            denom = Math::Constants::Pi<float> * denom * denom;
 
             return nom / denom;
         };
@@ -194,35 +187,35 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
             return nom / denom;
         };
 
-        auto GeometrySmith = [&](const glm::vec3 &N, const glm::vec3 &V, const glm::vec3 &L, float roughness) {
-            float NdotV = abs(glm::dot(N, V));
-            float NdotL = abs(glm::dot(N, L));
+        auto GeometrySmith = [&](const Math::Vector3f &N, const Math::Vector3f &V, const Math::Vector3f &L, float roughness) {
+            float NdotV = Math::Abs(Math::Dot(N, V));
+            float NdotL = Math::Abs(Math::Dot(N, L));
             float ggx2 = GeometrySchlickGGX(NdotV, roughness);
             float ggx1 = GeometrySchlickGGX(NdotL, roughness);
 
             return ggx1 * ggx2;
         };
 
-        auto FresnelSchlick = [](float cosTheta, const glm::vec3 &F0) {
+        auto FresnelSchlick = [](float cosTheta, const Math::Vector3f &F0) {
             return F0 + (1.f - F0) * pow(1.f - cosTheta, 5.f);
         };
 
-        auto SpecularBRDF = [](float D, float G, const glm::vec3 &F, const glm::vec3 &V, const glm::vec3 &L, const glm::vec3 &N) {        
-            float NdotL = abs(glm::dot(N, L));
-            float NdotV = abs(glm::dot(N, V));
+        auto SpecularBRDF = [](float D, float G, const Math::Vector3f &F, const Math::Vector3f &V, const Math::Vector3f &L, const Math::Vector3f &N) {        
+            float NdotL = Math::Abs(Math::Dot(N, L));
+            float NdotV = Math::Abs(Math::Dot(N, V));
                     
             //specualr
             //Microfacet specular = D * G * F / (4 * NoL * NoV)
-            glm::vec3 nominator = D * G * F;
+            Math::Vector3f nominator = D * G * F;
             float denominator = 4.0 * NdotV * NdotL + 0.000001f;
-            glm::vec3 specularBrdf = nominator / denominator;
+            Math::Vector3f specularBrdf = nominator / denominator;
             
             return specularBrdf;
         };
         
 
-        auto DiffuseBRDF = [](const glm::vec3 &albedo) {
-            return albedo * (float)std::numbers::inv_pi;
+        auto DiffuseBRDF = [](const Math::Vector3f &albedo) {
+            return albedo * Math::Constants::InversePi<float>;
         };
 
         auto ImportanceSampleGGX_PDF = [](float NDF, float NdotH, float VdotH) {
@@ -232,30 +225,30 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         };
 
         auto CosinSamplingPDF = [](float NdotL) {
-            return NdotL * (float)std::numbers::inv_pi;
+            return NdotL * Math::Constants::InversePi<float>;
         };
 
-        glm::vec3 L = glm::normalize(reflectionDirection);
-        glm::vec3 H = glm::normalize(V + L);
+        Math::Vector3f L = Math::Normalize(reflectionDirection);
+        Math::Vector3f H = Math::Normalize(V + L);
 
-        float NdotL = abs(glm::dot(payload.normal, L));
-        float NdotH = abs(glm::dot(payload.normal, H));
-        float VdotH = abs(glm::dot(V, H));
+        float NdotL = Math::Abs(Math::Dot(payload.normal, L));
+        float NdotH = Math::Abs(Math::Dot(payload.normal, H));
+        float VdotH = Math::Abs(Math::Dot(V, H));
         
-        float NdotV = abs(glm::dot(payload.normal, V));
+        float NdotV = Math::Abs(Math::Dot(payload.normal, V));
         
-        glm::vec3 F0 = glm::vec3(0.08, 0.08, 0.08);
-        F0 = glm::mix(F0 * material.specular, material.albedo, material.metallic);
+        Math::Vector3f F0 = Math::Vector3f(0.08, 0.08, 0.08);
+        F0 = Math::Lerp(F0 * material.specular, material.albedo, material.metallic);
 
         float NDF = DistributionGGX(payload.normal, H, material.roughness);
         float G = GeometrySmith(payload.normal, V, L, material.roughness);
-        glm::vec3 F = FresnelSchlick(std::max(dot(H, V), 0.f), F0);
+        Math::Vector3f F = FresnelSchlick(Math::Max(Math::Dot(H, V), 0.f), F0);
 
-        glm::vec3 kS = F;
-        glm::vec3 kD = 1.f - kS;
+        Math::Vector3f kS = F;
+        Math::Vector3f kD = 1.f - kS;
         kD *= 1.0 - material.metallic;
 
-        glm::vec3 specularBrdf = SpecularBRDF(NDF, G, F, V, L, payload.normal);
+        Math::Vector3f specularBrdf = SpecularBRDF(NDF, G, F, V, L, payload.normal);
             
         //hemisphere sampling pdf
         //pdf = 1 / (2 * PI)
@@ -267,11 +260,11 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         
         //diffuse
         //Lambert diffuse = diffuse / PI
-        glm::vec3 diffuseBrdf = DiffuseBRDF(material.albedo);
+        Math::Vector3f diffuseBrdf = DiffuseBRDF(material.albedo);
         //cosin sample pdf = N dot L / PI
         float diffusePdf = CosinSamplingPDF(NdotL);
 
-        glm::vec3 totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;
+        Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;
         float totalPdf = diffuseRatio * diffusePdf + specularRatio * speccualrPdf;
             
         ray.origin = payload.point + payload.normal * 0.000001f;
@@ -284,142 +277,8 @@ glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
         }
     }
 
-    return {light, 1.f};
+    return {light.x, light.y, light.z, 1.f};
 }
-
-// glm::vec4 Renderer::PixelProgram(int i, int j) const noexcept {
-    // Ray ray;
-    // ray.origin = m_Camera->GetPosition();
-    // ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
-
-    // glm::vec3 light(0.f);
-    // glm::vec3 contribution(1.f);
-    // for (int i = 0; i < m_MaxRayDepth; ++i) {
-    //     HitPayload payload = TraceRay(ray);
-
-    //     if (payload.t < 0.f) {
-    //         light += m_OnRayMiss(ray) * contribution;
-    //         break;
-    //     }
-
-    //     int materialIndex = -1;
-    //     switch (payload.primitive)
-    //     {
-    //     case Primitive::Sphere:
-    //         materialIndex = m_Scene->spheres[payload.objectIndex].materialIndex;
-    //         break;
-    //     case Primitive::Triangle:
-    //         materialIndex = m_Scene->triangles[payload.objectIndex].materialIndex;
-    //         break;        
-    //     default:
-    //         break;
-    //     }
-
-    //     const Material &material = m_Scene->materials[materialIndex];
-        
-    //     if (material.emissionPower != 0.f) {
-    //         light += material.GetEmission() * contribution;
-    //         break;
-    //     }
-
-    //     ray.origin = payload.point + payload.normal * 0.00001f;
-
-    //     if (material.fuzziness > 1.f) {
-    //         // ray.direction = glm::normalize(payload.normal + Utilities::RandomUnitVectorFast());
-
-    //         // ray.direction = Utilities::RandomInHemisphereFast(payload.normal);
-
-    //         // if (Utilities::AlmostZero(ray.direction)) {
-    //         //     ray.direction = payload.normal;
-    //         // } else {
-    //         //     ray.direction = glm::normalize(ray.direction);
-    //         // }
-
-    //         // glm::vec3 w = payload.normal;
-    //         // glm::vec3 a = (glm::abs(w.x) > 0.9) ? glm::vec3(0.f, 1.f, 0.f) : glm::vec3(1.f, 0.f, 0.f);
-    //         // glm::vec3 v = glm::normalize(glm::cross(w, a));
-    //         // glm::vec3 u = glm::cross(w, v);
-
-    //         // glm::vec3 randomCosineDirection = Utilities::RandomCosineDirection();
-    //         // ray.direction = randomCosineDirection.x * u + randomCosineDirection.y * v + randomCosineDirection.z * w;
-    //         // ray.direction = glm::normalize(ray.direction);
-
-    //         constexpr float inversePi = std::numbers::inv_pi;
-    //         // float cosineThetaOverPi = glm::abs(glm::dot(ray.direction, w)) * inversePi;
-    //         // float pdfValue = 0.f > cosineThetaOverPi ? 0.f : cosineThetaOverPi;
-    //         float pdfValue = 0.f;
-    //         for (int q = 0; q < 1; ++q)
-    //         {
-    //             const Triangle &triangle = m_Scene->triangles.back();
-
-    //             constexpr float epsilon = std::numeric_limits<float>::epsilon();
-
-    //             glm::vec3 uu = triangle.edges[0];
-    //             glm::vec3 vv = triangle.edges[1];
-            
-    //             glm::vec3 randomInPar;
-    //             // do {
-    //                 randomInPar = triangle.vertices[0] + Utilities::RandomFloatInZeroToOne() * uu + Utilities::RandomFloatInZeroToOne() * vv;
-    //             // } while (signbit(glm::cross(triangle.edges)) == )
-
-
-    //             ray.direction = randomInPar - ray.origin;
-
-    //             glm::vec3 edge1 = triangle.edges[0];
-    //             glm::vec3 edge2 = triangle.edges[1];
-    //             glm::vec3 rayCrossEdge2 = glm::cross(ray.direction, edge2);
-    //             float determinant = glm::dot(edge1, rayCrossEdge2);
-
-    //             if (glm::abs(determinant) < epsilon) {
-    //                 break;
-    //             }
-
-    //             float inverseDeterminant = 1.0 / determinant;
-    //             glm::vec3 s = ray.origin - triangle.vertices[0];
-    //             float u = inverseDeterminant * glm::dot(s, rayCrossEdge2);
-
-    //             if (u < 0.f || u > 1.f) {
-    //                 break;
-    //             }
-
-    //             glm::vec3 sCrossEdge1 = glm::cross(s, edge1);
-    //             float v = inverseDeterminant * glm::dot(ray.direction, sCrossEdge1);
-
-    //             if (v < 0.f || u + v > 1.f) {
-    //                 break;
-    //             }
-
-    //             float t = inverseDeterminant * glm::dot(edge2, sCrossEdge1);
-
-    //             if (t < 0.f) {
-    //                 break;
-    //             }
-
-    //             auto distanceSquared = t * t * glm::dot(ray.direction, ray.direction);
-    //             auto cosine = abs(glm::dot(ray.direction, payload.normal) / glm::length(ray.direction));
-
-    //             pdfValue = distanceSquared / (cosine * abs(glm::length(glm::cross(triangle.edges[0], triangle.edges[1])) * 0.5f));
-    //         }
-
-    //         float scatterPdf = std::max(0.f, glm::dot(payload.normal, ray.direction) * inversePi);
-
-    //         contribution *= material.albedo * scatterPdf / pdfValue;
-
-    //     } else {
-    //         ray.direction = glm::normalize(glm::reflect(ray.direction, payload.normal) + material.fuzziness * Utilities::RandomUnitVectorFast());
-            
-    //         contribution *= material.albedo;
-    //     }
-    // }
-
-    // return {light, 1.f};
-
-    // Ray ray;
-    // ray.origin = m_Camera->GetPosition();
-    // ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
-
-    // return {ColorRecursive(ray, m_MaxRayDepth), 1.f};
-// }
 
 HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     Primitive primitive = Primitive::None;
@@ -430,18 +289,18 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     for (int i = 0; i < objectCount; ++i) {
         const Sphere &sphere = m_Scene->spheres[i];
 
-        glm::vec3 centerToOrigin = ray.origin - sphere.center;
+        Math::Vector3f centerToOrigin = ray.origin - sphere.center;
         
-        float a = glm::dot(ray.direction, ray.direction);
-        float k = glm::dot(centerToOrigin, ray.direction);
-        float c = glm::dot(centerToOrigin, centerToOrigin) - sphere.radiusSquared;
+        float a = Math::Dot(ray.direction, ray.direction);
+        float k = Math::Dot(centerToOrigin, ray.direction);
+        float c = Math::Dot(centerToOrigin, centerToOrigin) - sphere.radiusSquared;
         float discriminant = k * k - a * c;
         
         if (discriminant < 0.0) {
             continue;
         }
 
-        float t = (-k - glm::sqrt(discriminant)) / a;
+        float t = (-k - Math::Sqrt(discriminant)) / a;
 
         if (t > 0.f && t < closestT) {
             closestT = t;
@@ -456,31 +315,31 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
 
         constexpr float epsilon = std::numeric_limits<float>::epsilon();
 
-        glm::vec3 edge1 = triangle.edges[0];
-        glm::vec3 edge2 = triangle.edges[1];
-        glm::vec3 rayCrossEdge2 = glm::cross(ray.direction, edge2);
-        float determinant = glm::dot(edge1, rayCrossEdge2);
+        Math::Vector3f edge1 = triangle.edges[0];
+        Math::Vector3f edge2 = triangle.edges[1];
+        Math::Vector3f rayCrossEdge2 = Math::Cross(ray.direction, edge2);
+        float determinant = Math::Dot(edge1, rayCrossEdge2);
 
-        if (glm::abs(determinant) < epsilon) {
+        if (Math::Abs(determinant) < epsilon) {
             continue;
         }
 
         float inverseDeterminant = 1.0 / determinant;
-        glm::vec3 s = ray.origin - triangle.vertices[0];
-        float u = inverseDeterminant * glm::dot(s, rayCrossEdge2);
+        Math::Vector3f s = ray.origin - triangle.vertices[0];
+        float u = inverseDeterminant * Math::Dot(s, rayCrossEdge2);
 
         if (u < 0.f || u > 1.f) {
             continue;
         }
 
-        glm::vec3 sCrossEdge1 = glm::cross(s, edge1);
-        float v = inverseDeterminant * glm::dot(ray.direction, sCrossEdge1);
+        Math::Vector3f sCrossEdge1 = Math::Cross(s, edge1);
+        float v = inverseDeterminant * Math::Dot(ray.direction, sCrossEdge1);
 
         if (v < 0.f || u + v > 1.f) {
             continue;
         }
 
-        float t = inverseDeterminant * glm::dot(edge2, sCrossEdge1);
+        float t = inverseDeterminant * Math::Dot(edge2, sCrossEdge1);
 
         if (t > 0.f && t < closestT) {
             closestT = t;
@@ -511,10 +370,10 @@ HitPayload Renderer::ClosestHit(const Ray &ray, float t, Primitive primitive, in
     case Primitive::Triangle: {
         const Triangle &triangle = m_Scene->triangles[objectIndex];
         payload.normal = triangle.normal;
-        if (glm::dot(ray.direction, payload.normal) > 0) {
+        if (Math::Dot(ray.direction, payload.normal) > 0) {
             payload.normal = -payload.normal;
         }
-        payload.normal = glm::normalize(payload.normal);
+        payload.normal = Math::Normalize(payload.normal);
         payload.material = m_Scene->materials[triangle.materialIndex];
         break;
     }
