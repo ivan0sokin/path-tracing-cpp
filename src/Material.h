@@ -5,10 +5,12 @@
 
 struct Material {
     glm::vec3 albedo{0.f, 0.f, 0.f};
+    float metallic = 0.f;
+    float specular = 0.f;
+    float roughness = 1.f;
+
     glm::vec3 emissionColor{0.f, 0.f, 0.f};
     float emissionPower = 0.f;
-    float reflectance = 0.f;
-    float fuzziness = 0.f;
 
     constexpr glm::vec3 GetEmission() const noexcept {
         return emissionColor * emissionPower;

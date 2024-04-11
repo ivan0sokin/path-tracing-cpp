@@ -10,28 +10,28 @@
 #include "../glm/include/glm/geometric.hpp"
 
 namespace Utilities {
-	static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	thread_local static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 	
-	constexpr uint32_t RandomUint() {
+	inline uint32_t RandomUint() {
 		uint32_t state = s_RandomEngineState;
 		s_RandomEngineState = state * 747796405u + 2891336453u;
 		uint32_t word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;
 		return (word >> 22u) ^ word;
 	}
 
-	constexpr float RandomFloatInZeroToOne() noexcept {
+	inline float RandomFloatInZeroToOne() noexcept {
 		return (float)RandomUint() / UINT32_MAX;
 	}
 
-	constexpr float RandomFloatInNegativeHalfToHalf() noexcept {
+	inline float RandomFloatInNegativeHalfToHalf() noexcept {
 		return RandomFloatInZeroToOne() - 0.5f;
 	}
 
-	constexpr float RandomFloatInNegativeToOne() noexcept {
+	inline float RandomFloatInNegativeToOne() noexcept {
 		return RandomFloatInZeroToOne() * 2.f - 1.f;
 	}
 
-	constexpr glm::vec3 RandomInUnitSphere() noexcept {
+	inline glm::vec3 RandomInUnitSphere() noexcept {
 		while (true) {
 			glm::vec3 result(RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne(), RandomFloatInNegativeToOne());
 			if (glm::dot(result, result) < 1.f) {
@@ -40,9 +40,18 @@ namespace Utilities {
 		}
 	}
 
-	constexpr glm::vec3 RandomUnitVector() noexcept {
+	inline glm::vec3 RandomUnitVector() noexcept {
 		glm::vec3 v = RandomInUnitSphere();
 		return v * (1.f / glm::sqrt(glm::dot(v, v)));
+	}
+
+	inline glm::vec3 RandomInHemisphere(const glm::vec3 &normal) {
+    	glm::vec3 randomUnitVector = RandomUnitVector();
+		if (glm::dot(randomUnitVector, normal) < 0.f) {
+			return -randomUnitVector;
+		}
+
+		return randomUnitVector;
 	}
 
 	constexpr float InverseSqrtFast(float x) {
@@ -58,9 +67,32 @@ namespace Utilities {
 		return x;
 	}
 
-	constexpr glm::vec3 RandomUnitVectorFast() noexcept {
+	inline glm::vec3 RandomUnitVectorFast() noexcept {
 		glm::vec3 v = RandomInUnitSphere();
 		return v * InverseSqrtFast(glm::dot(v, v));
+	}
+
+	inline glm::vec3 RandomInHemisphereFast(const glm::vec3 &normal) {
+    	glm::vec3 randomUnitVector = RandomUnitVectorFast();
+		if (glm::dot(randomUnitVector, normal) < 0.f) {
+			return -randomUnitVector;
+		}
+
+		return randomUnitVector;
+	}
+
+	inline glm::vec3 RandomCosineDirection() {
+		float r1 = RandomFloatInZeroToOne();
+		float r2 = RandomFloatInZeroToOne();
+
+		constexpr float twoPi = 2.f * std::numbers::pi;
+
+		float phi = twoPi * r1;
+		float x = cos(phi) * sqrt(r2);
+		float y = sin(phi) * sqrt(r2);
+		float z = sqrt(1.f - r2);
+
+		return {x, y, z};
 	}
 
 	constexpr uint32_t AsUint(float x) {
@@ -74,6 +106,11 @@ namespace Utilities {
 	constexpr float PowFast(float x, float exp) {
 		constexpr float oneAsUint = 0x3f800000u;
 		return AsFloat(int(exp * (AsUint(x) - oneAsUint)) + oneAsUint);
+	}
+
+	constexpr bool AlmostZero(const glm::vec3 &v) {
+		constexpr float epsilon = std::numeric_limits<float>::epsilon();
+		return glm::abs(v.x) < epsilon && glm::abs(v.y) < epsilon && glm::abs(v.z) < epsilon;
 	}
 
 	constexpr uint32_t ConvertColorToRGBA(glm::vec4 color) noexcept {
@@ -101,11 +138,6 @@ namespace Utilities {
 			PowFast(color.b, inverseGamma),
 			color.a
 		};
-	}
-
-	constexpr bool AlmostZero(const glm::vec3 &v) {
-		constexpr float epsilon = std::numeric_limits<float>::epsilon();
-		return glm::abs(v.x) < epsilon && glm::abs(v.y) < epsilon && glm::abs(v.z) < epsilon;
 	}
 }
 

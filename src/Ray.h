@@ -5,7 +5,6 @@
 
 struct Ray {
     glm::vec3 origin, direction;
-    // float tMin = 0.00001f, tMax = std::numeric_limits<float>::infinity();
 };
 
 #endif

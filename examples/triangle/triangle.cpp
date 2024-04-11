@@ -18,7 +18,7 @@ int main() {
     Camera camera(1580, 720, position, target, glm::radians(verticalFovInDegrees), up);
     
     Renderer renderer(1580, 720);
-    renderer.OnRayMiss([](const Ray&){ return glm::vec3(0.1f, 0.2f, 0.5f);});
+    // renderer.OnRayMiss([](const Ray&){ return glm::vec3(0.1f, 0.2f, 0.5f);});
 
     Scene scene;
     scene.triangles.emplace_back(glm::vec3{-555.f, 0.f, 0.f}, glm::vec3{-555.f, 555.f, 0.f}, glm::vec3{-555.f, 0.f, -555.f}, 0);
@@ -56,7 +56,7 @@ int main() {
 
     Material reflective;
     reflective.albedo = {1.f, 1.f, 1.f};
-    reflective.reflectance = 1.f;
+    reflective.metallic = 1.f;
     scene.materials.push_back(reflective);
 
     bool accumulate = false;
@@ -160,8 +160,9 @@ int main() {
                         ImGui::ColorEdit3("Albedo", glm::value_ptr(material.albedo));
                         ImGui::ColorEdit3("Emission color", glm::value_ptr(material.emissionColor));
                         ImGui::InputFloat("Emission power", &material.emissionPower);
-                        ImGui::InputFloat("Reflectance", &material.reflectance);
-                        ImGui::InputFloat("Fuzziness", &material.fuzziness);
+                        ImGui::InputFloat("Metallic", &material.metallic);
+                        ImGui::InputFloat("Roughness", &material.roughness);
+                        ImGui::InputFloat("Specular", &material.specular);
 
                         ImGui::PopID();
                     }

@@ -79,6 +79,8 @@ public:
 private:
     glm::vec4 PixelProgram(int x, int y) const noexcept;
 
+    glm::vec3 ColorRecursive(Ray ray, int depth = 0) const noexcept;
+
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
     HitPayload ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex) const noexcept;
