@@ -13,6 +13,8 @@ namespace Math {
         template<typename T> constexpr static T InverseHalfCircumferenceInDegrees = static_cast<T>(1 / HalfCircumferenceInDegrees<T>);
         template<typename T> constexpr static T HalfCircumferenceInRadians = static_cast<T>(Pi<T>);
         template<typename T> constexpr static T InverseHalfCircumferenceInRadians = static_cast<T>(InversePi<T>);
+    
+        template<typename T> constexpr static T Epsilon = static_cast<T>(std::numeric_limits<T>::epsilon());
     }
 }
 

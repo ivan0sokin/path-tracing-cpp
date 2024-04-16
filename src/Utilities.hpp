@@ -2,13 +2,15 @@
 #define _UTILITIES_HPP
 
 #include <chrono>
-#include <numbers>
+#include <random>
 
 #include "math/Math.h"
 
 namespace Utilities {
-	thread_local inline static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-	
+	inline static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	thread_local inline static std::mt19937_64 s_RandomNumberGenerator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+	inline static std::uniform_real_distribution<> s_ZeroToOne(0.f, 1.f);
+
 	inline uint32_t RandomUint() {
 		uint32_t state = s_RandomEngineState;
 		s_RandomEngineState = state * 747796405u + 2891336453u;
@@ -17,7 +19,8 @@ namespace Utilities {
 	}
 
 	inline float RandomFloatInZeroToOne() noexcept {
-		return (float)RandomUint() / UINT32_MAX;
+		// return (float)RandomUint() / UINT32_MAX;
+		return s_ZeroToOne(s_RandomNumberGenerator);
 	}
 
 	inline float RandomFloatInNegativeHalfToHalf() noexcept {

@@ -10,7 +10,8 @@ struct HitPayload {
     float t;
     Math::Vector3f point;
     Math::Vector3f normal;
-    Material material;
+    Math::Vector3f orientedNormal;
+    int materialIndex;
 };
 
 #endif

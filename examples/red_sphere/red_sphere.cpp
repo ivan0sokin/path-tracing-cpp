@@ -10,8 +10,9 @@ int main() {
     Application app(1580, 720, "Red sphere");
 
     Scene scene;
-    Camera camera(1580, 720, {0.f, -0.5f, 2.f});
+    Camera camera(1580, 720, {0.f, -0.5f, 10.f}, {0.f, -0.5f, -1.f});
     Renderer renderer(1580, 720);
+    renderer.OnRayMiss([](const auto &ray){ return Math::Vector3f(0.2f, 0.4f, 0.6f); });
 
     Material redColor;
     redColor.albedo = Math::Vector3f(1.f, 0.1f, 0.2f);
@@ -68,7 +69,7 @@ int main() {
                     for (int i = 0; i < (int)scene.spheres.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Sphere &sphere = scene.spheres[i];
+                        Shapes::Sphere &sphere = scene.spheres[i];
                         ImGui::Text("Sphere %d:", i);
                         if (ImGui::InputFloat("Radius", &sphere.radius)) {
                             sphere.radiusSquared = sphere.radius * sphere.radius;

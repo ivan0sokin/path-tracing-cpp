@@ -78,9 +78,11 @@ public:
 private:
     Math::Vector4f PixelProgram(int x, int y) const noexcept;
 
+    Math::Vector3f Li(const Ray &ray, const Math::Vector3f &throughput = Math::Vector3f(1.f), int depth = 0) const noexcept;
+
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
-    HitPayload ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex) const noexcept;
+    HitPayload ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex, int polygonIndex) const noexcept;
 
     HitPayload Miss(const Ray &ray) const noexcept;
 

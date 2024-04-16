@@ -76,7 +76,7 @@ int main() {
                     for (int i = 0; i < (int)scene.spheres.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Sphere &sphere = scene.spheres[i];
+                        Shapes::Sphere &sphere = scene.spheres[i];
                         ImGui::Text("Sphere %d:", i);
                         if (ImGui::InputFloat("Radius", &sphere.radius)) {
                             sphere.radiusSquared = sphere.radius * sphere.radius;
@@ -93,7 +93,7 @@ int main() {
                     for (int i = 0; i < (int)scene.triangles.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Triangle &triangle = scene.triangles[i];
+                        Shapes::Triangle &triangle = scene.triangles[i];
                         ImGui::Text("Triangle %d:", i);
                         ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]));
                         ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]));
