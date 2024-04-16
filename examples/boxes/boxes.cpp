@@ -34,7 +34,7 @@ int main() {
     scene.triangles.emplace_back(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, 3);
     scene.triangles.emplace_back(Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, 3); // top light
 
-    // scene.spheres.emplace_back(Math::Vector3f{-400.0, 50.5, -400.5}, 100.f, 4);
+    scene.spheres.emplace_back(Math::Vector3f{-100.0, 250.5, -400.5}, 100.f, 4);
 
     scene.boxes.emplace_back(Math::Vector3f{-130.f, 0.f, -65.f}, Math::Vector3f{-295.f, 165.f, -230.f}, 1);
     scene.boxes.emplace_back(Math::Vector3f{-265.f, 0.f, -295.f}, Math::Vector3f{-430.f, 330.f, -460.f}, 1);

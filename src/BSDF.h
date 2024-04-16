@@ -13,7 +13,7 @@ public:
     constexpr BSDF(const Material &material) noexcept :
         m_Material(&material) {}
 
-    std::pair<Math::Vector3f, Math::Vector3f> Sample(const Ray &ray, const HitPayload &payload) noexcept;
+    Math::Vector3f Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
 
 private:
     const Material *m_Material;

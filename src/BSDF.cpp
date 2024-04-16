@@ -1,7 +1,7 @@
 #include "BSDF.h"
 #include "Utilities.hpp"
 
-std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const HitPayload &payload) noexcept {
+Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     float diffuseRatio = 0.5f * (1.f - m_Material->metallic);
     float specularRatio = 1.f - diffuseRatio;
 
@@ -19,16 +19,14 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
             float a = m_Material->roughness * m_Material->roughness;
 
             float phi = Math::Constants::Tau<float> * Xi.x;
-            float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
-            float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+            float cosTheta = Math::Sqrt((1.f - Xi.y) / (1.f + (a * a - 1.f) * Xi.y));
+            float sinTheta = Math::Sqrt(1.f - cosTheta * cosTheta);
 
-            // from spherical coordinates to cartesian coordinates
             Math::Vector3f H;
-            H.x = cos(phi) * sinTheta;
-            H.y = sin(phi) * sinTheta;
+            H.x = Math::Cos(phi) * sinTheta;
+            H.y = Math::Sin(phi) * sinTheta;
             H.z = cosTheta;
 
-            // from tangent-space vector to world-space sample vector
             Math::Vector3f up = Math::Abs(N.z) < 0.999f ? Math::Vector3f(0.0, 0.0, 1.0) : Math::Vector3f(1.0, 0.0, 0.0);
             Math::Vector3f tangent = Math::Normalize(Math::Cross(up, N));
             Math::Vector3f bitangent = Math::Cross(N, tangent);
@@ -37,7 +35,7 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
             halfVec = Math::Normalize(halfVec);
         }
 
-        reflectionDirection = Math::Normalize(2.f * Math::Dot(V, halfVec) * halfVec - V);
+        reflectionDirection = 2.f * Math::Dot(V, halfVec) * halfVec - V;
     }
 
     auto DistributionGGX = [](const Math::Vector3f &N, const Math::Vector3f &H, float roughness) {
@@ -47,18 +45,18 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
         float NdotH2 = NdotH * NdotH;
 
         float nom = a2;
-        float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+        float denom = (NdotH2 * (a2 - 1.f) + 1.f);
         denom = Math::Constants::Pi<float> * denom * denom;
 
         return nom / denom;
     };
 
     auto GeometrySchlickGGX = [](float NdotV, float roughness) {
-        float r = (roughness + 1.0);
-        float k = (r * r) / 8.0;
+        float r = (roughness + 1.f);
+        float k = (r * r) / 8.f;
 
         float nom = NdotV;
-        float denom = NdotV * (1.0 - k) + k;
+        float denom = NdotV * (1.f - k) + k;
 
         return nom / denom;
     };
@@ -80,27 +78,22 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
         float NdotL = Math::Abs(Math::Dot(N, L));
         float NdotV = Math::Abs(Math::Dot(N, V));
                 
-        //specualr
-        //Microfacet specular = D * G * F / (4 * NoL * NoV)
         Math::Vector3f nominator = D * G * F;
-        float denominator = 4.0 * NdotV * NdotL + 0.000001f;
+        float denominator = 4.f * NdotV * NdotL + 0.001f;
         Math::Vector3f specularBrdf = nominator / denominator;
         
         return specularBrdf;
     };
-    
 
     auto DiffuseBRDF = [](const Math::Vector3f &albedo) {
         return albedo * Math::Constants::InversePi<float>;
     };
 
-    auto ImportanceSampleGGX_PDF = [](float NDF, float NdotH, float VdotH) {
-        //ImportanceSampleGGX pdf
-            //pdf = D * NoH / (4 * VoH)
-        return NDF * NdotH / (4 * VdotH);
+    auto ImportanceSampleGGXPDF = [](float NDF, float NdotH, float VdotH) {
+        return NDF * NdotH / (4.f * VdotH);
     };
 
-    auto CosinSamplingPDF = [](float NdotL) {
+    auto CosineSamplingPDF = [](float NdotL) {
         return NdotL * Math::Constants::InversePi<float>;
     };
 
@@ -113,7 +106,7 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
     
     float NdotV = Math::Abs(Math::Dot(payload.normal, V));
     
-    Math::Vector3f F0 = Math::Vector3f(0.08, 0.08, 0.08);
+    Math::Vector3f F0 = Math::Vector3f(0.08f, 0.08f, 0.08f);
     F0 = Math::Lerp(F0 * m_Material->specular, m_Material->albedo, m_Material->metallic);
 
     float NDF = DistributionGGX(payload.normal, H, m_Material->roughness);
@@ -126,28 +119,17 @@ std::pair<Math::Vector3f, Math::Vector3f> BSDF::Sample(const Ray &ray, const Hit
 
     Math::Vector3f specularBrdf = SpecularBRDF(NDF, G, F, V, L, payload.normal);
         
-    //hemisphere sampling pdf
-    //pdf = 1 / (2 * PI)
-    //float speccualrPdf = 1 / (2 * PI);
+    float specularPdf = ImportanceSampleGGXPDF(NDF, NdotH, VdotH);
     
-    //ImportanceSampleGGX pdf
-    //pdf = D * NoH / (4 * VoH)
-    float specularPdf = ImportanceSampleGGX_PDF(NDF, NdotH, VdotH);
-    
-    //diffuse
-    //Lambert diffuse = diffuse / PI
     Math::Vector3f diffuseBrdf = DiffuseBRDF(m_Material->albedo);
-    //cosin sample pdf = N dot L / PI
-    float diffusePdf = CosinSamplingPDF(NdotL);
+    float diffusePdf = CosineSamplingPDF(NdotL);
 
-    Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL; // delete kS
+    Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;
     float totalPdf = diffuseRatio * diffusePdf + specularRatio * specularPdf;
 
-    // return {m_Material->albedo, reflectionDirection}; // goida)
-
-    if (totalPdf > 0.f) {
-        return {totalBrdf / totalPdf, reflectionDirection};
+    if (totalPdf > Math::Constants::Epsilon<float>) {
+        throughput *= totalBrdf / totalPdf;
     }
 
-    return {Math::Vector3f(0.f), reflectionDirection};
+    return reflectionDirection;
 }

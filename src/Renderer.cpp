@@ -85,8 +85,6 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
             for (int t = i; t < limit; ++t) {
                 for (int j = 0; j < m_Width; ++j) {
                     m_AccumulationData[m_Width * t + j] += PixelProgram(t, j);
-                    // auto clr = Li({m_Camera->GetPosition(), m_Camera->GetRayDirections()[m_Width * t + j]});
-                    // m_AccumulationData[m_Width * t + j] += Math::Vector4f{clr.x, clr.y, clr.z, 1.f};
 
                     Math::Vector4f color = m_AccumulationData[m_Width * t + j];
 
@@ -122,8 +120,7 @@ Math::Vector3f Renderer::Li(const Ray &ray, const Math::Vector3f &throughput, in
     }
 
     const Material &material = m_Scene->materials[payload.materialIndex];
-    // Math::Vector3f emission = Math::Dot(ray.direction, payload.orientedNormal) <= 0.f ? material.GetEmission() : Math::Vector3f(0.f);
-    Math::Vector3f emission = material.GetEmission();
+    Math::Vector3f emission = Math::Dot(ray.direction, payload.orientedNormal) <= 0.f ? material.GetEmission() : Math::Vector3f(0.f);
     
     return emission + material.albedo * Li({payload.point, Utilities::RandomUnitVector()}, throughput, depth + 1);
 }
@@ -147,9 +144,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         light += emission * throughput;
         
         BSDF bsdf(material);
-        auto [value, direction] = bsdf.Sample(ray, payload);    
-
-        throughput *= value;
+        Math::Vector3f direction = bsdf.Sample(ray, payload, throughput);    
 
         ray.origin = payload.point;
         ray.direction = direction;
