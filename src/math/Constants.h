@@ -10,11 +10,13 @@ namespace Math {
         template<typename T> constexpr static T InversePi = static_cast<T>(std::numbers::inv_pi);
 
         template<typename T> constexpr static T HalfCircumferenceInDegrees = static_cast<T>(180.0);
-        template<typename T> constexpr static T InverseHalfCircumferenceInDegrees = static_cast<T>(1 / HalfCircumferenceInDegrees<T>);
-        template<typename T> constexpr static T HalfCircumferenceInRadians = static_cast<T>(Pi<T>);
-        template<typename T> constexpr static T InverseHalfCircumferenceInRadians = static_cast<T>(InversePi<T>);
+        template<typename T> constexpr static T InverseHalfCircumferenceInDegrees = static_cast<T>(1) / HalfCircumferenceInDegrees<T>;
+        template<typename T> constexpr static T HalfCircumferenceInRadians = Pi<T>;
+        template<typename T> constexpr static T InverseHalfCircumferenceInRadians = InversePi<T>;
     
-        template<typename T> constexpr static T Epsilon = static_cast<T>(std::numeric_limits<T>::epsilon());
+        template<typename T> constexpr static T Epsilon = std::numeric_limits<T>::epsilon();
+        template<typename T> constexpr static T Max = std::numeric_limits<T>::max();
+        template<typename T> constexpr static T Infinity = std::numeric_limits<T>::infinity();
     }
 }
 

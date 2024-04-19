@@ -1,7 +1,6 @@
 #ifndef _HIT_PAYLOAD_H
 #define _HIT_PAYLOAD_H
 
-#include "Primitive.h"
 #include "Material.h"
 
 #include "math/Math.h"

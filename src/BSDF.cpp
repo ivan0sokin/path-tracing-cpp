@@ -127,6 +127,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
     Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;
     float totalPdf = diffuseRatio * diffusePdf + specularRatio * specularPdf;
 
+
     if (totalPdf > Math::Constants::Epsilon<float>) {
         throughput *= totalBrdf / totalPdf;
     }

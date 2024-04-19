@@ -6,7 +6,6 @@
 #include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
-#include "Primitive.h"
 
 #include "math/Math.h"
 
@@ -82,7 +81,7 @@ private:
 
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
-    HitPayload ClosestHit(const Ray &ray, float t, Primitive primitive, int objectIndex, int polygonIndex) const noexcept;
+    HitPayload ClosestHit(const Ray &ray, float t, int objectIndex, int polygonIndex, const Math::Vector3f &worldNormal) const noexcept;
 
     HitPayload Miss(const Ray &ray) const noexcept;
 
