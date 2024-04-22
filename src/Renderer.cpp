@@ -85,8 +85,6 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
             for (int t = i; t < limit; ++t) {
                 for (int j = 0; j < m_Width; ++j) {
                     m_AccumulationData[m_Width * t + j] += PixelProgram(t, j);
-                    // auto clr = Li({m_Camera->GetPosition(), m_Camera->GetRayDirections()[m_Width * t + j]});
-                    // m_AccumulationData[m_Width * t + j] += {clr.r, clr.g, clr.b, 1.f};
 
                     Math::Vector4f color = m_AccumulationData[m_Width * t + j];
 
@@ -111,67 +109,54 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     }
 }
 
-Math::Vector3f Renderer::Li(const Ray &ray, const Math::Vector3f &throughput, int depth) const noexcept {
-    if (depth == m_MaxRayDepth) {
-        return Math::Vector3f(0.f, 0.f, 0.f);
+void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, const std::vector<Material> &materials) noexcept {
+    m_Camera = &camera;
+    m_AccelerationStructure = &accelerationStructure;
+    m_Materials = materials;
+
+    if (!m_Accumulate) {
+        m_FrameIndex = 1;
     }
 
-    HitPayload payload = TraceRay(ray);
-    if (payload.t < 0.f) {
-        return m_OnRayMiss(ray);
+    if (m_FrameIndex == 1) {
+        memset(m_AccumulationData, 0, m_Width * m_Height * sizeof(Math::Vector4f));
     }
 
-    const Material &material = m_Scene->materials[payload.materialIndex];
-    Math::Vector3f emission = Math::Dot(ray.direction, payload.orientedNormal) <= 0.f ? material.GetEmission() : Math::Vector3f(0.f);
-    
-    Math::Vector3f indirect(1.f);
-    BSDF bsdf(material);
-    indirect *= Li({payload.point, bsdf.Sample(ray, payload, indirect)}, throughput, depth + 1);
+    float inverseFrameIndex = 1.f / m_FrameIndex;
+    float inverseGamma = 1.f / m_Gamma;
 
-    Math::Vector3f toLight(0.f);
-    HitPayload lightHitPayload;
-    float distance;
-    float area;
-    // {
-        // sample light
-        Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
-        float lightSize = 130.f;
-        area = lightSize * lightSize;
+    std::vector<std::thread> handles;
+    handles.reserve(m_UsedThreads);
 
-        Math::Vector3f randomPointOnLight = lightCenter + Math::Vector3f{lightSize, 0.f, 0.f} * Utilities::RandomFloatInNegativeHalfToHalf()
-                                                        + Math::Vector3f{0.f, 0.f, lightSize} * Utilities::RandomFloatInNegativeHalfToHalf();
+    for (int i = 0; i < m_Height; i += m_LinesPerThread) {
+        handles.emplace_back([this, i, inverseFrameIndex, inverseGamma]() {
+            int nextBlock = i + m_LinesPerThread;
+            int limit = Math::Min(nextBlock, m_Height);
+            for (int t = i; t < limit; ++t) {
+                for (int j = 0; j < m_Width; ++j) {
+                    m_AccumulationData[m_Width * t + j] += AcceleratedPixelProgram(t, j);
 
-        toLight = randomPointOnLight - payload.point;
+                    Math::Vector4f color = m_AccumulationData[m_Width * t + j];
 
-        lightHitPayload = TraceRay({payload.point, Math::Normalize(toLight)});
+                    color *= inverseFrameIndex;
+                    color = Utilities::CorrectGamma(color, inverseGamma);
+                    color = Math::Clamp(color, 0.f, 1.f);
 
-    //     if (distance > lightHitPayload.t + 0.00001f) {
-    //         lightPdf = 0.f;
-    //     } else {
-    //         float distanceSquared = distance * distance;
-    //         float cosine = Math::Abs(Math::Dot(toLight, lightHitPayload.normal));
+                    m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
+                }
+            }
+        });
+    }
 
-    //         // float G = Math::Max(0.f, Math::Dot(payload.normal, l_nee)) * Math::Max(0.f, -Math::Dot(l_nee, lightHitPayload.normal)) / rr_nee;
+    for (auto &handle : handles) {
+        handle.join();
+    }
 
-    //         lightPdf = distanceSquared / (cosine * lightSize * lightSize);
-    //         // lightEmmision = m->payload.material.GetEmission();
-    //         // lightPdf = 1.0 / (lightSize * lightSize * G);
-    //     }
-    // }
+    m_Image->UpdateData(m_ImageData);
 
-    // float v = 1.f;
-    // float lightPdf = Math::Dot(toLight, toLight) / (Math::Abs(Math::Dot(Math::Normalize(toLight), lightHitPayload.normal)) * lightSize * lightSize);
-    // if (lightHitPayload.t > Math::Length(toLight) + 0.001f) {
-    //     v = 0.f;
-    //     lightPdf = 0.f;
-    // }
-
-    // Math::Vector3f lightEmission = Math::Dot(toLight, m_Scene->triangles.back().orientedNormal) <= 0.f ? m_Scene->materials[m_Scene->triangles.back().materialIndex].GetEmission() : Math::Vector3f(0.f);
-
-    // float P = Math::Dot(m_Scene->triangles.back().orientedNormal, -Math::Normalize(toLight)) / Math::Dot(toLight, toLight);
-    // Math::Vector3f direct = v * material.albedo * Math::Constants::InversePi<float> * lightEmission * Math::Dot(payload.normal, Math::Normalize(toLight)) * P * area;
-
-    // return emission + direct;
+    if (m_Accumulate) {
+        ++m_FrameIndex;
+    }
 }
 
 Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
@@ -188,34 +173,75 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             break;
         }
 
-        const Material &material = m_Scene->materials[payload.materialIndex];
-        Math::Vector3f emission = Math::Dot(ray.direction, payload.orientedNormal) <= 0.f ? material.GetEmission() : Math::Vector3f(0.f);
+        const Material &material = m_Scene->materials[payload.object->GetMaterialIndex()];
+        Math::Vector3f emission = material.GetEmission();
 
         light += emission * throughput;
 
         BSDF bsdf(material);
-        Math::Vector3f direction = bsdf.Sample(ray, payload, throughput);
+        auto [direction, pdf] = bsdf.Sample(ray, payload, throughput);
         
         // Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
         // float lightSize = 330.f;
 
         // Math::Vector3f randomPointOnLight = lightCenter + Math::Vector3f{lightSize, 0.f, 0.f} * Utilities::RandomFloatInNegativeHalfToHalf()
         //                                                 + Math::Vector3f{0.f, 0.f, lightSize} * Utilities::RandomFloatInNegativeHalfToHalf();
-
         
 
-        ray.origin = payload.point;
+        ray.origin += ray.direction * payload.t;
         ray.direction = direction;
 
-        // auto toLight = randomPointOnLight - payload.point;
+        // auto toLight = randomPointOnLight - ray.origin;
         // auto lightCosine = fabs(Math::Normalize(toLight).y);
 
-        // auto lightHitPayload = TraceRay({payload.point, Math::Normalize(toLight)});
-
-        
+        // auto lightHitPayload = TraceRay({ray.origin, Math::Normalize(toLight)});
 
         // float lightArea = lightSize * lightSize;
         // float lightPdf = Math::Dot(toLight, toLight) / (lightCosine * lightArea);
+
+        if (pdf > Math::Constants::Epsilon<float>) {
+            throughput /= pdf;
+        }
+
+        // if (lightCosine > 0.0001f) {
+        //     light += throughput * 1.f;
+        //     throughput /= lightPdf;
+        // }
+
+        // ray.direction = direction;
+        // if (pdf > Math::Constants::Epsilon<float>) {
+        //     if (lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) {
+        //         throughput /= pdf;
+        //     } else {
+        //         float f = lightPdf;
+        //         float g = pdf;
+        //         float totalPdf = (f * f) / (f * f + g * g);
+
+        //         throughput /= (pdf * 0.5f + totalPdf * 0.5f);
+        //         if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
+        //             ray.direction = toLight;
+        //         }
+        //     }
+        // }
+
+        // if ((lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) && pdf > Math::Constants::Epsilon<float>) {
+        //     throughput /= pdf;
+        //     ray.direction = direction;
+        // } else if (!(lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) && pdf > Math::Constants::Epsilon<float>) {
+        //     throughput /= (0.5f * lightPdf + 0.5f * pdf);
+
+        //     if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
+        //         ray.direction = toLight;
+        //     } else {
+        //         ray.direction = direction;
+        //     }
+        // } else if (!(lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight))) {
+        //     // throughput /= lightPdf;
+        //     ray.direction = direction;
+        //     // ray.direction = toLight;
+        // } else {
+        //     ray.direction = direction;
+        // }
 
         // if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
         //     ray.direction = toLight;
@@ -234,83 +260,72 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     return {light.r, light.g, light.b, 1.f};
 }
 
+Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
+    Ray ray;
+    ray.origin = m_Camera->GetPosition();
+    ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
+
+    Math::Vector3f light(0.f), throughput(1.f);
+    for (int i = 0; i < m_MaxRayDepth; ++i) {
+        HitPayload payload = AcceleratedTraceRay(ray);
+        
+        if (payload.t < 0.f) {
+            light += throughput * m_OnRayMiss(ray);
+            break;
+        }
+
+        const Material &material = m_Materials.at(payload.object->GetMaterialIndex());
+        Math::Vector3f emission = material.GetEmission();
+
+        light += emission * throughput;
+
+        BSDF bsdf(material);
+        auto [direction, pdf] = bsdf.Sample(ray, payload, throughput);
+
+        if (pdf > Math::Constants::Epsilon<float>) {
+            throughput /= pdf;
+        }
+
+        ray.origin += ray.direction * payload.t;
+        ray.direction = direction;
+    }
+ 
+    return {light.r, light.g, light.b, 1.f};
+}
+
 HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
-    int objectIndex = -1;
-    int polygonIndex = -1;
-    Math::Vector3f worldNormal;
-    float closestT = Math::Constants::Max<float>;
+    HitPayload payload;
+    payload.t = Math::Constants::Infinity<float>;
+    payload.normal = Math::Vector3f(0.f);
+    payload.object = nullptr;
 
     int objectCount = (int)m_Scene->objects.size();
     for (int i = 0; i < objectCount; ++i) {
-        auto [t, normal] = m_Scene->objects[i]->TryHit(ray);
-
-        if (t > 0.001f && t < closestT) {
-            closestT = t;
-            objectIndex = i;
-            worldNormal = normal;
-        }
+        m_Scene->objects[i]->Hit(ray, 0.001f, Math::Min(Math::Constants::Infinity<float>, payload.t), payload);
     }
 
-    if (objectIndex < 0) {
+    if (payload.object == nullptr) {
         return Miss(ray);
     }
 
-    return ClosestHit(ray, closestT, objectIndex, polygonIndex, worldNormal);
+    payload.normal = Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
+
+    return payload;
 }
 
-HitPayload Renderer::ClosestHit(const Ray &ray, float t, int objectIndex, int polygonIndex, const Math::Vector3f &worldNormal) const noexcept {
-    // HitPayload payload;
-    // payload.t = t;
-    // payload.point = ray.origin + ray.direction * t;
-
-    // switch (primitive) {
-    // case Primitive::Sphere: {
-    //     const Shapes::Sphere &sphere = m_Scene->spheres[objectIndex];
-    //     payload.normal = (payload.point - sphere.center) * sphere.inverseRadius;
-    //     payload.orientedNormal = payload.normal;
-    //     payload.materialIndex = sphere.materialIndex;
-    //     break;       
-    // }
-    // case Primitive::Triangle: {
-    //     const Shapes::Triangle &triangle = m_Scene->triangles[objectIndex];
-
-    //     payload.normal = triangle.orientedNormal;
-    //     if (Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float>) {
-    //         payload.normal = -payload.normal;
-    //     }
-    //     payload.normal = Math::Normalize(payload.normal);
-
-    //     payload.orientedNormal = triangle.orientedNormal;
-    //     payload.materialIndex = triangle.materialIndex;
-    //     break;
-    // }
-    // case Primitive::Box: {
-    //     const Shapes::Triangle &triangle = m_Scene->boxes[objectIndex].triangles[polygonIndex];
-
-    //     payload.normal = triangle.orientedNormal;
-    //     if (Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float>) {
-    //         payload.normal = -payload.normal;
-    //     }
-    //     payload.normal = Math::Normalize(payload.normal);
-
-    //     payload.orientedNormal = triangle.orientedNormal;
-    //     payload.materialIndex = triangle.materialIndex;
-    //     break;
-    // }
-    // default:
-    //     break;
-    // }
-    
-    // return payload;
-
+HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
-    payload.t = t;
-    payload.point = ray.origin + ray.direction * t;
+    payload.t = Math::Constants::Infinity<float>;
+    payload.normal = Math::Vector3f(0.f);
+    payload.object = nullptr;
 
-    HittableObject *object = m_Scene->objects[objectIndex];
-    payload.orientedNormal = worldNormal;
-    payload.normal = Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.orientedNormal : payload.orientedNormal;
-    payload.materialIndex = object->GetMaterialIndex();
+    m_AccelerationStructure->Hit(ray, 0.001f, Math::Constants::Infinity<float>, payload);
+
+    if (payload.object == nullptr) {
+        return Miss(ray);
+    }
+
+    payload.normal = Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
 
     return payload;
 }

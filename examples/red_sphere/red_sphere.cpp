@@ -3,6 +3,7 @@
 #include <Renderer.h>
 #include <chrono>
 #include <algorithm>
+#include <hittable/Sphere.h>
 
 #define dbg(msg) fprintf(stdout, (msg));
 
@@ -20,8 +21,12 @@ int main() {
     Material greenColor;
     greenColor.albedo = Math::Vector3f(0.1f, 0.5f, 0.7f);
 
-    scene.spheres.emplace_back(Math::Vector3f(0.f, -0.5f, 0.f), 0.5f, 0);
-    scene.spheres.emplace_back(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 1);
+    std::vector<Shapes::Sphere*> spheres;
+
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -0.5f, 0.f), 0.5f, 0));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 1));
+    
+    scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
     scene.materials.assign({redColor, greenColor});
 
     bool accumulate = false;
@@ -66,10 +71,10 @@ int main() {
         {
             if (ImGui::CollapsingHeader("Scene", nullptr)) {
                 if (ImGui::CollapsingHeader("Spheres", nullptr)) {
-                    for (int i = 0; i < (int)scene.spheres.size(); ++i) {
+                    for (int i = 0; i < (int)spheres.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Shapes::Sphere &sphere = scene.spheres[i];
+                        Shapes::Sphere &sphere = *spheres[i];
                         ImGui::Text("Sphere %d:", i);
                         if (ImGui::InputFloat("Radius", &sphere.radius)) {
                             sphere.radiusSquared = sphere.radius * sphere.radius;

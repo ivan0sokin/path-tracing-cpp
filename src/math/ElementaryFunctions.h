@@ -17,8 +17,62 @@ namespace Math {
     }
 
     template<typename T>
+    constexpr Types::Vector<T, 2> Min(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b) noexcept {
+        return {
+            Min(a.x, b.x),
+            Min(a.y, b.y)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Min(const Types::Vector<T, 3> &a, const Types::Vector<T, 3> &b) noexcept {
+        return {
+            Min(a.x, b.x),
+            Min(a.y, b.y),
+            Min(a.z, b.z)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 4> Min(const Types::Vector<T, 4> &a, const Types::Vector<T, 4> &b) noexcept {
+        return {
+            Min(a.x, b.x),
+            Min(a.y, b.y),
+            Min(a.z, b.z),
+            Min(a.w, b.w)
+        };
+    }
+
+    template<typename T>
     constexpr T Max(T a, T b) noexcept {
         return a > b ? a : b;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 2> Max(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b) noexcept {
+        return {
+            Max(a.x, b.x),
+            Max(a.y, b.y)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Max(const Types::Vector<T, 3> &a, const Types::Vector<T, 3> &b) noexcept {
+        return {
+            Max(a.x, b.x),
+            Max(a.y, b.y),
+            Max(a.z, b.z)
+        };
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 4> Max(const Types::Vector<T, 4> &a, const Types::Vector<T, 4> &b) noexcept {
+        return {
+            Max(a.x, b.x),
+            Max(a.y, b.y),
+            Max(a.z, b.z),
+            Max(a.w, b.w)
+        };
     }
 
     template<typename T>

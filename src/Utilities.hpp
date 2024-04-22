@@ -19,7 +19,6 @@ namespace Utilities {
 	}
 
 	inline float RandomFloatInZeroToOne() noexcept {
-		// return (float)RandomUint() / UINT32_MAX;
 		return s_ZeroToOne(s_RandomNumberGenerator);
 	}
 
@@ -29,6 +28,10 @@ namespace Utilities {
 
 	inline float RandomFloatInNegativeToOne() noexcept {
 		return RandomFloatInZeroToOne() * 2.f - 1.f;
+	}
+
+	inline int RandomIntInRange(int min, int max) noexcept {
+		return std::uniform_int_distribution<>(min, max)(s_RandomNumberGenerator);
 	}
 
 	inline Math::Vector3f RandomInUnitSphere() noexcept {

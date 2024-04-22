@@ -3,8 +3,10 @@
 
 #include "../math/Math.h"
 #include "../Ray.h"
+#include "../AABB.h"
+// #include "../HitPayload.h"
 
-#include <utility>
+struct HitPayload;
 
 class HittableObject {
 public:
@@ -15,9 +17,11 @@ public:
 
     constexpr virtual ~HittableObject() = default;
 
-    virtual std::pair<float, Math::Vector3f> TryHit(const Ray &ray) const noexcept = 0;
+    virtual void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;
 
     virtual int GetMaterialIndex() const noexcept = 0;
+
+    virtual AABB GetBoundingBox() const noexcept = 0;
 };
 
 #endif

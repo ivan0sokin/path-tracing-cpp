@@ -3,6 +3,8 @@
 
 #include "HittableObject.h"
 #include "../math/Math.h"
+#include "../AABB.h"
+#include "../HitPayload.h"
 
 namespace Shapes {
     struct Sphere : public HittableObject {
@@ -13,7 +15,7 @@ namespace Shapes {
         constexpr Sphere(const Math::Vector3f &center, float radius, int materialIndex) noexcept :
             center(center), radius(radius), radiusSquared(radius * radius), inverseRadius(1.f / radius), materialIndex(materialIndex) {}
 
-        inline std::pair<float, Math::Vector3f> TryHit(const Ray &ray) const noexcept override {
+        inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             Math::Vector3f centerToOrigin = ray.origin - center;
         
             float a = Math::Dot(ray.direction, ray.direction);
@@ -22,16 +24,31 @@ namespace Shapes {
             float discriminant = k * k - a * c;
             
             if (discriminant < 0.0) {
-                return {Math::Constants::Max<float>, Math::Vector3f(0.f)};
+                return;
             }
 
-            float t = (-k - Math::Sqrt(discriminant)) / a;
+            float t0 = (-k - Math::Sqrt(discriminant)) / a;
+            float t1 = (-k + Math::Sqrt(discriminant)) / a;
 
-            return {t, (ray.origin + ray.direction * t - center) * inverseRadius};
+            float t = t0;
+            if (t < tMin || tMax < t) {
+                t = t1;
+                if (t < tMin || tMax < t) {
+                    return;
+                }
+            }
+            
+            payload.t = t;
+            payload.normal = (ray.origin + ray.direction * t - center) * inverseRadius;
+            payload.object = this;
         }
 
         inline int GetMaterialIndex() const noexcept override {
             return materialIndex;
+        }
+
+        inline AABB GetBoundingBox() const noexcept override {
+            return AABB(center - radius, center + radius);
         }
     };
 }

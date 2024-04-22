@@ -22,7 +22,8 @@ set(SOURCES src/Renderer.cpp
             src/Image.cpp
             src/Application.cpp
             src/Camera.cpp
-            src/BSDF.cpp)
+            src/BSDF.cpp
+            src/AccelerationStructure.cpp)
 
 add_library(ptrace STATIC ${SOURCES} ${IMGUI_SOURCES})
 target_include_directories(ptrace PRIVATE ${IMGUI_DIR} ${GLFW_INCLUDE_DIR})

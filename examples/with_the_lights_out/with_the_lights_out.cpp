@@ -3,6 +3,8 @@
 #include <Renderer.h>
 #include <chrono>
 #include <algorithm>
+#include <hittable/Sphere.h>
+#include <hittable/Triangle.h>
 
 #define dbg(msg) fprintf(stdout, (msg));
 
@@ -24,9 +26,15 @@ int main() {
     Material blueColor;
     blueColor.albedo = Math::Vector3f(0.1f, 0.5f, 0.7f);
 
-    scene.spheres.emplace_back(Math::Vector3f(-0.55f, -0.5f, 0.f), 0.5f, 0);
-    scene.spheres.emplace_back(Math::Vector3f(0.55f, -0.5f, 0.f), 0.5f, 1);
-    scene.spheres.emplace_back(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 2);
+    std::vector<Shapes::Sphere*> spheres;
+
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(-0.55f, -0.5f, 0.f), 0.5f, 0));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.55f, -0.5f, 0.f), 0.5f, 1));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 2));
+
+    scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
+
+    std::vector<Shapes::Triangle*> triangles;
 
     scene.materials.assign({redWithLight, purpleWithLight, blueColor});
 
@@ -73,10 +81,10 @@ int main() {
         {
             if (ImGui::CollapsingHeader("Scene", nullptr)) {
                 if (ImGui::CollapsingHeader("Spheres", nullptr)) {
-                    for (int i = 0; i < (int)scene.spheres.size(); ++i) {
+                    for (int i = 0; i < (int)spheres.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Shapes::Sphere &sphere = scene.spheres[i];
+                        Shapes::Sphere &sphere = *spheres[i];
                         ImGui::Text("Sphere %d:", i);
                         if (ImGui::InputFloat("Radius", &sphere.radius)) {
                             sphere.radiusSquared = sphere.radius * sphere.radius;
@@ -90,10 +98,10 @@ int main() {
                 }
 
                 if (ImGui::CollapsingHeader("Triangles", nullptr)) {
-                    for (int i = 0; i < (int)scene.triangles.size(); ++i) {
+                    for (int i = 0; i < (int)triangles.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Shapes::Triangle &triangle = scene.triangles[i];
+                        Shapes::Triangle &triangle = *triangles[i];
                         ImGui::Text("Triangle %d:", i);
                         ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]));
                         ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]));

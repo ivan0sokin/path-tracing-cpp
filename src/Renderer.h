@@ -6,8 +6,9 @@
 #include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
-
 #include "math/Math.h"
+#include "AccelerationStructure.h"
+#include "Material.h"
 
 #include <functional>
 
@@ -20,6 +21,8 @@ public:
     ~Renderer() noexcept;
 
     void Render(const Camera &camera, const Scene &scene) noexcept;
+
+    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, const std::vector<Material> &materials) noexcept;
 
     constexpr void Accumulate() noexcept {
         m_Accumulate = true;
@@ -75,13 +78,13 @@ public:
     }
 
 private:
-    Math::Vector4f PixelProgram(int x, int y) const noexcept;
+    Math::Vector4f PixelProgram(int u, int j) const noexcept;
 
-    Math::Vector3f Li(const Ray &ray, const Math::Vector3f &throughput = Math::Vector3f(1.f), int depth = 0) const noexcept;
+    Math::Vector4f AcceleratedPixelProgram(int i, int j) const noexcept;
 
     HitPayload TraceRay(const Ray &ray) const noexcept;
 
-    HitPayload ClosestHit(const Ray &ray, float t, int objectIndex, int polygonIndex, const Math::Vector3f &worldNormal) const noexcept;
+    HitPayload AcceleratedTraceRay(const Ray &ray) const noexcept;
 
     HitPayload Miss(const Ray &ray) const noexcept;
 
@@ -100,6 +103,8 @@ private:
 
     const Camera *m_Camera = nullptr;
     const Scene *m_Scene = nullptr;
+    const AccelerationStructure *m_AccelerationStructure = nullptr;
+    std::vector<Material> m_Materials;
 
     bool m_Accumulate = false;
     Math::Vector4f *m_AccumulationData = nullptr;

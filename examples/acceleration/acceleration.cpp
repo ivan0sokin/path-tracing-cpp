@@ -1,13 +1,15 @@
 #include <imgui.h>
 #include <Application.h>
 #include <Renderer.h>
-
-#include <hittable/Triangle.h>
-#include <hittable/Sphere.h>
 #include <math/Math.h>
+#include <hittable/Triangle.h>
+#include <hittable/Box.h>
+#include <hittable/Sphere.h>
 
-#include <algorithm>
+#include <AccelerationStructure.h>
+
 #include <chrono>
+#include <algorithm>
 
 #define dbg(msg) fprintf(stdout, (msg));
 
@@ -23,9 +25,14 @@ int main() {
     Renderer renderer(1580, 720);
     // renderer.OnRayMiss([](const Ray&){ return Math::Vector3f(0.1f, 0.2f, 0.5f);});
 
-    std::vector<Shapes::Triangle*> triangles;
-
     Scene scene;
+
+    std::vector<Shapes::Sphere*> spheres;
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f{-100.f, 300.f, -455.f}, 100.f, 4));
+
+    scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
+
+    std::vector<Shapes::Triangle*> triangles;
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0));
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0)); // left
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, 1));
@@ -36,16 +43,19 @@ int main() {
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, 1)); // up
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 2));
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{0.f, 0.f, 0.f}, 2)); // right
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, 3));
+    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f -100.f}, 3));
     triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, 3)); // top light
 
     scene.objects.insert(scene.objects.cend(), triangles.cbegin(), triangles.cend());
 
-    std::vector<Shapes::Sphere*> spheres;
+    std::vector<Shapes::Box*> boxes;
 
-    spheres.push_back(new Shapes::Sphere(Math::Vector3f{-400.0, 50.5, -400.5}, 100.f, 4));
+    boxes.push_back(new Shapes::Box(Math::Vector3f{-130.f, 0.f, -65.f}, Math::Vector3f{-295.f, 165.f, -230.f}, 1));
+    boxes.push_back(new Shapes::Box(Math::Vector3f{-265.f, 0.f, -295.f}, Math::Vector3f{-430.f, 330.f, -460.f}, 1));
 
-    scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
+    scene.objects.insert(scene.objects.cend(), boxes.cbegin(), boxes.cend());
+
+    AccelerationStructure accelerationStructure(scene.objects);
 
     Material green;
     green.albedo = {0.12f, 0.45f, 0.15f};
@@ -80,6 +90,8 @@ int main() {
     int rayDepth = renderer.GetMaxRayDepth();
     int usedThreads = renderer.GetUsedThreadCount();
     float gamma = renderer.GetGamma();
+
+    bool accelerate = false;
 
     app.SetOnUpdate([&](){
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -134,14 +146,14 @@ int main() {
                     for (int i = 0; i < (int)spheres.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Shapes::Sphere &sphere = *spheres[i];
+                        Shapes::Sphere *sphere = spheres[i];
                         ImGui::Text("Sphere %d:", i);
-                        if (ImGui::InputFloat("Radius", &sphere.radius)) {
-                            sphere.radiusSquared = sphere.radius * sphere.radius;
-                            sphere.inverseRadius = 1.f / sphere.inverseRadius;
+                        if (ImGui::InputFloat("Radius", &sphere->radius)) {
+                            sphere->radiusSquared = sphere->radius * sphere->radius;
+                            sphere->inverseRadius = 1.f / sphere->inverseRadius;
                         }
-                        ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center));
-                        ImGui::InputInt("Material index", &sphere.materialIndex);
+                        ImGui::InputFloat3("Position", Math::ValuePointer(sphere->center));
+                        ImGui::InputInt("Material index", &sphere->materialIndex);
 
                         ImGui::PopID();
                     }
@@ -151,12 +163,23 @@ int main() {
                     for (int i = 0; i < (int)triangles.size(); ++i) {
                         ImGui::PushID(i);
 
-                        Shapes::Triangle &triangle = *triangles[i];
+                        Shapes::Triangle *triangle = triangles[i];
                         ImGui::Text("Triangle %d:", i);
-                        ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]));
-                        ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]));
-                        ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]));
-                        ImGui::InputInt("Material index", &triangle.materialIndex);
+                        ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle->vertices[0]));
+                        ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle->vertices[1]));
+                        ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle->vertices[2]));
+                        ImGui::InputInt("Material index", &triangle->materialIndex);
+
+                        ImGui::PopID();
+                    }
+                }
+
+                if (ImGui::CollapsingHeader("Boxes", nullptr)) {
+                    for (int i = 0; i < (int)boxes.size(); ++i) {
+                        ImGui::PushID(i);
+
+                        Shapes::Box *box = boxes[i];
+                        ImGui::InputInt("Material index", &box->materialIndex);
 
                         ImGui::PopID();
                     }
@@ -190,6 +213,10 @@ int main() {
                 }
             }
 
+            if (ImGui::RadioButton("Accelerate", accelerate)) {
+                accelerate = !accelerate;
+            }
+
             if (ImGui::InputInt("Used threads", &usedThreads)) {
                 renderer.SetUsedThreadCount(usedThreads);
                 usedThreads = renderer.GetUsedThreadCount();
@@ -209,7 +236,11 @@ int main() {
                 camera.ComputeRayDirections();
 
                 auto t1 = std::chrono::high_resolution_clock::now();
-                renderer.Render(camera, scene);
+                if (accelerate) {
+                    renderer.Render(camera, accelerationStructure, scene.materials);
+                } else {
+                    renderer.Render(camera, scene);
+                }
                 auto t2 = std::chrono::high_resolution_clock::now();
                 
                 lastRenderTime = static_cast<std::chrono::duration<float, std::milli>>(t2 - t1).count();

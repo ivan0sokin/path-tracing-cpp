@@ -15,7 +15,6 @@ namespace Math {
         template<typename T> constexpr static T InverseHalfCircumferenceInRadians = InversePi<T>;
     
         template<typename T> constexpr static T Epsilon = std::numeric_limits<T>::epsilon();
-        template<typename T> constexpr static T Max = std::numeric_limits<T>::max();
         template<typename T> constexpr static T Infinity = std::numeric_limits<T>::infinity();
     }
 }
