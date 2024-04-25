@@ -21,13 +21,14 @@ int main() {
     Material greenColor;
     greenColor.albedo = Math::Vector3f(0.1f, 0.5f, 0.7f);
 
+    scene.materials.assign({redColor, greenColor});
+
     std::vector<Shapes::Sphere*> spheres;
 
-    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -0.5f, 0.f), 0.5f, 0));
-    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, 1));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -0.5f, 0.f), 0.5f, scene.materials[0]));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f(0.f, -1001.f, 0.f), 1000.f, scene.materials[1]));
     
     scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
-    scene.materials.assign({redColor, greenColor});
 
     bool accumulate = false;
     float lastRenderTime = 0.f;

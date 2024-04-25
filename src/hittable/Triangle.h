@@ -3,7 +3,7 @@
 
 #include "../math/Math.h"
 #include "HittableObject.h"
-#include "AABB.h"
+#include "../AABB.h"
 #include "../HitPayload.h"
 
 namespace Shapes {
@@ -52,7 +52,7 @@ namespace Shapes {
 
             payload.t = t;
             payload.normal = orientedNormal;
-            payload.object = this;
+            payload.materialIndex = materialIndex;
         }
 
         inline int GetMaterialIndex() const noexcept override {
@@ -60,8 +60,8 @@ namespace Shapes {
         }
 
         inline AABB GetBoundingBox() const noexcept override {
-            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.001f,
-                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.001f);
+            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.1f,
+                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.1f);
         }
     };
 }

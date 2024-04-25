@@ -1,12 +1,10 @@
 #ifndef _HITTABLE_OBJECT_H
 #define _HITTABLE_OBJECT_H
 
+#include "../HitPayload.h"
 #include "../math/Math.h"
 #include "../Ray.h"
 #include "../AABB.h"
-// #include "../HitPayload.h"
-
-struct HitPayload;
 
 class HittableObject {
 public:

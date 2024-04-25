@@ -9,11 +9,10 @@ struct Material {
     float specular = 0.f;
     float roughness = 1.f;
 
-    Math::Vector3f emissionColor{0.f, 0.f, 0.f};
     float emissionPower = 0.f;
 
     constexpr Math::Vector3f GetEmission() const noexcept {
-        return emissionColor * emissionPower;
+        return albedo * emissionPower;
     }
 };
 

@@ -1,8 +1,8 @@
 #include "Camera.h"
 #include "Utilities.hpp"
 
-Camera::Camera(int viewportWidth, int viewportHeight, const Math::Vector3f &position, const Math::Vector3f &target, float verticalFovInRadians, const Math::Vector3f &up) noexcept :
-    m_ViewportWidth(viewportWidth), m_ViewportHeight(viewportHeight), m_Position(position), m_Target(target), m_VerticalFovInRadians(verticalFovInRadians), m_Up(up) {
+Camera::Camera(int viewportWidth, int viewportHeight, const Math::Vector3f &position, const Math::Vector3f &target, float verticalFovInDegrees, const Math::Vector3f &up) noexcept :
+    m_ViewportWidth(viewportWidth), m_ViewportHeight(viewportHeight), m_Position(position), m_Target(target), m_VerticalFovInDegrees(verticalFovInDegrees), m_Up(up) {
     m_RayDirections = new Math::Vector3f[m_ViewportWidth * m_ViewportHeight];
     ComputeRayDirections();
 }
@@ -24,9 +24,11 @@ void Camera::OnViewportResize(int viewportWidth, int viewportHeight) noexcept {
 }
 
 void Camera::ComputeRayDirections() noexcept {
+    float verticalFovInRadians = Math::ToRadians(m_VerticalFovInDegrees);
+
     Math::Vector3f forward = m_Target - m_Position;
     float focalLength = Math::Length(forward);
-    float viewportWorldHeight = 2.f * Math::Tan(m_VerticalFovInRadians * 0.5f) * focalLength;
+    float viewportWorldHeight = 2.f * Math::Tan(verticalFovInRadians * 0.5f) * focalLength;
     float viewportWorldWidth = (viewportWorldHeight * m_ViewportWidth) / m_ViewportHeight;
 
     Math::Vector3f w = Math::Normalize(forward);  

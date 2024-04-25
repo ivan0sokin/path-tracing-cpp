@@ -60,9 +60,10 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
+void Renderer::Render(const Camera &camera, std::span<HittableObject*> objects, std::span<Material> materials) noexcept {
     m_Camera = &camera;
-    m_Scene = &scene;
+    m_Objects = objects;
+    m_Materials = materials;
 
     if (!m_Accumulate) {
         m_FrameIndex = 1;
@@ -109,7 +110,7 @@ void Renderer::Render(const Camera &camera, const Scene &scene) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, const std::vector<Material> &materials) noexcept {
+void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<Material> materials) noexcept {
     m_Camera = &camera;
     m_AccelerationStructure = &accelerationStructure;
     m_Materials = materials;
@@ -165,7 +166,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
 
     Math::Vector3f light(0.f), throughput(1.f);
-    for (int i = 0; i < m_MaxRayDepth; ++i) {
+    for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
         
         if (payload.t < 0.f) {
@@ -173,7 +174,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             break;
         }
 
-        const Material &material = m_Scene->materials[payload.object->GetMaterialIndex()];
+        const Material &material = m_Materials[payload.materialIndex];
         Math::Vector3f emission = material.GetEmission();
 
         light += emission * throughput;
@@ -266,7 +267,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
 
     Math::Vector3f light(0.f), throughput(1.f);
-    for (int i = 0; i < m_MaxRayDepth; ++i) {
+    for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = AcceleratedTraceRay(ray);
         
         if (payload.t < 0.f) {
@@ -274,7 +275,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             break;
         }
 
-        const Material &material = m_Materials.at(payload.object->GetMaterialIndex());
+        const Material &material = m_Materials[payload.materialIndex];
         Math::Vector3f emission = material.GetEmission();
 
         light += emission * throughput;
@@ -297,14 +298,14 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.object = nullptr;
+    payload.materialIndex = -1;
 
-    int objectCount = (int)m_Scene->objects.size();
+    int objectCount = (int)m_Objects.size();
     for (int i = 0; i < objectCount; ++i) {
-        m_Scene->objects[i]->Hit(ray, 0.001f, Math::Min(Math::Constants::Infinity<float>, payload.t), payload);
+        m_Objects[i]->Hit(ray, 0.001f, Math::Min(Math::Constants::Infinity<float>, payload.t), payload);
     }
 
-    if (payload.object == nullptr) {
+    if (payload.materialIndex == -1) {
         return Miss(ray);
     }
 
@@ -317,11 +318,11 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.object = nullptr;
+    payload.materialIndex = -1;
 
     m_AccelerationStructure->Hit(ray, 0.001f, Math::Constants::Infinity<float>, payload);
 
-    if (payload.object == nullptr) {
+    if (payload.materialIndex == -1) {
         return Miss(ray);
     }
 

@@ -1,13 +1,13 @@
 #include "AccelerationStructure.h"
 #include "Utilities.hpp"
 
-AccelerationStructure::AccelerationStructure(std::vector<HittableObject*> &objects) noexcept {
-    m_Nodes = new BVHNode[objects.size() * 4];
-    Build(objects, 0, 0, (int)objects.size());
+AccelerationStructure::AccelerationStructure(std::vector<const HittableObject*> &objects) noexcept {
+    // m_Root = Build(objects, 0, (int)objects.size());
+    m_Root = BVHNode::MakeHierarchy(objects, 0, (int)objects.size());
 }
 
-void AccelerationStructure::Build(std::vector<HittableObject*> &objects, int index, int low, int high) noexcept {
-    AABB aabb = AABB::Empty;
+BVHNode* AccelerationStructure::Build(std::vector<HittableObject*> &objects, int low, int high) noexcept {
+    AABB aabb = AABB::Empty();
     for (int i = low; i < high; ++i) {
         aabb = AABB(aabb, objects[i]->GetBoundingBox());
     }
@@ -25,38 +25,21 @@ void AccelerationStructure::Build(std::vector<HittableObject*> &objects, int ind
         longestAxisLength = aabb.max.z - aabb.min.z;
     }
     
-    auto comparator = m_Comparators[longestAxisIndex];
+    auto comparator = BVHNode::c_Comparators[longestAxisIndex];
 
     if (low + 1 == high) {
-        m_Nodes[index] = BVHNode(objects[low]);
-        return;
+        // return objects[low];
     }
 
     std::sort(objects.begin() + low, objects.begin() + high, comparator);
 
     int mid = (low + high) / 2;
-    Build(objects, 2 * index + 1, low, mid);
-    Build(objects, 2 * index + 2, mid, high);
+    BVHNode *left = Build(objects, low, mid);
+    BVHNode *right = Build(objects, mid, high);
 
-    m_Nodes[index] = BVHNode(m_Nodes[2 * index + 1], m_Nodes[2 * index + 2]);
+    return new BVHNode(left, right);
 }
 
 void AccelerationStructure::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
-    HitBVHNode(0, ray, tMin, tMax, payload);
-}
-
-void AccelerationStructure::HitBVHNode(int index, const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
-    const BVHNode &node = m_Nodes[index];
-    
-    if (!node.aabb.IntersectsRay(ray, tMin, tMax)) {
-        return;
-    }
-
-    if (node.IsTerminating()) {
-        node.object->Hit(ray, tMin, tMax, payload);
-        return;
-    }
-
-    HitBVHNode(2 * index + 1, ray, tMin, tMax, payload);
-    HitBVHNode(2 * index + 2, ray, tMin, Math::Min(tMax, payload.t), payload);
+    m_Root->Hit(ray, tMin, tMax, payload);
 }

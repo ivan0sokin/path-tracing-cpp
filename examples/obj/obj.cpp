@@ -5,6 +5,9 @@
 #include <hittable/Triangle.h>
 #include <hittable/Box.h>
 #include <hittable/Sphere.h>
+#include <hittable/Mesh.h>
+
+#include <AccelerationStructure.h>
 
 #include <chrono>
 #include <algorithm>
@@ -14,44 +17,54 @@
 int main() {
     Application app(1580, 720, "Cornell box");
 
-    Math::Vector3f position(-277.5f, 277.5f, 800.f);
-    Math::Vector3f target(-277.5f, 277.5f, 0.f);
+    // Math::Vector3f position(-277.5f, 277.5f, 800.f);
+    Math::Vector3f position(0.f, 2.f, -10.f);
+    // Math::Vector3f target(-277.5f, 277.5f, 0.f);
+    Math::Vector3f target(0.f, 2.f, -1.f);
     float verticalFovInDegrees = 40.f;
     Math::Vector3f up(0.f, 1.f, 0.f);
     Camera camera(1580, 720, position, target, Math::ToRadians(verticalFovInDegrees), up);
     
     Renderer renderer(1580, 720);
-    // renderer.OnRayMiss([](const Ray&){ return Math::Vector3f(0.1f, 0.2f, 0.5f);});
+    renderer.OnRayMiss([](const Ray&){ return Math::Vector3f(0.1f, 0.2f, 0.5f);});
 
     Scene scene;
 
     std::vector<Shapes::Sphere*> spheres;
-    spheres.push_back(new Shapes::Sphere(Math::Vector3f{-100.f, 300.f, -455.f}, 100.f, 4));
+    spheres.push_back(new Shapes::Sphere(Math::Vector3f{0.f, -1000.f, 0.f}, 1000.f, 1));
 
     scene.objects.insert(scene.objects.cend(), spheres.cbegin(), spheres.cend());
 
     std::vector<Shapes::Triangle*> triangles;
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0)); // left
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, 1));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, 0.f}, 1)); // bottom
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 1)); // forward
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, 1)); // up
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 2));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{0.f, 0.f, 0.f}, 2)); // right
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f -100.f}, 3));
-    triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, 3)); // top light
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0)); // left
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, 1));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, 0.f}, 1)); // bottom
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 1)); // forward
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, 1)); // up
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 2));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{0.f, 0.f, 0.f}, 2)); // right
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f -100.f}, 3));
+    // triangles.push_back(new Shapes::Triangle(Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, 3)); // top light
 
     scene.objects.insert(scene.objects.cend(), triangles.cbegin(), triangles.cend());
 
     std::vector<Shapes::Box*> boxes;
 
-    boxes.push_back(new Shapes::Box(Math::Vector3f{-130.f, 0.f, -65.f}, Math::Vector3f{-295.f, 165.f, -230.f}, 1));
-    boxes.push_back(new Shapes::Box(Math::Vector3f{-265.f, 0.f, -295.f}, Math::Vector3f{-430.f, 330.f, -460.f}, 1));
+    // boxes.push_back(new Shapes::Box(Math::Vector3f{-130.f, 0.f, -65.f}, Math::Vector3f{-295.f, 165.f, -230.f}, 1));
+    // boxes.push_back(new Shapes::Box(Math::Vector3f{-265.f, 0.f, -295.f}, Math::Vector3f{-430.f, 330.f, -460.f}, 1));
 
     scene.objects.insert(scene.objects.cend(), boxes.cbegin(), boxes.cend());
+
+    std::vector<Mesh*> meshes;
+    meshes.push_back(new Mesh("assets/teapot.obj", "materials"));
+    // meshes.push_back(new Mesh("assets/cornell_box.obj", "materials"));
+
+    scene.objects.insert(scene.objects.cend(), meshes.cbegin(), meshes.cend());
+
+    AccelerationStructure accelerationStructure(scene.objects);
 
     Material green;
     green.albedo = {0.12f, 0.45f, 0.15f};
@@ -81,11 +94,13 @@ int main() {
     float totalRenderTime = 0.f;
 
     char *filename = new char[128];
-    
+    memset(filename, 0, sizeof(char) * sizeof(filename));
 
     int rayDepth = renderer.GetMaxRayDepth();
     int usedThreads = renderer.GetUsedThreadCount();
     float gamma = renderer.GetGamma();
+
+    bool accelerate = false;
 
     app.SetOnUpdate([&](){
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -207,6 +222,10 @@ int main() {
                 }
             }
 
+            if (ImGui::RadioButton("Accelerate", accelerate)) {
+                accelerate = !accelerate;
+            }
+
             if (ImGui::InputInt("Used threads", &usedThreads)) {
                 renderer.SetUsedThreadCount(usedThreads);
                 usedThreads = renderer.GetUsedThreadCount();
@@ -226,7 +245,11 @@ int main() {
                 camera.ComputeRayDirections();
 
                 auto t1 = std::chrono::high_resolution_clock::now();
-                renderer.Render(camera, scene);
+                if (accelerate) {
+                    renderer.Render(camera, accelerationStructure, scene.materials);
+                } else {
+                    renderer.Render(camera, scene);
+                }
                 auto t2 = std::chrono::high_resolution_clock::now();
                 
                 lastRenderTime = static_cast<std::chrono::duration<float, std::milli>>(t2 - t1).count();

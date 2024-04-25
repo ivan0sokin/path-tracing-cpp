@@ -1,6 +1,7 @@
 #ifndef _SPHERE_H
 #define _SPHERE_H
 
+#include "../Material.h"
 #include "HittableObject.h"
 #include "../math/Math.h"
 #include "../AABB.h"
@@ -40,7 +41,7 @@ namespace Shapes {
             
             payload.t = t;
             payload.normal = (ray.origin + ray.direction * t - center) * inverseRadius;
-            payload.object = this;
+            payload.materialIndex = materialIndex;
         }
 
         inline int GetMaterialIndex() const noexcept override {

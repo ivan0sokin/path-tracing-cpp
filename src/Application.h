@@ -1,36 +1,45 @@
 #ifndef _APPLICATION_H
 #define _APPLICATION_H
 
-#include <functional>
-#include <string>
+#include "../glfw-3.4/include/GLFW/glfw3.h"
+
+#include "Scene.h"
+#include "Camera.h"
+#include "AccelerationStructure.h"
+#include "Renderer.h"
+
+#include <cstring>
 
 class Application {
 public:
-    Application(int windowWidth, int windowHeight, const char *windowTitle) noexcept :
-        m_WindowWidth(windowWidth), m_WindowHeight(windowHeight), m_WindowTitle(windowTitle) {}
-
-    inline void SetOnUpdate(std::function<void()> onUpdate) noexcept {
-        m_OnUpdate = onUpdate;
-    }
+    Application(int windowWidth, int windowHeight) noexcept;
 
     int Run() noexcept;
 
-    inline  int GetWindowWidth() const {
-        return m_WindowWidth;
-    }
+private:
+    void MainLoop() noexcept;
 
-    inline  int GetWindowHeight() const {
-        return m_WindowHeight;
-    }
+    void OnUpdate() noexcept; 
 
 private:
-    void OnWindowResize(int width, int height) noexcept;
+    int m_InitialWindowWidth, m_InitialWindowHeight;
+    int m_LastViewportWidth, m_LastViewportHeight;
+    GLFWwindow *m_Window = nullptr;
 
-private:
-    int m_WindowWidth, m_WindowHeight;
-    std::string m_WindowTitle;
+    float m_TotalRenderTime;
+    float m_LastRenderTime;
 
-    std::function<void()> m_OnUpdate = [](){};
+    char *m_SaveImageFilePath;
+
+    Scene m_Scene;
+    Camera m_Camera;
+    AccelerationStructure m_AccelerationStructure;
+    Renderer m_Renderer;
+
+    std::vector<HittableObject*> m_Objects;
+
+    constexpr static const char *c_WindowTitle = "Path Tracing";
+    constexpr static int c_SaveImageFilePathSize = 128;
 };
 
 #endif

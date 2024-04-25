@@ -11,11 +11,11 @@ namespace Shapes {
     class Box : public HittableObject {
     public:
         Triangle triangles[12];
-        int materialIndex;
         AABB aabb;
+        int materialIndex;
 
-        inline Box(const Math::Vector3f &a, const Math::Vector3f &b, int materialIndex) noexcept :
-            materialIndex(materialIndex), aabb(a, b) {            
+        inline Box(const Math::Vector3f &a, const Math::Vector3f &b, int materialIndex) noexcept : 
+            aabb(a, b), materialIndex(materialIndex) {            
             Math::Vector3f min(Math::Min(a, b));
             Math::Vector3f max(Math::Max(a, b));
 
@@ -36,9 +36,6 @@ namespace Shapes {
         inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             for (int i = 0; i < 12; ++i) {
                 triangles[i].Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
-                if (payload.object == &triangles[i]) {
-                    payload.object = this;
-                }
             }
         }
 

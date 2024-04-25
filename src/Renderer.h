@@ -11,6 +11,7 @@
 #include "Material.h"
 
 #include <functional>
+#include <span>
 
 class Renderer {
 public:
@@ -20,23 +21,23 @@ public:
 
     ~Renderer() noexcept;
 
-    void Render(const Camera &camera, const Scene &scene) noexcept;
+    void Render(const Camera &camera, std::span<HittableObject*> objects, std::span<Material> materials) noexcept;
 
-    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, const std::vector<Material> &materials) noexcept;
+    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<Material> materials) noexcept;
 
-    constexpr void Accumulate() noexcept {
-        m_Accumulate = true;
+    constexpr bool& Accumulate() noexcept {
+        return m_Accumulate;
     }
 
-    constexpr void DontAccumulate() noexcept {
-        m_Accumulate = false;
+    constexpr bool& Accelerate() noexcept {
+        return m_Accelerate;
     }
 
     constexpr int GetFrameIndex() const noexcept {
         return m_FrameIndex;
     }
 
-    Image* GetImage() const noexcept {
+    constexpr Image* GetImage() const noexcept {
         return m_Image;
     }
 
@@ -57,24 +58,20 @@ public:
         m_LinesPerThread = (m_Height + m_UsedThreads - 1) / m_UsedThreads;
     }
 
+    constexpr int& UsedThreadCount() noexcept {
+        return m_UsedThreads;
+    }
+
     inline void OnRayMiss(std::function<Math::Vector3f(const Ray&)> onRayMiss) noexcept {
         m_OnRayMiss = onRayMiss;
     }
 
-    constexpr int GetMaxRayDepth() const noexcept {
-        return m_MaxRayDepth;
+    constexpr int& RayDepth() noexcept {
+        return m_RayDepth;
     }
 
-    inline void SetMaxRayDepth(int maxRayDepth) noexcept {
-        m_MaxRayDepth = maxRayDepth;
-    }
-
-    constexpr float GetGamma() const noexcept {
+    constexpr float& Gamma() noexcept {
         return m_Gamma;
-    }
-
-    inline void SetGamma(float gamma) noexcept {
-        m_Gamma = gamma;
     }
 
 private:
@@ -99,16 +96,18 @@ private:
     int m_UsedThreads;
     int m_LinesPerThread;
 
-    int m_MaxRayDepth = 5;
+    int m_RayDepth = 5;
 
     const Camera *m_Camera = nullptr;
-    const Scene *m_Scene = nullptr;
+    std::span<HittableObject*> m_Objects;
     const AccelerationStructure *m_AccelerationStructure = nullptr;
-    std::vector<Material> m_Materials;
+    std::span<Material> m_Materials;
 
     bool m_Accumulate = false;
     Math::Vector4f *m_AccumulationData = nullptr;
     int m_FrameIndex = 1;
+
+    bool m_Accelerate = false;
 
     float m_Gamma = 2.f;
 };
