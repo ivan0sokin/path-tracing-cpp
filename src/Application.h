@@ -46,6 +46,7 @@ private:
     std::vector<HittableObject*> m_Objects;
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
+    constexpr static const char *c_DefaultScenePath = "assets/default.scn";
     constexpr static int c_AnyInputFileSize = 128;
 };
 

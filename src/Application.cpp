@@ -67,6 +67,8 @@ int Application::Run() noexcept {
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    LoadSceneFromFile(c_DefaultScenePath);
+
     MainLoop();
 
     ImGui_ImplOpenGL3_Shutdown();
