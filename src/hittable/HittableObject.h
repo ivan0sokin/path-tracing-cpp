@@ -17,9 +17,11 @@ public:
 
     virtual void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;
 
-    virtual int GetMaterialIndex() const noexcept = 0;
+    virtual Math::Vector3f GetCentroid() const noexcept = 0;
 
     virtual AABB GetBoundingBox() const noexcept = 0;
 };
+
+using HittableObjectPtr = HittableObject*;
 
 #endif

@@ -8,15 +8,18 @@
 #include "../HitPayload.h"
 
 namespace Shapes {
-    struct Sphere : public HittableObject {
+    class Sphere : public HittableObject {
+    public:
         Math::Vector3f center;
         float radius, radiusSquared, inverseRadius;
         int materialIndex;
 
+        constexpr Sphere() noexcept = default;
+
         constexpr Sphere(const Math::Vector3f &center, float radius, int materialIndex) noexcept :
             center(center), radius(radius), radiusSquared(radius * radius), inverseRadius(1.f / radius), materialIndex(materialIndex) {}
 
-        inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+        constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             Math::Vector3f centerToOrigin = ray.origin - center;
         
             float a = Math::Dot(ray.direction, ray.direction);
@@ -44,11 +47,11 @@ namespace Shapes {
             payload.materialIndex = materialIndex;
         }
 
-        inline int GetMaterialIndex() const noexcept override {
-            return materialIndex;
+        constexpr Math::Vector3f GetCentroid() const noexcept override {
+            return center;
         }
 
-        inline AABB GetBoundingBox() const noexcept override {
+        constexpr AABB GetBoundingBox() const noexcept override {
             return AABB(center - radius, center + radius);
         }
     };

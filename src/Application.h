@@ -26,6 +26,8 @@ private:
 
     void SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept;
 
+    void UpdateAccelerationStructure() noexcept;
+
     void UpdateObjects() noexcept;
 
 private:
@@ -44,6 +46,10 @@ private:
     Renderer m_Renderer;
 
     std::vector<HittableObject*> m_Objects;
+
+    Shapes::Sphere m_AddSphere;
+    Shapes::Triangle m_AddTriangle;
+    Shapes::Box m_AddBox;
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
     constexpr static const char *c_DefaultScenePath = "assets/default.scn";

@@ -19,12 +19,19 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     m_LastViewportWidth(-1), m_LastViewportHeight(-1),
     m_Renderer(windowWidth, windowHeight),
     m_TotalRenderTime(0.f), m_LastRenderTime(0.f) {
+
     m_SaveImageFilePath = new char[c_AnyInputFileSize];
     m_SceneFilePath = new char[c_AnyInputFileSize];
     memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
     memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
 
+    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, 0);
+    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), 0);
+    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), 0);
+
     m_Scene.camera = Camera(windowWidth, windowHeight);
+
+    LoadSceneFromFile(c_DefaultScenePath);
 }
 
 int Application::Run() noexcept {
@@ -66,8 +73,6 @@ int Application::Run() noexcept {
 
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
-
-    LoadSceneFromFile(c_DefaultScenePath);
 
     MainLoop();
 
@@ -156,7 +161,6 @@ void Application::OnUpdate() noexcept {
 
             m_Renderer.OnResize(m_LastViewportWidth, m_LastViewportHeight);
         }
-    
 
         Image *image = m_Renderer.GetImage();
         if (image != nullptr) {
@@ -192,6 +196,9 @@ void Application::OnUpdate() noexcept {
         }
 
         if (ImGui::CollapsingHeader("Scene", nullptr)) {
+            bool hasAnyObjectChange = false;
+            bool hasAnyGeometryChange = false;
+
             if (ImGui::CollapsingHeader("Spheres", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.spheres.size(); ++i) {
                     ImGui::PushID(i);
@@ -199,15 +206,36 @@ void Application::OnUpdate() noexcept {
                     Shapes::Sphere &sphere = m_Scene.spheres[i];
                     ImGui::Text("Sphere %d:", i);
 
-                    if (ImGui::InputFloat("Radius", &sphere.radius)) {
+                    if (ImGui::InputFloat("Radius", Math::ValuePointer(sphere.radius))) {
                         sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.materialIndex);
+                        hasAnyGeometryChange = true;
                     }
 
-                    ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center));
+                    if (ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center))) {
+                        hasAnyGeometryChange = true;
+                    }
+
                     ImGui::InputInt("Material index", Math::ValuePointer(sphere.materialIndex));
 
                     ImGui::PopID();
                 }
+
+                ImGui::PushID(m_Scene.spheres.size());
+
+                if (ImGui::Button("Add")) {
+                    m_Scene.spheres.push_back(m_AddSphere);
+                    hasAnyObjectChange = true;
+                    hasAnyGeometryChange = true;
+                }
+                
+                if (ImGui::InputFloat("Radius", Math::ValuePointer(m_AddSphere.radius))) {
+                    m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.materialIndex);
+                }
+
+                ImGui::InputFloat3("Position", Math::ValuePointer(m_AddSphere.center));
+                ImGui::InputInt("Material index", Math::ValuePointer(m_AddSphere.materialIndex));
+
+                ImGui::PopID();
             }
 
             if (ImGui::CollapsingHeader("Triangles", nullptr)) {
@@ -219,18 +247,43 @@ void Application::OnUpdate() noexcept {
                     
                     if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]))) {
                         triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        hasAnyGeometryChange = true;
                     }
                     if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]))) {
                         triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        hasAnyGeometryChange = true;
                     }
                     if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]))) {
                         triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        hasAnyGeometryChange = true;
                     }
 
                     ImGui::InputInt("Material index", Math::ValuePointer(triangle.materialIndex));
 
                     ImGui::PopID();
                 }
+
+                ImGui::PushID(m_Scene.triangles.size());
+
+                if (ImGui::Button("Add")) {
+                    m_Scene.triangles.push_back(m_AddTriangle);
+                    hasAnyObjectChange = true;
+                    hasAnyGeometryChange = true;
+                }
+                
+                if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(m_AddTriangle.vertices[0]))) {
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                }
+                if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(m_AddTriangle.vertices[1]))) {
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                }
+                if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(m_AddTriangle.vertices[2]))) {
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                }
+
+                ImGui::InputInt("Material index", Math::ValuePointer(m_AddTriangle.materialIndex));
+
+                ImGui::PopID();
             }
 
             if (ImGui::CollapsingHeader("Boxes", nullptr)) {
@@ -238,10 +291,47 @@ void Application::OnUpdate() noexcept {
                     ImGui::PushID(i);
 
                     Shapes::Box &box = m_Scene.boxes[i];
+
+                    if (ImGui::InputFloat3("First corner", Math::ValuePointer(box.min))) {
+                        box = Shapes::Box(box.min, box.max, box.materialIndex);
+                        hasAnyGeometryChange = true;
+                    }
+
+                    if (ImGui::InputFloat3("Second corner", Math::ValuePointer(box.max))) {
+                        box = Shapes::Box(box.min, box.max, box.materialIndex);
+                        hasAnyGeometryChange = true;
+                    }
+
                     ImGui::InputInt("Material index", Math::ValuePointer(box.materialIndex));
 
                     ImGui::PopID();
                 }
+
+                ImGui::PushID(m_Scene.boxes.size());
+
+                if (ImGui::Button("Add")) {
+                    m_Scene.boxes.push_back(m_AddBox);
+                    hasAnyObjectChange = true;
+                }
+                
+                if (ImGui::InputFloat3("First corner", Math::ValuePointer(m_AddBox.min))) {
+                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.materialIndex);
+                }
+                if (ImGui::InputFloat3("Second corner", Math::ValuePointer(m_AddBox.max))) {
+                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.materialIndex);
+                }
+
+                ImGui::InputInt("Material index", Math::ValuePointer(m_AddBox.materialIndex));
+
+                ImGui::PopID();
+            }
+
+            if (hasAnyObjectChange) {
+                UpdateObjects();
+            }
+
+            if (hasAnyGeometryChange) {
+                m_AccelerationStructure.Update(m_Objects);
             }
         }
 
@@ -326,9 +416,8 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
         return;
     }
 
-    // update objects and acceleration structure
-
     UpdateObjects();
+    m_AccelerationStructure.Update(m_Objects);
 }
 
 void Application::SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept {

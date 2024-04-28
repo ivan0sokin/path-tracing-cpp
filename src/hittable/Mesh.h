@@ -13,9 +13,11 @@ public:
 
     void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override;
 
-    int GetMaterialIndex() const noexcept override;
-
     AABB GetBoundingBox() const noexcept override;
+
+    inline Math::Vector3f GetCentroid() const noexcept override {
+        return Math::Vector3f(0.f);
+    }
 
 private:
     BVHNode *MakeHierarchy() const noexcept;

@@ -24,7 +24,7 @@ namespace Shapes {
         constexpr Triangle(const std::array<Math::Vector3f, 3> &vertices, const Math::Vector3f &normal, int materialIndex) noexcept :
             vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), materialIndex(materialIndex) {}
 
-        inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+        constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             constexpr float epsilon = Math::Constants::Epsilon<float>;
 
             Math::Vector3f rayCrossEdge2 = Math::Cross(ray.direction, edges[1]);
@@ -60,13 +60,13 @@ namespace Shapes {
             payload.materialIndex = materialIndex;
         }
 
-        inline int GetMaterialIndex() const noexcept override {
-            return materialIndex;
+        constexpr Math::Vector3f GetCentroid() const noexcept override {
+            return (vertices[0] + vertices[1] + vertices[2]) * Math::Constants::OneThird<float>;
         }
 
-        inline AABB GetBoundingBox() const noexcept override {
-            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.1f,
-                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.1f);
+        constexpr AABB GetBoundingBox() const noexcept override {
+            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.001f,
+                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.001f);
         }
     };
 }

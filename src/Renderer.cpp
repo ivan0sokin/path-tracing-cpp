@@ -60,7 +60,7 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, std::span<const HittableObjectPointer> objects, std::span<const Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_Objects = objects;
     m_Materials = materials;
@@ -180,7 +180,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         light += emission * throughput;
 
         BSDF bsdf(material);
-        auto [direction, pdf] = bsdf.Sample(ray, payload, throughput);
+        auto direction = bsdf.Sample(ray, payload, throughput);
         
         // Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
         // float lightSize = 330.f;
@@ -188,7 +188,6 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         // Math::Vector3f randomPointOnLight = lightCenter + Math::Vector3f{lightSize, 0.f, 0.f} * Utilities::RandomFloatInNegativeHalfToHalf()
         //                                                 + Math::Vector3f{0.f, 0.f, lightSize} * Utilities::RandomFloatInNegativeHalfToHalf();
         
-
         ray.origin += ray.direction * payload.t;
         ray.direction = direction;
 
@@ -200,9 +199,9 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         // float lightArea = lightSize * lightSize;
         // float lightPdf = Math::Dot(toLight, toLight) / (lightCosine * lightArea);
 
-        if (pdf > Math::Constants::Epsilon<float>) {
-            throughput /= pdf;
-        }
+        // if (pdf > Math::Constants::Epsilon<float>) { // todo ! back
+            // throughput /= pdf;
+        // }
 
         // if (lightCosine > 0.0001f) {
         //     light += throughput * 1.f;
@@ -281,11 +280,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
         light += emission * throughput;
 
         BSDF bsdf(material);
-        auto [direction, pdf] = bsdf.Sample(ray, payload, throughput);
-
-        if (pdf > Math::Constants::Epsilon<float>) {
-            throughput /= pdf;
-        }
+        auto direction = bsdf.Sample(ray, payload, throughput);
 
         ray.origin += ray.direction * payload.t;
         ray.direction = direction;
@@ -302,7 +297,7 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
 
     int objectCount = (int)m_Objects.size();
     for (int i = 0; i < objectCount; ++i) {
-        m_Objects[i]->Hit(ray, 0.001f, Math::Min(Math::Constants::Infinity<float>, payload.t), payload);
+        m_Objects[i]->Hit(ray, 0.01f, Math::Min(payload.t, Math::Constants::Infinity<float>), payload);
     }
 
     if (payload.materialIndex == -1) {
@@ -320,7 +315,7 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     payload.normal = Math::Vector3f(0.f);
     payload.materialIndex = -1;
 
-    m_AccelerationStructure->Hit(ray, 0.001f, Math::Constants::Infinity<float>, payload);
+    m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload);
 
     if (payload.materialIndex == -1) {
         return Miss(ray);

@@ -14,8 +14,6 @@
 #include <span>
 
 class Renderer {
-private:
-    using HittableObjectPointer = HittableObject*;
 public:
     Renderer() = delete;
     
@@ -25,7 +23,7 @@ public:
 
     using typ_t = HittableObject*;
 
-    void Render(const Camera &camera, std::span<const HittableObjectPointer> objects, std::span<const Material> materials) noexcept;
+    void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Material> materials) noexcept;
 
     void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Material> materials) noexcept;
 
@@ -103,7 +101,7 @@ private:
     int m_RayDepth = 5;
 
     const Camera *m_Camera = nullptr;
-    std::span<const HittableObjectPointer> m_Objects;
+    std::span<const HittableObjectPtr> m_Objects;
     const AccelerationStructure *m_AccelerationStructure = nullptr;
     std::span<const Material> m_Materials;
 

@@ -15,8 +15,10 @@ namespace Shapes {
         AABB aabb;
         int materialIndex;
 
-        inline Box(const Math::Vector3f &a, const Math::Vector3f &b, int materialIndex) noexcept : 
-            aabb(a, b), materialIndex(materialIndex), min(Math::Min(a, b)), max(Math::Max(a, b)) {            
+        constexpr Box() noexcept = default;
+
+        constexpr Box(const Math::Vector3f &min, const Math::Vector3f &max, int materialIndex) noexcept : 
+            aabb(min, max), materialIndex(materialIndex), min(min), max(max) {            
             triangles[0] = Triangle({min.x, min.y, max.z}, {min.x, min.y, min.z}, {max.x, min.y, min.z}, materialIndex); // bottom
             triangles[1] = Triangle({max.x, min.y, min.z}, {max.x, min.y, max.z}, {min.x, min.y, max.z}, materialIndex);
             triangles[2] = Triangle({min.x, min.y, min.z}, {min.x, max.y, min.z}, {max.x, max.y, min.z}, materialIndex); // back
@@ -31,17 +33,17 @@ namespace Shapes {
             triangles[11] = Triangle({max.x, max.y, max.z}, {max.x, min.y, max.z}, {max.x, min.y, min.z}, materialIndex);
         }
 
-        inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+        constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             for (int i = 0; i < 12; ++i) {
                 triangles[i].Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
             }
         }
 
-        inline int GetMaterialIndex() const noexcept override {
-            return materialIndex;
+        constexpr Math::Vector3f GetCentroid() const noexcept override {
+            return (aabb.min + aabb.max) * 0.5f;
         }
 
-        inline AABB GetBoundingBox() const noexcept override {
+        constexpr AABB GetBoundingBox() const noexcept override {
             return aabb;
         }
     };

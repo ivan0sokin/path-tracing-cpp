@@ -192,10 +192,6 @@ BVHNode* Mesh::MakeHierarchy() const noexcept {
     return fuck(triangles, 0, (int)m_Triangles.size());
 }
 
-int Mesh::GetMaterialIndex() const noexcept {
-    return 0;
-}
-
 AABB Mesh::GetBoundingBox() const noexcept {
     return AABB(m_Min - 0.001f, m_Max + 0.001f);
 }

@@ -8,19 +8,19 @@
 #include "HitPayload.h"
 #include "BVHNode.h"
 
-#include <vector>
-#include <functional>
+#include <span>
 
 class AccelerationStructure {
 public:
-    constexpr AccelerationStructure() = default;
+    AccelerationStructure() noexcept;
 
-    AccelerationStructure(std::vector<const HittableObject*> &objects) noexcept;
+    AccelerationStructure(std::span<HittableObjectPtr> objects) noexcept;
+    
+    ~AccelerationStructure() noexcept;
+
+    void Update(std::span<HittableObjectPtr> objects) noexcept;
 
     void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept;
-
-private:
-    BVHNode* Build(std::vector<HittableObject*> &objects, int low, int high) noexcept;
 
 private:
     BVHNode *m_Root = nullptr;

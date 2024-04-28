@@ -1,7 +1,7 @@
 #include "BSDF.h"
 #include "Utilities.hpp"
 
-std::pair<Math::Vector3f, float> BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
+Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     float diffuseRatio = 0.5f * (1.f - m_Material->metallic);
     float specularRatio = 1.f - diffuseRatio;
 
@@ -127,11 +127,9 @@ std::pair<Math::Vector3f, float> BSDF::Sample(const Ray &ray, const HitPayload &
     Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;
     float totalPdf = diffuseRatio * diffusePdf + specularRatio * specularPdf;
 
-
     if (totalPdf > Math::Constants::Epsilon<float>) {
-        // throughput *= totalBrdf / totalPdf;
-        throughput *= totalBrdf;
+        throughput *= totalBrdf / totalPdf;
     }
 
-    return {reflectionDirection, totalPdf};
+    return reflectionDirection;
 }
