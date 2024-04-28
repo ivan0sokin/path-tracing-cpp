@@ -14,6 +14,8 @@
 #include <span>
 
 class Renderer {
+private:
+    using HittableObjectPointer = HittableObject*;
 public:
     Renderer() = delete;
     
@@ -21,9 +23,11 @@ public:
 
     ~Renderer() noexcept;
 
-    void Render(const Camera &camera, std::span<HittableObject*> objects, std::span<Material> materials) noexcept;
+    using typ_t = HittableObject*;
 
-    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<Material> materials) noexcept;
+    void Render(const Camera &camera, std::span<const HittableObjectPointer> objects, std::span<const Material> materials) noexcept;
+
+    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Material> materials) noexcept;
 
     constexpr bool& Accumulate() noexcept {
         return m_Accumulate;
@@ -99,9 +103,9 @@ private:
     int m_RayDepth = 5;
 
     const Camera *m_Camera = nullptr;
-    std::span<HittableObject*> m_Objects;
+    std::span<const HittableObjectPointer> m_Objects;
     const AccelerationStructure *m_AccelerationStructure = nullptr;
-    std::span<Material> m_Materials;
+    std::span<const Material> m_Materials;
 
     bool m_Accumulate = false;
     Math::Vector4f *m_AccumulationData = nullptr;

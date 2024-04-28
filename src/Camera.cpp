@@ -3,7 +3,7 @@
 
 Camera::Camera(int viewportWidth, int viewportHeight, const Math::Vector3f &position, const Math::Vector3f &target, float verticalFovInDegrees, const Math::Vector3f &up) noexcept :
     m_ViewportWidth(viewportWidth), m_ViewportHeight(viewportHeight), m_Position(position), m_Target(target), m_VerticalFovInDegrees(verticalFovInDegrees), m_Up(up) {
-    m_RayDirections = new Math::Vector3f[m_ViewportWidth * m_ViewportHeight];
+    m_RayDirections.resize(m_ViewportWidth * m_ViewportHeight);
     ComputeRayDirections();
 }
 
@@ -15,11 +15,7 @@ void Camera::OnViewportResize(int viewportWidth, int viewportHeight) noexcept {
     m_ViewportWidth = viewportWidth;
     m_ViewportHeight = viewportHeight;
 
-    if (m_RayDirections != nullptr) {
-        delete[] m_RayDirections;
-    }
-    m_RayDirections = new Math::Vector3f[m_ViewportWidth * m_ViewportHeight];
-
+    m_RayDirections.resize(m_ViewportWidth * m_ViewportHeight);
     ComputeRayDirections();
 }
 
@@ -45,11 +41,5 @@ void Camera::ComputeRayDirections() noexcept {
             float vScale = (float)(i + Utilities::RandomFloatInNegativeHalfToHalf()) / (m_ViewportHeight - 1);
             m_RayDirections[m_ViewportWidth * i + j] = Math::Normalize(leftUpper + horizontal * uScale + vertical * vScale);
         }
-    }
-}
-
-Camera::~Camera() noexcept {
-    if (m_RayDirections != nullptr) {
-        delete[] m_RayDirections;
     }
 }

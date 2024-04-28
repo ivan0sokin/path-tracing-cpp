@@ -60,7 +60,7 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, std::span<HittableObject*> objects, std::span<Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, std::span<const HittableObjectPointer> objects, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_Objects = objects;
     m_Materials = materials;
@@ -110,7 +110,7 @@ void Renderer::Render(const Camera &camera, std::span<HittableObject*> objects, 
     }
 }
 
-void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_AccelerationStructure = &accelerationStructure;
     m_Materials = materials;

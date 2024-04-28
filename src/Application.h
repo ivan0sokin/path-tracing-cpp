@@ -9,6 +9,7 @@
 #include "Renderer.h"
 
 #include <cstring>
+#include <filesystem>
 
 class Application {
 public:
@@ -19,7 +20,13 @@ public:
 private:
     void MainLoop() noexcept;
 
-    void OnUpdate() noexcept; 
+    void OnUpdate() noexcept;
+
+    void LoadSceneFromFile(const std::filesystem::path &pathToFile) noexcept;
+
+    void SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept;
+
+    void UpdateObjects() noexcept;
 
 private:
     int m_InitialWindowWidth, m_InitialWindowHeight;
@@ -30,16 +37,16 @@ private:
     float m_LastRenderTime;
 
     char *m_SaveImageFilePath;
+    char *m_SceneFilePath;
 
     Scene m_Scene;
-    Camera m_Camera;
     AccelerationStructure m_AccelerationStructure;
     Renderer m_Renderer;
 
     std::vector<HittableObject*> m_Objects;
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
-    constexpr static int c_SaveImageFilePathSize = 128;
+    constexpr static int c_AnyInputFileSize = 128;
 };
 
 #endif

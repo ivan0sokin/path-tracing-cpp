@@ -8,7 +8,6 @@ struct Material {
     float metallic = 0.f;
     float specular = 0.f;
     float roughness = 1.f;
-
     float emissionPower = 0.f;
 
     constexpr Math::Vector3f GetEmission() const noexcept {

@@ -6,19 +6,24 @@
 #include "../AABB.h"
 #include "../HitPayload.h"
 
+#include <array>
+
 namespace Shapes {
     class Triangle : public HittableObject {
     public:
         Math::Vector3f vertices[3];
         Math::Vector3f edges[2];
-        Math::Vector3f orientedNormal;
+        Math::Vector3f normal;
         int materialIndex;
 
         constexpr Triangle() = default;
 
         constexpr Triangle(const Math::Vector3f &a, const Math::Vector3f &b, const Math::Vector3f &c, int materialIndex) noexcept :
-            vertices{a, b, c}, edges{b - a, c - a}, orientedNormal(Math::Normalize(Math::Cross(edges[0], edges[1]))), materialIndex(materialIndex) {}
-    
+            vertices{a, b, c}, edges{b - a, c - a}, normal(Math::Normalize(Math::Cross(edges[0], edges[1]))), materialIndex(materialIndex) {}
+
+        constexpr Triangle(const std::array<Math::Vector3f, 3> &vertices, const Math::Vector3f &normal, int materialIndex) noexcept :
+            vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), materialIndex(materialIndex) {}
+
         inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             constexpr float epsilon = Math::Constants::Epsilon<float>;
 
@@ -51,7 +56,7 @@ namespace Shapes {
             }
 
             payload.t = t;
-            payload.normal = orientedNormal;
+            payload.normal = normal;
             payload.materialIndex = materialIndex;
         }
 

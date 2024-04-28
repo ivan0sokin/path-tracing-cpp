@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Utilities.hpp"
 
 #include "../imgui-docking/imgui.h"
 #include "../imgui-docking/backends/imgui_impl_glfw.h"
@@ -11,15 +12,19 @@
 
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 Application::Application(int windowWidth, int windowHeight) noexcept :
     m_InitialWindowWidth(windowWidth), m_InitialWindowHeight(windowHeight),
     m_LastViewportWidth(-1), m_LastViewportHeight(-1),
-    m_Camera(windowWidth, windowHeight),
     m_Renderer(windowWidth, windowHeight),
     m_TotalRenderTime(0.f), m_LastRenderTime(0.f) {
-    m_SaveImageFilePath = new char[c_SaveImageFilePathSize];
-    memset(m_SaveImageFilePath, 0, sizeof(char) * sizeof(m_SaveImageFilePath));
+    m_SaveImageFilePath = new char[c_AnyInputFileSize];
+    m_SceneFilePath = new char[c_AnyInputFileSize];
+    memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
+    memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
+
+    m_Scene.camera = Camera(windowWidth, windowHeight);
 }
 
 int Application::Run() noexcept {
@@ -61,65 +66,6 @@ int Application::Run() noexcept {
 
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
-
-    {
-        m_Scene.spheres.emplace_back(Math::Vector3f{-100.f, 300.f, -455.f}, 100.f, 4);
-
-        m_Scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0);
-        m_Scene.triangles.emplace_back(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 0); // left
-        m_Scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, 1);
-        m_Scene.triangles.emplace_back(Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{-555.f, 0.f, 0.f}, 1); // bottom
-        m_Scene.triangles.emplace_back(Math::Vector3f{-555.f, 0.f, -555.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1);
-        m_Scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{-555.f, 0.f, -555.f}, 1); // forward
-        m_Scene.triangles.emplace_back(Math::Vector3f{-555.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 1);
-        m_Scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{-555.f, 555.f, 0.f}, 1); // up
-        m_Scene.triangles.emplace_back(Math::Vector3f{0.f, 0.f, 0.f}, Math::Vector3f{0.f, 0.f, -555.f}, Math::Vector3f{0.f, 555.f, -555.f}, 2);
-        m_Scene.triangles.emplace_back(Math::Vector3f{0.f, 555.f, -555.f}, Math::Vector3f{0.f, 555.f, 0.f}, Math::Vector3f{0.f, 0.f, 0.f}, 2); // right
-        m_Scene.triangles.emplace_back(Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f -100.f}, 3);
-        m_Scene.triangles.emplace_back(Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f - 100.f}, Math::Vector3f{-343.f + 130.f + 100.f, 554.f, -343.f + 130.f + 100.f}, Math::Vector3f{-343.f - 100.f, 554.f, -343.f + 130.f + 100.f}, 3); // top light
-
-        m_Scene.boxes.emplace_back(Math::Vector3f{-130.f, 0.f, -65.f}, Math::Vector3f{-295.f, 165.f, -230.f}, 1);
-        m_Scene.boxes.emplace_back(Math::Vector3f{-265.f, 0.f, -295.f}, Math::Vector3f{-430.f, 330.f, -460.f}, 1);
-
-        Material green;
-        green.albedo = {0.12f, 0.45f, 0.15f};
-        m_Scene.materials.push_back(green);
-        
-        Material white;
-        white.albedo = {0.73f, 0.73f, 0.73f};
-        m_Scene.materials.push_back(white);
-
-        Material red;
-        red.albedo = {0.65f, 0.05f, 0.05f};
-        m_Scene.materials.push_back(red);
-
-        Material light;
-        light.albedo = {1.f, 1.f, 1.f};
-        light.emissionPower = 30.f;
-        m_Scene.materials.push_back(light);
-
-        Material reflective;
-        reflective.albedo = {1.f, 1.f, 1.f};
-        reflective.metallic = 1.f;
-        reflective.roughness = 0.f;
-        m_Scene.materials.push_back(reflective);
-
-        for (auto &sphere : m_Scene.spheres) {
-            m_Objects.push_back(&sphere);
-        }
-
-        for (auto &triangle : m_Scene.triangles) {
-            m_Objects.push_back(&triangle);
-        }
-
-        for (auto &box : m_Scene.boxes) {
-            m_Objects.push_back(&box);
-        }
-
-        m_Camera.Position() = {-277.5f, 277.5f, 800.f};
-        m_Camera.Target() = {-277.5f, 277.5f, 0.f};
-        m_Camera.VerticalFovInDegrees() = 40.f;
-    }
 
     MainLoop();
 
@@ -183,8 +129,6 @@ void Application::MainLoop() noexcept {
 }
 
 void Application::OnUpdate() noexcept {
-    bool cameraNeedUpdate = false;
-
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGuiWindowFlags frameFlags = ImGuiViewportFlags_IsPlatformWindow
                                 | ImGuiViewportFlags_NoDecoration
@@ -206,8 +150,7 @@ void Application::OnUpdate() noexcept {
             m_LastViewportWidth = viewportWidth;
             m_LastViewportHeight = viewportHeight;
 
-            m_Camera.OnViewportResize(m_LastViewportWidth, m_LastViewportHeight);
-            m_Camera.ComputeRayDirections();
+            m_Scene.camera.OnViewportResize(m_LastViewportWidth, m_LastViewportHeight);
 
             m_Renderer.OnResize(m_LastViewportWidth, m_LastViewportHeight);
         }
@@ -227,22 +170,22 @@ void Application::OnUpdate() noexcept {
     ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar);
     {
         if (ImGui::CollapsingHeader("Camera", nullptr)) {
-            if (ImGui::InputFloat3("Position", Math::ValuePointer(m_Camera.Position()))) {
+            bool cameraNeedUpdate = false;
+            if (ImGui::InputFloat3("Position", Math::ValuePointer(m_Scene.camera.Position()))) {
                 cameraNeedUpdate = true;
             }
-            if (ImGui::InputFloat3("Target", Math::ValuePointer(m_Camera.Target()))) {
+            if (ImGui::InputFloat3("Target", Math::ValuePointer(m_Scene.camera.Target()))) {
                 cameraNeedUpdate = true;
             }
-            if (ImGui::InputFloat("Vertical FOV", &m_Camera.VerticalFovInDegrees())) {
+            if (ImGui::InputFloat("Vertical FOV", &m_Scene.camera.VerticalFovInDegrees())) {
                 cameraNeedUpdate = true;
             }
-            if (ImGui::InputFloat3("Up", Math::ValuePointer(m_Camera.Up()))) {
+            if (ImGui::InputFloat3("Up", Math::ValuePointer(m_Scene.camera.Up()))) {
                 cameraNeedUpdate = true;
             }
 
             if (cameraNeedUpdate) {
-                m_Camera.OnViewportResize(m_LastViewportWidth, m_LastViewportHeight);
-                m_Camera.ComputeRayDirections();
+                m_Scene.camera.OnViewportResize(m_LastViewportWidth, m_LastViewportHeight);
             }
         }
 
@@ -330,9 +273,9 @@ void Application::OnUpdate() noexcept {
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
             auto t1 = std::chrono::high_resolution_clock::now();
             if (m_Renderer.Accelerate()) {
-                m_Renderer.Render(m_Camera, m_AccelerationStructure, m_Scene.materials);
+                m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Scene.materials);
             } else {
-                m_Renderer.Render(m_Camera, m_Objects, m_Scene.materials);
+                m_Renderer.Render(m_Scene.camera, m_Objects, m_Scene.materials);
             }
             auto t2 = std::chrono::high_resolution_clock::now();
             
@@ -344,10 +287,20 @@ void Application::OnUpdate() noexcept {
             }
         }
 
-        ImGui::InputText("##filename.png", m_SaveImageFilePath, c_SaveImageFilePathSize);
+        ImGui::InputText("##save_image", m_SaveImageFilePath, c_AnyInputFileSize);
         ImGui::SameLine();
         if (ImGui::Button("Save image")) {
             m_Renderer.SaveImage(m_SaveImageFilePath);
+        }
+
+        ImGui::InputText("##save_scene", m_SceneFilePath, c_AnyInputFileSize);
+        if (ImGui::Button("Save scene")) {
+            SaveSceneToFile(m_SceneFilePath);
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Load scene")) {
+            LoadSceneFromFile(m_SceneFilePath);
         }
 
         ImGui::Text("Last render time: %fms", m_LastRenderTime);
@@ -356,4 +309,52 @@ void Application::OnUpdate() noexcept {
     }
 
     ImGui::End();
+}
+
+void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noexcept {
+    std::ifstream fileStream(pathToFile, std::ios::binary);
+    if (!fileStream) {
+        std::cerr << "Failed to open file: " << pathToFile << '\n';
+        return;
+    }
+
+    auto error = m_Scene.Deserialize(fileStream);
+    if (error.has_value()) {
+        std::cerr << "Failed to deserialize scene: " << pathToFile << '\n';
+        return;
+    }
+
+    // update objects and acceleration structure
+
+    UpdateObjects();
+}
+
+void Application::SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept {
+    std::ofstream fileStream(pathToFile, std::ios::binary);
+    if (!fileStream) {
+        std::cerr << "Failed to open file: " << pathToFile << '\n';
+        return;
+    }
+
+    auto error = m_Scene.Serialize(fileStream);
+    if (error.has_value()) {
+        std::cerr << "Failed to serialize scene: " << pathToFile << '\n';
+    }
+}
+
+void Application::UpdateObjects() noexcept {
+    m_Objects.clear();
+    m_Objects.shrink_to_fit();
+
+    for (auto &sphere : m_Scene.spheres) {
+        m_Objects.push_back(&sphere);
+    }
+
+    for (auto &triangle : m_Scene.triangles) {
+        m_Objects.push_back(&triangle);
+    }
+
+    for (auto &box : m_Scene.boxes) {
+        m_Objects.push_back(&box);
+    }
 }

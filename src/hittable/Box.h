@@ -10,15 +10,13 @@
 namespace Shapes {
     class Box : public HittableObject {
     public:
+        Math::Vector3f min, max;
         Triangle triangles[12];
         AABB aabb;
         int materialIndex;
 
         inline Box(const Math::Vector3f &a, const Math::Vector3f &b, int materialIndex) noexcept : 
-            aabb(a, b), materialIndex(materialIndex) {            
-            Math::Vector3f min(Math::Min(a, b));
-            Math::Vector3f max(Math::Max(a, b));
-
+            aabb(a, b), materialIndex(materialIndex), min(Math::Min(a, b)), max(Math::Max(a, b)) {            
             triangles[0] = Triangle({min.x, min.y, max.z}, {min.x, min.y, min.z}, {max.x, min.y, min.z}, materialIndex); // bottom
             triangles[1] = Triangle({max.x, min.y, min.z}, {max.x, min.y, max.z}, {min.x, min.y, max.z}, materialIndex);
             triangles[2] = Triangle({min.x, min.y, min.z}, {min.x, max.y, min.z}, {max.x, max.y, min.z}, materialIndex); // back
