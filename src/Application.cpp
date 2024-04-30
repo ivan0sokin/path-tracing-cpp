@@ -25,9 +25,13 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
     memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
 
-    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, &m_Scene.materials[0]);
-    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), &m_Scene.materials[0]);
-    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), &m_Scene.materials[0]);
+    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, nullptr);
+    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), nullptr);
+    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), nullptr);
+
+    m_AddSphereMaterialIndex = -1;
+    m_AddTriangleMaterialIndex = -1;
+    m_AddBoxMaterialIndex = -1;
 
     m_Scene.camera = Camera(windowWidth, windowHeight);
 
@@ -188,12 +192,18 @@ void Application::OnUpdate() noexcept {
             bool hasAnyGeometryChange = false;
 
             int id = 0;
+
+            int deleteIndex = -1;
             if (ImGui::CollapsingHeader("Spheres", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.spheres.size(); ++i) {
                     ImGui::PushID(id++);
 
                     Shapes::Sphere &sphere = m_Scene.spheres[i];
                     ImGui::Text("Sphere %d:", i);
+
+                    if (ImGui::Button("Delete")) {
+                        deleteIndex = i;
+                    }
 
                     if (ImGui::InputFloat("Radius", Math::ValuePointer(sphere.radius))) {
                         sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.material);
@@ -225,7 +235,17 @@ void Application::OnUpdate() noexcept {
 
                 ImGui::InputFloat3("Position", Math::ValuePointer(m_AddSphere.center));
 
+                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddSphereMaterialIndex))) {
+                    m_AddSphere.material = &m_Scene.materials[m_AddSphereMaterialIndex];
+                }
+
                 ImGui::PopID();
+
+                if (deleteIndex >= 0) {
+                    m_Scene.spheres.erase(m_Scene.spheres.cbegin() + deleteIndex);
+                    hasAnyObjectChange = true;
+                    hasAnyGeometryChange = true;
+                }
             }
 
             if (ImGui::CollapsingHeader("Triangles", nullptr)) {
@@ -235,6 +255,10 @@ void Application::OnUpdate() noexcept {
                     Shapes::Triangle &triangle = m_Scene.triangles[i];
                     ImGui::Text("Triangle %d:", i);
                     
+                    if (ImGui::Button("Delete")) {
+                        deleteIndex = i;
+                    }
+
                     if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]))) {
                         triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
                         hasAnyGeometryChange = true;
@@ -273,12 +297,28 @@ void Application::OnUpdate() noexcept {
                     m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
                 }
 
+                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddTriangleMaterialIndex))) {
+                    m_AddTriangle.material = &m_Scene.materials[m_AddTriangleMaterialIndex];
+                }
+
                 ImGui::PopID();
+
+                if (deleteIndex >= 0) {
+                    m_Scene.triangles.erase(m_Scene.triangles.cbegin() + deleteIndex);
+                    hasAnyObjectChange = true;
+                    hasAnyGeometryChange = true;
+                }
             }
 
             if (ImGui::CollapsingHeader("Boxes", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.boxes.size(); ++i) {
                     ImGui::PushID(id++);
+
+                    ImGui::Text("Box: %d", i);
+
+                    if (ImGui::Button("Delete")) {
+                        deleteIndex = i;
+                    }
 
                     Shapes::Box &box = m_Scene.boxes[i];
 
@@ -313,7 +353,17 @@ void Application::OnUpdate() noexcept {
                     m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
                 }
 
+                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddBoxMaterialIndex))) {
+                    m_AddBox.material = &m_Scene.materials[m_AddBoxMaterialIndex];
+                }
+
                 ImGui::PopID();
+
+                if (deleteIndex >= 0) {
+                    m_Scene.boxes.erase(m_Scene.boxes.cbegin() + deleteIndex);
+                    hasAnyObjectChange = true;
+                    hasAnyGeometryChange = true;
+                }
             }
 
             if (hasAnyObjectChange) {

@@ -55,6 +55,10 @@ private:
     Shapes::Triangle m_AddTriangle;
     Shapes::Box m_AddBox;
 
+    int m_AddSphereMaterialIndex;
+    int m_AddTriangleMaterialIndex;
+    int m_AddBoxMaterialIndex;
+
     constexpr static const char *c_WindowTitle = "Path Tracing";
     constexpr static const char *c_DefaultScenePath = "assets/dft.scn";
     constexpr static int c_AnyInputFileSize = 128;
