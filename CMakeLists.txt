@@ -25,6 +25,7 @@ set(SOURCES src/Renderer.cpp
             src/BSDF.cpp
             src/AccelerationStructure.cpp
             src/hittable/Mesh.cpp
+            src/hittable/Model.cpp
             src/Entrypoint.cpp)
 
 add_executable(ptrace ${SOURCES} ${IMGUI_SOURCES})
@@ -33,5 +34,3 @@ target_link_directories(ptrace PRIVATE ${GLFW_LIB_DIR})
 target_link_libraries(ptrace PRIVATE glfw3 opengl32)
 
 set(PTRACE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-# add_subdirectory(examples)

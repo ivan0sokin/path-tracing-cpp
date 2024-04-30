@@ -6,8 +6,6 @@
 #include "../stb-master/stb_image_write.h"
 
 #include <vector>
-#include <numeric>
-#include <execution>
 #include <thread>
 #include <cstring>
 
@@ -174,14 +172,14 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             break;
         }
 
-        const Material &material = m_Materials[payload.materialIndex];
-        Math::Vector3f emission = material.GetEmission();
+        const Material *material = payload.material;
+        Math::Vector3f emission = material->GetEmission();
 
         light += emission * throughput;
 
         BSDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);
-        
+
         // Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
         // float lightSize = 330.f;
 
@@ -274,8 +272,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             break;
         }
 
-        const Material &material = m_Materials[payload.materialIndex];
-        Math::Vector3f emission = material.GetEmission();
+        const Material *material = payload.material;
+        Math::Vector3f emission = material->GetEmission();
 
         light += emission * throughput;
 
@@ -293,14 +291,14 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.materialIndex = -1;
+    payload.material = nullptr;
 
     int objectCount = (int)m_Objects.size();
     for (int i = 0; i < objectCount; ++i) {
         m_Objects[i]->Hit(ray, 0.01f, Math::Min(payload.t, Math::Constants::Infinity<float>), payload);
     }
 
-    if (payload.materialIndex == -1) {
+    if (payload.material == nullptr) {
         return Miss(ray);
     }
 
@@ -313,11 +311,11 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.materialIndex = -1;
+    payload.material = nullptr;
 
     m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload);
 
-    if (payload.materialIndex == -1) {
+    if (payload.material == nullptr) {
         return Miss(ray);
     }
 

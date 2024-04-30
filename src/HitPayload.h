@@ -2,11 +2,12 @@
 #define _HIT_PAYLOAD_H
 
 #include "math/Math.h"
+#include "Material.h"
 
 struct HitPayload {
     float t;
     Math::Vector3f normal;
-    int materialIndex;
+    const Material *material;
 };
 
 #endif

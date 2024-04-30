@@ -71,7 +71,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
     };
 
     auto FresnelSchlick = [](float cosTheta, const Math::Vector3f &F0) {
-        return F0 + (1.f - F0) * pow(1.f - cosTheta, 5.f);
+        return F0 + (1.f - F0) * Math::Pow(1.f - cosTheta, 5.f);
     };
 
     auto SpecularBRDF = [](float D, float G, const Math::Vector3f &F, const Math::Vector3f &V, const Math::Vector3f &L, const Math::Vector3f &N) {        

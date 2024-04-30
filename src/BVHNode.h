@@ -9,7 +9,6 @@
 #include <span>
 #include <vector>
 #include <functional>
-#include <cstdio>
 
 struct BVHNode {
     AABB aabb = AABB::Empty();

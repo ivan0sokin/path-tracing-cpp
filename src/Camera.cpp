@@ -16,7 +16,6 @@ void Camera::OnViewportResize(int viewportWidth, int viewportHeight) noexcept {
     m_ViewportHeight = viewportHeight;
 
     m_RayDirections.resize(m_ViewportWidth * m_ViewportHeight);
-    ComputeRayDirections();
 }
 
 void Camera::ComputeRayDirections() noexcept {

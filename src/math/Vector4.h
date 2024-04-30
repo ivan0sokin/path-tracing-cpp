@@ -22,6 +22,12 @@ namespace Math {
                 x(x), y(y), z(z), w(w) {}
         };
 
+        
+        template<typename T>
+        constexpr bool operator==(const Vector<T, 4> &a, const Vector<T, 4> &b) noexcept {
+            return a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w;
+        }
+
         template<typename T>
         constexpr Vector<T, 4> operator+(const Vector<T, 4> &a, const Vector<T, 4> &b) noexcept {
             return {

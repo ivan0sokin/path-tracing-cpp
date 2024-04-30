@@ -10,6 +10,7 @@
 #include "TrigonometricFunctions.h"
 #include "Constants.h"
 #include "ValuePointer.h"
+#include "Hashes.h"
 
 namespace Math {
     using Vector2f = Types::Vector<float, 2>;

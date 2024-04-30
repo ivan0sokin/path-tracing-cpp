@@ -16,8 +16,6 @@ AccelerationStructure::~AccelerationStructure() noexcept {
     }
 }
 
-BVHNode* fuck(std::span<HittableObjectPtr> objects, int low, int high);
-
 void AccelerationStructure::Update(std::span<HittableObjectPtr> objects) noexcept {
     if (m_Root != nullptr) {
         BVHNode::FreeMemory(m_Root);

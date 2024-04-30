@@ -12,12 +12,12 @@ namespace Shapes {
     public:
         Math::Vector3f center;
         float radius, radiusSquared, inverseRadius;
-        int materialIndex;
+        const Material *material;
 
         constexpr Sphere() noexcept = default;
 
-        constexpr Sphere(const Math::Vector3f &center, float radius, int materialIndex) noexcept :
-            center(center), radius(radius), radiusSquared(radius * radius), inverseRadius(1.f / radius), materialIndex(materialIndex) {}
+        constexpr Sphere(const Math::Vector3f &center, float radius, const Material *material) noexcept :
+            center(center), radius(radius), radiusSquared(radius * radius), inverseRadius(1.f / radius), material(material) {}
 
         constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             Math::Vector3f centerToOrigin = ray.origin - center;
@@ -44,7 +44,7 @@ namespace Shapes {
             
             payload.t = t;
             payload.normal = (ray.origin + ray.direction * t - center) * inverseRadius;
-            payload.materialIndex = materialIndex;
+            payload.material = material;
         }
 
         constexpr Math::Vector3f GetCentroid() const noexcept override {

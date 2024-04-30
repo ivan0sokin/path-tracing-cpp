@@ -14,15 +14,15 @@ namespace Shapes {
         Math::Vector3f vertices[3];
         Math::Vector3f edges[2];
         Math::Vector3f normal;
-        int materialIndex;
+        const Material *material;
 
         constexpr Triangle() = default;
 
-        constexpr Triangle(const Math::Vector3f &a, const Math::Vector3f &b, const Math::Vector3f &c, int materialIndex) noexcept :
-            vertices{a, b, c}, edges{b - a, c - a}, normal(Math::Normalize(Math::Cross(edges[0], edges[1]))), materialIndex(materialIndex) {}
+        constexpr Triangle(const Math::Vector3f &a, const Math::Vector3f &b, const Math::Vector3f &c, const Material *material) noexcept :
+            vertices{a, b, c}, edges{b - a, c - a}, normal(Math::Normalize(Math::Cross(edges[0], edges[1]))), material(material) {}
 
-        constexpr Triangle(const std::array<Math::Vector3f, 3> &vertices, const Math::Vector3f &normal, int materialIndex) noexcept :
-            vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), materialIndex(materialIndex) {}
+        constexpr Triangle(const std::array<Math::Vector3f, 3> &vertices, const Math::Vector3f &normal, const Material *material) noexcept :
+            vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), material(material) {}
 
         constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             constexpr float epsilon = Math::Constants::Epsilon<float>;
@@ -57,7 +57,7 @@ namespace Shapes {
 
             payload.t = t;
             payload.normal = normal;
-            payload.materialIndex = materialIndex;
+            payload.material = material;
         }
 
         constexpr Math::Vector3f GetCentroid() const noexcept override {
@@ -65,8 +65,8 @@ namespace Shapes {
         }
 
         constexpr AABB GetBoundingBox() const noexcept override {
-            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.001f,
-                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.001f);
+            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.1f,
+                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.1f);
         }
     };
 }

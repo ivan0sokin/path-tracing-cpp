@@ -45,6 +45,10 @@ private:
     AccelerationStructure m_AccelerationStructure;
     Renderer m_Renderer;
 
+    std::vector<int> m_SphereMaterialIndices;
+    std::vector<int> m_TriangleMaterialIndices;
+    std::vector<int> m_BoxMaterialIndices;
+
     std::vector<HittableObject*> m_Objects;
 
     Shapes::Sphere m_AddSphere;
@@ -52,7 +56,7 @@ private:
     Shapes::Box m_AddBox;
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
-    constexpr static const char *c_DefaultScenePath = "assets/default.scn";
+    constexpr static const char *c_DefaultScenePath = "assets/dft.scn";
     constexpr static int c_AnyInputFileSize = 128;
 };
 

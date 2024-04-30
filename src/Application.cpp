@@ -25,9 +25,9 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
     memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
 
-    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, 0);
-    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), 0);
-    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), 0);
+    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, &m_Scene.materials[0]);
+    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), &m_Scene.materials[0]);
+    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), &m_Scene.materials[0]);
 
     m_Scene.camera = Camera(windowWidth, windowHeight);
 
@@ -177,37 +177,26 @@ void Application::OnUpdate() noexcept {
     {
         if (ImGui::CollapsingHeader("Camera", nullptr)) {
             bool cameraNeedUpdate = false;
-            if (ImGui::InputFloat3("Position", Math::ValuePointer(m_Scene.camera.Position()))) {
-                cameraNeedUpdate = true;
-            }
-            if (ImGui::InputFloat3("Target", Math::ValuePointer(m_Scene.camera.Target()))) {
-                cameraNeedUpdate = true;
-            }
-            if (ImGui::InputFloat("Vertical FOV", &m_Scene.camera.VerticalFovInDegrees())) {
-                cameraNeedUpdate = true;
-            }
-            if (ImGui::InputFloat3("Up", Math::ValuePointer(m_Scene.camera.Up()))) {
-                cameraNeedUpdate = true;
-            }
-
-            if (cameraNeedUpdate) {
-                m_Scene.camera.OnViewportResize(m_LastViewportWidth, m_LastViewportHeight);
-            }
+            ImGui::InputFloat3("Position", Math::ValuePointer(m_Scene.camera.Position()));
+            ImGui::InputFloat3("Target", Math::ValuePointer(m_Scene.camera.Target()));
+            ImGui::InputFloat("Vertical FOV", Math::ValuePointer(m_Scene.camera.VerticalFovInDegrees()));
+            ImGui::InputFloat3("Up", Math::ValuePointer(m_Scene.camera.Up()));
         }
 
         if (ImGui::CollapsingHeader("Scene", nullptr)) {
             bool hasAnyObjectChange = false;
             bool hasAnyGeometryChange = false;
 
+            int id = 0;
             if (ImGui::CollapsingHeader("Spheres", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.spheres.size(); ++i) {
-                    ImGui::PushID(i);
+                    ImGui::PushID(id++);
 
                     Shapes::Sphere &sphere = m_Scene.spheres[i];
                     ImGui::Text("Sphere %d:", i);
 
                     if (ImGui::InputFloat("Radius", Math::ValuePointer(sphere.radius))) {
-                        sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.materialIndex);
+                        sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.material);
                         hasAnyGeometryChange = true;
                     }
 
@@ -215,12 +204,14 @@ void Application::OnUpdate() noexcept {
                         hasAnyGeometryChange = true;
                     }
 
-                    ImGui::InputInt("Material index", Math::ValuePointer(sphere.materialIndex));
+                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_SphereMaterialIndices[i]))) {
+                        sphere.material = &m_Scene.materials[m_SphereMaterialIndices[i]];
+                    }
 
                     ImGui::PopID();
                 }
 
-                ImGui::PushID(m_Scene.spheres.size());
+                ImGui::PushID(id++);
 
                 if (ImGui::Button("Add")) {
                     m_Scene.spheres.push_back(m_AddSphere);
@@ -229,41 +220,42 @@ void Application::OnUpdate() noexcept {
                 }
                 
                 if (ImGui::InputFloat("Radius", Math::ValuePointer(m_AddSphere.radius))) {
-                    m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.materialIndex);
+                    m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.material);
                 }
 
                 ImGui::InputFloat3("Position", Math::ValuePointer(m_AddSphere.center));
-                ImGui::InputInt("Material index", Math::ValuePointer(m_AddSphere.materialIndex));
 
                 ImGui::PopID();
             }
 
             if (ImGui::CollapsingHeader("Triangles", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.triangles.size(); ++i) {
-                    ImGui::PushID(i);
+                    ImGui::PushID(id++);
 
                     Shapes::Triangle &triangle = m_Scene.triangles[i];
                     ImGui::Text("Triangle %d:", i);
                     
                     if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
                         hasAnyGeometryChange = true;
                     }
                     if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
                         hasAnyGeometryChange = true;
                     }
                     if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.materialIndex);
+                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
                         hasAnyGeometryChange = true;
                     }
 
-                    ImGui::InputInt("Material index", Math::ValuePointer(triangle.materialIndex));
+                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_TriangleMaterialIndices[i]))) {
+                        triangle.material = &m_Scene.materials[m_TriangleMaterialIndices[i]];
+                    }
 
                     ImGui::PopID();
                 }
 
-                ImGui::PushID(m_Scene.triangles.size());
+                ImGui::PushID(id++);
 
                 if (ImGui::Button("Add")) {
                     m_Scene.triangles.push_back(m_AddTriangle);
@@ -272,42 +264,42 @@ void Application::OnUpdate() noexcept {
                 }
                 
                 if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(m_AddTriangle.vertices[0]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
                 }
                 if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(m_AddTriangle.vertices[1]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
                 }
                 if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(m_AddTriangle.vertices[2]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.materialIndex);
+                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
                 }
-
-                ImGui::InputInt("Material index", Math::ValuePointer(m_AddTriangle.materialIndex));
 
                 ImGui::PopID();
             }
 
             if (ImGui::CollapsingHeader("Boxes", nullptr)) {
                 for (int i = 0; i < (int)m_Scene.boxes.size(); ++i) {
-                    ImGui::PushID(i);
+                    ImGui::PushID(id++);
 
                     Shapes::Box &box = m_Scene.boxes[i];
 
                     if (ImGui::InputFloat3("First corner", Math::ValuePointer(box.min))) {
-                        box = Shapes::Box(box.min, box.max, box.materialIndex);
+                        box = Shapes::Box(box.min, box.max, box.material);
                         hasAnyGeometryChange = true;
                     }
 
                     if (ImGui::InputFloat3("Second corner", Math::ValuePointer(box.max))) {
-                        box = Shapes::Box(box.min, box.max, box.materialIndex);
+                        box = Shapes::Box(box.min, box.max, box.material);
                         hasAnyGeometryChange = true;
                     }
 
-                    ImGui::InputInt("Material index", Math::ValuePointer(box.materialIndex));
+                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_BoxMaterialIndices[i]))) {
+                        box = Shapes::Box(box.min, box.max, &m_Scene.materials[m_BoxMaterialIndices[i]]);
+                    }
 
                     ImGui::PopID();
                 }
 
-                ImGui::PushID(m_Scene.boxes.size());
+                ImGui::PushID(id++);
 
                 if (ImGui::Button("Add")) {
                     m_Scene.boxes.push_back(m_AddBox);
@@ -315,13 +307,11 @@ void Application::OnUpdate() noexcept {
                 }
                 
                 if (ImGui::InputFloat3("First corner", Math::ValuePointer(m_AddBox.min))) {
-                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.materialIndex);
+                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
                 }
                 if (ImGui::InputFloat3("Second corner", Math::ValuePointer(m_AddBox.max))) {
-                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.materialIndex);
+                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
                 }
-
-                ImGui::InputInt("Material index", Math::ValuePointer(m_AddBox.materialIndex));
 
                 ImGui::PopID();
             }
@@ -340,12 +330,12 @@ void Application::OnUpdate() noexcept {
                 ImGui::PushID(i);
 
                 Material &material = m_Scene.materials[i];
-                ImGui::Text("Material %d:", i);
+                ImGui::Text("Material %d:", material.index);
                 ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
-                ImGui::InputFloat("Emission power", &material.emissionPower);
-                ImGui::InputFloat("Metallic", &material.metallic);
-                ImGui::InputFloat("Roughness", &material.roughness);
-                ImGui::InputFloat("Specular", &material.specular);
+                ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
+                ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
+                ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
+                ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
 
                 ImGui::PopID();
             }
@@ -363,6 +353,8 @@ void Application::OnUpdate() noexcept {
         ImGui::InputFloat("Gamma", Math::ValuePointer(m_Renderer.Gamma()));
 
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
+            m_Scene.camera.ComputeRayDirections();
+            
             auto t1 = std::chrono::high_resolution_clock::now();
             if (m_Renderer.Accelerate()) {
                 m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Scene.materials);
@@ -417,6 +409,29 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
     }
 
     UpdateObjects();
+
+    // auto result = Model::LoadOBJ("assets/teapot_old.obj", "assets");
+    // if (result.IsFailure()) {
+    //     std::cerr << "Failed to load model " << "assets/teapot.obj" << '\n';
+    //     return;
+    // }
+
+    // if (!result.warning.empty()) {
+    //     std::cout << "Warnings occured while loading " << "assets/teapot_old.obj" << ": " << result.warning << '\n';
+    // }
+
+    // m_Renderer.OnRayMiss([](const auto &ray){ return Math::Vector3f(0.2f, 0.3f, 0.6f); });
+
+    // Model *model = result.model;
+
+    // m_Scene.camera.Position() = {5.f, 5.f, 5.f};
+    // m_Scene.camera.Target() = {0.f, 1.5, -1.f};
+
+    // m_Scene.materials[0].metallic = 1.f;
+    // m_Scene.materials[0].roughness = 0.1f;
+
+    // m_Objects.push_back(model);
+
     m_AccelerationStructure.Update(m_Objects);
 }
 
@@ -435,17 +450,22 @@ void Application::SaveSceneToFile(const std::filesystem::path &pathToFile) const
 
 void Application::UpdateObjects() noexcept {
     m_Objects.clear();
-    m_Objects.shrink_to_fit();
 
+    m_SphereMaterialIndices.clear();
     for (auto &sphere : m_Scene.spheres) {
         m_Objects.push_back(&sphere);
+        m_SphereMaterialIndices.push_back(sphere.material->index);
     }
 
+    m_TriangleMaterialIndices.clear();
     for (auto &triangle : m_Scene.triangles) {
         m_Objects.push_back(&triangle);
+        m_TriangleMaterialIndices.push_back(triangle.material->index);
     }
 
+    m_BoxMaterialIndices.clear();
     for (auto &box : m_Scene.boxes) {
         m_Objects.push_back(&box);
+        m_BoxMaterialIndices.push_back(box.material->index);
     }
 }
