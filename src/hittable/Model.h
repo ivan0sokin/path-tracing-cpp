@@ -37,10 +37,21 @@ public:
 
     AABB GetBoundingBox() const noexcept;
 
-private:
-    Model(std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept;
+    std::filesystem::path GetPathToFile() const noexcept {
+        return m_PathToFile;
+    }
+
+    std::filesystem::path GetMaterialDirectory() const noexcept {
+        return m_MaterialDirectory;
+    }
 
 private:
+    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept;
+
+private:
+    const std::filesystem::path m_PathToFile;
+    const std::filesystem::path m_MaterialDirectory;
+
     std::vector<Mesh> m_Meshes;
     std::vector<Polygon> m_Polygons;
     std::vector<Material> m_Materials;

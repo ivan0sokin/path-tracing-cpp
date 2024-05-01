@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Utilities.hpp"
+#include "Timer.h"
 
 #include "../imgui-docking/imgui.h"
 #include "../imgui-docking/backends/imgui_impl_glfw.h"
@@ -20,10 +21,21 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     m_Renderer(windowWidth, windowHeight),
     m_TotalRenderTime(0.f), m_LastRenderTime(0.f) {
 
-    m_SaveImageFilePath = new char[c_AnyInputFileSize];
-    m_SceneFilePath = new char[c_AnyInputFileSize];
+    m_SaveImageFilePath = new char[c_AnyInputFilePathLength];
+    m_SceneFilePath = new char[c_AnyInputFilePathLength];
+    m_ModelFilePath = new char[c_AnyInputFilePathLength];
+    m_MaterialDirectory = new char[c_AnyInputFilePathLength];
     memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
     memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
+    memset(m_ModelFilePath, 0, sizeof(m_ModelFilePath));
+    memset(m_MaterialDirectory, 0, sizeof(m_MaterialDirectory));
+
+    m_AddMaterial.albedo = {0.f, 0.f, 0.f};
+    m_AddMaterial.metallic = 0.f;
+    m_AddMaterial.specular = 0.f;
+    m_AddMaterial.roughness = 0.f;
+    m_AddMaterial.emissionPower = 0.f;
+    m_AddMaterial.index = -1;
 
     m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, nullptr);
     m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), nullptr);
@@ -71,9 +83,9 @@ int Application::Run() noexcept {
 
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
-    ImGui::StyleColorsLight();
+    UpdateThemeStyle();
 
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
@@ -104,25 +116,13 @@ void Application::MainLoop() noexcept {
         ImGui::SetNextWindowSize(viewport->WorkSize);
         ImGui::SetNextWindowViewport(viewport->ID);
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-
         ImGuiWindowFlags dockWindowFlags = ImGuiWindowFlags_NoDocking;
         dockWindowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
         dockWindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-        ImGui::Begin("Dock", nullptr, dockWindowFlags);
-        ImGui::PopStyleVar(3);
-
-        ImGuiID dockspace_id = ImGui::GetID("Dockspace");
-        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
-
         {
             OnUpdate();
         }
-
-        ImGui::End();
 
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
@@ -176,220 +176,15 @@ void Application::OnUpdate() noexcept {
     ImGui::SetNextWindowPos({viewport->WorkPos.x + viewport->WorkSize.x * 0.7f, viewport->WorkPos.y});
     ImGui::SetNextWindowSize({viewport->WorkSize.x * 0.3f, viewport->WorkSize.y});
     ImGui::SetNextWindowViewport(viewport->ID);
-
+    
     ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar);
     {
-        if (ImGui::CollapsingHeader("Camera", nullptr)) {
-            bool cameraNeedUpdate = false;
-            ImGui::InputFloat3("Position", Math::ValuePointer(m_Scene.camera.Position()));
-            ImGui::InputFloat3("Target", Math::ValuePointer(m_Scene.camera.Target()));
-            ImGui::InputFloat("Vertical FOV", Math::ValuePointer(m_Scene.camera.VerticalFovInDegrees()));
-            ImGui::InputFloat3("Up", Math::ValuePointer(m_Scene.camera.Up()));
-        }
+        m_LastID = 0;
 
-        if (ImGui::CollapsingHeader("Scene", nullptr)) {
-            bool hasAnyObjectChange = false;
-            bool hasAnyGeometryChange = false;
+        m_SomeObjectChanged = false;
+        m_SomeGeometryChanged = false;
 
-            int id = 0;
-
-            int deleteIndex = -1;
-            if (ImGui::CollapsingHeader("Spheres", nullptr)) {
-                for (int i = 0; i < (int)m_Scene.spheres.size(); ++i) {
-                    ImGui::PushID(id++);
-
-                    Shapes::Sphere &sphere = m_Scene.spheres[i];
-                    ImGui::Text("Sphere %d:", i);
-
-                    if (ImGui::Button("Delete")) {
-                        deleteIndex = i;
-                    }
-
-                    if (ImGui::InputFloat("Radius", Math::ValuePointer(sphere.radius))) {
-                        sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.material);
-                        hasAnyGeometryChange = true;
-                    }
-
-                    if (ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center))) {
-                        hasAnyGeometryChange = true;
-                    }
-
-                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_SphereMaterialIndices[i]))) {
-                        sphere.material = &m_Scene.materials[m_SphereMaterialIndices[i]];
-                    }
-
-                    ImGui::PopID();
-                }
-
-                ImGui::PushID(id++);
-
-                if (ImGui::Button("Add")) {
-                    m_Scene.spheres.push_back(m_AddSphere);
-                    hasAnyObjectChange = true;
-                    hasAnyGeometryChange = true;
-                }
-                
-                if (ImGui::InputFloat("Radius", Math::ValuePointer(m_AddSphere.radius))) {
-                    m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.material);
-                }
-
-                ImGui::InputFloat3("Position", Math::ValuePointer(m_AddSphere.center));
-
-                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddSphereMaterialIndex))) {
-                    m_AddSphere.material = &m_Scene.materials[m_AddSphereMaterialIndex];
-                }
-
-                ImGui::PopID();
-
-                if (deleteIndex >= 0) {
-                    m_Scene.spheres.erase(m_Scene.spheres.cbegin() + deleteIndex);
-                    hasAnyObjectChange = true;
-                    hasAnyGeometryChange = true;
-                }
-            }
-
-            if (ImGui::CollapsingHeader("Triangles", nullptr)) {
-                for (int i = 0; i < (int)m_Scene.triangles.size(); ++i) {
-                    ImGui::PushID(id++);
-
-                    Shapes::Triangle &triangle = m_Scene.triangles[i];
-                    ImGui::Text("Triangle %d:", i);
-                    
-                    if (ImGui::Button("Delete")) {
-                        deleteIndex = i;
-                    }
-
-                    if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
-                        hasAnyGeometryChange = true;
-                    }
-                    if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
-                        hasAnyGeometryChange = true;
-                    }
-                    if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]))) {
-                        triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
-                        hasAnyGeometryChange = true;
-                    }
-
-                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_TriangleMaterialIndices[i]))) {
-                        triangle.material = &m_Scene.materials[m_TriangleMaterialIndices[i]];
-                    }
-
-                    ImGui::PopID();
-                }
-
-                ImGui::PushID(id++);
-
-                if (ImGui::Button("Add")) {
-                    m_Scene.triangles.push_back(m_AddTriangle);
-                    hasAnyObjectChange = true;
-                    hasAnyGeometryChange = true;
-                }
-                
-                if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(m_AddTriangle.vertices[0]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
-                }
-                if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(m_AddTriangle.vertices[1]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
-                }
-                if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(m_AddTriangle.vertices[2]))) {
-                    m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
-                }
-
-                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddTriangleMaterialIndex))) {
-                    m_AddTriangle.material = &m_Scene.materials[m_AddTriangleMaterialIndex];
-                }
-
-                ImGui::PopID();
-
-                if (deleteIndex >= 0) {
-                    m_Scene.triangles.erase(m_Scene.triangles.cbegin() + deleteIndex);
-                    hasAnyObjectChange = true;
-                    hasAnyGeometryChange = true;
-                }
-            }
-
-            if (ImGui::CollapsingHeader("Boxes", nullptr)) {
-                for (int i = 0; i < (int)m_Scene.boxes.size(); ++i) {
-                    ImGui::PushID(id++);
-
-                    ImGui::Text("Box: %d", i);
-
-                    if (ImGui::Button("Delete")) {
-                        deleteIndex = i;
-                    }
-
-                    Shapes::Box &box = m_Scene.boxes[i];
-
-                    if (ImGui::InputFloat3("First corner", Math::ValuePointer(box.min))) {
-                        box = Shapes::Box(box.min, box.max, box.material);
-                        hasAnyGeometryChange = true;
-                    }
-
-                    if (ImGui::InputFloat3("Second corner", Math::ValuePointer(box.max))) {
-                        box = Shapes::Box(box.min, box.max, box.material);
-                        hasAnyGeometryChange = true;
-                    }
-
-                    if (ImGui::InputInt("Material index", Math::ValuePointer(m_BoxMaterialIndices[i]))) {
-                        box = Shapes::Box(box.min, box.max, &m_Scene.materials[m_BoxMaterialIndices[i]]);
-                    }
-
-                    ImGui::PopID();
-                }
-
-                ImGui::PushID(id++);
-
-                if (ImGui::Button("Add")) {
-                    m_Scene.boxes.push_back(m_AddBox);
-                    hasAnyObjectChange = true;
-                }
-                
-                if (ImGui::InputFloat3("First corner", Math::ValuePointer(m_AddBox.min))) {
-                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
-                }
-                if (ImGui::InputFloat3("Second corner", Math::ValuePointer(m_AddBox.max))) {
-                    m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
-                }
-
-                if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddBoxMaterialIndex))) {
-                    m_AddBox.material = &m_Scene.materials[m_AddBoxMaterialIndex];
-                }
-
-                ImGui::PopID();
-
-                if (deleteIndex >= 0) {
-                    m_Scene.boxes.erase(m_Scene.boxes.cbegin() + deleteIndex);
-                    hasAnyObjectChange = true;
-                    hasAnyGeometryChange = true;
-                }
-            }
-
-            if (hasAnyObjectChange) {
-                UpdateObjects();
-            }
-
-            if (hasAnyGeometryChange) {
-                m_AccelerationStructure.Update(m_Objects);
-            }
-        }
-
-        if (ImGui::CollapsingHeader("Materials", nullptr)) {
-            for (int i = 0; i < (int)m_Scene.materials.size(); ++i) {
-                ImGui::PushID(i);
-
-                Material &material = m_Scene.materials[i];
-                ImGui::Text("Material %d:", material.index);
-                ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
-                ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
-                ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
-                ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
-                ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
-
-                ImGui::PopID();
-            }
-        }
+        ProcessSceneCollapsingHeaders();
 
         ImGui::Checkbox("Accumulate", Math::ValuePointer(m_Renderer.Accumulate()));
         ImGui::Checkbox("Accelerate", Math::ValuePointer(m_Renderer.Accelerate()));
@@ -405,15 +200,14 @@ void Application::OnUpdate() noexcept {
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
             m_Scene.camera.ComputeRayDirections();
             
-            auto t1 = std::chrono::high_resolution_clock::now();
-            if (m_Renderer.Accelerate()) {
-                m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Scene.materials);
-            } else {
-                m_Renderer.Render(m_Scene.camera, m_Objects, m_Scene.materials);
-            }
-            auto t2 = std::chrono::high_resolution_clock::now();
-            
-            m_LastRenderTime = static_cast<std::chrono::duration<float, std::milli>>(t2 - t1).count();
+            m_LastRenderTime = Timer::MeasureInMillis([this](){
+                if (m_Renderer.Accelerate()) {
+                    m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Scene.materials);
+                } else {
+                    m_Renderer.Render(m_Scene.camera, m_Objects, m_Scene.materials);
+                }
+            });
+
             if (m_Renderer.Accumulate()) {
                 m_TotalRenderTime += m_LastRenderTime;
             } else {
@@ -421,13 +215,17 @@ void Application::OnUpdate() noexcept {
             }
         }
 
-        ImGui::InputText("##save_image", m_SaveImageFilePath, c_AnyInputFileSize);
+        if (ImGui::Checkbox("Dark theme", Math::ValuePointer(m_DarkTheme))) {
+            UpdateThemeStyle();
+        }
+
+        ImGui::InputText("##save_image", m_SaveImageFilePath, c_AnyInputFilePathLength);
         ImGui::SameLine();
         if (ImGui::Button("Save image")) {
             m_Renderer.SaveImage(m_SaveImageFilePath);
         }
 
-        ImGui::InputText("##save_scene", m_SceneFilePath, c_AnyInputFileSize);
+        ImGui::InputText("##save_scene", m_SceneFilePath, c_AnyInputFilePathLength);
         if (ImGui::Button("Save scene")) {
             SaveSceneToFile(m_SceneFilePath);
         }
@@ -445,6 +243,329 @@ void Application::OnUpdate() noexcept {
     ImGui::End();
 }
 
+void Application::UpdateThemeStyle() noexcept {
+    if (m_DarkTheme) {
+        ImGui::StyleColorsDark();
+    } else {
+        ImGui::StyleColorsLight();
+    }
+}
+
+void Application::ProcessSceneCollapsingHeaders() noexcept {
+    ProcessCameraCollapsingHeader();
+    ProcessSpheresCollapsingHeader();
+    ProcessTrianglesCollapsingHeader();
+    ProcessBoxesCollapsingHeader();
+    ProcessModelsCollapsingHeader();
+    ProcessMaterialsCollapsingHeader();
+
+    if (m_SomeObjectChanged) {
+        UpdateObjects();
+    }
+
+    if (m_SomeGeometryChanged) {
+        m_AccelerationStructure.Update(m_Objects);
+    }
+}
+
+void Application::ProcessCameraCollapsingHeader() noexcept {
+    ImGui::PushID(m_LastID++);
+
+    if (ImGui::CollapsingHeader("Camera", nullptr)) {
+        bool cameraNeedUpdate = false;
+        ImGui::InputFloat3("Position", Math::ValuePointer(m_Scene.camera.Position()));
+        ImGui::InputFloat3("Target", Math::ValuePointer(m_Scene.camera.Target()));
+        ImGui::InputFloat("Vertical FOV", Math::ValuePointer(m_Scene.camera.VerticalFovInDegrees()));
+        ImGui::InputFloat3("Up", Math::ValuePointer(m_Scene.camera.Up()));
+    }
+
+    ImGui::PopID();
+}
+
+void Application::ProcessSpheresCollapsingHeader() noexcept {
+    int deleteIndex = -1;
+    if (ImGui::CollapsingHeader("Spheres", nullptr)) {
+        for (int i = 0; i < (int)m_Scene.spheres.size(); ++i) {
+            ImGui::PushID(m_LastID++);
+
+            Shapes::Sphere &sphere = m_Scene.spheres[i];
+            ImGui::Text("Sphere %d:", i);
+
+            if (ImGui::Button("Delete")) {
+                deleteIndex = i;
+            }
+
+            if (ImGui::InputFloat("Radius", Math::ValuePointer(sphere.radius))) {
+                sphere = Shapes::Sphere(sphere.center, sphere.radius, sphere.material);
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputFloat3("Position", Math::ValuePointer(sphere.center))) {
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputInt("Material index", Math::ValuePointer(m_SphereMaterialIndices[i]))) {
+                sphere.material = &m_Scene.materials[m_SphereMaterialIndices[i]];
+            }
+
+            ImGui::PopID();
+        }
+
+        ImGui::PushID(m_LastID++);
+
+        if (ImGui::Button("Add")) {
+            m_Scene.spheres.push_back(m_AddSphere);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+        
+        if (ImGui::InputFloat("Radius", Math::ValuePointer(m_AddSphere.radius))) {
+            m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.material);
+        }
+
+        ImGui::InputFloat3("Position", Math::ValuePointer(m_AddSphere.center));
+
+        if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddSphereMaterialIndex))) {
+            m_AddSphere.material = &m_Scene.materials[m_AddSphereMaterialIndex];
+        }
+
+        ImGui::PopID();
+
+        if (deleteIndex >= 0) {
+            m_Scene.spheres.erase(m_Scene.spheres.cbegin() + deleteIndex);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+    }
+}
+
+void Application::ProcessTrianglesCollapsingHeader() noexcept {
+    int deleteIndex = -1;
+    if (ImGui::CollapsingHeader("Triangles", nullptr)) {
+        for (int i = 0; i < (int)m_Scene.triangles.size(); ++i) {
+            ImGui::PushID(m_LastID++);
+
+            Shapes::Triangle &triangle = m_Scene.triangles[i];
+            ImGui::Text("Triangle %d:", i);
+            
+            if (ImGui::Button("Delete")) {
+                deleteIndex = i;
+            }
+
+            if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(triangle.vertices[0]))) {
+                triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
+                m_SomeGeometryChanged = true;
+            }
+            if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(triangle.vertices[1]))) {
+                triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
+                m_SomeGeometryChanged = true;
+            }
+            if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(triangle.vertices[2]))) {
+                triangle = Shapes::Triangle(triangle.vertices[0], triangle.vertices[1], triangle.vertices[2], triangle.material);
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputInt("Material index", Math::ValuePointer(m_TriangleMaterialIndices[i]))) {
+                triangle.material = &m_Scene.materials[m_TriangleMaterialIndices[i]];
+            }
+
+            ImGui::PopID();
+        }
+
+        ImGui::PushID(m_LastID++);
+
+        if (ImGui::Button("Add")) {
+            m_Scene.triangles.push_back(m_AddTriangle);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+        
+        if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(m_AddTriangle.vertices[0]))) {
+            m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
+        }
+        if (ImGui::InputFloat3("Vertex 1", Math::ValuePointer(m_AddTriangle.vertices[1]))) {
+            m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
+        }
+        if (ImGui::InputFloat3("Vertex 2", Math::ValuePointer(m_AddTriangle.vertices[2]))) {
+            m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
+        }
+
+        if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddTriangleMaterialIndex))) {
+            m_AddTriangle.material = &m_Scene.materials[m_AddTriangleMaterialIndex];
+        }
+
+        ImGui::PopID();
+
+        if (deleteIndex >= 0) {
+            m_Scene.triangles.erase(m_Scene.triangles.cbegin() + deleteIndex);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+    }
+}
+
+void Application::ProcessBoxesCollapsingHeader() noexcept {
+    int deleteIndex = -1;
+    if (ImGui::CollapsingHeader("Boxes", nullptr)) {
+        for (int i = 0; i < (int)m_Scene.boxes.size(); ++i) {
+            ImGui::PushID(m_LastID++);
+
+            ImGui::Text("Box: %d", i);
+
+            if (ImGui::Button("Delete")) {
+                deleteIndex = i;
+            }
+
+            Shapes::Box &box = m_Scene.boxes[i];
+
+            if (ImGui::InputFloat3("First corner", Math::ValuePointer(box.min))) {
+                box = Shapes::Box(box.min, box.max, box.material);
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputFloat3("Second corner", Math::ValuePointer(box.max))) {
+                box = Shapes::Box(box.min, box.max, box.material);
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputInt("Material index", Math::ValuePointer(m_BoxMaterialIndices[i]))) {
+                box = Shapes::Box(box.min, box.max, &m_Scene.materials[m_BoxMaterialIndices[i]]);
+            }
+
+            ImGui::PopID();
+        }
+
+        ImGui::PushID(m_LastID++);
+
+        if (ImGui::Button("Add")) {
+            m_Scene.boxes.push_back(m_AddBox);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+        
+        if (ImGui::InputFloat3("First corner", Math::ValuePointer(m_AddBox.min))) {
+            m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
+        }
+        if (ImGui::InputFloat3("Second corner", Math::ValuePointer(m_AddBox.max))) {
+            m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
+        }
+
+        if (ImGui::InputInt("Material index", Math::ValuePointer(m_AddBoxMaterialIndex))) {
+            m_AddBox.material = &m_Scene.materials[m_AddBoxMaterialIndex];
+        }
+
+        ImGui::PopID();
+
+        if (deleteIndex >= 0) {
+            m_Scene.boxes.erase(m_Scene.boxes.cbegin() + deleteIndex);
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+    }
+}
+
+void Application::ProcessModelsCollapsingHeader() noexcept {
+    int deleteIndex = -1;
+    if (ImGui::CollapsingHeader("Models", nullptr)) {
+        for (int i = 0; i < (int)m_Scene.models.size(); ++i) {
+            ImGui::PushID(m_LastID++);
+
+            ImGui::Text("Model: %d", i);
+
+            if (ImGui::Button("Delete")) {
+                deleteIndex = i;
+            }
+
+            Model *model = m_Scene.models[i];
+
+            ImGui::PopID();
+        }
+
+        ImGui::PushID(m_LastID++);
+
+        if (ImGui::Button("Import")) {
+            auto result = Model::LoadOBJ(m_ModelFilePath, m_MaterialDirectory);
+            
+            if (!result.warning.empty()) {
+                std::cout << "Warnings occured while loading model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << ": " << result.warning << '\n';
+            }
+
+            if (result.IsFailure()) {
+                std::cerr << "Failed to import model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
+                
+            } else {
+                std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
+
+                m_Scene.models.push_back(result.model);
+                m_SomeObjectChanged = true;
+                m_SomeGeometryChanged = true;
+            }
+        }
+        
+        ImGui::InputText("Path (.obj)", m_ModelFilePath, c_AnyInputFilePathLength);
+        ImGui::InputText("Material folder", m_MaterialDirectory, c_AnyInputFilePathLength);
+
+        ImGui::PopID();
+
+        if (deleteIndex >= 0) {
+            delete m_Scene.models[deleteIndex];
+            m_Scene.models.erase(m_Scene.models.cbegin() + deleteIndex);
+
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
+        }
+    }
+}
+
+void Application::ProcessMaterialsCollapsingHeader() noexcept {
+    int deleteIndex = -1;
+    if (ImGui::CollapsingHeader("Materials", nullptr)) {
+        for (int i = 0; i < (int)m_Scene.materials.size(); ++i) {
+            ImGui::PushID(m_LastID++);
+
+            Material &material = m_Scene.materials[i];
+            ImGui::Text("Material %d:", material.index);
+
+            if (ImGui::Button("Delete")) {
+                deleteIndex = i;
+            }
+
+            ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+            ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
+            ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
+            ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
+            ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
+
+            ImGui::PopID();
+        }
+
+        ImGui::PushID(m_LastID++);
+
+        if (ImGui::Button("Add")) {
+            int maxIndex = -1;
+            for (const auto &material : m_Scene.materials) {
+                maxIndex = Math::Max(maxIndex, material.index);
+            }
+
+            m_AddMaterial.index = maxIndex + 1;
+            m_Scene.materials.push_back(m_AddMaterial);
+            UpdateObjectMaterials();
+        }
+
+        ImGui::ColorEdit3("Albedo", Math::ValuePointer(m_AddMaterial.albedo));
+        ImGui::InputFloat("Emission power", Math::ValuePointer(m_AddMaterial.emissionPower));
+        ImGui::InputFloat("Metallic", Math::ValuePointer(m_AddMaterial.metallic));
+        ImGui::InputFloat("Roughness", Math::ValuePointer(m_AddMaterial.roughness));
+        ImGui::InputFloat("Specular", Math::ValuePointer(m_AddMaterial.specular));
+
+        ImGui::PopID();
+
+        if (deleteIndex >= 0) {
+            m_Scene.materials.erase(m_Scene.materials.cbegin() + deleteIndex);
+        }
+    }
+}
+
 void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noexcept {
     std::ifstream fileStream(pathToFile, std::ios::binary);
     if (!fileStream) {
@@ -456,32 +577,11 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
     if (error.has_value()) {
         std::cerr << "Failed to deserialize scene: " << pathToFile << '\n';
         return;
+    } else {
+        std::cout << "Loaded scene: " << pathToFile << '\n';
     }
 
     UpdateObjects();
-
-    // auto result = Model::LoadOBJ("assets/teapot_old.obj", "assets");
-    // if (result.IsFailure()) {
-    //     std::cerr << "Failed to load model " << "assets/teapot.obj" << '\n';
-    //     return;
-    // }
-
-    // if (!result.warning.empty()) {
-    //     std::cout << "Warnings occured while loading " << "assets/teapot_old.obj" << ": " << result.warning << '\n';
-    // }
-
-    // m_Renderer.OnRayMiss([](const auto &ray){ return Math::Vector3f(0.2f, 0.3f, 0.6f); });
-
-    // Model *model = result.model;
-
-    // m_Scene.camera.Position() = {5.f, 5.f, 5.f};
-    // m_Scene.camera.Target() = {0.f, 1.5, -1.f};
-
-    // m_Scene.materials[0].metallic = 1.f;
-    // m_Scene.materials[0].roughness = 0.1f;
-
-    // m_Objects.push_back(model);
-
     m_AccelerationStructure.Update(m_Objects);
 }
 
@@ -517,5 +617,32 @@ void Application::UpdateObjects() noexcept {
     for (auto &box : m_Scene.boxes) {
         m_Objects.push_back(&box);
         m_BoxMaterialIndices.push_back(box.material->index);
+    }
+
+    for (auto model : m_Scene.models) {
+        m_Objects.push_back(model);
+    }
+}
+
+void Application::UpdateObjectMaterials() noexcept {
+    int sphereCount = static_cast<int>(m_Scene.spheres.size());
+    for (int i = 0; i < sphereCount; ++i) {
+        m_Scene.spheres[i].material = &*std::find_if(m_Scene.materials.cbegin(), m_Scene.materials.cend(), [this, i](const auto &material) {
+            return material.index == m_SphereMaterialIndices[i];
+        });
+    }
+
+    int triangleCount = static_cast<int>(m_Scene.triangles.size());
+    for (int i = 0; i < triangleCount; ++i) {
+        m_Scene.triangles[i].material = &*std::find_if(m_Scene.materials.cbegin(), m_Scene.materials.cend(), [this, i](const auto &material) {
+            return material.index == m_TriangleMaterialIndices[i];
+        });
+    }
+
+    int boxCount = static_cast<int>(m_Scene.boxes.size());
+    for (int i = 0; i < boxCount; ++i) {
+        m_Scene.boxes[i].material = &*std::find_if(m_Scene.materials.cbegin(), m_Scene.materials.cend(), [this, i](const auto &material) {
+            return material.index == m_BoxMaterialIndices[i];
+        });
     }
 }

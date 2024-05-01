@@ -7,16 +7,28 @@
 
 #include "Triangle.h"
 
+
+constexpr static Material mat = {
+    Math::Vector3f(1.f),
+    1.0f,
+    0.f,
+    0.2f,
+    0.f,
+    0
+};
+
+#include <cstdio>
+
 class Polygon : public HittableObject {
 public:
     const Mesh *mesh;
     const Material *material;
     int faceIndex;
 
-    constexpr Polygon(const Mesh *mesh, const Material *model, int faceIndex) noexcept :
+    constexpr Polygon(const Mesh *mesh, const Material *material, int faceIndex) noexcept :
         mesh(mesh), material(material), faceIndex(faceIndex) {}
 
-    constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+    inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
         // MakeTriangle().Hit(ray, tMin, tMax, payload);
         
         HitPayload hitPayload;
@@ -48,25 +60,24 @@ public:
 
             float u0 = Math::Length(Math::Cross(v1 - p, v2 - p)) / Math::Length(Math::Cross(v1 - v0, v2 - v0));
             float u1 = Math::Length(Math::Cross(v0 - p, v2 - p)) / Math::Length(Math::Cross(v1 - v0, v2 - v0));
-            float u2 = Math::Length(Math::Cross(v0 - p, v1 - p)) / Math::Length(Math::Cross(v1 - v0, v2 - v0));
+            float u2 = 1.f - u1 - u0;
 
             payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
         }
     }
 
-    constexpr Math::Vector3f GetCentroid() const noexcept override {
+    inline Math::Vector3f GetCentroid() const noexcept override {
         return MakeTriangle().GetCentroid();
     }
 
-    constexpr AABB GetBoundingBox() const noexcept override {
+    inline AABB GetBoundingBox() const noexcept override {
         return MakeTriangle().GetBoundingBox();
     }
 
 private:
-    constexpr Shapes::Triangle MakeTriangle() const noexcept {
+    inline Shapes::Triangle MakeTriangle() const noexcept {
         auto vertices = mesh->GetVertices();
         auto indices = mesh->GetIndices();
-        auto materialIndices = mesh->GetMaterialIndices();
         return Shapes::Triangle(vertices[indices[3 * faceIndex + 0]].position, vertices[indices[3 * faceIndex + 1]].position, vertices[indices[3 * faceIndex + 2]].position, material);
     }
 };

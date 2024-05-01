@@ -18,6 +18,7 @@ struct Scene {
     std::vector<Shapes::Sphere> spheres;
     std::vector<Shapes::Triangle> triangles;
     std::vector<Shapes::Box> boxes;
+    std::vector<Model*> models;
     std::vector<Material> materials;
     Camera camera;
 
@@ -51,7 +52,7 @@ private:
         int sphereCount = static_cast<int>(spheres.size());
         int triangleCount = static_cast<int>(triangles.size());
         int boxCount = static_cast<int>(boxes.size());
-        int modelCount = 0;
+        int modelCount = static_cast<int>(models.size());
 
         os.write(reinterpret_cast<const char*>(&materialCount), sizeof(materialCount));
         os.write(reinterpret_cast<const char*>(&sphereCount), sizeof(sphereCount));
@@ -79,6 +80,20 @@ private:
             os.write(reinterpret_cast<const char*>(&box.min), sizeof(box.min));
             os.write(reinterpret_cast<const char*>(&box.max), sizeof(box.max));
             os.write(reinterpret_cast<const char*>(&box.material->index), sizeof(box.material->index));
+        }
+
+        for (const auto model : models) {
+            auto pathToFile = model->GetPathToFile().string();
+            int pathToFileLength = static_cast<int>(pathToFile.length());
+            
+            auto materialDirectory = model->GetMaterialDirectory().string();
+            int materialDirectoryLength = static_cast<int>(materialDirectory.length());
+            
+            os.write(reinterpret_cast<const char*>(&pathToFileLength), sizeof(pathToFileLength));
+            os.write(pathToFile.data(), pathToFileLength);
+
+            os.write(reinterpret_cast<const char*>(&materialDirectoryLength), sizeof(materialDirectoryLength));
+            os.write(materialDirectory.data(), materialDirectoryLength);
         }
 
         // todo! loop for models here
@@ -155,9 +170,38 @@ private:
         }
         boxes.shrink_to_fit();
 
-        while (modelCount--) {
 
+        for (const auto model : models) {
+            delete model;
         }
+
+        models.clear();
+        models.reserve(modelCount);
+        while (modelCount--) {
+            int pathToFileLength;
+            is.read(reinterpret_cast<char*>(&pathToFileLength), sizeof(pathToFileLength));
+
+            std::vector<char> buffer(pathToFileLength);
+            is.read(buffer.data(), pathToFileLength);
+
+            std::string pathToFile(buffer.data(), pathToFileLength);
+            
+            int materialDirectoryLength;
+            is.read(reinterpret_cast<char*>(&materialDirectoryLength), sizeof(materialDirectoryLength));
+
+            buffer.resize(materialDirectoryLength);
+            is.read(buffer.data(), materialDirectoryLength);
+            
+            std::string materialDirectory(buffer.data(), materialDirectoryLength);
+
+            auto result = Model::LoadOBJ(pathToFile, materialDirectory);
+            if (result.IsFailure()) {
+                continue;
+            }
+
+            models.push_back(result.model);
+        }
+        models.shrink_to_fit();
 
         is.read(reinterpret_cast<char*>(&camera.Position()), sizeof(camera.Position()));
         is.read(reinterpret_cast<char*>(&camera.Target()), sizeof(camera.Target()));

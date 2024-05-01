@@ -21,7 +21,11 @@ void AccelerationStructure::Update(std::span<HittableObjectPtr> objects) noexcep
         BVHNode::FreeMemory(m_Root);
     }
 
-    m_Root = BVHNode::MakeHierarchySAH(objects, 0, static_cast<int>(objects.size()));
+    if (objects.empty()) {
+        m_Root = new BVHNode(new NonHittable());
+    } else {
+        m_Root = BVHNode::MakeHierarchySAH(objects, 0, static_cast<int>(objects.size()));
+    }
 }
 
 void AccelerationStructure::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {

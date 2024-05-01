@@ -5,7 +5,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
     float diffuseRatio = 0.5f * (1.f - m_Material->metallic);
     float specularRatio = 1.f - diffuseRatio;
 
-    Math::Vector3f V = Math::Normalize(-ray.direction);
+    Math::Vector3f V = -ray.direction;
 
     Math::Vector3f reflectionDirection;
     if (Utilities::RandomFloatInZeroToOne() < diffuseRatio) {
@@ -35,7 +35,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
             halfVec = Math::Normalize(halfVec);
         }
 
-        reflectionDirection = 2.f * Math::Dot(V, halfVec) * halfVec - V;
+        reflectionDirection = Math::Normalize(2.f * Math::Dot(V, halfVec) * halfVec - V);
     }
 
     auto DistributionGGX = [](const Math::Vector3f &N, const Math::Vector3f &H, float roughness) {
@@ -97,7 +97,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
         return NdotL * Math::Constants::InversePi<float>;
     };
 
-    Math::Vector3f L = Math::Normalize(reflectionDirection);
+    Math::Vector3f L = reflectionDirection;
     Math::Vector3f H = Math::Normalize(V + L);
 
     float NdotL = Math::Abs(Math::Dot(payload.normal, L));

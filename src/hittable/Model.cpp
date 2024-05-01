@@ -5,7 +5,8 @@
 
 #include <unordered_map>
 
-Model::Model(std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
+Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : 
+    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
     int totalVertexCount = 0;
     for (const auto &mesh : m_Meshes) {
         Math::Vector3f sum(0.f);
@@ -33,7 +34,8 @@ Model::Model(std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noex
 
         int faceCount = static_cast<int>(indices.size() / 3);
         for (int f = 0; f < faceCount; ++f) {
-            m_Polygons.emplace_back(&mesh, &m_Materials[materialIndices[f]], f);
+            // m_Polygons.emplace_back(&mesh, &m_Materials[materialIndices[f]], f);
+            m_Polygons.emplace_back(&mesh, &m_Materials[0], f);
         }
     }
 
@@ -151,7 +153,7 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
     }
 
     LoadResult result;
-    result.model = new Model(std::move(meshes), std::move(pbrMaterials));
+    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
     result.warning = warning;
 
     return result;

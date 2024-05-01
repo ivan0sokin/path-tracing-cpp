@@ -22,21 +22,42 @@ private:
 
     void OnUpdate() noexcept;
 
+    void ProcessSceneCollapsingHeaders() noexcept;
+
+    void ProcessCameraCollapsingHeader() noexcept;
+
+    void ProcessSpheresCollapsingHeader() noexcept;
+
+    void ProcessTrianglesCollapsingHeader() noexcept;
+
+    void ProcessBoxesCollapsingHeader() noexcept;
+
+    void ProcessModelsCollapsingHeader() noexcept;
+
+    void ProcessMaterialsCollapsingHeader() noexcept;
+
+    void UpdateThemeStyle() noexcept;
+
     void LoadSceneFromFile(const std::filesystem::path &pathToFile) noexcept;
 
     void SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept;
 
-    void UpdateAccelerationStructure() noexcept;
-
     void UpdateObjects() noexcept;
+
+    void UpdateObjectMaterials() noexcept;
 
 private:
     int m_InitialWindowWidth, m_InitialWindowHeight;
     int m_LastViewportWidth, m_LastViewportHeight;
     GLFWwindow *m_Window = nullptr;
+    bool m_DarkTheme = false;
 
-    float m_TotalRenderTime;
-    float m_LastRenderTime;
+    int m_LastID;
+    bool m_SomeObjectChanged;
+    bool m_SomeGeometryChanged;
+
+    double m_TotalRenderTime;
+    double m_LastRenderTime;
 
     char *m_SaveImageFilePath;
     char *m_SceneFilePath;
@@ -51,9 +72,12 @@ private:
 
     std::vector<HittableObject*> m_Objects;
 
+    Material m_AddMaterial;
     Shapes::Sphere m_AddSphere;
     Shapes::Triangle m_AddTriangle;
     Shapes::Box m_AddBox;
+    char *m_ModelFilePath;
+    char *m_MaterialDirectory;
 
     int m_AddSphereMaterialIndex;
     int m_AddTriangleMaterialIndex;
@@ -61,7 +85,7 @@ private:
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
     constexpr static const char *c_DefaultScenePath = "assets/dft.scn";
-    constexpr static int c_AnyInputFileSize = 128;
+    constexpr static int c_AnyInputFilePathLength = 128;
 };
 
 #endif
