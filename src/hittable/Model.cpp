@@ -3,8 +3,6 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "../../tinyobjloader/tiny_obj_loader.h"
 
-#include <unordered_map>
-
 Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : 
     m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
     int totalVertexCount = 0;
@@ -34,8 +32,12 @@ Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::pat
 
         int faceCount = static_cast<int>(indices.size() / 3);
         for (int f = 0; f < faceCount; ++f) {
-            // m_Polygons.emplace_back(&mesh, &m_Materials[materialIndices[f]], f);
-            m_Polygons.emplace_back(&mesh, &m_Materials[0], f);
+            auto &material = m_Materials[materialIndices[f]];
+            m_Polygons.emplace_back(&mesh, &material, f);
+
+            if (material.emissionPower > 0.f) {
+                m_LightSources.emplace_back(&m_Polygons.back(), material.GetEmission());
+            }
         }
     }
 
@@ -89,8 +91,6 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
         std::vector<int> materialIndices;
         materialIndices.reserve(faceCount);
 
-        std::unordered_map<Mesh::Vertex, int> vertexToIndex;
-
         int offset = 0;
         for (int f = 0; f < faceCount; ++f) {
             for (int v = 0; v < c_VerticesPerFace; ++v) {
@@ -111,16 +111,9 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
                 vertex.position = Math::Vector3f(x, y, z);
                 vertex.normal = Math::Vector3f(nx, ny, nz);
 
-                auto it = vertexToIndex.find(vertex);
-                if (it == vertexToIndex.cend()) {
-                    int i = static_cast<int>(vertices.size());
-                    vertexToIndex.emplace(vertex, i);
-                    vertices.push_back(vertex);
-                    
-                    indices.push_back(i);
-                } else {
-                    indices.push_back(it->second);
-                }
+                int i = static_cast<int>(vertices.size());
+                vertices.push_back(vertex);
+                indices.push_back(i);
 
                 // tinyobj::real_t tx = attrib.texcoords[2*idx.texcoord_index+0];
                 // tinyobj::real_t ty = attrib.texcoords[2*idx.texcoord_index+1];
@@ -159,8 +152,8 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
     return result;
 }
 
-void Model::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
-    m_Root->Hit(ray, tMin, tMax, payload);
+bool Model::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
+    return m_Root->Hit(ray, tMin, tMax, payload);
 }
 
 Math::Vector3f Model::GetCentroid() const noexcept {

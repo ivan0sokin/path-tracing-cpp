@@ -15,11 +15,15 @@ public:
 
     constexpr virtual ~HittableObject() = default;
 
-    virtual void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;
+    virtual bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;
 
     virtual Math::Vector3f GetCentroid() const noexcept = 0;
 
     virtual AABB GetBoundingBox() const noexcept = 0;
+
+    virtual Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept = 0;
+
+    virtual float GetArea() const noexcept = 0;
 };
 
 using HittableObjectPtr = HittableObject*;

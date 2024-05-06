@@ -44,6 +44,8 @@ private:
 
     void UpdateObjects() noexcept;
 
+    void UpdateLights() noexcept;
+
     void UpdateObjectMaterials() noexcept;
 
 private:
@@ -71,6 +73,7 @@ private:
     std::vector<int> m_BoxMaterialIndices;
 
     std::vector<HittableObject*> m_Objects;
+    std::vector<Light> m_Lights;
 
     Material m_AddMaterial;
     Shapes::Sphere m_AddSphere;
@@ -84,7 +87,7 @@ private:
     int m_AddBoxMaterialIndex;
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
-    constexpr static const char *c_DefaultScenePath = "assets/dft.scn";
+    constexpr static const char *c_DefaultScenePath = "assets/dft2.scn";
     constexpr static int c_AnyInputFilePathLength = 128;
 };
 

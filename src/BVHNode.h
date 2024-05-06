@@ -27,18 +27,19 @@ struct BVHNode {
         return object != nullptr;
     }
 
-    inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) noexcept {
+    inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) noexcept {
         if (!aabb.IntersectsRay(ray, tMin, tMax)) {
-            return;
+            return false;
         }
 
         if (IsTerminating()) {
-            object->Hit(ray, tMin, tMax, payload);
-            return;
+            return object->Hit(ray, tMin, tMax, payload);
         }
 
-        left->Hit(ray, tMin, tMax, payload);
-        right->Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
+        bool anyHit = left->Hit(ray, tMin, tMax, payload);
+        anyHit |= right->Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
+
+        return anyHit;
     }
 
     inline static BVHNode* MakeHierarchySAH(std::span<HittableObjectPtr> objects, int low, int high) noexcept {

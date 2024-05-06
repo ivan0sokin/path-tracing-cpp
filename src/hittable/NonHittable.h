@@ -7,8 +7,8 @@ class NonHittable : public HittableObject {
 public:
     constexpr NonHittable() noexcept = default;
     
-    constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
-        return;
+    constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+        return false;
     }
 
     constexpr Math::Vector3f GetCentroid() const noexcept override {
@@ -17,6 +17,14 @@ public:
 
     constexpr AABB GetBoundingBox() const noexcept override {
         return AABB::Empty();
+    }
+
+    constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
+        return Math::Vector3f(0.f);
+    }
+
+    constexpr float GetArea() const noexcept override {
+        return 0.f;
     }
 };
 

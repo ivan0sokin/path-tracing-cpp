@@ -157,7 +157,10 @@ void Application::OnUpdate() noexcept {
         int viewportWidth = (int)ImGui::GetContentRegionAvail().x;
         int viewportHeight = (int)ImGui::GetContentRegionAvail().y;
 
-        if (m_LastViewportWidth != viewportWidth || m_LastViewportHeight != viewportHeight) {
+        int width = -1, height = -1;
+        glfwGetWindowSize(m_Window, &width, &height);
+
+        if ((m_LastViewportWidth != viewportWidth || m_LastViewportHeight != viewportHeight) && width * height > 0) {
             m_LastViewportWidth = viewportWidth;
             m_LastViewportHeight = viewportHeight;
 
@@ -180,7 +183,6 @@ void Application::OnUpdate() noexcept {
     ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar);
     {
         m_LastID = 0;
-
         m_SomeObjectChanged = false;
         m_SomeGeometryChanged = false;
 
@@ -188,13 +190,10 @@ void Application::OnUpdate() noexcept {
 
         ImGui::Checkbox("Accumulate", Math::ValuePointer(m_Renderer.Accumulate()));
         ImGui::Checkbox("Accelerate", Math::ValuePointer(m_Renderer.Accelerate()));
-
         if (ImGui::InputInt("Used threads", Math::ValuePointer(m_Renderer.UsedThreadCount()))) {
             m_Renderer.SetUsedThreadCount(m_Renderer.UsedThreadCount());
         }
-
         ImGui::InputInt("Ray depth", Math::ValuePointer(m_Renderer.RayDepth()));
-
         ImGui::InputFloat("Gamma", Math::ValuePointer(m_Renderer.Gamma()));
 
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
@@ -202,9 +201,9 @@ void Application::OnUpdate() noexcept {
             
             m_LastRenderTime = Timer::MeasureInMillis([this](){
                 if (m_Renderer.Accelerate()) {
-                    m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Scene.materials);
+                    m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Lights, m_Scene.materials);
                 } else {
-                    m_Renderer.Render(m_Scene.camera, m_Objects, m_Scene.materials);
+                    m_Renderer.Render(m_Scene.camera, m_Objects, m_Lights, m_Scene.materials);
                 }
             });
 
@@ -470,13 +469,29 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
         for (int i = 0; i < (int)m_Scene.models.size(); ++i) {
             ImGui::PushID(m_LastID++);
 
+            auto model = m_Scene.models[i];
+
             ImGui::Text("Model: %d", i);
+        
+            auto materials = model->GetMaterials();
+            for (int i = 0; i < (int)materials.size(); ++i) {
+                ImGui::PushID(m_LastID++);
+
+                Material &material = materials[i];
+                ImGui::Text("Material %d:", material.index);
+
+                ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+                ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
+                ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
+                ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
+                ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
+
+                ImGui::PopID();
+            }
 
             if (ImGui::Button("Delete")) {
                 deleteIndex = i;
             }
-
-            Model *model = m_Scene.models[i];
 
             ImGui::PopID();
         }
@@ -492,7 +507,6 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
 
             if (result.IsFailure()) {
                 std::cerr << "Failed to import model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
-                
             } else {
                 std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
 
@@ -582,6 +596,7 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
     }
 
     UpdateObjects();
+    UpdateLights();
     m_AccelerationStructure.Update(m_Objects);
 }
 
@@ -621,6 +636,33 @@ void Application::UpdateObjects() noexcept {
 
     for (auto model : m_Scene.models) {
         m_Objects.push_back(model);
+    }
+}
+
+void Application::UpdateLights() noexcept {
+    m_Lights.clear();
+    
+    for (auto &sphere : m_Scene.spheres) {
+        if (sphere.material->emissionPower > 0.f) {
+            m_Lights.emplace_back(&sphere, sphere.material->GetEmission());
+        }
+    }
+
+    for (auto &triangle : m_Scene.triangles) {
+        if (triangle.material->emissionPower > 0.f) {
+            m_Lights.emplace_back(&triangle, triangle.material->GetEmission());
+        }
+    }
+
+    for (auto &box : m_Scene.boxes) {
+        if (box.material->emissionPower > 0.f) {
+            m_Lights.emplace_back(&box, box.material->GetEmission());
+        }
+    }
+
+    for (auto model : m_Scene.models) {
+        auto lights = model->GetLightSources();
+        m_Lights.insert(m_Lights.cend(), lights.begin(), lights.end());
     }
 }
 

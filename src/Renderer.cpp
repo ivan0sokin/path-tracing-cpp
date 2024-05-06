@@ -58,9 +58,10 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_Objects = objects;
+    m_LightSources = lightSources;
     m_Materials = materials;
 
     if (!m_Accumulate) {
@@ -108,9 +109,10 @@ void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> o
     }
 }
 
-void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_AccelerationStructure = &accelerationStructure;
+    m_LightSources = lightSources;
     m_Materials = materials;
 
     if (!m_Accumulate) {
@@ -139,7 +141,8 @@ void Renderer::Render(const Camera &camera, const AccelerationStructure &acceler
 
                     color *= inverseFrameIndex;
                     color = Utilities::CorrectGamma(color, inverseGamma);
-                    color = Math::Clamp(color, 0.f, 1.f);
+                    color = color * (1.f / (1.f + color));
+                    // color = Math::Clamp(color, 0.f, 1.f);
 
                     m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
                 }
@@ -173,86 +176,54 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         }
 
         const Material *material = payload.material;
-        Math::Vector3f emission = material->GetEmission();
-
+        auto emission = material->GetEmission();
+            
         light += emission * throughput;
 
-        BSDF bsdf(material);
-        auto direction = bsdf.Sample(ray, payload, throughput);
+        if (material->emissionPower > 0.f) {
+            break;
+        }
 
         // Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
-        // float lightSize = 330.f;
+        // float lightSize = 130.f;
 
         // Math::Vector3f randomPointOnLight = lightCenter + Math::Vector3f{lightSize, 0.f, 0.f} * Utilities::RandomFloatInNegativeHalfToHalf()
         //                                                 + Math::Vector3f{0.f, 0.f, lightSize} * Utilities::RandomFloatInNegativeHalfToHalf();
         
-        ray.origin += ray.direction * payload.t;
-        ray.direction = direction;
+        // auto p = ray.origin + ray.direction * payload.t;
 
-        // auto toLight = randomPointOnLight - ray.origin;
-        // auto lightCosine = fabs(Math::Normalize(toLight).y);
-
-        // auto lightHitPayload = TraceRay({ray.origin, Math::Normalize(toLight)});
-
+        // auto toLight = randomPointOnLight - p;
+        // HitPayload lightHitPayload = TraceRay({p, Math::Normalize(toLight)});
         // float lightArea = lightSize * lightSize;
-        // float lightPdf = Math::Dot(toLight, toLight) / (lightCosine * lightArea);
-
-        // if (pdf > Math::Constants::Epsilon<float>) { // todo ! back
-            // throughput /= pdf;
-        // }
-
-        // if (lightCosine > 0.0001f) {
-        //     light += throughput * 1.f;
-        //     throughput /= lightPdf;
-        // }
-
-        // ray.direction = direction;
-        // if (pdf > Math::Constants::Epsilon<float>) {
-        //     if (lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) {
-        //         throughput /= pdf;
-        //     } else {
-        //         float f = lightPdf;
-        //         float g = pdf;
-        //         float totalPdf = (f * f) / (f * f + g * g);
-
-        //         throughput /= (pdf * 0.5f + totalPdf * 0.5f);
-        //         if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
-        //             ray.direction = toLight;
-        //         }
-        //     }
-        // }
-
-        // if ((lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) && pdf > Math::Constants::Epsilon<float>) {
-        //     throughput /= pdf;
-        //     ray.direction = direction;
-        // } else if (!(lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) && pdf > Math::Constants::Epsilon<float>) {
-        //     throughput /= (0.5f * lightPdf + 0.5f * pdf);
-
-        //     if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
-        //         ray.direction = toLight;
-        //     } else {
-        //         ray.direction = direction;
-        //     }
-        // } else if (!(lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight))) {
-        //     // throughput /= lightPdf;
-        //     ray.direction = direction;
-        //     // ray.direction = toLight;
-        // } else {
-        //     ray.direction = direction;
-        // }
-
-        // if (Utilities::RandomFloatInZeroToOne() < 0.5f) {
-        //     ray.direction = toLight;
-        //     if (lightCosine < 0.0001f || lightHitPayload.t + 0.001f < Math::Length(toLight)) {
-        //         // light += throughput * m_OnRayMiss(ray);
-        //         break;
-        //     }
-        // throughput /= lightPdf;
-
-        // } else {
-        //     ray.direction = direction;
-        // }
+        // auto omega = Math::Normalize(toLight);
+        // float lightPdf = Math::Dot(toLight, toLight) / (Math::Dot(lightHitPayload.normal, -omega) * lightArea);
         
+        // if (Math::Abs(lightHitPayload.t - Math::Length(toLight)) < 0.1f) {
+        //     if (lightPdf > 0.01f) {
+        //         light += throughput * material->albedo * Math::Constants::InversePi<float> * Math::Dot(payload.normal, omega) * 5.f / lightPdf;
+        //     }
+        // }
+
+        auto hitPoint = ray.origin + ray.direction * payload.t;
+        for (auto lightSource : m_LightSources) {
+            auto pointOnLight = lightSource.GetObject()->SampleUniform({Utilities::RandomFloatInZeroToOne(), Utilities::RandomFloatInZeroToOne()});
+            
+            auto toLight = pointOnLight - hitPoint;
+            float distanceSquared = Math::Dot(toLight, toLight);
+            float distance = Math::Sqrt(distanceSquared);
+            
+            Ray lightRay(hitPoint, toLight / distance);
+
+            HitPayload lightHitPayload = TraceRay(lightRay);
+            
+            light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
+        }
+
+        BSDF bsdf(material);
+        auto direction = bsdf.Sample(ray, payload, throughput);
+
+        ray.origin = hitPoint;
+        ray.direction = direction;
     }
  
     return {light.r, light.g, light.b, 1.f};

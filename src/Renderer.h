@@ -9,6 +9,7 @@
 #include "math/Math.h"
 #include "AccelerationStructure.h"
 #include "Material.h"
+#include "Light.h"
 
 #include <functional>
 #include <span>
@@ -23,9 +24,9 @@ public:
 
     using typ_t = HittableObject*;
 
-    void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Material> materials) noexcept;
+    void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
-    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Material> materials) noexcept;
+    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
     constexpr bool& Accumulate() noexcept {
         return m_Accumulate;
@@ -102,6 +103,7 @@ private:
 
     const Camera *m_Camera = nullptr;
     std::span<const HittableObjectPtr> m_Objects;
+    std::span<const Light> m_LightSources;
     const AccelerationStructure *m_AccelerationStructure = nullptr;
     std::span<const Material> m_Materials;
 

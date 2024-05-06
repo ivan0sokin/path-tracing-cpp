@@ -33,10 +33,13 @@ namespace Shapes {
             triangles[11] = Triangle({max.x, max.y, max.z}, {max.x, min.y, max.z}, {max.x, min.y, min.z}, this->material);
         }
 
-        constexpr void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+        constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+            bool anyHit = false;
             for (int i = 0; i < 12; ++i) {
-                triangles[i].Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
+                anyHit |= triangles[i].Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
             }
+
+            return anyHit;
         }
 
         constexpr Math::Vector3f GetCentroid() const noexcept override {
@@ -45,6 +48,14 @@ namespace Shapes {
 
         constexpr AABB GetBoundingBox() const noexcept override {
             return aabb;
+        }
+
+        constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
+            return Math::Vector3f(0.f);
+        }
+
+        constexpr float GetArea() const noexcept override {
+            return 0.f;
         }
     };
 }

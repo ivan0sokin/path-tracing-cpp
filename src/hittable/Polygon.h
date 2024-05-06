@@ -28,7 +28,7 @@ public:
     constexpr Polygon(const Mesh *mesh, const Material *material, int faceIndex) noexcept :
         mesh(mesh), material(material), faceIndex(faceIndex) {}
 
-    inline void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
+    inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
         // MakeTriangle().Hit(ray, tMin, tMax, payload);
         
         HitPayload hitPayload;
@@ -36,9 +36,7 @@ public:
         hitPayload.normal = Math::Vector3f(0.f);
         hitPayload.material = nullptr;
 
-        MakeTriangle().Hit(ray, tMin, tMax, hitPayload);
-
-        if (hitPayload.material != nullptr) {
+        if (MakeTriangle().Hit(ray, tMin, tMax, hitPayload)) {
             MakeTriangle().Hit(ray, tMin, tMax, payload);
 
             auto vertices = mesh->GetVertices();
@@ -63,7 +61,11 @@ public:
             float u2 = 1.f - u1 - u0;
 
             payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
+
+            return true;
         }
+
+        return false;
     }
 
     inline Math::Vector3f GetCentroid() const noexcept override {
@@ -74,8 +76,16 @@ public:
         return MakeTriangle().GetBoundingBox();
     }
 
+    constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
+        return MakeTriangle().SampleUniform(sample);
+    }
+
+    constexpr float GetArea() const noexcept override {
+        return MakeTriangle().GetArea();
+    }
+
 private:
-    inline Shapes::Triangle MakeTriangle() const noexcept {
+    constexpr Shapes::Triangle MakeTriangle() const noexcept {
         auto vertices = mesh->GetVertices();
         auto indices = mesh->GetIndices();
         return Shapes::Triangle(vertices[indices[3 * faceIndex + 0]].position, vertices[indices[3 * faceIndex + 1]].position, vertices[indices[3 * faceIndex + 2]].position, material);
