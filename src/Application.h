@@ -68,6 +68,8 @@ private:
     AccelerationStructure m_AccelerationStructure;
     Renderer m_Renderer;
 
+    Math::Vector3f m_RayMissColor;
+
     std::vector<int> m_SphereMaterialIndices;
     std::vector<int> m_TriangleMaterialIndices;
     std::vector<int> m_BoxMaterialIndices;

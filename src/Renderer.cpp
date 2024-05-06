@@ -141,8 +141,7 @@ void Renderer::Render(const Camera &camera, const AccelerationStructure &acceler
 
                     color *= inverseFrameIndex;
                     color = Utilities::CorrectGamma(color, inverseGamma);
-                    color = color * (1.f / (1.f + color));
-                    // color = Math::Clamp(color, 0.f, 1.f);
+                    color = Math::Clamp(color, 0.f, 1.f);
 
                     m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
                 }
@@ -183,26 +182,6 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         if (material->emissionPower > 0.f) {
             break;
         }
-
-        // Math::Vector3f lightCenter(-278.f, 554.f, -278.f);
-        // float lightSize = 130.f;
-
-        // Math::Vector3f randomPointOnLight = lightCenter + Math::Vector3f{lightSize, 0.f, 0.f} * Utilities::RandomFloatInNegativeHalfToHalf()
-        //                                                 + Math::Vector3f{0.f, 0.f, lightSize} * Utilities::RandomFloatInNegativeHalfToHalf();
-        
-        // auto p = ray.origin + ray.direction * payload.t;
-
-        // auto toLight = randomPointOnLight - p;
-        // HitPayload lightHitPayload = TraceRay({p, Math::Normalize(toLight)});
-        // float lightArea = lightSize * lightSize;
-        // auto omega = Math::Normalize(toLight);
-        // float lightPdf = Math::Dot(toLight, toLight) / (Math::Dot(lightHitPayload.normal, -omega) * lightArea);
-        
-        // if (Math::Abs(lightHitPayload.t - Math::Length(toLight)) < 0.1f) {
-        //     if (lightPdf > 0.01f) {
-        //         light += throughput * material->albedo * Math::Constants::InversePi<float> * Math::Dot(payload.normal, omega) * 5.f / lightPdf;
-        //     }
-        // }
 
         auto hitPoint = ray.origin + ray.direction * payload.t;
         for (auto lightSource : m_LightSources) {
@@ -247,6 +226,25 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
         Math::Vector3f emission = material->GetEmission();
 
         light += emission * throughput;
+
+        if (material->emissionPower > 0.f) {
+            break;
+        }
+
+        auto hitPoint = ray.origin + ray.direction * payload.t;
+        for (auto lightSource : m_LightSources) {
+            auto pointOnLight = lightSource.GetObject()->SampleUniform({Utilities::RandomFloatInZeroToOne(), Utilities::RandomFloatInZeroToOne()});
+            
+            auto toLight = pointOnLight - hitPoint;
+            float distanceSquared = Math::Dot(toLight, toLight);
+            float distance = Math::Sqrt(distanceSquared);
+            
+            Ray lightRay(hitPoint, toLight / distance);
+
+            HitPayload lightHitPayload = TraceRay(lightRay);
+            
+            light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
+        }
 
         BSDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);

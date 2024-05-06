@@ -45,6 +45,8 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     m_AddTriangleMaterialIndex = -1;
     m_AddBoxMaterialIndex = -1;
 
+    m_RayMissColor = Math::Vector3f(0.f);
+
     m_Scene.camera = Camera(windowWidth, windowHeight);
 
     LoadSceneFromFile(c_DefaultScenePath);
@@ -195,6 +197,10 @@ void Application::OnUpdate() noexcept {
         }
         ImGui::InputInt("Ray depth", Math::ValuePointer(m_Renderer.RayDepth()));
         ImGui::InputFloat("Gamma", Math::ValuePointer(m_Renderer.Gamma()));
+
+        if (ImGui::ColorEdit3("Ray miss color", Math::ValuePointer(m_RayMissColor))) {
+            m_Renderer.OnRayMiss([this](const Ray&){ return m_RayMissColor; });
+        }
 
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
             m_Scene.camera.ComputeRayDirections();

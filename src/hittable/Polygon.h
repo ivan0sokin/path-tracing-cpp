@@ -28,17 +28,13 @@ public:
     constexpr Polygon(const Mesh *mesh, const Material *material, int faceIndex) noexcept :
         mesh(mesh), material(material), faceIndex(faceIndex) {}
 
-    inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
-        // MakeTriangle().Hit(ray, tMin, tMax, payload);
-        
+    constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
         HitPayload hitPayload;
         hitPayload.t = Math::Constants::Infinity<float>;
         hitPayload.normal = Math::Vector3f(0.f);
         hitPayload.material = nullptr;
 
-        if (MakeTriangle().Hit(ray, tMin, tMax, hitPayload)) {
-            MakeTriangle().Hit(ray, tMin, tMax, payload);
-
+        if (MakeTriangle().Hit(ray, tMin, tMax, payload)) {
             auto vertices = mesh->GetVertices();
             auto indices = mesh->GetIndices();
 
@@ -68,11 +64,11 @@ public:
         return false;
     }
 
-    inline Math::Vector3f GetCentroid() const noexcept override {
+    constexpr Math::Vector3f GetCentroid() const noexcept override {
         return MakeTriangle().GetCentroid();
     }
 
-    inline AABB GetBoundingBox() const noexcept override {
+    constexpr AABB GetBoundingBox() const noexcept override {
         return MakeTriangle().GetBoundingBox();
     }
 
