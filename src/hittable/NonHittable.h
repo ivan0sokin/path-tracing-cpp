@@ -3,6 +3,7 @@
 
 #include "HittableObject.h"
 
+//! Hittable object that cannot be hit
 class NonHittable : public HittableObject {
 public:
     constexpr NonHittable() noexcept = default;

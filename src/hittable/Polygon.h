@@ -7,18 +7,7 @@
 
 #include "Triangle.h"
 
-
-constexpr static Material mat = {
-    Math::Vector3f(1.f),
-    1.0f,
-    0.f,
-    0.2f,
-    0.f,
-    0
-};
-
-#include <cstdio>
-
+//! Slightly differs from Triangle. It is connected with mesh and stores its face index
 class Polygon : public HittableObject {
 public:
     const Mesh *mesh;
