@@ -6,6 +6,9 @@
 #include "../imgui-docking/backends/imgui_impl_glfw.h"
 #include "../imgui-docking/backends/imgui_impl_opengl3.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "../stb-master/stb_image.h"
+
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -80,6 +83,12 @@ int Application::Run() noexcept {
         std::cerr << "Failed to create window\n";
         return -1;
     }
+
+    GLFWimage *icon = new GLFWimage();
+    icon->pixels = stbi_load("icon/icon.png", &icon->width, &icon->height, 0, 4);
+    glfwSetWindowIcon(m_Window, 1, icon);
+    stbi_image_free(icon->pixels);
+    delete icon;
 
     glfwMakeContextCurrent(m_Window);
 
