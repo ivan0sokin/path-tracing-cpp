@@ -1,0 +1,88 @@
+\doxysection{Non\+Hittable Class Reference}
+\hypertarget{class_non_hittable}{}\label{class_non_hittable}\index{NonHittable@{NonHittable}}
+Inheritance diagram for Non\+Hittable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_non_hittable}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr bool \mbox{\hyperlink{class_non_hittable_a031701f76b550c59d3685d78cdc9247a}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_non_hittable_a355773bd874c8d7627cec448f3afcb9e}{Get\+Centroid}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} \mbox{\hyperlink{class_non_hittable_a90fe0f2b545c290d5f0ed995c33b5c8c}{Get\+Bounding\+Box}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_non_hittable_a6d2bd2b9a253334316c87d957b834e85}{Sample\+Uniform}} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&sample) const noexcept override
+\item 
+constexpr float \mbox{\hyperlink{class_non_hittable_a38f05a638f15a1c283e2a61a4305088a}{Get\+Area}} () const noexcept override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+constexpr {\bfseries Hittable\+Object} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\item 
+constexpr {\bfseries Hittable\+Object} (\mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&\&)=default
+\item 
+constexpr \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_non_hittable_a38f05a638f15a1c283e2a61a4305088a}\label{class_non_hittable_a38f05a638f15a1c283e2a61a4305088a} 
+\index{NonHittable@{NonHittable}!GetArea@{GetArea}}
+\index{GetArea@{GetArea}!NonHittable@{NonHittable}}
+\doxysubsubsection{\texorpdfstring{GetArea()}{GetArea()}}
+{\footnotesize\ttfamily constexpr float Non\+Hittable\+::\+Get\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_non_hittable_a90fe0f2b545c290d5f0ed995c33b5c8c}\label{class_non_hittable_a90fe0f2b545c290d5f0ed995c33b5c8c} 
+\index{NonHittable@{NonHittable}!GetBoundingBox@{GetBoundingBox}}
+\index{GetBoundingBox@{GetBoundingBox}!NonHittable@{NonHittable}}
+\doxysubsubsection{\texorpdfstring{GetBoundingBox()}{GetBoundingBox()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} Non\+Hittable\+::\+Get\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_non_hittable_a355773bd874c8d7627cec448f3afcb9e}\label{class_non_hittable_a355773bd874c8d7627cec448f3afcb9e} 
+\index{NonHittable@{NonHittable}!GetCentroid@{GetCentroid}}
+\index{GetCentroid@{GetCentroid}!NonHittable@{NonHittable}}
+\doxysubsubsection{\texorpdfstring{GetCentroid()}{GetCentroid()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Non\+Hittable\+::\+Get\+Centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_non_hittable_a031701f76b550c59d3685d78cdc9247a}\label{class_non_hittable_a031701f76b550c59d3685d78cdc9247a} 
+\index{NonHittable@{NonHittable}!Hit@{Hit}}
+\index{Hit@{Hit}!NonHittable@{NonHittable}}
+\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
+{\footnotesize\ttfamily constexpr bool Non\+Hittable\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_non_hittable_a6d2bd2b9a253334316c87d957b834e85}\label{class_non_hittable_a6d2bd2b9a253334316c87d957b834e85} 
+\index{NonHittable@{NonHittable}!SampleUniform@{SampleUniform}}
+\index{SampleUniform@{SampleUniform}!NonHittable@{NonHittable}}
+\doxysubsubsection{\texorpdfstring{SampleUniform()}{SampleUniform()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Non\+Hittable\+::\+Sample\+Uniform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&}]{sample }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+hittable/Non\+Hittable.\+h\end{DoxyCompactItemize}

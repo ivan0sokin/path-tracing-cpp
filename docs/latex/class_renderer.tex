@@ -1,489 +1,78 @@
 \doxysection{Renderer Class Reference}
 \hypertarget{class_renderer}{}\label{class_renderer}\index{Renderer@{Renderer}}
+
+
+Class that renders scene to image.  
+
+
+
+
+{\ttfamily \#include $<$Renderer.\+h$>$}
+
 \doxysubsubsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-using \mbox{\hyperlink{class_renderer_a6a3eb266da658f4697aaa811785a85d0}{typ\+\_\+t}} = Hittable\+Object\texorpdfstring{$\ast$}{*}
+\Hypertarget{class_renderer_a6a3eb266da658f4697aaa811785a85d0}\label{class_renderer_a6a3eb266da658f4697aaa811785a85d0} 
+using {\bfseries typ\+\_\+t} = \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}\texorpdfstring{$\ast$}{*}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_renderer_a59f28059536f30f80c16022a61047694}{Renderer}} (int width, int height) noexcept
+\Hypertarget{class_renderer_a59f28059536f30f80c16022a61047694}\label{class_renderer_a59f28059536f30f80c16022a61047694} 
+{\bfseries Renderer} (int width, int height) noexcept
+\begin{DoxyCompactList}\small\item\em Creates renderer with given width and height. \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_ac8f8d5f6c84c870cbb0c24901988264c}\label{class_renderer_ac8f8d5f6c84c870cbb0c24901988264c} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Renderer} () noexcept
+\begin{DoxyCompactList}\small\item\em Deallocates image data. \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_a1e14dc9efe9d6783374b812721e2bde3}\label{class_renderer_a1e14dc9efe9d6783374b812721e2bde3} 
+void {\bfseries Render} (const \mbox{\hyperlink{class_camera}{Camera}} \&camera, std\+::span$<$ const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}} $>$ objects, std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$ light\+Sources, std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$ materials) noexcept
+\begin{DoxyCompactList}\small\item\em Renders without object acceleration (but with model accelerator for speed purpose) \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_aadfa77937a8182a967a2543ba0957f57}\label{class_renderer_aadfa77937a8182a967a2543ba0957f57} 
+void {\bfseries Render} (const \mbox{\hyperlink{class_camera}{Camera}} \&camera, const \mbox{\hyperlink{class_acceleration_structure}{Acceleration\+Structure}} \&acceleration\+Structure, std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$ light\+Sources, std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$ materials) noexcept
+\begin{DoxyCompactList}\small\item\em Renders with object acceleration. \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_ab529593cee20524c0baa5e5284fd11c1}\label{class_renderer_ab529593cee20524c0baa5e5284fd11c1} 
+constexpr bool \& {\bfseries Accumulate} () noexcept
 \item 
-void \mbox{\hyperlink{class_renderer_a1e14dc9efe9d6783374b812721e2bde3}{Render}} (const \mbox{\hyperlink{class_camera}{Camera}} \&camera, std\+::span$<$ const Hittable\+Object\+Ptr $>$ objects, std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$ light\+Sources, std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$ materials) noexcept
+\Hypertarget{class_renderer_a642f7f8741a9c5662d3dc704bf77ad24}\label{class_renderer_a642f7f8741a9c5662d3dc704bf77ad24} 
+constexpr bool \& {\bfseries Accelerate} () noexcept
 \item 
-void \mbox{\hyperlink{class_renderer_aadfa77937a8182a967a2543ba0957f57}{Render}} (const \mbox{\hyperlink{class_camera}{Camera}} \&camera, const \mbox{\hyperlink{class_acceleration_structure}{Acceleration\+Structure}} \&acceleration\+Structure, std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$ light\+Sources, std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$ materials) noexcept
+\Hypertarget{class_renderer_ad5fead09791606e2ce29c7f4874e0a09}\label{class_renderer_ad5fead09791606e2ce29c7f4874e0a09} 
+constexpr int {\bfseries Get\+Frame\+Index} () const noexcept
 \item 
-constexpr bool \& \mbox{\hyperlink{class_renderer_ab529593cee20524c0baa5e5284fd11c1}{Accumulate}} () noexcept
+\Hypertarget{class_renderer_a5f0bb877016b8357a734853a53950e85}\label{class_renderer_a5f0bb877016b8357a734853a53950e85} 
+constexpr \mbox{\hyperlink{class_image}{Image}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Image} () const noexcept
 \item 
-constexpr bool \& \mbox{\hyperlink{class_renderer_a642f7f8741a9c5662d3dc704bf77ad24}{Accelerate}} () noexcept
+\Hypertarget{class_renderer_a6f962e76a966bd2b33bd5d1f936b665d}\label{class_renderer_a6f962e76a966bd2b33bd5d1f936b665d} 
+void {\bfseries Save\+Image} (const std\+::filesystem\+::path \&path\+To\+File) const noexcept
+\begin{DoxyCompactList}\small\item\em Saves image to file. \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_a479bec0669d53d441558a1e7e2399683}\label{class_renderer_a479bec0669d53d441558a1e7e2399683} 
+void {\bfseries On\+Resize} (int width, int height) noexcept
+\begin{DoxyCompactList}\small\item\em Resizez image data. \end{DoxyCompactList}\item 
+\Hypertarget{class_renderer_a9f58745da15ca94a511c809023cf0eed}\label{class_renderer_a9f58745da15ca94a511c809023cf0eed} 
+constexpr int {\bfseries Get\+Available\+Thread\+Count} () const noexcept
 \item 
-constexpr int \mbox{\hyperlink{class_renderer_ad5fead09791606e2ce29c7f4874e0a09}{Get\+Frame\+Index}} () const noexcept
+\Hypertarget{class_renderer_a75d44f763f1e1b11b77a927a66fbd1d7}\label{class_renderer_a75d44f763f1e1b11b77a927a66fbd1d7} 
+constexpr int {\bfseries Get\+Used\+Thread\+Count} () const noexcept
 \item 
-constexpr \mbox{\hyperlink{class_image}{Image}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_renderer_a5f0bb877016b8357a734853a53950e85}{Get\+Image}} () const noexcept
+\Hypertarget{class_renderer_a8d7bccf9bfc047ae5b4ebf4b7855178b}\label{class_renderer_a8d7bccf9bfc047ae5b4ebf4b7855178b} 
+constexpr void {\bfseries Set\+Used\+Thread\+Count} (int used\+Threads) noexcept
 \item 
-void \mbox{\hyperlink{class_renderer_abd4bd06651bc672b21a4eee5ab2414c0}{Save\+Image}} (const char \texorpdfstring{$\ast$}{*}filename) const noexcept
+\Hypertarget{class_renderer_a4ec221255674e8b346104f63ac204f47}\label{class_renderer_a4ec221255674e8b346104f63ac204f47} 
+constexpr int \& {\bfseries Used\+Thread\+Count} () noexcept
 \item 
-void \mbox{\hyperlink{class_renderer_a479bec0669d53d441558a1e7e2399683}{On\+Resize}} (int width, int height) noexcept
+\Hypertarget{class_renderer_a1750bb3fd139b923e9f1ee3eed915ab5}\label{class_renderer_a1750bb3fd139b923e9f1ee3eed915ab5} 
+void {\bfseries On\+Ray\+Miss} (std\+::function$<$ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}}(const \mbox{\hyperlink{struct_ray}{Ray}} \&)$>$ on\+Ray\+Miss) noexcept
 \item 
-constexpr int \mbox{\hyperlink{class_renderer_a9f58745da15ca94a511c809023cf0eed}{Get\+Available\+Thread\+Count}} () const noexcept
+\Hypertarget{class_renderer_abbd2924832fd11fc0499967825277fa5}\label{class_renderer_abbd2924832fd11fc0499967825277fa5} 
+constexpr int \& {\bfseries Ray\+Depth} () noexcept
 \item 
-constexpr int \mbox{\hyperlink{class_renderer_a75d44f763f1e1b11b77a927a66fbd1d7}{Get\+Used\+Thread\+Count}} () const noexcept
-\item 
-constexpr void \mbox{\hyperlink{class_renderer_a8d7bccf9bfc047ae5b4ebf4b7855178b}{Set\+Used\+Thread\+Count}} (int used\+Threads) noexcept
-\item 
-constexpr int \& \mbox{\hyperlink{class_renderer_a4ec221255674e8b346104f63ac204f47}{Used\+Thread\+Count}} () noexcept
-\item 
-void \mbox{\hyperlink{class_renderer_a1750bb3fd139b923e9f1ee3eed915ab5}{On\+Ray\+Miss}} (std\+::function$<$ Math\+::\+Vector3f(const \mbox{\hyperlink{struct_ray}{Ray}} \&)$>$ on\+Ray\+Miss) noexcept
-\item 
-constexpr int \& \mbox{\hyperlink{class_renderer_abbd2924832fd11fc0499967825277fa5}{Ray\+Depth}} () noexcept
-\item 
-constexpr float \& \mbox{\hyperlink{class_renderer_a4630139a57e75ed8cf77aa55c5a9c86a}{Gamma}} () noexcept
+\Hypertarget{class_renderer_a4630139a57e75ed8cf77aa55c5a9c86a}\label{class_renderer_a4630139a57e75ed8cf77aa55c5a9c86a} 
+constexpr float \& {\bfseries Gamma} () noexcept
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00017}{17}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-
-\doxysubsection{Member Typedef Documentation}
-\Hypertarget{class_renderer_a6a3eb266da658f4697aaa811785a85d0}\label{class_renderer_a6a3eb266da658f4697aaa811785a85d0} 
-\index{Renderer@{Renderer}!typ\_t@{typ\_t}}
-\index{typ\_t@{typ\_t}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{typ\_t}{typ\_t}}
-{\footnotesize\ttfamily using Renderer\+::typ\+\_\+t = Hittable\+Object\texorpdfstring{$\ast$}{*}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00025}{25}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_renderer_a59f28059536f30f80c16022a61047694}\label{class_renderer_a59f28059536f30f80c16022a61047694} 
-\index{Renderer@{Renderer}!Renderer@{Renderer}}
-\index{Renderer@{Renderer}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Renderer()}{Renderer()}}
-{\footnotesize\ttfamily Renderer\+::\+Renderer (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00013\ \ \ \ \ m\_Width(width),\ m\_Height(height)\ \{}
-\DoxyCodeLine{00014\ \ \ \ \ m\_ImageData\ =\ \textcolor{keyword}{new}\ uint32\_t[m\_Width\ *\ m\_Height];}
-\DoxyCodeLine{00015\ \ \ \ \ m\_Image\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_image}{Image}}(m\_Width,\ m\_Height,\ m\_ImageData);}
-\DoxyCodeLine{00016\ \ \ \ \ m\_AccumulationData\ =\ \textcolor{keyword}{new}\ Math::Vector4f[m\_Width\ *\ m\_Height];}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \ \ \ \ m\_AvailableThreads\ =\ std::thread::hardware\_concurrency();}
-\DoxyCodeLine{00019\ \ \ \ \ m\_UsedThreads\ =\ 1;}
-\DoxyCodeLine{00020\ \ \ \ \ m\_LinesPerThread\ =\ (m\_Height\ +\ m\_UsedThreads\ -\/\ 1)\ /\ m\_UsedThreads;}
-\DoxyCodeLine{00021\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_ac8f8d5f6c84c870cbb0c24901988264c}\label{class_renderer_ac8f8d5f6c84c870cbb0c24901988264c} 
-\index{Renderer@{Renderer}!````~Renderer@{\texorpdfstring{$\sim$}{\string~}Renderer}}
-\index{````~Renderer@{\texorpdfstring{$\sim$}{\string~}Renderer}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Renderer()}{\string~Renderer()}}
-{\footnotesize\ttfamily Renderer\+::\texorpdfstring{$\sim$}{\string~}\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Image\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_Image;}
-\DoxyCodeLine{00026\ \ \ \ \ \}}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_ImageData\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ m\_ImageData;}
-\DoxyCodeLine{00029\ \ \ \ \ \}}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_AccumulationData\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ m\_AccumulationData;}
-\DoxyCodeLine{00032\ \ \ \ \ \}}
-\DoxyCodeLine{00033\ \}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_renderer_a642f7f8741a9c5662d3dc704bf77ad24}\label{class_renderer_a642f7f8741a9c5662d3dc704bf77ad24} 
-\index{Renderer@{Renderer}!Accelerate@{Accelerate}}
-\index{Accelerate@{Accelerate}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Accelerate()}{Accelerate()}}
-{\footnotesize\ttfamily constexpr bool \& Renderer\+::\+Accelerate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00035}{35}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accelerate;}
-\DoxyCodeLine{00037\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_ab529593cee20524c0baa5e5284fd11c1}\label{class_renderer_ab529593cee20524c0baa5e5284fd11c1} 
-\index{Renderer@{Renderer}!Accumulate@{Accumulate}}
-\index{Accumulate@{Accumulate}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Accumulate()}{Accumulate()}}
-{\footnotesize\ttfamily constexpr bool \& Renderer\+::\+Accumulate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00031}{31}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accumulate;}
-\DoxyCodeLine{00033\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a4630139a57e75ed8cf77aa55c5a9c86a}\label{class_renderer_a4630139a57e75ed8cf77aa55c5a9c86a} 
-\index{Renderer@{Renderer}!Gamma@{Gamma}}
-\index{Gamma@{Gamma}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Gamma()}{Gamma()}}
-{\footnotesize\ttfamily constexpr float \& Renderer\+::\+Gamma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00076}{76}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Gamma;}
-\DoxyCodeLine{00078\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a9f58745da15ca94a511c809023cf0eed}\label{class_renderer_a9f58745da15ca94a511c809023cf0eed} 
-\index{Renderer@{Renderer}!GetAvailableThreadCount@{GetAvailableThreadCount}}
-\index{GetAvailableThreadCount@{GetAvailableThreadCount}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{GetAvailableThreadCount()}{GetAvailableThreadCount()}}
-{\footnotesize\ttfamily constexpr int Renderer\+::\+Get\+Available\+Thread\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00051}{51}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_AvailableThreads;}
-\DoxyCodeLine{00053\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_ad5fead09791606e2ce29c7f4874e0a09}\label{class_renderer_ad5fead09791606e2ce29c7f4874e0a09} 
-\index{Renderer@{Renderer}!GetFrameIndex@{GetFrameIndex}}
-\index{GetFrameIndex@{GetFrameIndex}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{GetFrameIndex()}{GetFrameIndex()}}
-{\footnotesize\ttfamily constexpr int Renderer\+::\+Get\+Frame\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00039}{39}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_FrameIndex;}
-\DoxyCodeLine{00041\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a5f0bb877016b8357a734853a53950e85}\label{class_renderer_a5f0bb877016b8357a734853a53950e85} 
-\index{Renderer@{Renderer}!GetImage@{GetImage}}
-\index{GetImage@{GetImage}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{GetImage()}{GetImage()}}
-{\footnotesize\ttfamily constexpr \mbox{\hyperlink{class_image}{Image}} \texorpdfstring{$\ast$}{*} Renderer\+::\+Get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00043}{43}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Image;}
-\DoxyCodeLine{00045\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a75d44f763f1e1b11b77a927a66fbd1d7}\label{class_renderer_a75d44f763f1e1b11b77a927a66fbd1d7} 
-\index{Renderer@{Renderer}!GetUsedThreadCount@{GetUsedThreadCount}}
-\index{GetUsedThreadCount@{GetUsedThreadCount}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{GetUsedThreadCount()}{GetUsedThreadCount()}}
-{\footnotesize\ttfamily constexpr int Renderer\+::\+Get\+Used\+Thread\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00055}{55}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
-\DoxyCodeLine{00057\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a1750bb3fd139b923e9f1ee3eed915ab5}\label{class_renderer_a1750bb3fd139b923e9f1ee3eed915ab5} 
-\index{Renderer@{Renderer}!OnRayMiss@{OnRayMiss}}
-\index{OnRayMiss@{OnRayMiss}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{OnRayMiss()}{OnRayMiss()}}
-{\footnotesize\ttfamily void Renderer\+::\+On\+Ray\+Miss (\begin{DoxyParamCaption}\item[{std\+::function$<$ Math\+::\+Vector3f(const \mbox{\hyperlink{struct_ray}{Ray}} \&)$>$}]{on\+Ray\+Miss }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00068}{68}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ m\_OnRayMiss\ =\ onRayMiss;}
-\DoxyCodeLine{00070\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a479bec0669d53d441558a1e7e2399683}\label{class_renderer_a479bec0669d53d441558a1e7e2399683} 
-\index{Renderer@{Renderer}!OnResize@{OnResize}}
-\index{OnResize@{OnResize}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{OnResize()}{OnResize()}}
-{\footnotesize\ttfamily void Renderer\+::\+On\+Resize (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Width\ ==\ width\ \&\&\ m\_Height\ ==\ height)\ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00042\ \ \ \ \ \}}
-\DoxyCodeLine{00043\ \ \ \ \ }
-\DoxyCodeLine{00044\ \ \ \ \ m\_Width\ =\ width;}
-\DoxyCodeLine{00045\ \ \ \ \ m\_Height\ =\ height;}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_ImageData\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_ImageData;}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ m\_ImageData\ =\ \textcolor{keyword}{new}\ uint32\_t[m\_Width\ *\ m\_Height];}
-\DoxyCodeLine{00050\ \ \ \ \ \}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Image\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_Image;}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ m\_Image\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_image}{Image}}(m\_Width,\ m\_Height,\ m\_ImageData);}
-\DoxyCodeLine{00054\ \ \ \ \ \}}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_AccumulationData\ !=\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_AccumulationData;}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ m\_AccumulationData\ =\ \textcolor{keyword}{new}\ Math::Vector4f[m\_Width\ *\ m\_Height];}
-\DoxyCodeLine{00058\ \ \ \ \ \}}
-\DoxyCodeLine{00059\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_abbd2924832fd11fc0499967825277fa5}\label{class_renderer_abbd2924832fd11fc0499967825277fa5} 
-\index{Renderer@{Renderer}!RayDepth@{RayDepth}}
-\index{RayDepth@{RayDepth}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{RayDepth()}{RayDepth()}}
-{\footnotesize\ttfamily constexpr int \& Renderer\+::\+Ray\+Depth (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00072}{72}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_RayDepth;}
-\DoxyCodeLine{00074\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_aadfa77937a8182a967a2543ba0957f57}\label{class_renderer_aadfa77937a8182a967a2543ba0957f57} 
-\index{Renderer@{Renderer}!Render@{Render}}
-\index{Render@{Render}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void Renderer\+::\+Render (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_camera}{Camera}} \&}]{camera,  }\item[{const \mbox{\hyperlink{class_acceleration_structure}{Acceleration\+Structure}} \&}]{acceleration\+Structure,  }\item[{std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$}]{light\+Sources,  }\item[{std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$}]{materials }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00112}{112}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ m\_Camera\ =\ \&camera;}
-\DoxyCodeLine{00114\ \ \ \ \ m\_AccelerationStructure\ =\ \&accelerationStructure;}
-\DoxyCodeLine{00115\ \ \ \ \ m\_LightSources\ =\ lightSources;}
-\DoxyCodeLine{00116\ \ \ \ \ m\_Materials\ =\ materials;}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_Accumulate)\ \{}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ m\_FrameIndex\ =\ 1;}
-\DoxyCodeLine{00120\ \ \ \ \ \}}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_FrameIndex\ ==\ 1)\ \{}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ memset(m\_AccumulationData,\ 0,\ m\_Width\ *\ m\_Height\ *\ \textcolor{keyword}{sizeof}(Math::Vector4f));}
-\DoxyCodeLine{00124\ \ \ \ \ \}}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{float}\ inverseFrameIndex\ =\ 1.f\ /\ m\_FrameIndex;}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{float}\ inverseGamma\ =\ 1.f\ /\ m\_Gamma;}
-\DoxyCodeLine{00128\ }
-\DoxyCodeLine{00129\ \ \ \ \ std::vector<std::thread>\ handles;}
-\DoxyCodeLine{00130\ \ \ \ \ handles.reserve(m\_UsedThreads);}
-\DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ m\_Height;\ i\ +=\ m\_LinesPerThread)\ \{}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ handles.emplace\_back([\textcolor{keyword}{this},\ i,\ inverseFrameIndex,\ inverseGamma]()\ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nextBlock\ =\ i\ +\ m\_LinesPerThread;}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ limit\ =\ Math::Min(nextBlock,\ m\_Height);}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ i;\ t\ <\ limit;\ ++t)\ \{}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ m\_Width;\ ++j)\ \{}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_AccumulationData[m\_Width\ *\ t\ +\ j]\ +=\ AcceleratedPixelProgram(t,\ j);}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector4f\ color\ =\ m\_AccumulationData[m\_Width\ *\ t\ +\ j];}
-\DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ *=\ inverseFrameIndex;}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ =\ Utilities::CorrectGamma(color,\ inverseGamma);}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ =\ Math::Clamp(color,\ 0.f,\ 1.f);}
-\DoxyCodeLine{00145\ }
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ImageData[m\_Width\ *\ t\ +\ j]\ =\ Utilities::ConvertColorToRGBA(color);}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{00150\ \ \ \ \ \}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&handle\ :\ handles)\ \{}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ handle.join();}
-\DoxyCodeLine{00154\ \ \ \ \ \}}
-\DoxyCodeLine{00155\ }
-\DoxyCodeLine{00156\ \ \ \ \ m\_Image-\/>UpdateData(m\_ImageData);}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Accumulate)\ \{}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ ++m\_FrameIndex;}
-\DoxyCodeLine{00160\ \ \ \ \ \}}
-\DoxyCodeLine{00161\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a1e14dc9efe9d6783374b812721e2bde3}\label{class_renderer_a1e14dc9efe9d6783374b812721e2bde3} 
-\index{Renderer@{Renderer}!Render@{Render}}
-\index{Render@{Render}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void Renderer\+::\+Render (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_camera}{Camera}} \&}]{camera,  }\item[{std\+::span$<$ const Hittable\+Object\+Ptr $>$}]{objects,  }\item[{std\+::span$<$ const \mbox{\hyperlink{class_light}{Light}} $>$}]{light\+Sources,  }\item[{std\+::span$<$ const \mbox{\hyperlink{struct_material}{Material}} $>$}]{materials }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00062\ \ \ \ \ m\_Camera\ =\ \&camera;}
-\DoxyCodeLine{00063\ \ \ \ \ m\_Objects\ =\ objects;}
-\DoxyCodeLine{00064\ \ \ \ \ m\_LightSources\ =\ lightSources;}
-\DoxyCodeLine{00065\ \ \ \ \ m\_Materials\ =\ materials;}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_Accumulate)\ \{}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ m\_FrameIndex\ =\ 1;}
-\DoxyCodeLine{00069\ \ \ \ \ \}}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_FrameIndex\ ==\ 1)\ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ memset(m\_AccumulationData,\ 0,\ m\_Width\ *\ m\_Height\ *\ \textcolor{keyword}{sizeof}(Math::Vector4f));}
-\DoxyCodeLine{00073\ \ \ \ \ \}}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{float}\ inverseFrameIndex\ =\ 1.f\ /\ m\_FrameIndex;}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{float}\ inverseGamma\ =\ 1.f\ /\ m\_Gamma;}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00078\ \ \ \ \ std::vector<std::thread>\ handles;}
-\DoxyCodeLine{00079\ \ \ \ \ handles.reserve(m\_UsedThreads);}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ m\_Height;\ i\ +=\ m\_LinesPerThread)\ \{}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ handles.emplace\_back([\textcolor{keyword}{this},\ i,\ inverseFrameIndex,\ inverseGamma]()\ \{}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nextBlock\ =\ i\ +\ m\_LinesPerThread;}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ limit\ =\ Math::Min(nextBlock,\ m\_Height);}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ i;\ t\ <\ limit;\ ++t)\ \{}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ m\_Width;\ ++j)\ \{}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_AccumulationData[m\_Width\ *\ t\ +\ j]\ +=\ PixelProgram(t,\ j);}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector4f\ color\ =\ m\_AccumulationData[m\_Width\ *\ t\ +\ j];}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ *=\ inverseFrameIndex;}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ =\ Utilities::CorrectGamma(color,\ inverseGamma);}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ =\ Math::Clamp(color,\ 0.f,\ 1.f);}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ImageData[m\_Width\ *\ t\ +\ j]\ =\ Utilities::ConvertColorToRGBA(color);}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{00099\ \ \ \ \ \}}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&handle\ :\ handles)\ \{}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ handle.join();}
-\DoxyCodeLine{00103\ \ \ \ \ \}}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \ \ \ \ m\_Image-\/>UpdateData(m\_ImageData);}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Accumulate)\ \{}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ++m\_FrameIndex;}
-\DoxyCodeLine{00109\ \ \ \ \ \}}
-\DoxyCodeLine{00110\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_abd4bd06651bc672b21a4eee5ab2414c0}\label{class_renderer_abd4bd06651bc672b21a4eee5ab2414c0} 
-\index{Renderer@{Renderer}!SaveImage@{SaveImage}}
-\index{SaveImage@{SaveImage}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{SaveImage()}{SaveImage()}}
-{\footnotesize\ttfamily void Renderer\+::\+Save\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{_renderer_8cpp_source}{Renderer.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00036\ \ \ \ \ stbi\_write\_png(filename,\ m\_Width,\ m\_Height,\ 4,\ m\_ImageData,\ m\_Width\ *\ 4);}
-\DoxyCodeLine{00037\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a8d7bccf9bfc047ae5b4ebf4b7855178b}\label{class_renderer_a8d7bccf9bfc047ae5b4ebf4b7855178b} 
-\index{Renderer@{Renderer}!SetUsedThreadCount@{SetUsedThreadCount}}
-\index{SetUsedThreadCount@{SetUsedThreadCount}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{SetUsedThreadCount()}{SetUsedThreadCount()}}
-{\footnotesize\ttfamily constexpr void Renderer\+::\+Set\+Used\+Thread\+Count (\begin{DoxyParamCaption}\item[{int}]{used\+Threads }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00059}{59}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ m\_UsedThreads\ =\ Math::Clamp(usedThreads,\ 1,\ m\_AvailableThreads);}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ m\_LinesPerThread\ =\ (m\_Height\ +\ m\_UsedThreads\ -\/\ 1)\ /\ m\_UsedThreads;}
-\DoxyCodeLine{00062\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_renderer_a4ec221255674e8b346104f63ac204f47}\label{class_renderer_a4ec221255674e8b346104f63ac204f47} 
-\index{Renderer@{Renderer}!UsedThreadCount@{UsedThreadCount}}
-\index{UsedThreadCount@{UsedThreadCount}!Renderer@{Renderer}}
-\doxysubsubsection{\texorpdfstring{UsedThreadCount()}{UsedThreadCount()}}
-{\footnotesize\ttfamily constexpr int \& Renderer\+::\+Used\+Thread\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_renderer_8h_source_l00064}{64}} of file \mbox{\hyperlink{_renderer_8h_source}{Renderer.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
-\DoxyCodeLine{00066\ \ \ \ \ \}}
-
-\end{DoxyCode}
-
+Class that renders scene to image. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

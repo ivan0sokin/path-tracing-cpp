@@ -6,6 +6,7 @@
 #include <vector>
 #include <span>
 
+//! Observerer class
 class Camera {
 public:
     inline Camera() noexcept = default;
@@ -14,10 +15,13 @@ public:
 
     ~Camera() noexcept = default;
 
+    //! Reconstructs internal state based on new viewport size
     void OnViewportResize(int viewportWidth, int viewportHeight) noexcept;
 
+    //! Computes ray directions and saves them into private member
     void ComputeRayDirections() noexcept;
 
+    //! Return span to array of ray directions
     constexpr std::span<const Math::Vector3f> GetRayDirections() const noexcept {
         return m_RayDirections;
     }

@@ -32,8 +32,8 @@ Renderer::~Renderer() noexcept {
     }
 }
 
-void Renderer::SaveImage(const char *filename) const noexcept {
-    stbi_write_png(filename, m_Width, m_Height, 4, m_ImageData, m_Width * 4);
+void Renderer::SaveImage(const std::filesystem::path &pathToFile) const noexcept {
+    stbi_write_png(pathToFile.string().c_str(), m_Width, m_Height, 4, m_ImageData, m_Width * 4);
 }
 
 void Renderer::OnResize(int width, int height) noexcept {

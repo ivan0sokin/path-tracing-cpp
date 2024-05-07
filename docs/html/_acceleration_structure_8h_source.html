@@ -93,29 +93,33 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;span&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_acceleration_structure.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="class_acceleration_structure.html">AccelerationStructure</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="class_acceleration_structure.html">AccelerationStructure</a>() <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="class_acceleration_structure.html">AccelerationStructure</a>(std::span&lt;HittableObjectPtr&gt; objects) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="class_acceleration_structure.html">~AccelerationStructure</a>() <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> Update(std::span&lt;HittableObjectPtr&gt; objects) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> Hit(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ray.html">Ray</a> &amp;ray, <span class="keywordtype">float</span> tMin, <span class="keywordtype">float</span> tMax, <a class="code hl_struct" href="struct_hit_payload.html">HitPayload</a> &amp;payload) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_acceleration_structure.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="class_acceleration_structure.html">AccelerationStructure</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_function" href="class_acceleration_structure.html#a0d62be56e05c15bd162665810f04a4d5">AccelerationStructure</a>() <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_function" href="class_acceleration_structure.html#a0d62be56e05c15bd162665810f04a4d5">AccelerationStructure</a>(std::span&lt;HittableObjectPtr&gt; objects) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_function" href="class_acceleration_structure.html#a18a088639acc377d2dc789af1f72d6d3">~AccelerationStructure</a>() <span class="keyword">noexcept</span>;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_struct" href="struct_b_v_h_node.html">BVHNode</a> *m_Root = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_acceleration_structure.html#adcf60852f60cba8aba627e8e051d9df2">Update</a>(std::span&lt;HittableObjectPtr&gt; objects) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_acceleration_structure.html#ad6205b0428d2cd4c98dcd1d39d1b5297">Hit</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ray.html">Ray</a> &amp;ray, <span class="keywordtype">float</span> tMin, <span class="keywordtype">float</span> tMax, <a class="code hl_struct" href="struct_hit_payload.html">HitPayload</a> &amp;payload) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_struct" href="struct_b_v_h_node.html">BVHNode</a> *m_Root = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>};</div>
 </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_acceleration_structure_html"><div class="ttname"><a href="class_acceleration_structure.html">AccelerationStructure</a></div><div class="ttdef"><b>Definition</b> <a href="#l00013">AccelerationStructure.h:13</a></div></div>
-<div class="ttc" id="astruct_b_v_h_node_html"><div class="ttname"><a href="struct_b_v_h_node.html">BVHNode</a></div><div class="ttdef"><b>Definition</b> <a href="_b_v_h_node_8h_source.html#l00013">BVHNode.h:13</a></div></div>
-<div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdef"><b>Definition</b> <a href="_hit_payload_8h_source.html#l00007">HitPayload.h:7</a></div></div>
-<div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdef"><b>Definition</b> <a href="_ray_8h_source.html#l00006">Ray.h:6</a></div></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_acceleration_structure_html"><div class="ttname"><a href="class_acceleration_structure.html">AccelerationStructure</a></div><div class="ttdoc">Class which holds all information about accelerating scene.</div><div class="ttdef"><b>Definition</b> AccelerationStructure.h:14</div></div>
+<div class="ttc" id="aclass_acceleration_structure_html_a0d62be56e05c15bd162665810f04a4d5"><div class="ttname"><a href="class_acceleration_structure.html#a0d62be56e05c15bd162665810f04a4d5">AccelerationStructure::AccelerationStructure</a></div><div class="ttdeci">AccelerationStructure() noexcept</div><div class="ttdoc">Creates Acceleration structure that cannot be hit.</div><div class="ttdef"><b>Definition</b> AccelerationStructure.cpp:5</div></div>
+<div class="ttc" id="aclass_acceleration_structure_html_a18a088639acc377d2dc789af1f72d6d3"><div class="ttname"><a href="class_acceleration_structure.html#a18a088639acc377d2dc789af1f72d6d3">AccelerationStructure::~AccelerationStructure</a></div><div class="ttdeci">~AccelerationStructure() noexcept</div><div class="ttdoc">Deallocates BVH.</div><div class="ttdef"><b>Definition</b> AccelerationStructure.cpp:13</div></div>
+<div class="ttc" id="aclass_acceleration_structure_html_ad6205b0428d2cd4c98dcd1d39d1b5297"><div class="ttname"><a href="class_acceleration_structure.html#ad6205b0428d2cd4c98dcd1d39d1b5297">AccelerationStructure::Hit</a></div><div class="ttdeci">void Hit(const Ray &amp;ray, float tMin, float tMax, HitPayload &amp;payload) const noexcept</div><div class="ttdoc">Saves info about hit into payload</div><div class="ttdef"><b>Definition</b> AccelerationStructure.cpp:31</div></div>
+<div class="ttc" id="aclass_acceleration_structure_html_adcf60852f60cba8aba627e8e051d9df2"><div class="ttname"><a href="class_acceleration_structure.html#adcf60852f60cba8aba627e8e051d9df2">AccelerationStructure::Update</a></div><div class="ttdeci">void Update(std::span&lt; HittableObjectPtr &gt; objects) noexcept</div><div class="ttdoc">Replaces old BVH with new one constructed with objects</div><div class="ttdef"><b>Definition</b> AccelerationStructure.cpp:19</div></div>
+<div class="ttc" id="astruct_b_v_h_node_html"><div class="ttname"><a href="struct_b_v_h_node.html">BVHNode</a></div><div class="ttdoc">Bounding volume hierarchy node.</div><div class="ttdef"><b>Definition</b> BVHNode.h:14</div></div>
+<div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdoc">Holds information about surface interaction.</div><div class="ttdef"><b>Definition</b> HitPayload.h:8</div></div>
+<div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdoc">Ray representation, P(t) = origin + direction * t.</div><div class="ttdef"><b>Definition</b> Ray.h:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

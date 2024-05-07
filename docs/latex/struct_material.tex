@@ -1,116 +1,45 @@
 \doxysection{Material Struct Reference}
 \hypertarget{struct_material}{}\label{struct_material}\index{Material@{Material}}
+
+
+Strictly defined type that can be serialized/deserialized.  
+
+
+
+
+{\ttfamily \#include $<$Material.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-constexpr Math\+::\+Vector3f \mbox{\hyperlink{struct_material_a17a74cfbf769fbcd816744330b31be42}{Get\+Emission}} () const noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{struct_material_a17a74cfbf769fbcd816744330b31be42}\label{struct_material_a17a74cfbf769fbcd816744330b31be42} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries Get\+Emission} () const noexcept
+\begin{DoxyCompactList}\small\item\em Returns emmision of material. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-Math\+::\+Vector3f \mbox{\hyperlink{struct_material_a92fadac406d40679434c3239c68f15a1}{albedo}}
+\Hypertarget{struct_material_a92fadac406d40679434c3239c68f15a1}\label{struct_material_a92fadac406d40679434c3239c68f15a1} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries albedo}
 \item 
-float \mbox{\hyperlink{struct_material_a97fc4551763505f23dac24a9901cee88}{metallic}}
+\Hypertarget{struct_material_a97fc4551763505f23dac24a9901cee88}\label{struct_material_a97fc4551763505f23dac24a9901cee88} 
+float {\bfseries metallic}
 \item 
-float \mbox{\hyperlink{struct_material_a8cb88ff425239410cd0e8dd8c938ec0c}{specular}}
+\Hypertarget{struct_material_a8cb88ff425239410cd0e8dd8c938ec0c}\label{struct_material_a8cb88ff425239410cd0e8dd8c938ec0c} 
+float {\bfseries specular}
 \item 
-float \mbox{\hyperlink{struct_material_abbaeac8374986ca82670ff0d7749c566}{roughness}}
+\Hypertarget{struct_material_abbaeac8374986ca82670ff0d7749c566}\label{struct_material_abbaeac8374986ca82670ff0d7749c566} 
+float {\bfseries roughness}
 \item 
-float \mbox{\hyperlink{struct_material_a34afba3ab516adc78229530a32f22a49}{emission\+Power}}
+\Hypertarget{struct_material_a34afba3ab516adc78229530a32f22a49}\label{struct_material_a34afba3ab516adc78229530a32f22a49} 
+float {\bfseries emission\+Power}
 \item 
-int \mbox{\hyperlink{struct_material_a4c963b37cea2feeae42302bb7388e992}{index}}
+\Hypertarget{struct_material_a4c963b37cea2feeae42302bb7388e992}\label{struct_material_a4c963b37cea2feeae42302bb7388e992} 
+int {\bfseries index}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00006}{6}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{struct_material_a17a74cfbf769fbcd816744330b31be42}\label{struct_material_a17a74cfbf769fbcd816744330b31be42} 
-\index{Material@{Material}!GetEmission@{GetEmission}}
-\index{GetEmission@{GetEmission}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{GetEmission()}{GetEmission()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f Material\+::\+Get\+Emission (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00015}{15}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ albedo\ *\ emissionPower;}
-\DoxyCodeLine{00017\ \ \ \ \ \}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Data Documentation}
-\Hypertarget{struct_material_a92fadac406d40679434c3239c68f15a1}\label{struct_material_a92fadac406d40679434c3239c68f15a1} 
-\index{Material@{Material}!albedo@{albedo}}
-\index{albedo@{albedo}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{albedo}{albedo}}
-{\footnotesize\ttfamily Math\+::\+Vector3f Material\+::albedo}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00007}{7}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-\Hypertarget{struct_material_a34afba3ab516adc78229530a32f22a49}\label{struct_material_a34afba3ab516adc78229530a32f22a49} 
-\index{Material@{Material}!emissionPower@{emissionPower}}
-\index{emissionPower@{emissionPower}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{emissionPower}{emissionPower}}
-{\footnotesize\ttfamily float Material\+::emission\+Power}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00011}{11}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-\Hypertarget{struct_material_a4c963b37cea2feeae42302bb7388e992}\label{struct_material_a4c963b37cea2feeae42302bb7388e992} 
-\index{Material@{Material}!index@{index}}
-\index{index@{index}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{index}{index}}
-{\footnotesize\ttfamily int Material\+::index}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00013}{13}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-\Hypertarget{struct_material_a97fc4551763505f23dac24a9901cee88}\label{struct_material_a97fc4551763505f23dac24a9901cee88} 
-\index{Material@{Material}!metallic@{metallic}}
-\index{metallic@{metallic}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{metallic}{metallic}}
-{\footnotesize\ttfamily float Material\+::metallic}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00008}{8}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-\Hypertarget{struct_material_abbaeac8374986ca82670ff0d7749c566}\label{struct_material_abbaeac8374986ca82670ff0d7749c566} 
-\index{Material@{Material}!roughness@{roughness}}
-\index{roughness@{roughness}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{roughness}{roughness}}
-{\footnotesize\ttfamily float Material\+::roughness}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00010}{10}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-\Hypertarget{struct_material_a8cb88ff425239410cd0e8dd8c938ec0c}\label{struct_material_a8cb88ff425239410cd0e8dd8c938ec0c} 
-\index{Material@{Material}!specular@{specular}}
-\index{specular@{specular}!Material@{Material}}
-\doxysubsubsection{\texorpdfstring{specular}{specular}}
-{\footnotesize\ttfamily float Material\+::specular}
-
-
-
-Definition at line \mbox{\hyperlink{_material_8h_source_l00009}{9}} of file \mbox{\hyperlink{_material_8h_source}{Material.\+h}}.
-
-
+Strictly defined type that can be serialized/deserialized. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

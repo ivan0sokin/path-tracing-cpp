@@ -14,18 +14,23 @@
 #include <functional>
 #include <span>
 
+//! Class that renders scene to image
 class Renderer {
 public:
     Renderer() = delete;
     
+    //! Creates renderer with given width and height
     Renderer(int width, int height) noexcept;
 
+    //! Deallocates image data
     ~Renderer() noexcept;
 
     using typ_t = HittableObject*;
 
+    //! Renders without object acceleration (but with model accelerator for speed purpose)
     void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
+    //! Renders with object acceleration
     void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
     constexpr bool& Accumulate() noexcept {
@@ -44,8 +49,10 @@ public:
         return m_Image;
     }
 
-    void SaveImage(const char *filename) const noexcept;
+    //! Saves image to file
+    void SaveImage(const std::filesystem::path &pathToFile) const noexcept;
 
+    //! Resizez image data
     void OnResize(int width, int height) noexcept;
 
     constexpr int GetAvailableThreadCount() const noexcept {

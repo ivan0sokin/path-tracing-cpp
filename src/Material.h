@@ -3,6 +3,7 @@
 
 #include "math/Math.h"
 
+//! Strictly defined type that can be serialized/deserialized
 struct Material {
     Math::Vector3f albedo;
     float metallic;
@@ -12,6 +13,7 @@ struct Material {
 
     int index;
 
+    //! Returns emmision of material 
     constexpr Math::Vector3f GetEmission() const noexcept {
         return albedo * emissionPower;
     }

@@ -1,151 +1,48 @@
 \doxysection{Scene Struct Reference}
 \hypertarget{struct_scene}{}\label{struct_scene}\index{Scene@{Scene}}
+
+
+Struct that holds camera, all primitives and models. Can be serialized/deserialized.  
+
+
+
+
+{\ttfamily \#include $<$Scene.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-std\+::optional$<$ std\+::string $>$ \mbox{\hyperlink{struct_scene_a14f9707a4b2bb121d676a1ce33eb5996}{Serialize}} (std\+::ostream \&os) const noexcept
-\item 
-std\+::optional$<$ std\+::string $>$ \mbox{\hyperlink{struct_scene_afb2077d341ca179c79c243742d8f583c}{Deserialize}} (std\+::istream \&is) noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{struct_scene_a14f9707a4b2bb121d676a1ce33eb5996}\label{struct_scene_a14f9707a4b2bb121d676a1ce33eb5996} 
+std\+::optional$<$ std\+::string $>$ {\bfseries Serialize} (std\+::ostream \&os) const noexcept
+\begin{DoxyCompactList}\small\item\em Serializes scene into {\ttfamily os} \end{DoxyCompactList}\item 
+\Hypertarget{struct_scene_afb2077d341ca179c79c243742d8f583c}\label{struct_scene_afb2077d341ca179c79c243742d8f583c} 
+std\+::optional$<$ std\+::string $>$ {\bfseries Deserialize} (std\+::istream \&is) noexcept
+\begin{DoxyCompactList}\small\item\em Deserializes scene from {\ttfamily is} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-std\+::vector$<$ Shapes\+::\+Sphere $>$ \mbox{\hyperlink{struct_scene_a81f47260ad46cb1392428e8342d9ba6a}{spheres}}
+\Hypertarget{struct_scene_a81f47260ad46cb1392428e8342d9ba6a}\label{struct_scene_a81f47260ad46cb1392428e8342d9ba6a} 
+std\+::vector$<$ \mbox{\hyperlink{class_shapes_1_1_sphere}{Shapes\+::\+Sphere}} $>$ {\bfseries spheres}
 \item 
-std\+::vector$<$ Shapes\+::\+Triangle $>$ \mbox{\hyperlink{struct_scene_abd17f9d9a350e070c7eafc5571e3f050}{triangles}}
+\Hypertarget{struct_scene_abd17f9d9a350e070c7eafc5571e3f050}\label{struct_scene_abd17f9d9a350e070c7eafc5571e3f050} 
+std\+::vector$<$ \mbox{\hyperlink{class_shapes_1_1_triangle}{Shapes\+::\+Triangle}} $>$ {\bfseries triangles}
 \item 
-std\+::vector$<$ Shapes\+::\+Box $>$ \mbox{\hyperlink{struct_scene_ab570b6a89df1224ccb97bca13d8841b6}{boxes}}
+\Hypertarget{struct_scene_ab570b6a89df1224ccb97bca13d8841b6}\label{struct_scene_ab570b6a89df1224ccb97bca13d8841b6} 
+std\+::vector$<$ \mbox{\hyperlink{class_shapes_1_1_box}{Shapes\+::\+Box}} $>$ {\bfseries boxes}
 \item 
-std\+::vector$<$ Model \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{struct_scene_a097f5297e76bcda04de33a96644d064c}{models}}
+\Hypertarget{struct_scene_a097f5297e76bcda04de33a96644d064c}\label{struct_scene_a097f5297e76bcda04de33a96644d064c} 
+std\+::vector$<$ \mbox{\hyperlink{class_model}{Model}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries models}
 \item 
-std\+::vector$<$ \mbox{\hyperlink{struct_material}{Material}} $>$ \mbox{\hyperlink{struct_scene_a6f18f407d40c5c8ec8d2bac15417dc20}{materials}}
+\Hypertarget{struct_scene_a6f18f407d40c5c8ec8d2bac15417dc20}\label{struct_scene_a6f18f407d40c5c8ec8d2bac15417dc20} 
+std\+::vector$<$ \mbox{\hyperlink{struct_material}{Material}} $>$ {\bfseries materials}
 \item 
-\mbox{\hyperlink{class_camera}{Camera}} \mbox{\hyperlink{struct_scene_afed13ec4ba2d7ab75b273d507911b498}{camera}}
+\Hypertarget{struct_scene_afed13ec4ba2d7ab75b273d507911b498}\label{struct_scene_afed13ec4ba2d7ab75b273d507911b498} 
+\mbox{\hyperlink{class_camera}{Camera}} {\bfseries camera}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00017}{17}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{struct_scene_afb2077d341ca179c79c243742d8f583c}\label{struct_scene_afb2077d341ca179c79c243742d8f583c} 
-\index{Scene@{Scene}!Deserialize@{Deserialize}}
-\index{Deserialize@{Deserialize}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{Deserialize()}{Deserialize()}}
-{\footnotesize\ttfamily std\+::optional$<$ std\+::string $>$ Scene\+::\+Deserialize (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{is }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00037}{37}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ is.exceptions(std::ios::eofbit\ |\ std::ios::badbit\ |\ std::ios::failbit);}
-\DoxyCodeLine{00039\ }
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ TryDeserialize(is);}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (std::exception\ \&e)\ \{}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ e.what();}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
-\DoxyCodeLine{00047\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{struct_scene_a14f9707a4b2bb121d676a1ce33eb5996}\label{struct_scene_a14f9707a4b2bb121d676a1ce33eb5996} 
-\index{Scene@{Scene}!Serialize@{Serialize}}
-\index{Serialize@{Serialize}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{Serialize()}{Serialize()}}
-{\footnotesize\ttfamily std\+::optional$<$ std\+::string $>$ Scene\+::\+Serialize (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00025}{25}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ os.exceptions(std::ios::badbit\ |\ std::ios::failbit);}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ TrySerialize(os);}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (std::exception\ \&e)\ \{}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ e.what();}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
-\DoxyCodeLine{00035\ \ \ \ \ \}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Data Documentation}
-\Hypertarget{struct_scene_ab570b6a89df1224ccb97bca13d8841b6}\label{struct_scene_ab570b6a89df1224ccb97bca13d8841b6} 
-\index{Scene@{Scene}!boxes@{boxes}}
-\index{boxes@{boxes}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{boxes}{boxes}}
-{\footnotesize\ttfamily std\+::vector$<$Shapes\+::\+Box$>$ Scene\+::boxes}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00020}{20}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-\Hypertarget{struct_scene_afed13ec4ba2d7ab75b273d507911b498}\label{struct_scene_afed13ec4ba2d7ab75b273d507911b498} 
-\index{Scene@{Scene}!camera@{camera}}
-\index{camera@{camera}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{camera}{camera}}
-{\footnotesize\ttfamily \mbox{\hyperlink{class_camera}{Camera}} Scene\+::camera}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00023}{23}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-\Hypertarget{struct_scene_a6f18f407d40c5c8ec8d2bac15417dc20}\label{struct_scene_a6f18f407d40c5c8ec8d2bac15417dc20} 
-\index{Scene@{Scene}!materials@{materials}}
-\index{materials@{materials}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{materials}{materials}}
-{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{struct_material}{Material}}$>$ Scene\+::materials}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00022}{22}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-\Hypertarget{struct_scene_a097f5297e76bcda04de33a96644d064c}\label{struct_scene_a097f5297e76bcda04de33a96644d064c} 
-\index{Scene@{Scene}!models@{models}}
-\index{models@{models}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{models}{models}}
-{\footnotesize\ttfamily std\+::vector$<$Model\texorpdfstring{$\ast$}{*}$>$ Scene\+::models}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00021}{21}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-\Hypertarget{struct_scene_a81f47260ad46cb1392428e8342d9ba6a}\label{struct_scene_a81f47260ad46cb1392428e8342d9ba6a} 
-\index{Scene@{Scene}!spheres@{spheres}}
-\index{spheres@{spheres}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{spheres}{spheres}}
-{\footnotesize\ttfamily std\+::vector$<$Shapes\+::\+Sphere$>$ Scene\+::spheres}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00018}{18}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-\Hypertarget{struct_scene_abd17f9d9a350e070c7eafc5571e3f050}\label{struct_scene_abd17f9d9a350e070c7eafc5571e3f050} 
-\index{Scene@{Scene}!triangles@{triangles}}
-\index{triangles@{triangles}!Scene@{Scene}}
-\doxysubsubsection{\texorpdfstring{triangles}{triangles}}
-{\footnotesize\ttfamily std\+::vector$<$Shapes\+::\+Triangle$>$ Scene\+::triangles}
-
-
-
-Definition at line \mbox{\hyperlink{_scene_8h_source_l00019}{19}} of file \mbox{\hyperlink{_scene_8h_source}{Scene.\+h}}.
-
-
+Struct that holds camera, all primitives and models. Can be serialized/deserialized. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

@@ -10,6 +10,7 @@
 #include <vector>
 #include <functional>
 
+//! Bounding volume hierarchy node
 struct BVHNode {
     AABB aabb = AABB::Empty();
     BVHNode *left = nullptr, *right = nullptr;
@@ -23,10 +24,12 @@ struct BVHNode {
     constexpr BVHNode(const HittableObject *object) noexcept :
         object(object), aabb(object->GetBoundingBox()) {}
 
+    //! Returns true if this node contains pointer to primitive
     constexpr bool IsTerminating() const noexcept {
         return object != nullptr;
     }
 
+    //! Saves hit info into ```payload```
     inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) noexcept {
         if (!aabb.IntersectsRay(ray, tMin, tMax)) {
             return false;
@@ -42,6 +45,7 @@ struct BVHNode {
         return anyHit;
     }
 
+    //! Makes BVH using Sweep SAH optimization
     inline static BVHNode* MakeHierarchySAH(std::span<HittableObjectPtr> objects, int low, int high) noexcept {
         if (low + 1 == high) {
             return new BVHNode(objects[low]);
@@ -105,6 +109,7 @@ struct BVHNode {
         }
     };
     
+    //! Makes BVH using naive implementation sorting by lengths of axes
     inline static BVHNode* MakeHierarchyNaive(std::span<HittableObjectPtr> objects, int low, int high) noexcept {
         AABB aabb = AABB::Empty();
         for (int i = low; i < high; ++i) {
@@ -151,6 +156,7 @@ struct BVHNode {
         }
     };
 
+    //! Frees allocated memory of tree with root ```node```
     constexpr static void FreeMemory(BVHNode *node) noexcept {
         if (node == nullptr) {
             return;

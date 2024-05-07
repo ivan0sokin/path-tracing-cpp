@@ -1,124 +1,124 @@
 \doxysection{Renderer.\+h}
 \hypertarget{_renderer_8h_source}{}\label{_renderer_8h_source}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_RENDERER\_H}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_RENDERER\_H}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}Image.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}Scene.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}HitPayload.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}Ray.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}AccelerationStructure.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}Light.h"{}}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <functional>}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <span>}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00017}\mbox{\hyperlink{class_renderer}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_renderer}{Renderer}}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}()\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00020}00020\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00022}00022\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{class_renderer}{\string~Renderer}}()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00024}00024\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{using\ }typ\_t\ =\ HittableObject*;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ \&camera,\ std::span<const\ HittableObjectPtr>\ objects,\ std::span<const\ Light>\ lightSources,\ std::span<const\ Material>\ materials)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ \&camera,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ \&accelerationStructure,\ std::span<const\ Light>\ lightSources,\ std::span<const\ Material>\ materials)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\&\ Accumulate()\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accumulate;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00033}00033\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\&\ Accelerate()\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accelerate;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00037}00037\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00038}00038\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00039}00039\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetFrameIndex()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_FrameIndex;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00041}00041\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00042}00042\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_image}{Image}}*\ GetImage()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Image;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00045}00045\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00046}00046\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{void}\ SaveImage(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *filename)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00048}00048\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{void}\ OnResize(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetAvailableThreadCount()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_AvailableThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00053}00053\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00054}00054\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00055}00055\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetUsedThreadCount()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00057}00057\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ SetUsedThreadCount(\textcolor{keywordtype}{int}\ usedThreads)\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ m\_UsedThreads\ =\ Math::Clamp(usedThreads,\ 1,\ m\_AvailableThreads);}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ m\_LinesPerThread\ =\ (m\_Height\ +\ m\_UsedThreads\ -\/\ 1)\ /\ m\_UsedThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00062}00062\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00063}00063\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00064}00064\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\&\ UsedThreadCount()\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00066}00066\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00067}00067\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00068}00068\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ OnRayMiss(std::function<Math::Vector3f(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)>\ onRayMiss)\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ m\_OnRayMiss\ =\ onRayMiss;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00070}00070\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00071}00071\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00072}00072\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\&\ RayDepth()\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_RayDepth;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00074}00074\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00075}00075\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00076}00076\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\&\ Gamma()\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Gamma;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00078}00078\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00079}00079\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00080}00080\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00081}00081\ \ \ \ \ Math::Vector4f\ PixelProgram(\textcolor{keywordtype}{int}\ u,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00083}00083\ \ \ \ \ Math::Vector4f\ AcceleratedPixelProgram(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00084}00084\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ TraceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00086}00086\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ AcceleratedTraceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00088}00088\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ Miss(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00090}00090\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00091}00091\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_Width,\ m\_Height;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{class_image}{Image}}\ *m\_Image\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00094}00094\ \ \ \ \ uint32\_t\ *m\_ImageData\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00095}00095\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00096}00096\ \ \ \ \ std::function<Math::Vector3f(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)>\ m\_OnRayMiss\ =\ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)\{\ \textcolor{keywordflow}{return}\ Math::Vector3f(0.f,\ 0.f,\ 0.f);\ \};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00097}00097\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00098}00098\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AvailableThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00099}00099\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_UsedThreads;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00100}00100\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LinesPerThread;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00101}00101\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00102}00102\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_RayDepth\ =\ 5;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00103}00103\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ *m\_Camera\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00105}00105\ \ \ \ \ std::span<const\ HittableObjectPtr>\ m\_Objects;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00106}00106\ \ \ \ \ std::span<const\ Light>\ m\_LightSources;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00107}00107\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ *m\_AccelerationStructure\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00108}00108\ \ \ \ \ std::span<const\ Material>\ m\_Materials;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00109}00109\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00110}00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_Accumulate\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00111}00111\ \ \ \ \ Math::Vector4f\ *m\_AccumulationData\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_FrameIndex\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00113}00113\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00114}00114\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_Accelerate\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00115}00115\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00116}00116\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_Gamma\ =\ 2.f;}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00117}00117\ \};}
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00118}00118\ }
-\DoxyCodeLine{\Hypertarget{_renderer_8h_source_l00119}00119\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_RENDERER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_RENDERER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Image.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Scene.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}HitPayload.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Ray.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AccelerationStructure.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Light.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <span>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_renderer}{Renderer}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_renderer_ac8f8d5f6c84c870cbb0c24901988264c}{\string~Renderer}}()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_hittable_object}{typ\_t}}\ =\ \mbox{\hyperlink{class_hittable_object}{HittableObject}}*;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_renderer_a1e14dc9efe9d6783374b812721e2bde3}{Render}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ \&camera,\ std::span<const\ HittableObjectPtr>\ objects,\ std::span<const\ Light>\ lightSources,\ std::span<const\ Material>\ materials)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_renderer_a1e14dc9efe9d6783374b812721e2bde3}{Render}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ \&camera,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ \&accelerationStructure,\ std::span<const\ Light>\ lightSources,\ std::span<const\ Material>\ materials)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\&\ Accumulate()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accumulate;}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\&\ Accelerate()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Accelerate;}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetFrameIndex()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_FrameIndex;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_image}{Image}}*\ GetImage()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Image;}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_renderer_a6f962e76a966bd2b33bd5d1f936b665d}{SaveImage}}(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_renderer_a479bec0669d53d441558a1e7e2399683}{OnResize}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetAvailableThreadCount()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_AvailableThreads;}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ GetUsedThreadCount()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ SetUsedThreadCount(\textcolor{keywordtype}{int}\ usedThreads)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ m\_UsedThreads\ =\ Math::Clamp(usedThreads,\ 1,\ m\_AvailableThreads);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ m\_LinesPerThread\ =\ (m\_Height\ +\ m\_UsedThreads\ -\/\ 1)\ /\ m\_UsedThreads;}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\&\ UsedThreadCount()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_UsedThreads;}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ OnRayMiss(std::function<\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)>\ onRayMiss)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ m\_OnRayMiss\ =\ onRayMiss;}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\&\ RayDepth()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_RayDepth;}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\&\ Gamma()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Gamma;}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector4f}}\ PixelProgram(\textcolor{keywordtype}{int}\ u,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector4f}}\ AcceleratedPixelProgram(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ TraceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ AcceleratedTraceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ Miss(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_Width,\ m\_Height;}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{class_image}{Image}}\ *m\_Image\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00101\ \ \ \ \ uint32\_t\ *m\_ImageData\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ std::function<\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)>\ m\_OnRayMiss\ =\ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\&)\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}(0.f,\ 0.f,\ 0.f);\ \};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AvailableThreads;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_UsedThreads;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LinesPerThread;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_RayDepth\ =\ 5;}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_camera}{Camera}}\ *m\_Camera\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00112\ \ \ \ \ std::span<const\ HittableObjectPtr>\ m\_Objects;}
+\DoxyCodeLine{00113\ \ \ \ \ std::span<const\ Light>\ m\_LightSources;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ *m\_AccelerationStructure\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00115\ \ \ \ \ std::span<const\ Material>\ m\_Materials;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_Accumulate\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector4f}}\ *m\_AccumulationData\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_FrameIndex\ =\ 1;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_Accelerate\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_Gamma\ =\ 2.f;}
+\DoxyCodeLine{00124\ \};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

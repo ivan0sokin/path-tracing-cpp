@@ -1,101 +1,101 @@
 \doxysection{Application.\+h}
 \hypertarget{_application_8h_source}{}\label{_application_8h_source}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_APPLICATION\_H}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_APPLICATION\_H}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../glfw-\/3.4/include/GLFW/glfw3.h"{}}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00005}00005\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}Scene.h"{}}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}AccelerationStructure.h"{}}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}Renderer.h"{}}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00010}00010\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstring>}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <filesystem>}}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00015}\mbox{\hyperlink{class_application}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_application}{Application}}\ \{}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00016}00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{class_application}{Application}}(\textcolor{keywordtype}{int}\ windowWidth,\ \textcolor{keywordtype}{int}\ windowHeight)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00018}00018\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{int}\ Run()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00021}00021\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00022}00022\ \ \ \ \ \textcolor{keywordtype}{void}\ MainLoop()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00024}00024\ \ \ \ \ \textcolor{keywordtype}{void}\ OnUpdate()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00025}00025\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessSceneCollapsingHeaders()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00027}00027\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessCameraCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00029}00029\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessSpheresCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00031}00031\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessTrianglesCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessBoxesCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00035}00035\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessModelsCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00037}00037\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessMaterialsCollapsingHeader()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00039}00039\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateThemeStyle()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ LoadSceneFromFile(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00043}00043\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{void}\ SaveSceneToFile(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00045}00045\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateObjects()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00047}00047\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateLights()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00049}00049\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateObjectMaterials()\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00051}00051\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00052}00052\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_InitialWindowWidth,\ m\_InitialWindowHeight;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LastViewportWidth,\ m\_LastViewportHeight;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00055}00055\ \ \ \ \ GLFWwindow\ *m\_Window\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_DarkTheme\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00057}00057\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LastID;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_SomeObjectChanged;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_SomeGeometryChanged;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_TotalRenderTime;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00063}00063\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_LastRenderTime;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00064}00064\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_SaveImageFilePath;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00066}00066\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_SceneFilePath;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00067}00067\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{struct_scene}{Scene}}\ m\_Scene;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00069}00069\ \ \ \ \ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ m\_AccelerationStructure;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}\ m\_Renderer;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00071}00071\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00072}00072\ \ \ \ \ Math::Vector3f\ m\_RayMissColor;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00073}00073\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00074}00074\ \ \ \ \ std::vector<int>\ m\_SphereMaterialIndices;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00075}00075\ \ \ \ \ std::vector<int>\ m\_TriangleMaterialIndices;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00076}00076\ \ \ \ \ std::vector<int>\ m\_BoxMaterialIndices;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00077}00077\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00078}00078\ \ \ \ \ std::vector<HittableObject*>\ m\_Objects;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00079}00079\ \ \ \ \ std::vector<Light>\ m\_Lights;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00080}00080\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00081}00081\ \ \ \ \ \mbox{\hyperlink{struct_material}{Material}}\ m\_AddMaterial;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00082}00082\ \ \ \ \ Shapes::Sphere\ m\_AddSphere;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00083}00083\ \ \ \ \ Shapes::Triangle\ m\_AddTriangle;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00084}00084\ \ \ \ \ Shapes::Box\ m\_AddBox;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_ModelFilePath;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00086}00086\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_MaterialDirectory;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00087}00087\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddSphereMaterialIndex;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddTriangleMaterialIndex;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00090}00090\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddBoxMaterialIndex;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00091}00091\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *c\_WindowTitle\ =\ \textcolor{stringliteral}{"{}Path\ Tracing"{}};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00093}00093\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *c\_DefaultScenePath\ =\ \textcolor{stringliteral}{"{}assets/dft2.scn"{}};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00094}00094\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ c\_AnyInputFilePathLength\ =\ 128;}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00095}00095\ \};}
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00096}00096\ }
-\DoxyCodeLine{\Hypertarget{_application_8h_source_l00097}00097\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_APPLICATION\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_APPLICATION\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../glfw-\/3.4/include/GLFW/glfw3.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Scene.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}AccelerationStructure.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Renderer.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_application}{Application}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_application_a7e16acc4775189b71c6f795df5fc7cbb}{Application}}(\textcolor{keywordtype}{int}\ windowWidth,\ \textcolor{keywordtype}{int}\ windowHeight)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_application_a5c63f622cc0fd7ca14f9a19b3f24742f}{Run}}()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ MainLoop()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ OnUpdate()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessSceneCollapsingHeaders()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessCameraCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessSpheresCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessTrianglesCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessBoxesCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessModelsCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessMaterialsCollapsingHeader()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateThemeStyle()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ LoadSceneFromFile(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ SaveSceneToFile(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateObjects()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateLights()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateObjectMaterials()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_InitialWindowWidth,\ m\_InitialWindowHeight;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LastViewportWidth,\ m\_LastViewportHeight;}
+\DoxyCodeLine{00057\ \ \ \ \ GLFWwindow\ *m\_Window\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_DarkTheme\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_LastID;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_SomeObjectChanged;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_SomeGeometryChanged;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_TotalRenderTime;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_LastRenderTime;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_SaveImageFilePath;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_SceneFilePath;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{struct_scene}{Scene}}\ m\_Scene;}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{class_acceleration_structure}{AccelerationStructure}}\ m\_AccelerationStructure;}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{class_renderer}{Renderer}}\ m\_Renderer;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}\ m\_RayMissColor;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ std::vector<int>\ m\_SphereMaterialIndices;}
+\DoxyCodeLine{00077\ \ \ \ \ std::vector<int>\ m\_TriangleMaterialIndices;}
+\DoxyCodeLine{00078\ \ \ \ \ std::vector<int>\ m\_BoxMaterialIndices;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ std::vector<HittableObject*>\ m\_Objects;}
+\DoxyCodeLine{00081\ \ \ \ \ std::vector<Light>\ m\_Lights;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{struct_material}{Material}}\ m\_AddMaterial;}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{class_shapes_1_1_sphere}{Shapes::Sphere}}\ m\_AddSphere;}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{class_shapes_1_1_triangle}{Shapes::Triangle}}\ m\_AddTriangle;}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_shapes_1_1_box}{Shapes::Box}}\ m\_AddBox;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_ModelFilePath;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{char}\ *m\_MaterialDirectory;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddSphereMaterialIndex;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddTriangleMaterialIndex;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_AddBoxMaterialIndex;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *c\_WindowTitle\ =\ \textcolor{stringliteral}{"{}Path\ Tracing"{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *c\_DefaultScenePath\ =\ \textcolor{stringliteral}{"{}assets/dft2.scn"{}};}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ c\_AnyInputFilePathLength\ =\ 128;}
+\DoxyCodeLine{00097\ \};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

@@ -1,0 +1,109 @@
+\doxysection{Shapes\+::Triangle Class Reference}
+\hypertarget{class_shapes_1_1_triangle}{}\label{class_shapes_1_1_triangle}\index{Shapes::Triangle@{Shapes::Triangle}}
+Inheritance diagram for Shapes\+::Triangle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_shapes_1_1_triangle}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_shapes_1_1_triangle_a66d0fb157bd426247e37c60ea7eb7424}\label{class_shapes_1_1_triangle_a66d0fb157bd426247e37c60ea7eb7424} 
+constexpr {\bfseries Triangle} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&a, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&b, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&c, const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material) noexcept
+\item 
+\Hypertarget{class_shapes_1_1_triangle_a7824e5739d79bc7a003e2d41d5763d8d}\label{class_shapes_1_1_triangle_a7824e5739d79bc7a003e2d41d5763d8d} 
+constexpr {\bfseries Triangle} (const std\+::array$<$ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}}, 3 $>$ \&vertices, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&normal, const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material) noexcept
+\item 
+constexpr bool \mbox{\hyperlink{class_shapes_1_1_triangle_a1c84e67c958e2c121004662c90b4ecf9}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_shapes_1_1_triangle_a0ccf6ccb76b1d85dc1da2e3643237391}{Get\+Centroid}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} \mbox{\hyperlink{class_shapes_1_1_triangle_af67f2892cd6aefd4536cc1575ea8dbb8}{Get\+Bounding\+Box}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_shapes_1_1_triangle_af05bc7dd2a111b9855945b1254e126d5}{Sample\+Uniform}} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&sample) const noexcept override
+\item 
+constexpr float \mbox{\hyperlink{class_shapes_1_1_triangle_a640bdfd871e0eadc335ca696e84a268b}{Get\+Area}} () const noexcept override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+constexpr {\bfseries Hittable\+Object} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\item 
+constexpr {\bfseries Hittable\+Object} (\mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&\&)=default
+\item 
+constexpr \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_shapes_1_1_triangle_ad76123fc96372b9f39f5a758832f1dbe}\label{class_shapes_1_1_triangle_ad76123fc96372b9f39f5a758832f1dbe} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries vertices} \mbox{[}3\mbox{]}
+\item 
+\Hypertarget{class_shapes_1_1_triangle_a85aa6a9d328b480143efcdad8eb97858}\label{class_shapes_1_1_triangle_a85aa6a9d328b480143efcdad8eb97858} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries edges} \mbox{[}2\mbox{]}
+\item 
+\Hypertarget{class_shapes_1_1_triangle_ae34ab4dc733a90eed3c4fb3640361259}\label{class_shapes_1_1_triangle_ae34ab4dc733a90eed3c4fb3640361259} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries normal}
+\item 
+\Hypertarget{class_shapes_1_1_triangle_a82efdc2c2cb324e80ee17cee59488e83}\label{class_shapes_1_1_triangle_a82efdc2c2cb324e80ee17cee59488e83} 
+const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_shapes_1_1_triangle_a640bdfd871e0eadc335ca696e84a268b}\label{class_shapes_1_1_triangle_a640bdfd871e0eadc335ca696e84a268b} 
+\index{Shapes::Triangle@{Shapes::Triangle}!GetArea@{GetArea}}
+\index{GetArea@{GetArea}!Shapes::Triangle@{Shapes::Triangle}}
+\doxysubsubsection{\texorpdfstring{GetArea()}{GetArea()}}
+{\footnotesize\ttfamily constexpr float Shapes\+::\+Triangle\+::\+Get\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_triangle_af67f2892cd6aefd4536cc1575ea8dbb8}\label{class_shapes_1_1_triangle_af67f2892cd6aefd4536cc1575ea8dbb8} 
+\index{Shapes::Triangle@{Shapes::Triangle}!GetBoundingBox@{GetBoundingBox}}
+\index{GetBoundingBox@{GetBoundingBox}!Shapes::Triangle@{Shapes::Triangle}}
+\doxysubsubsection{\texorpdfstring{GetBoundingBox()}{GetBoundingBox()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} Shapes\+::\+Triangle\+::\+Get\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_triangle_a0ccf6ccb76b1d85dc1da2e3643237391}\label{class_shapes_1_1_triangle_a0ccf6ccb76b1d85dc1da2e3643237391} 
+\index{Shapes::Triangle@{Shapes::Triangle}!GetCentroid@{GetCentroid}}
+\index{GetCentroid@{GetCentroid}!Shapes::Triangle@{Shapes::Triangle}}
+\doxysubsubsection{\texorpdfstring{GetCentroid()}{GetCentroid()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Shapes\+::\+Triangle\+::\+Get\+Centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_triangle_a1c84e67c958e2c121004662c90b4ecf9}\label{class_shapes_1_1_triangle_a1c84e67c958e2c121004662c90b4ecf9} 
+\index{Shapes::Triangle@{Shapes::Triangle}!Hit@{Hit}}
+\index{Hit@{Hit}!Shapes::Triangle@{Shapes::Triangle}}
+\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
+{\footnotesize\ttfamily constexpr bool Shapes\+::\+Triangle\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_triangle_af05bc7dd2a111b9855945b1254e126d5}\label{class_shapes_1_1_triangle_af05bc7dd2a111b9855945b1254e126d5} 
+\index{Shapes::Triangle@{Shapes::Triangle}!SampleUniform@{SampleUniform}}
+\index{SampleUniform@{SampleUniform}!Shapes::Triangle@{Shapes::Triangle}}
+\doxysubsubsection{\texorpdfstring{SampleUniform()}{SampleUniform()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Shapes\+::\+Triangle\+::\+Sample\+Uniform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&}]{sample }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+hittable/Triangle.\+h\end{DoxyCompactItemize}

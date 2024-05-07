@@ -1,0 +1,109 @@
+\doxysection{Shapes\+::Sphere Class Reference}
+\hypertarget{class_shapes_1_1_sphere}{}\label{class_shapes_1_1_sphere}\index{Shapes::Sphere@{Shapes::Sphere}}
+Inheritance diagram for Shapes\+::Sphere\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_shapes_1_1_sphere}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a08e26167faaf581ad803c73afb8bada9}\label{class_shapes_1_1_sphere_a08e26167faaf581ad803c73afb8bada9} 
+constexpr {\bfseries Sphere} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&center, float radius, const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material) noexcept
+\item 
+constexpr bool \mbox{\hyperlink{class_shapes_1_1_sphere_a69ef0fe8d31756d9d11d54120ba161d8}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_shapes_1_1_sphere_ad0d15eb01d9d4f8aaa60d2d15f5b8234}{Get\+Centroid}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} \mbox{\hyperlink{class_shapes_1_1_sphere_abdd66ccf2232dae260a10a9c80ec5135}{Get\+Bounding\+Box}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_shapes_1_1_sphere_a7ea10d6d49cce8976c0bc172de4ff9cb}{Sample\+Uniform}} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&sample) const noexcept override
+\item 
+constexpr float \mbox{\hyperlink{class_shapes_1_1_sphere_a2bb4e964da40c7e7bae5999963b4a545}{Get\+Area}} () const noexcept override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+constexpr {\bfseries Hittable\+Object} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\item 
+constexpr {\bfseries Hittable\+Object} (\mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&\&)=default
+\item 
+constexpr \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a91f6d5271b748651900995425bf71fe5}\label{class_shapes_1_1_sphere_a91f6d5271b748651900995425bf71fe5} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries center}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a6018b89302ab8bd55d089ccdb861722b}\label{class_shapes_1_1_sphere_a6018b89302ab8bd55d089ccdb861722b} 
+float {\bfseries radius}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a4f7248bfad482cc142ff79e3ac464878}\label{class_shapes_1_1_sphere_a4f7248bfad482cc142ff79e3ac464878} 
+float {\bfseries radius\+Squared}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a6897fc1e37f9a91f27ba4a81090e6624}\label{class_shapes_1_1_sphere_a6897fc1e37f9a91f27ba4a81090e6624} 
+float {\bfseries inverse\+Radius}
+\item 
+\Hypertarget{class_shapes_1_1_sphere_a5ca38b0c4f025ffc954fc6d65101880e}\label{class_shapes_1_1_sphere_a5ca38b0c4f025ffc954fc6d65101880e} 
+const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_shapes_1_1_sphere_a2bb4e964da40c7e7bae5999963b4a545}\label{class_shapes_1_1_sphere_a2bb4e964da40c7e7bae5999963b4a545} 
+\index{Shapes::Sphere@{Shapes::Sphere}!GetArea@{GetArea}}
+\index{GetArea@{GetArea}!Shapes::Sphere@{Shapes::Sphere}}
+\doxysubsubsection{\texorpdfstring{GetArea()}{GetArea()}}
+{\footnotesize\ttfamily constexpr float Shapes\+::\+Sphere\+::\+Get\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_sphere_abdd66ccf2232dae260a10a9c80ec5135}\label{class_shapes_1_1_sphere_abdd66ccf2232dae260a10a9c80ec5135} 
+\index{Shapes::Sphere@{Shapes::Sphere}!GetBoundingBox@{GetBoundingBox}}
+\index{GetBoundingBox@{GetBoundingBox}!Shapes::Sphere@{Shapes::Sphere}}
+\doxysubsubsection{\texorpdfstring{GetBoundingBox()}{GetBoundingBox()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} Shapes\+::\+Sphere\+::\+Get\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_sphere_ad0d15eb01d9d4f8aaa60d2d15f5b8234}\label{class_shapes_1_1_sphere_ad0d15eb01d9d4f8aaa60d2d15f5b8234} 
+\index{Shapes::Sphere@{Shapes::Sphere}!GetCentroid@{GetCentroid}}
+\index{GetCentroid@{GetCentroid}!Shapes::Sphere@{Shapes::Sphere}}
+\doxysubsubsection{\texorpdfstring{GetCentroid()}{GetCentroid()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Shapes\+::\+Sphere\+::\+Get\+Centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_sphere_a69ef0fe8d31756d9d11d54120ba161d8}\label{class_shapes_1_1_sphere_a69ef0fe8d31756d9d11d54120ba161d8} 
+\index{Shapes::Sphere@{Shapes::Sphere}!Hit@{Hit}}
+\index{Hit@{Hit}!Shapes::Sphere@{Shapes::Sphere}}
+\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
+{\footnotesize\ttfamily constexpr bool Shapes\+::\+Sphere\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_shapes_1_1_sphere_a7ea10d6d49cce8976c0bc172de4ff9cb}\label{class_shapes_1_1_sphere_a7ea10d6d49cce8976c0bc172de4ff9cb} 
+\index{Shapes::Sphere@{Shapes::Sphere}!SampleUniform@{SampleUniform}}
+\index{SampleUniform@{SampleUniform}!Shapes::Sphere@{Shapes::Sphere}}
+\doxysubsubsection{\texorpdfstring{SampleUniform()}{SampleUniform()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Shapes\+::\+Sphere\+::\+Sample\+Uniform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&}]{sample }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+hittable/Sphere.\+h\end{DoxyCompactItemize}

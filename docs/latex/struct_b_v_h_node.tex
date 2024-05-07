@@ -1,391 +1,111 @@
 \doxysection{BVHNode Struct Reference}
 \hypertarget{struct_b_v_h_node}{}\label{struct_b_v_h_node}\index{BVHNode@{BVHNode}}
+
+
+Bounding volume hierarchy node.  
+
+
+
+
+{\ttfamily \#include $<$BVHNode.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-constexpr \mbox{\hyperlink{struct_b_v_h_node_ac1d66bee6c34eb79a3e093ce69dfdf3c}{BVHNode}} (\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}left, \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}right) noexcept
+\Hypertarget{struct_b_v_h_node_ac1d66bee6c34eb79a3e093ce69dfdf3c}\label{struct_b_v_h_node_ac1d66bee6c34eb79a3e093ce69dfdf3c} 
+constexpr {\bfseries BVHNode} (\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}left, \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}right) noexcept
 \item 
-constexpr \mbox{\hyperlink{struct_b_v_h_node_a3af486e2a8024291f5d86d1100dc1aaa}{BVHNode}} (const Hittable\+Object \texorpdfstring{$\ast$}{*}object) noexcept
+\Hypertarget{struct_b_v_h_node_a3af486e2a8024291f5d86d1100dc1aaa}\label{struct_b_v_h_node_a3af486e2a8024291f5d86d1100dc1aaa} 
+constexpr {\bfseries BVHNode} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \texorpdfstring{$\ast$}{*}object) noexcept
 \item 
-constexpr bool \mbox{\hyperlink{struct_b_v_h_node_a3eae882f7e22773781fa25ca15e912bf}{Is\+Terminating}} () const noexcept
-\item 
-bool \mbox{\hyperlink{struct_b_v_h_node_a63ef64aeac9cc2d1b64245e3bea41eca}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{struct_b_v_h_node_a3eae882f7e22773781fa25ca15e912bf}\label{struct_b_v_h_node_a3eae882f7e22773781fa25ca15e912bf} 
+constexpr bool {\bfseries Is\+Terminating} () const noexcept
+\begin{DoxyCompactList}\small\item\em Returns true if this node contains pointer to primitive. \end{DoxyCompactList}\item 
+\Hypertarget{struct_b_v_h_node_a63ef64aeac9cc2d1b64245e3bea41eca}\label{struct_b_v_h_node_a63ef64aeac9cc2d1b64245e3bea41eca} 
+bool {\bfseries Hit} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) noexcept
+\begin{DoxyCompactList}\small\item\em Saves hit info into {\ttfamily payload} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_b_v_h_node_a9934e61ef7303394b7fe4c571fdfd4bc}{Make\+Hierarchy\+SAH}} (std\+::span$<$ Hittable\+Object\+Ptr $>$ objects, int low, int high) noexcept
-\item 
-static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_b_v_h_node_a71cee53c03ddb592721c5885e0111c5e}{Make\+Hierarchy\+Naive}} (std\+::span$<$ Hittable\+Object\+Ptr $>$ objects, int low, int high) noexcept
-\item 
-static constexpr void \mbox{\hyperlink{struct_b_v_h_node_ae27865aea9e38e32aff22699848c3942}{Free\+Memory}} (\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}node) noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{struct_b_v_h_node_a9934e61ef7303394b7fe4c571fdfd4bc}\label{struct_b_v_h_node_a9934e61ef7303394b7fe4c571fdfd4bc} 
+static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} {\bfseries Make\+Hierarchy\+SAH} (std\+::span$<$ \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}} $>$ objects, int low, int high) noexcept
+\begin{DoxyCompactList}\small\item\em Makes BVH using Sweep SAH optimization. \end{DoxyCompactList}\item 
+\Hypertarget{struct_b_v_h_node_a71cee53c03ddb592721c5885e0111c5e}\label{struct_b_v_h_node_a71cee53c03ddb592721c5885e0111c5e} 
+static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} {\bfseries Make\+Hierarchy\+Naive} (std\+::span$<$ \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}} $>$ objects, int low, int high) noexcept
+\begin{DoxyCompactList}\small\item\em Makes BVH using naive implementation sorting by lengths of axes. \end{DoxyCompactList}\item 
+\Hypertarget{struct_b_v_h_node_ae27865aea9e38e32aff22699848c3942}\label{struct_b_v_h_node_ae27865aea9e38e32aff22699848c3942} 
+static constexpr void {\bfseries Free\+Memory} (\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}node) noexcept
+\begin{DoxyCompactList}\small\item\em Frees allocated memory of tree with root {\ttfamily node} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{struct_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_b_v_h_node_ab8ccbdebbea62d51da193f3e96f0b862}{aabb}} = AABB\+::\+Empty()
+\Hypertarget{struct_b_v_h_node_ab8ccbdebbea62d51da193f3e96f0b862}\label{struct_b_v_h_node_ab8ccbdebbea62d51da193f3e96f0b862} 
+\mbox{\hyperlink{struct_a_a_b_b}{AABB}} {\bfseries aabb} = \mbox{\hyperlink{struct_a_a_b_b_a57007ca50af6db45130f5d24c6991d41}{AABB\+::\+Empty}}()
 \item 
-\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_b_v_h_node_a3fe0f97e3b448280270bc81cb53486f8}{left}} = nullptr
+\Hypertarget{struct_b_v_h_node_a3fe0f97e3b448280270bc81cb53486f8}\label{struct_b_v_h_node_a3fe0f97e3b448280270bc81cb53486f8} 
+\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} {\bfseries left} = nullptr
 \item 
-\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_b_v_h_node_a0c93d2bf88c0dac750060b1b56a54c65}{right}} = nullptr
+\Hypertarget{struct_b_v_h_node_a0c93d2bf88c0dac750060b1b56a54c65}\label{struct_b_v_h_node_a0c93d2bf88c0dac750060b1b56a54c65} 
+\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} {\bfseries right} = nullptr
 \item 
-const Hittable\+Object \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_b_v_h_node_a7fd16345385ae4871dbe77440e0b3418}{object}} = nullptr
+\Hypertarget{struct_b_v_h_node_a7fd16345385ae4871dbe77440e0b3418}\label{struct_b_v_h_node_a7fd16345385ae4871dbe77440e0b3418} 
+const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries object} = nullptr
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-static const std\+::function$<$ bool(Hittable\+Object\+Ptr, Hittable\+Object\+Ptr)$>$ \mbox{\hyperlink{struct_b_v_h_node_a2c605d82e550b2157117f66c9d32a8e7}{c\+\_\+\+Comparators\+SAH}} \mbox{[}3\mbox{]}
+static const std\+::function$<$ bool(\mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}}, \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}})$>$ \mbox{\hyperlink{struct_b_v_h_node_a2c605d82e550b2157117f66c9d32a8e7}{c\+\_\+\+Comparators\+SAH}} \mbox{[}3\mbox{]}
 \item 
-static const std\+::function$<$ bool(Hittable\+Object\+Ptr, Hittable\+Object\+Ptr)$>$ \mbox{\hyperlink{struct_b_v_h_node_a87cdbc7341a988ddbbbe54362266f273}{c\+\_\+\+Comparators\+Naive}} \mbox{[}3\mbox{]}
+static const std\+::function$<$ bool(\mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}}, \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}})$>$ \mbox{\hyperlink{struct_b_v_h_node_a87cdbc7341a988ddbbbe54362266f273}{c\+\_\+\+Comparators\+Naive}} \mbox{[}3\mbox{]}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00013}{13}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{struct_b_v_h_node_ac1d66bee6c34eb79a3e093ce69dfdf3c}\label{struct_b_v_h_node_ac1d66bee6c34eb79a3e093ce69dfdf3c} 
-\index{BVHNode@{BVHNode}!BVHNode@{BVHNode}}
-\index{BVHNode@{BVHNode}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{BVHNode()}{BVHNode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily constexpr BVHNode\+::\+BVHNode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}}]{left,  }\item[{\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00020}{20}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ left(left),\ right(right),\ aabb(left-\/>aabb,\ right-\/>aabb)\ \{\}}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a3af486e2a8024291f5d86d1100dc1aaa}\label{struct_b_v_h_node_a3af486e2a8024291f5d86d1100dc1aaa} 
-\index{BVHNode@{BVHNode}!BVHNode@{BVHNode}}
-\index{BVHNode@{BVHNode}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{BVHNode()}{BVHNode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily constexpr BVHNode\+::\+BVHNode (\begin{DoxyParamCaption}\item[{const Hittable\+Object \texorpdfstring{$\ast$}{*}}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00023}{23}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ object(\textcolor{keywordtype}{object}),\ aabb(object-\/>GetBoundingBox())\ \{\}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{struct_b_v_h_node_ae27865aea9e38e32aff22699848c3942}\label{struct_b_v_h_node_ae27865aea9e38e32aff22699848c3942} 
-\index{BVHNode@{BVHNode}!FreeMemory@{FreeMemory}}
-\index{FreeMemory@{FreeMemory}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{FreeMemory()}{FreeMemory()}}
-{\footnotesize\ttfamily static constexpr void BVHNode\+::\+Free\+Memory (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00154}{154}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (node\ ==\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ FreeMemory(node-\/>left);}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ FreeMemory(node-\/>right);}
-\DoxyCodeLine{00161\ }
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ node;}
-\DoxyCodeLine{00163\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a63ef64aeac9cc2d1b64245e3bea41eca}\label{struct_b_v_h_node_a63ef64aeac9cc2d1b64245e3bea41eca} 
-\index{BVHNode@{BVHNode}!Hit@{Hit}}
-\index{Hit@{Hit}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
-{\footnotesize\ttfamily bool BVHNode\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00030}{30}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!aabb.IntersectsRay(ray,\ tMin,\ tMax))\ \{}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (IsTerminating())\ \{}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{object}-\/>Hit(ray,\ tMin,\ tMax,\ payload);}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ anyHit\ =\ left-\/>Hit(ray,\ tMin,\ tMax,\ payload);}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ anyHit\ |=\ right-\/>Hit(ray,\ tMin,\ Math::Min(tMax,\ payload.t),\ payload);}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ anyHit;}
-\DoxyCodeLine{00043\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a3eae882f7e22773781fa25ca15e912bf}\label{struct_b_v_h_node_a3eae882f7e22773781fa25ca15e912bf} 
-\index{BVHNode@{BVHNode}!IsTerminating@{IsTerminating}}
-\index{IsTerminating@{IsTerminating}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{IsTerminating()}{IsTerminating()}}
-{\footnotesize\ttfamily constexpr bool BVHNode\+::\+Is\+Terminating (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00026}{26}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{object}\ !=\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00028\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a71cee53c03ddb592721c5885e0111c5e}\label{struct_b_v_h_node_a71cee53c03ddb592721c5885e0111c5e} 
-\index{BVHNode@{BVHNode}!MakeHierarchyNaive@{MakeHierarchyNaive}}
-\index{MakeHierarchyNaive@{MakeHierarchyNaive}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{MakeHierarchyNaive()}{MakeHierarchyNaive()}}
-{\footnotesize\ttfamily static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} BVHNode\+::\+Make\+Hierarchy\+Naive (\begin{DoxyParamCaption}\item[{std\+::span$<$ Hittable\+Object\+Ptr $>$}]{objects,  }\item[{int}]{low,  }\item[{int}]{high }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00108}{108}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ aabb\ =\ AABB::Empty();}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ low;\ i\ <\ high;\ ++i)\ \{}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ aabb\ =\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(aabb,\ objects[i]-\/>GetBoundingBox());}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ longestAxisIndex\ =\ 0;}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ longestAxisLength\ =\ aabb.max.x\ -\/\ aabb.min.x;}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aabb.max.y\ -\/\ aabb.min.y\ >\ longestAxisLength)\ \{}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ longestAxisIndex\ =\ 1;}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ longestAxisLength\ =\ aabb.max.y\ -\/\ aabb.min.y;}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aabb.max.z\ -\/\ aabb.min.z\ >\ longestAxisLength)\ \{}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ longestAxisIndex\ =\ 2;}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ longestAxisLength\ =\ aabb.max.z\ -\/\ aabb.min.z;}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ comparator\ =\ c\_ComparatorsNaive[longestAxisIndex];}
-\DoxyCodeLine{00128\ }
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (low\ +\ 1\ ==\ high)\ \{}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(objects[low]);}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00132\ }
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ std::sort(objects.begin()\ +\ low,\ objects.begin()\ +\ high,\ comparator);}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mid\ =\ (low\ +\ high)\ /\ 2;}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\ *left\ =\ MakeHierarchyNaive(objects,\ low,\ mid);}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\ *right\ =\ MakeHierarchyNaive(objects,\ mid,\ high);}
-\DoxyCodeLine{00138\ }
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(left,\ right);}
-\DoxyCodeLine{00140\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a9934e61ef7303394b7fe4c571fdfd4bc}\label{struct_b_v_h_node_a9934e61ef7303394b7fe4c571fdfd4bc} 
-\index{BVHNode@{BVHNode}!MakeHierarchySAH@{MakeHierarchySAH}}
-\index{MakeHierarchySAH@{MakeHierarchySAH}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{MakeHierarchySAH()}{MakeHierarchySAH()}}
-{\footnotesize\ttfamily static \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} BVHNode\+::\+Make\+Hierarchy\+SAH (\begin{DoxyParamCaption}\item[{std\+::span$<$ Hittable\+Object\+Ptr $>$}]{objects,  }\item[{int}]{low,  }\item[{int}]{high }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00045}{45}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (low\ +\ 1\ ==\ high)\ \{}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(objects[low]);}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ high\ -\/\ low;}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::vector<AABB>\ pref(n\ +\ 1);}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::vector<AABB>\ suff(n\ +\ 1);}
-\DoxyCodeLine{00053\ }
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ minValue\ =\ Math::Constants::Infinity<float>;}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mid\ =\ -\/1;}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ dimension\ =\ -\/1;}
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ d\ =\ 0;\ d\ <\ 3;\ ++d)\ \{}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(objects.begin()\ +\ low,\ objects.begin()\ +\ high,\ c\_ComparatorsSAH[d]);}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ pref[0]\ =\ AABB::Empty();}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pref[i\ +\ 1]\ =\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(pref[i],\ objects[i\ +\ low]-\/>GetBoundingBox());}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ suff[n]\ =\ AABB::Empty();}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ n\ -\/\ 1;\ i\ >=\ 0;\ -\/-\/i)\ \{}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ suff[i]\ =\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(objects[i\ +\ low]-\/>GetBoundingBox(),\ suff[i\ +\ 1]);}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ minValueAlongAxis\ =\ Math::Constants::Infinity<float>;}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ -\/1;}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ pref[i\ +\ 1].GetSurfaceArea()\ *\ (float)(i\ +\ 1)\ +\ suff[i\ +\ 1].GetSurfaceArea()\ *\ (float)(n\ -\/\ i\ -\/\ 1);}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <\ minValueAlongAxis)\ \{}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minValueAlongAxis\ =\ value;}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index\ =\ i\ +\ low;}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (minValueAlongAxis\ <\ minValue)\ \{}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minValue\ =\ minValueAlongAxis;}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mid\ =\ index\ +\ 1;}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dimension\ =\ d;}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ std::sort(objects.begin()\ +\ low,\ objects.begin()\ +\ high,\ c\_ComparatorsSAH[dimension]);}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\ *left\ =\ MakeHierarchySAH(objects,\ low,\ mid);}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\ *right\ =\ MakeHierarchySAH(objects,\ mid,\ high);}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(left,\ right);}
-\DoxyCodeLine{00094\ \ \ \ \ \}}
-
-\end{DoxyCode}
-
+Bounding volume hierarchy node. 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{struct_b_v_h_node_ab8ccbdebbea62d51da193f3e96f0b862}\label{struct_b_v_h_node_ab8ccbdebbea62d51da193f3e96f0b862} 
-\index{BVHNode@{BVHNode}!aabb@{aabb}}
-\index{aabb@{aabb}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{aabb}{aabb}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_a_a_b_b}{AABB}} BVHNode\+::aabb = AABB\+::\+Empty()}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00014}{14}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
 \Hypertarget{struct_b_v_h_node_a87cdbc7341a988ddbbbe54362266f273}\label{struct_b_v_h_node_a87cdbc7341a988ddbbbe54362266f273} 
 \index{BVHNode@{BVHNode}!c\_ComparatorsNaive@{c\_ComparatorsNaive}}
 \index{c\_ComparatorsNaive@{c\_ComparatorsNaive}!BVHNode@{BVHNode}}
 \doxysubsubsection{\texorpdfstring{c\_ComparatorsNaive}{c\_ComparatorsNaive}}
-{\footnotesize\ttfamily const std\+::function$<$bool(Hittable\+Object\+Ptr, Hittable\+Object\+Ptr)$>$ BVHNode\+::c\+\_\+\+Comparators\+Naive\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+{\footnotesize\ttfamily const std\+::function$<$bool(\mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}}, \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}})$>$ BVHNode\+::c\+\_\+\+Comparators\+Naive\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 {\bfseries Initial value\+:}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{=\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.x\ <\ b-\/>GetBoundingBox().min.x;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.y\ <\ b-\/>GetBoundingBox().min.y;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.z\ <\ b-\/>GetBoundingBox().min.z;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\ \ \ \ \}}
-
-\end{DoxyCode}
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00142}{142}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.x\ <\ b-\/>GetBoundingBox().min.x;}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.y\ <\ b-\/>GetBoundingBox().min.y;}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetBoundingBox().min.z\ <\ b-\/>GetBoundingBox().min.z;}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00152\ \ \ \ \ \};}
 
 \end{DoxyCode}
 \Hypertarget{struct_b_v_h_node_a2c605d82e550b2157117f66c9d32a8e7}\label{struct_b_v_h_node_a2c605d82e550b2157117f66c9d32a8e7} 
 \index{BVHNode@{BVHNode}!c\_ComparatorsSAH@{c\_ComparatorsSAH}}
 \index{c\_ComparatorsSAH@{c\_ComparatorsSAH}!BVHNode@{BVHNode}}
 \doxysubsubsection{\texorpdfstring{c\_ComparatorsSAH}{c\_ComparatorsSAH}}
-{\footnotesize\ttfamily const std\+::function$<$bool(Hittable\+Object\+Ptr, Hittable\+Object\+Ptr)$>$ BVHNode\+::c\+\_\+\+Comparators\+SAH\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+{\footnotesize\ttfamily const std\+::function$<$bool(\mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}}, \mbox{\hyperlink{class_hittable_object}{Hittable\+Object\+Ptr}})$>$ BVHNode\+::c\+\_\+\+Comparators\+SAH\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 {\bfseries Initial value\+:}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{=\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().x\ <\ b-\/>GetCentroid().x;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().y\ <\ b-\/>GetCentroid().y;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](\mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ a,\ \mbox{\hyperlink{class_hittable_object}{HittableObjectPtr}}\ b)\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().z\ <\ b-\/>GetCentroid().z;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\ \ \ \ \}}
 
 \end{DoxyCode}
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00096}{96}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().x\ <\ b-\/>GetCentroid().x;}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().y\ <\ b-\/>GetCentroid().y;}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \},}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ [](HittableObjectPtr\ a,\ HittableObjectPtr\ b)\{}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>GetCentroid().z\ <\ b-\/>GetCentroid().z;}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00106\ \ \ \ \ \};}
-
-\end{DoxyCode}
-\Hypertarget{struct_b_v_h_node_a3fe0f97e3b448280270bc81cb53486f8}\label{struct_b_v_h_node_a3fe0f97e3b448280270bc81cb53486f8} 
-\index{BVHNode@{BVHNode}!left@{left}}
-\index{left@{left}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{left}{left}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\texorpdfstring{$\ast$}{*} BVHNode\+::left = nullptr}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00015}{15}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-\Hypertarget{struct_b_v_h_node_a7fd16345385ae4871dbe77440e0b3418}\label{struct_b_v_h_node_a7fd16345385ae4871dbe77440e0b3418} 
-\index{BVHNode@{BVHNode}!object@{object}}
-\index{object@{object}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{object}{object}}
-{\footnotesize\ttfamily const Hittable\+Object\texorpdfstring{$\ast$}{*} BVHNode\+::object = nullptr}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00016}{16}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
-\Hypertarget{struct_b_v_h_node_a0c93d2bf88c0dac750060b1b56a54c65}\label{struct_b_v_h_node_a0c93d2bf88c0dac750060b1b56a54c65} 
-\index{BVHNode@{BVHNode}!right@{right}}
-\index{right@{right}!BVHNode@{BVHNode}}
-\doxysubsubsection{\texorpdfstring{right}{right}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}} \texorpdfstring{$\ast$}{*} BVHNode\+::right = nullptr}
-
-
-
-Definition at line \mbox{\hyperlink{_b_v_h_node_8h_source_l00015}{15}} of file \mbox{\hyperlink{_b_v_h_node_8h_source}{BVHNode.\+h}}.
-
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}

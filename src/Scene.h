@@ -14,6 +14,7 @@
 #include <exception>
 #include <optional>
 
+//! Struct that holds camera, all primitives and models. Can be serialized/deserialized
 struct Scene {
     std::vector<Shapes::Sphere> spheres;
     std::vector<Shapes::Triangle> triangles;
@@ -22,6 +23,7 @@ struct Scene {
     std::vector<Material> materials;
     Camera camera;
 
+    //! Serializes scene into ```os```
     std::optional<std::string> Serialize(std::ostream &os) const noexcept {
         os.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -34,6 +36,7 @@ struct Scene {
         return {};
     }
 
+    //! Deserializes scene from ```is```
     std::optional<std::string> Deserialize(std::istream &is) noexcept {
         is.exceptions(std::ios::eofbit | std::ios::badbit | std::ios::failbit);
 

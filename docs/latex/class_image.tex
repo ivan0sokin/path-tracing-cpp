@@ -1,112 +1,30 @@
 \doxysection{Image Class Reference}
 \hypertarget{class_image}{}\label{class_image}\index{Image@{Image}}
+
+
+Open\+GL image.  
+
+
+
+
+{\ttfamily \#include $<$Image.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_image_ad85bf8d739d5625fa8dba383c2130c3f}{Image}} (int width, int height, const uint32\+\_\+t \texorpdfstring{$\ast$}{*}data) noexcept
-\item 
-void \mbox{\hyperlink{class_image_a2c0c67244a354e2d68352dac6e0ee50d}{Update\+Data}} (const uint32\+\_\+t \texorpdfstring{$\ast$}{*}data) noexcept
-\item 
-constexpr unsigned int \mbox{\hyperlink{class_image_adf14a6f918d001ab6da529c7b1eb27bd}{Get\+Descriptor}} () const noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{class_image_ad85bf8d739d5625fa8dba383c2130c3f}\label{class_image_ad85bf8d739d5625fa8dba383c2130c3f} 
+{\bfseries Image} (int width, int height, const uint32\+\_\+t \texorpdfstring{$\ast$}{*}data) noexcept
+\begin{DoxyCompactList}\small\item\em Creates new image with RGBA {\ttfamily data} \end{DoxyCompactList}\item 
+\Hypertarget{class_image_a2c0c67244a354e2d68352dac6e0ee50d}\label{class_image_a2c0c67244a354e2d68352dac6e0ee50d} 
+void {\bfseries Update\+Data} (const uint32\+\_\+t \texorpdfstring{$\ast$}{*}data) noexcept
+\begin{DoxyCompactList}\small\item\em Updates image with same size using new {\ttfamily data} \end{DoxyCompactList}\item 
+\Hypertarget{class_image_adf14a6f918d001ab6da529c7b1eb27bd}\label{class_image_adf14a6f918d001ab6da529c7b1eb27bd} 
+constexpr unsigned int {\bfseries Get\+Descriptor} () const noexcept
+\begin{DoxyCompactList}\small\item\em Returns Open\+GL descriptor to texture. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_image_8h_source_l00007}{7}} of file \mbox{\hyperlink{_image_8h_source}{Image.\+h}}.
-
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_image_ad85bf8d739d5625fa8dba383c2130c3f}\label{class_image_ad85bf8d739d5625fa8dba383c2130c3f} 
-\index{Image@{Image}!Image@{Image}}
-\index{Image@{Image}!Image@{Image}}
-\doxysubsubsection{\texorpdfstring{Image()}{Image()}}
-{\footnotesize\ttfamily Image\+::\+Image (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{const uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_image_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_image_8cpp_source}{Image.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00005\ \ \ \ \ m\_Width(width),\ m\_Height(height)\ \{}
-\DoxyCodeLine{00006\ \ \ \ \ glGenTextures(1,\ \&m\_Descriptor);}
-\DoxyCodeLine{00007\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ m\_Descriptor);}
-\DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MIN\_FILTER,\ GL\_LINEAR);}
-\DoxyCodeLine{00010\ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MAG\_FILTER,\ GL\_LINEAR);}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \ \ \ \ glTexImage2D(GL\_TEXTURE\_2D,\ 0,\ GL\_RGBA,\ m\_Width,\ m\_Height,\ 0,\ GL\_RGBA,\ GL\_UNSIGNED\_BYTE,\ (\textcolor{keywordtype}{void}*)data);}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ 0);}
-\DoxyCodeLine{00015\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_image_aeab8c1ba230200c873908525186f9c94}\label{class_image_aeab8c1ba230200c873908525186f9c94} 
-\index{Image@{Image}!````~Image@{\texorpdfstring{$\sim$}{\string~}Image}}
-\index{````~Image@{\texorpdfstring{$\sim$}{\string~}Image}!Image@{Image}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Image()}{\string~Image()}}
-{\footnotesize\ttfamily Image\+::\texorpdfstring{$\sim$}{\string~}\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_image_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_image_8cpp_source}{Image.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00018\ \ \ \ \ glDeleteTextures(1,\ \&m\_Descriptor);}
-\DoxyCodeLine{00019\ \}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_image_adf14a6f918d001ab6da529c7b1eb27bd}\label{class_image_adf14a6f918d001ab6da529c7b1eb27bd} 
-\index{Image@{Image}!GetDescriptor@{GetDescriptor}}
-\index{GetDescriptor@{GetDescriptor}!Image@{Image}}
-\doxysubsubsection{\texorpdfstring{GetDescriptor()}{GetDescriptor()}}
-{\footnotesize\ttfamily constexpr unsigned int Image\+::\+Get\+Descriptor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_image_8h_source_l00017}{17}} of file \mbox{\hyperlink{_image_8h_source}{Image.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Descriptor;}
-\DoxyCodeLine{00019\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_image_a2c0c67244a354e2d68352dac6e0ee50d}\label{class_image_a2c0c67244a354e2d68352dac6e0ee50d} 
-\index{Image@{Image}!UpdateData@{UpdateData}}
-\index{UpdateData@{UpdateData}!Image@{Image}}
-\doxysubsubsection{\texorpdfstring{UpdateData()}{UpdateData()}}
-{\footnotesize\ttfamily void Image\+::\+Update\+Data (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_image_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_image_8cpp_source}{Image.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00022\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ m\_Descriptor);}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MIN\_FILTER,\ GL\_LINEAR);}
-\DoxyCodeLine{00025\ \ \ \ \ glTexParameteri(GL\_TEXTURE\_2D,\ GL\_TEXTURE\_MAG\_FILTER,\ GL\_LINEAR);}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \ \ \ \ glTexSubImage2D(GL\_TEXTURE\_2D,\ 0,\ 0,\ 0,\ m\_Width,\ m\_Height,\ GL\_RGBA,\ GL\_UNSIGNED\_BYTE,\ (\textcolor{keywordtype}{void}*)data);}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ 0);}
-\DoxyCodeLine{00030\ \}}
-
-\end{DoxyCode}
-
+Open\+GL image. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

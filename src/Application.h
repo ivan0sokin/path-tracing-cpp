@@ -14,8 +14,10 @@
 //! Path tracing application class which holds basic logic
 class Application {
 public:
+    //! Creates new Application with initial window size
     Application(int windowWidth, int windowHeight) noexcept;
 
+    //! Runs application
     int Run() noexcept;
 
 private:

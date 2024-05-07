@@ -1,188 +1,27 @@
 \doxysection{BSDF Class Reference}
 \hypertarget{class_b_s_d_f}{}\label{class_b_s_d_f}\index{BSDF@{BSDF}}
+
+
+Bidirectional scattering distribution function class.  
+
+
+
+
+{\ttfamily \#include $<$BSDF.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-constexpr \mbox{\hyperlink{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be}{BSDF}} (const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material) noexcept
-\item 
-Math\+::\+Vector3f \mbox{\hyperlink{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f}{Sample}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload, Math\+::\+Vector3f \&throughput) noexcept
-\end{DoxyCompactItemize}
+\Hypertarget{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be}\label{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be} 
+constexpr {\bfseries BSDF} (const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material) noexcept
+\begin{DoxyCompactList}\small\item\em Creates \doxylink{class_b_s_d_f}{BSDF} based on passed material. \end{DoxyCompactList}\item 
+\Hypertarget{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f}\label{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f} 
+\mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries Sample} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload, \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&throughput) noexcept
+\begin{DoxyCompactList}\small\item\em Returns direction of reflected ray and modifies throughput. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_b_s_d_f_8h_source_l00009}{9}} of file \mbox{\hyperlink{_b_s_d_f_8h_source}{BSDF.\+h}}.
-
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be}\label{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be} 
-\index{BSDF@{BSDF}!BSDF@{BSDF}}
-\index{BSDF@{BSDF}!BSDF@{BSDF}}
-\doxysubsubsection{\texorpdfstring{BSDF()}{BSDF()}}
-{\footnotesize\ttfamily constexpr BSDF\+::\+BSDF (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}}]{material }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_s_d_f_8h_source_l00011}{11}} of file \mbox{\hyperlink{_b_s_d_f_8h_source}{BSDF.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ m\_Material(material)\ \{\}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f}\label{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f} 
-\index{BSDF@{BSDF}!Sample@{Sample}}
-\index{Sample@{Sample}!BSDF@{BSDF}}
-\doxysubsubsection{\texorpdfstring{Sample()}{Sample()}}
-{\footnotesize\ttfamily Math\+::\+Vector3f BSDF\+::\+Sample (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload,  }\item[{Math\+::\+Vector3f \&}]{throughput }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_b_s_d_f_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_b_s_d_f_8cpp_source}{BSDF.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00005\ \ \ \ \ \textcolor{keywordtype}{float}\ diffuseRatio\ =\ 0.5f\ *\ (1.f\ -\/\ m\_Material-\/>metallic);}
-\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keywordtype}{float}\ specularRatio\ =\ 1.f\ -\/\ diffuseRatio;}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \ \ \ \ Math::Vector3f\ V\ =\ -\/ray.direction;}
-\DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \ \ \ \ Math::Vector3f\ reflectionDirection;}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (Utilities::RandomFloatInZeroToOne()\ <\ diffuseRatio)\ \{}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ reflectionDirection\ =\ Utilities::RandomInHemisphere(payload.normal);}
-\DoxyCodeLine{00013\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ Math::Vector3f\ halfVec;}
-\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector2f\ Xi\{Utilities::RandomFloatInZeroToOne(),\ Utilities::RandomFloatInZeroToOne()\};}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ N\ =\ payload.normal;}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ m\_Material-\/>roughness\ *\ m\_Material-\/>roughness;}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ phi\ =\ Math::Constants::Tau<float>\ *\ Xi.x;}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cosTheta\ =\ Math::Sqrt((1.f\ -\/\ Xi.y)\ /\ (1.f\ +\ (a\ *\ a\ -\/\ 1.f)\ *\ Xi.y));}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sinTheta\ =\ Math::Sqrt(1.f\ -\/\ cosTheta\ *\ cosTheta);}
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ H;}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ H.x\ =\ Math::Cos(phi)\ *\ sinTheta;}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ H.y\ =\ Math::Sin(phi)\ *\ sinTheta;}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ H.z\ =\ cosTheta;}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ up\ =\ Math::Abs(N.z)\ <\ 0.999f\ ?\ Math::Vector3f(0.0,\ 0.0,\ 1.0)\ :\ Math::Vector3f(1.0,\ 0.0,\ 0.0);}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ tangent\ =\ Math::Normalize(Math::Cross(up,\ N));}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ bitangent\ =\ Math::Cross(N,\ tangent);}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ halfVec\ =\ tangent\ *\ H.x\ +\ bitangent\ *\ H.y\ +\ N\ *\ H.z;}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ halfVec\ =\ Math::Normalize(halfVec);}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ reflectionDirection\ =\ Math::Normalize(2.f\ *\ Math::Dot(V,\ halfVec)\ *\ halfVec\ -\/\ V);}
-\DoxyCodeLine{00039\ \ \ \ \ \}}
-\DoxyCodeLine{00040\ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{auto}\ DistributionGGX\ =\ [](\textcolor{keyword}{const}\ Math::Vector3f\ \&N,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&H,\ \textcolor{keywordtype}{float}\ roughness)\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ roughness\ *\ roughness;}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a2\ =\ a\ *\ a;}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotH\ =\ Math::Max(Math::Dot(N,\ H),\ 0.f);}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotH2\ =\ NdotH\ *\ NdotH;}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nom\ =\ a2;}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denom\ =\ (NdotH2\ *\ (a2\ -\/\ 1.f)\ +\ 1.f);}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ denom\ =\ Math::Constants::Pi<float>\ *\ denom\ *\ denom;}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ nom\ /\ denom;}
-\DoxyCodeLine{00052\ \ \ \ \ \};}
-\DoxyCodeLine{00053\ }
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{auto}\ GeometrySchlickGGX\ =\ [](\textcolor{keywordtype}{float}\ NdotV,\ \textcolor{keywordtype}{float}\ roughness)\ \{}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ r\ =\ (roughness\ +\ 1.f);}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ k\ =\ (r\ *\ r)\ /\ 8.f;}
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nom\ =\ NdotV;}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denom\ =\ NdotV\ *\ (1.f\ -\/\ k)\ +\ k;}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ nom\ /\ denom;}
-\DoxyCodeLine{00062\ \ \ \ \ \};}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{auto}\ GeometrySmith\ =\ [\&](\textcolor{keyword}{const}\ Math::Vector3f\ \&N,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&V,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&L,\ \textcolor{keywordtype}{float}\ roughness)\ \{}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotV\ =\ Math::Abs(Math::Dot(N,\ V));}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotL\ =\ Math::Abs(Math::Dot(N,\ L));}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ggx2\ =\ GeometrySchlickGGX(NdotV,\ roughness);}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ggx1\ =\ GeometrySchlickGGX(NdotL,\ roughness);}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ggx1\ *\ ggx2;}
-\DoxyCodeLine{00071\ \ \ \ \ \};}
-\DoxyCodeLine{00072\ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{auto}\ FresnelSchlick\ =\ [](\textcolor{keywordtype}{float}\ cosTheta,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&F0)\ \{}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ F0\ +\ (1.f\ -\/\ F0)\ *\ Math::Pow(1.f\ -\/\ cosTheta,\ 5.f);}
-\DoxyCodeLine{00075\ \ \ \ \ \};}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{auto}\ SpecularBRDF\ =\ [](\textcolor{keywordtype}{float}\ D,\ \textcolor{keywordtype}{float}\ G,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&F,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&V,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&L,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&N)\ \{\ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotL\ =\ Math::Abs(Math::Dot(N,\ L));}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ NdotV\ =\ Math::Abs(Math::Dot(N,\ V));}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ Math::Vector3f\ nominator\ =\ D\ *\ G\ *\ F;}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denominator\ =\ 4.f\ *\ NdotV\ *\ NdotL\ +\ 0.001f;}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ Math::Vector3f\ specularBrdf\ =\ nominator\ /\ denominator;}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ specularBrdf;}
-\DoxyCodeLine{00086\ \ \ \ \ \};}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{auto}\ DiffuseBRDF\ =\ [](\textcolor{keyword}{const}\ Math::Vector3f\ \&albedo)\ \{}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ albedo\ *\ Math::Constants::InversePi<float>;}
-\DoxyCodeLine{00090\ \ \ \ \ \};}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{auto}\ ImportanceSampleGGXPDF\ =\ [](\textcolor{keywordtype}{float}\ NDF,\ \textcolor{keywordtype}{float}\ NdotH,\ \textcolor{keywordtype}{float}\ VdotH)\ \{}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NDF\ *\ NdotH\ /\ (4.f\ *\ VdotH);}
-\DoxyCodeLine{00094\ \ \ \ \ \};}
-\DoxyCodeLine{00095\ }
-\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{auto}\ CosineSamplingPDF\ =\ [](\textcolor{keywordtype}{float}\ NdotL)\ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NdotL\ *\ Math::Constants::InversePi<float>;}
-\DoxyCodeLine{00098\ \ \ \ \ \};}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \ \ \ \ Math::Vector3f\ L\ =\ reflectionDirection;}
-\DoxyCodeLine{00101\ \ \ \ \ Math::Vector3f\ H\ =\ Math::Normalize(V\ +\ L);}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{float}\ NdotL\ =\ Math::Abs(Math::Dot(payload.normal,\ L));}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{float}\ NdotH\ =\ Math::Abs(Math::Dot(payload.normal,\ H));}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{float}\ VdotH\ =\ Math::Abs(Math::Dot(V,\ H));}
-\DoxyCodeLine{00106\ \ \ \ \ }
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{float}\ NdotV\ =\ Math::Abs(Math::Dot(payload.normal,\ V));}
-\DoxyCodeLine{00108\ \ \ \ \ }
-\DoxyCodeLine{00109\ \ \ \ \ Math::Vector3f\ F0\ =\ Math::Vector3f(0.08f,\ 0.08f,\ 0.08f);}
-\DoxyCodeLine{00110\ \ \ \ \ F0\ =\ Math::Lerp(F0\ *\ m\_Material-\/>specular,\ m\_Material-\/>albedo,\ m\_Material-\/>metallic);}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{float}\ NDF\ =\ DistributionGGX(payload.normal,\ H,\ m\_Material-\/>roughness);}
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{float}\ G\ =\ GeometrySmith(payload.normal,\ V,\ L,\ m\_Material-\/>roughness);}
-\DoxyCodeLine{00114\ \ \ \ \ Math::Vector3f\ F\ =\ FresnelSchlick(Math::Max(Math::Dot(H,\ V),\ 0.f),\ F0);}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00116\ \ \ \ \ Math::Vector3f\ kS\ =\ F;}
-\DoxyCodeLine{00117\ \ \ \ \ Math::Vector3f\ kD\ =\ 1.f\ -\/\ kS;}
-\DoxyCodeLine{00118\ \ \ \ \ kD\ *=\ 1.0\ -\/\ m\_Material-\/>metallic;}
-\DoxyCodeLine{00119\ }
-\DoxyCodeLine{00120\ \ \ \ \ Math::Vector3f\ specularBrdf\ =\ SpecularBRDF(NDF,\ G,\ F,\ V,\ L,\ payload.normal);}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{float}\ specularPdf\ =\ ImportanceSampleGGXPDF(NDF,\ NdotH,\ VdotH);}
-\DoxyCodeLine{00123\ \ \ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ Math::Vector3f\ diffuseBrdf\ =\ DiffuseBRDF(m\_Material-\/>albedo);}
-\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{float}\ diffusePdf\ =\ CosineSamplingPDF(NdotL);}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \ \ Math::Vector3f\ totalBrdf\ =\ (diffuseBrdf\ *\ kD\ +\ specularBrdf)\ *\ NdotL;}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{float}\ totalPdf\ =\ diffuseRatio\ *\ diffusePdf\ +\ specularRatio\ *\ specularPdf;}
-\DoxyCodeLine{00129\ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{if}\ (totalPdf\ >\ Math::Constants::Epsilon<float>)\ \{}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ throughput\ *=\ totalBrdf\ /\ totalPdf;}
-\DoxyCodeLine{00132\ \ \ \ \ \}}
-\DoxyCodeLine{00133\ }
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ reflectionDirection;}
-\DoxyCodeLine{00135\ \}}
-
-\end{DoxyCode}
-
+Bidirectional scattering distribution function class. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

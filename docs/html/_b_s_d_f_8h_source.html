@@ -89,24 +89,29 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;HitPayload.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;math/Math.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_b_s_d_f.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="class_b_s_d_f.html">BSDF</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">constexpr</span> <a class="code hl_class" href="class_b_s_d_f.html">BSDF</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_material.html">Material</a> *material) noexcept :</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        m_Material(material) {}</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    Math::Vector3f Sample(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ray.html">Ray</a> &amp;ray, <span class="keyword">const</span> <a class="code hl_struct" href="struct_hit_payload.html">HitPayload</a> &amp;payload, Math::Vector3f &amp;throughput) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_material.html">Material</a> *m_Material;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>};</div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_b_s_d_f.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="class_b_s_d_f.html">BSDF</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_b_s_d_f.html#a503815ea28489a8d781549bdae5c53be">   13</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="class_b_s_d_f.html#a503815ea28489a8d781549bdae5c53be">BSDF</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_material.html">Material</a> *material) noexcept :</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        m_Material(material) {}</div>
 </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_b_s_d_f_html"><div class="ttname"><a href="class_b_s_d_f.html">BSDF</a></div><div class="ttdef"><b>Definition</b> <a href="#l00009">BSDF.h:9</a></div></div>
-<div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdef"><b>Definition</b> <a href="_hit_payload_8h_source.html#l00007">HitPayload.h:7</a></div></div>
-<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdef"><b>Definition</b> <a href="_material_8h_source.html#l00006">Material.h:6</a></div></div>
-<div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdef"><b>Definition</b> <a href="_ray_8h_source.html#l00006">Ray.h:6</a></div></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_struct" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> <a class="code hl_function" href="class_b_s_d_f.html#a6a901f6fba26a37868bb383f7559860f">Sample</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ray.html">Ray</a> &amp;ray, <span class="keyword">const</span> <a class="code hl_struct" href="struct_hit_payload.html">HitPayload</a> &amp;payload, <a class="code hl_struct" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;throughput) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_material.html">Material</a> *m_Material;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_b_s_d_f_html"><div class="ttname"><a href="class_b_s_d_f.html">BSDF</a></div><div class="ttdoc">Bidirectional scattering distribution function class.</div><div class="ttdef"><b>Definition</b> BSDF.h:10</div></div>
+<div class="ttc" id="aclass_b_s_d_f_html_a503815ea28489a8d781549bdae5c53be"><div class="ttname"><a href="class_b_s_d_f.html#a503815ea28489a8d781549bdae5c53be">BSDF::BSDF</a></div><div class="ttdeci">constexpr BSDF(const Material *material) noexcept</div><div class="ttdoc">Creates BSDF based on passed material.</div><div class="ttdef"><b>Definition</b> BSDF.h:13</div></div>
+<div class="ttc" id="aclass_b_s_d_f_html_a6a901f6fba26a37868bb383f7559860f"><div class="ttname"><a href="class_b_s_d_f.html#a6a901f6fba26a37868bb383f7559860f">BSDF::Sample</a></div><div class="ttdeci">Math::Vector3f Sample(const Ray &amp;ray, const HitPayload &amp;payload, Math::Vector3f &amp;throughput) noexcept</div><div class="ttdoc">Returns direction of reflected ray and modifies throughput.</div><div class="ttdef"><b>Definition</b> BSDF.cpp:4</div></div>
+<div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdoc">Holds information about surface interaction.</div><div class="ttdef"><b>Definition</b> HitPayload.h:8</div></div>
+<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">Strictly defined type that can be serialized/deserialized.</div><div class="ttdef"><b>Definition</b> Material.h:7</div></div>
+<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdef"><b>Definition</b> Vector.h:9</div></div>
+<div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdoc">Ray representation, P(t) = origin + direction * t.</div><div class="ttdef"><b>Definition</b> Ray.h:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

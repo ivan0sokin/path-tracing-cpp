@@ -80,6 +80,11 @@ $(function() {
   <div class="headertitle"><div class="title">Timer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Time measuring struct.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_timer_8h_source.html">Timer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -92,48 +97,14 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Timer</b> (<a cl
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7b77f955e4e6d27cf7d8184db26bf64e" id="r_a7b77f955e4e6d27cf7d8184db26bf64e"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b77f955e4e6d27cf7d8184db26bf64e">MeasureInMillis</a> (std::function&lt; void()&gt; f)</td></tr>
+<tr class="memitem:a7b77f955e4e6d27cf7d8184db26bf64e" id="r_a7b77f955e4e6d27cf7d8184db26bf64e"><td class="memItemLeft" align="right" valign="top"><a id="a7b77f955e4e6d27cf7d8184db26bf64e" name="a7b77f955e4e6d27cf7d8184db26bf64e"></a>
+static double&#160;</td><td class="memItemRight" valign="bottom"><b>MeasureInMillis</b> (std::function&lt; void()&gt; f)</td></tr>
+<tr class="memdesc:a7b77f955e4e6d27cf7d8184db26bf64e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measures execution time in milliseconds. <br /></td></tr>
 <tr class="separator:a7b77f955e4e6d27cf7d8184db26bf64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00007">7</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7b77f955e4e6d27cf7d8184db26bf64e" name="a7b77f955e4e6d27cf7d8184db26bf64e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b77f955e4e6d27cf7d8184db26bf64e">&#9670;&#160;</a></span>MeasureInMillis()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static double Timer::MeasureInMillis </td>
-          <td>(</td>
-          <td class="paramtype">std::function&lt; void()&gt;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00013">13</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   13</span>                                                                {</div>
-<div class="line"><span class="lineno">   14</span>        <span class="keyword">auto</span> t1 = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   15</span>        f();</div>
-<div class="line"><span class="lineno">   16</span>        <span class="keyword">auto</span> t2 = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><span class="lineno">   17</span>        <span class="keyword">static_cast&lt;</span>std::chrono::duration&lt;float, std::milli&gt;<span class="keyword">&gt;</span>(t2 - t1).count();</div>
-<div class="line"><span class="lineno">   18</span>        <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::duration&lt;float, std::milli&gt;&gt;(t2 - t1).count();</div>
-<div class="line"><span class="lineno">   19</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Time measuring struct. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_timer_8h_source.html">Timer.h</a></li>
 </ul>
 </div><!-- contents -->

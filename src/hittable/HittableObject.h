@@ -6,6 +6,7 @@
 #include "../Ray.h"
 #include "../AABB.h"
 
+//! Abstraction for hittable object
 class HittableObject {
 public:
     constexpr HittableObject() = default;

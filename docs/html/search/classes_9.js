@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['timer_0',['Timer',['../class_timer.html',1,'']]]
+  ['ray_0',['Ray',['../struct_ray.html',1,'']]],
+  ['renderer_1',['Renderer',['../class_renderer.html',1,'']]]
 ];

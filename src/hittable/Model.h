@@ -11,8 +11,10 @@
 #include <filesystem>
 #include <string>
 
+//! Class that allows to load .obj models and store them
 class Model : public HittableObject {
 public:
+    //! Model loading result
     struct LoadResult {
         Model *model = nullptr;
         std::string warning = "";

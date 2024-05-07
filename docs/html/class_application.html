@@ -87,172 +87,20 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7e16acc4775189b71c6f795df5fc7cbb" id="r_a7e16acc4775189b71c6f795df5fc7cbb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e16acc4775189b71c6f795df5fc7cbb">Application</a> (int windowWidth, int windowHeight) noexcept</td></tr>
+<tr class="memitem:a7e16acc4775189b71c6f795df5fc7cbb" id="r_a7e16acc4775189b71c6f795df5fc7cbb"><td class="memItemLeft" align="right" valign="top"><a id="a7e16acc4775189b71c6f795df5fc7cbb" name="a7e16acc4775189b71c6f795df5fc7cbb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Application</b> (int windowWidth, int windowHeight) noexcept</td></tr>
+<tr class="memdesc:a7e16acc4775189b71c6f795df5fc7cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new <a class="el" href="class_application.html" title="Path tracing application class which holds basic logic.">Application</a> with initial window size. <br /></td></tr>
 <tr class="separator:a7e16acc4775189b71c6f795df5fc7cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c63f622cc0fd7ca14f9a19b3f24742f" id="r_a5c63f622cc0fd7ca14f9a19b3f24742f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c63f622cc0fd7ca14f9a19b3f24742f">Run</a> () noexcept</td></tr>
+<tr class="memitem:a5c63f622cc0fd7ca14f9a19b3f24742f" id="r_a5c63f622cc0fd7ca14f9a19b3f24742f"><td class="memItemLeft" align="right" valign="top"><a id="a5c63f622cc0fd7ca14f9a19b3f24742f" name="a5c63f622cc0fd7ca14f9a19b3f24742f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Run</b> () noexcept</td></tr>
+<tr class="memdesc:a5c63f622cc0fd7ca14f9a19b3f24742f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs application. <br /></td></tr>
 <tr class="separator:a5c63f622cc0fd7ca14f9a19b3f24742f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Path tracing application class which holds basic logic. </p>
-
-<p class="definition">Definition at line <a class="el" href="_application_8h_source.html#l00015">15</a> of file <a class="el" href="_application_8h_source.html">Application.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7e16acc4775189b71c6f795df5fc7cbb" name="a7e16acc4775189b71c6f795df5fc7cbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e16acc4775189b71c6f795df5fc7cbb">&#9670;&#160;</a></span>Application()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Application::Application </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>windowWidth</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>windowHeight</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_application_8cpp_source.html#l00021">21</a> of file <a class="el" href="_application_8cpp_source.html">Application.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   21</span>                                                                   :</div>
-<div class="line"><span class="lineno">   22</span>    m_InitialWindowWidth(windowWidth), m_InitialWindowHeight(windowHeight),</div>
-<div class="line"><span class="lineno">   23</span>    m_LastViewportWidth(-1), m_LastViewportHeight(-1),</div>
-<div class="line"><span class="lineno">   24</span>    m_Renderer(windowWidth, windowHeight),</div>
-<div class="line"><span class="lineno">   25</span>    m_TotalRenderTime(0.f), m_LastRenderTime(0.f) {</div>
-<div class="line"><span class="lineno">   26</span> </div>
-<div class="line"><span class="lineno">   27</span>    m_SaveImageFilePath = <span class="keyword">new</span> <span class="keywordtype">char</span>[c_AnyInputFilePathLength];</div>
-<div class="line"><span class="lineno">   28</span>    m_SceneFilePath = <span class="keyword">new</span> <span class="keywordtype">char</span>[c_AnyInputFilePathLength];</div>
-<div class="line"><span class="lineno">   29</span>    m_ModelFilePath = <span class="keyword">new</span> <span class="keywordtype">char</span>[c_AnyInputFilePathLength];</div>
-<div class="line"><span class="lineno">   30</span>    m_MaterialDirectory = <span class="keyword">new</span> <span class="keywordtype">char</span>[c_AnyInputFilePathLength];</div>
-<div class="line"><span class="lineno">   31</span>    memset(m_SaveImageFilePath, 0, <span class="keyword">sizeof</span>(m_SaveImageFilePath));</div>
-<div class="line"><span class="lineno">   32</span>    memset(m_SceneFilePath, 0, <span class="keyword">sizeof</span>(m_SceneFilePath));</div>
-<div class="line"><span class="lineno">   33</span>    memset(m_ModelFilePath, 0, <span class="keyword">sizeof</span>(m_ModelFilePath));</div>
-<div class="line"><span class="lineno">   34</span>    memset(m_MaterialDirectory, 0, <span class="keyword">sizeof</span>(m_MaterialDirectory));</div>
-<div class="line"><span class="lineno">   35</span> </div>
-<div class="line"><span class="lineno">   36</span>    m_AddMaterial.albedo = {0.f, 0.f, 0.f};</div>
-<div class="line"><span class="lineno">   37</span>    m_AddMaterial.metallic = 0.f;</div>
-<div class="line"><span class="lineno">   38</span>    m_AddMaterial.specular = 0.f;</div>
-<div class="line"><span class="lineno">   39</span>    m_AddMaterial.roughness = 0.f;</div>
-<div class="line"><span class="lineno">   40</span>    m_AddMaterial.emissionPower = 0.f;</div>
-<div class="line"><span class="lineno">   41</span>    m_AddMaterial.index = -1;</div>
-<div class="line"><span class="lineno">   42</span> </div>
-<div class="line"><span class="lineno">   43</span>    m_AddSphere = Shapes::Sphere(Math::Vector3f(0.f), 0.f, <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">   44</span>    m_AddTriangle = Shapes::Triangle(Math::Vector3f(0.f), Math::Vector3f(0.f), Math::Vector3f(0.f), <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">   45</span>    m_AddBox = Shapes::Box(Math::Vector3f(0.f), Math::Vector3f(0.f), <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">   46</span> </div>
-<div class="line"><span class="lineno">   47</span>    m_AddSphereMaterialIndex = -1;</div>
-<div class="line"><span class="lineno">   48</span>    m_AddTriangleMaterialIndex = -1;</div>
-<div class="line"><span class="lineno">   49</span>    m_AddBoxMaterialIndex = -1;</div>
-<div class="line"><span class="lineno">   50</span> </div>
-<div class="line"><span class="lineno">   51</span>    m_RayMissColor = Math::Vector3f(0.f);</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>    m_Scene.camera = <a class="code hl_class" href="class_camera.html">Camera</a>(windowWidth, windowHeight);</div>
-<div class="line"><span class="lineno">   54</span> </div>
-<div class="line"><span class="lineno">   55</span>    LoadSceneFromFile(c_DefaultScenePath);</div>
-<div class="line"><span class="lineno">   56</span>}</div>
-<div class="ttc" id="aclass_camera_html"><div class="ttname"><a href="class_camera.html">Camera</a></div><div class="ttdef"><b>Definition</b> <a href="_camera_8h_source.html#l00009">Camera.h:9</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5c63f622cc0fd7ca14f9a19b3f24742f" name="a5c63f622cc0fd7ca14f9a19b3f24742f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c63f622cc0fd7ca14f9a19b3f24742f">&#9670;&#160;</a></span>Run()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Application::Run </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_application_8cpp_source.html#l00058">58</a> of file <a class="el" href="_application_8cpp_source.html">Application.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   58</span>                              {</div>
-<div class="line"><span class="lineno">   59</span>    <span class="keywordflow">if</span> (!glfwInit()) {</div>
-<div class="line"><span class="lineno">   60</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to initialize GLFW\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><span class="lineno">   62</span>    }</div>
-<div class="line"><span class="lineno">   63</span> </div>
-<div class="line"><span class="lineno">   64</span><span class="preprocessor">#if defined(IMGUI_IMPL_OPENGL_ES2)</span></div>
-<div class="line"><span class="lineno">   65</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* glsl_version = <span class="stringliteral">&quot;#version 100&quot;</span>;</div>
-<div class="line"><span class="lineno">   66</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);</div>
-<div class="line"><span class="lineno">   67</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);</div>
-<div class="line"><span class="lineno">   68</span>    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);</div>
-<div class="line"><span class="lineno">   69</span><span class="preprocessor">#elif defined(__APPLE__)</span></div>
-<div class="line"><span class="lineno">   70</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* glsl_version = <span class="stringliteral">&quot;#version 150&quot;</span>;</div>
-<div class="line"><span class="lineno">   71</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);</div>
-<div class="line"><span class="lineno">   72</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);</div>
-<div class="line"><span class="lineno">   73</span>    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</div>
-<div class="line"><span class="lineno">   74</span>    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);</div>
-<div class="line"><span class="lineno">   75</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">   76</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* glsl_version = <span class="stringliteral">&quot;#version 130&quot;</span>;</div>
-<div class="line"><span class="lineno">   77</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);</div>
-<div class="line"><span class="lineno">   78</span>    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);</div>
-<div class="line"><span class="lineno">   79</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>    m_Window = glfwCreateWindow(m_InitialWindowWidth, m_InitialWindowHeight, c_WindowTitle, <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">   82</span>    <span class="keywordflow">if</span> (m_Window == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">   83</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to create window\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><span class="lineno">   85</span>    }</div>
-<div class="line"><span class="lineno">   86</span> </div>
-<div class="line"><span class="lineno">   87</span>    GLFWimage *icon = <span class="keyword">new</span> GLFWimage();</div>
-<div class="line"><span class="lineno">   88</span>    icon-&gt;pixels = stbi_load(<span class="stringliteral">&quot;icon/icon.png&quot;</span>, &amp;icon-&gt;width, &amp;icon-&gt;height, 0, 4);</div>
-<div class="line"><span class="lineno">   89</span>    glfwSetWindowIcon(m_Window, 1, icon);</div>
-<div class="line"><span class="lineno">   90</span>    stbi_image_free(icon-&gt;pixels);</div>
-<div class="line"><span class="lineno">   91</span>    <span class="keyword">delete</span> icon;</div>
-<div class="line"><span class="lineno">   92</span> </div>
-<div class="line"><span class="lineno">   93</span>    glfwMakeContextCurrent(m_Window);</div>
-<div class="line"><span class="lineno">   94</span> </div>
-<div class="line"><span class="lineno">   95</span>    ImGui::CreateContext();</div>
-<div class="line"><span class="lineno">   96</span>    ImGuiIO &amp;io = ImGui::GetIO();</div>
-<div class="line"><span class="lineno">   97</span>    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;</div>
-<div class="line"><span class="lineno">   98</span> </div>
-<div class="line"><span class="lineno">   99</span>    UpdateThemeStyle();</div>
-<div class="line"><span class="lineno">  100</span> </div>
-<div class="line"><span class="lineno">  101</span>    ImGui_ImplGlfw_InitForOpenGL(m_Window, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  102</span>    ImGui_ImplOpenGL3_Init(glsl_version);</div>
-<div class="line"><span class="lineno">  103</span> </div>
-<div class="line"><span class="lineno">  104</span>    MainLoop();</div>
-<div class="line"><span class="lineno">  105</span> </div>
-<div class="line"><span class="lineno">  106</span>    ImGui_ImplOpenGL3_Shutdown();</div>
-<div class="line"><span class="lineno">  107</span>    ImGui_ImplGlfw_Shutdown();</div>
-<div class="line"><span class="lineno">  108</span>    ImGui::DestroyContext();</div>
-<div class="line"><span class="lineno">  109</span> </div>
-<div class="line"><span class="lineno">  110</span>    glfwDestroyWindow(m_Window);</div>
-<div class="line"><span class="lineno">  111</span>    glfwTerminate();</div>
-<div class="line"><span class="lineno">  112</span> </div>
-<div class="line"><span class="lineno">  113</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  114</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_application_8h_source.html">Application.h</a></li>
-<li><a class="el" href="_application_8cpp_source.html">Application.cpp</a></li>
+<li><b>Application.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,280 +1,57 @@
 \doxysection{Camera Class Reference}
 \hypertarget{class_camera}{}\label{class_camera}\index{Camera@{Camera}}
+
+
+Observerer class.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_camera_a62b45cba39a7950ba61d7eccd9d5aced}{Camera}} (int viewport\+Width, int viewport\+Height, const Math\+::\+Vector3f \&position=\{0.f, 0.f, 0.f\}, const Math\+::\+Vector3f \&target=\{0.f, 0.f, -\/1.f\}, float vertical\+Fov\+In\+Degrees=20.f, const Math\+::\+Vector3f \&up=\{0.f, 1.f, 0.f\}) noexcept
+\Hypertarget{class_camera_a62b45cba39a7950ba61d7eccd9d5aced}\label{class_camera_a62b45cba39a7950ba61d7eccd9d5aced} 
+{\bfseries Camera} (int viewport\+Width, int viewport\+Height, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&position=\{0.f, 0.f, 0.f\}, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&target=\{0.f, 0.f, -\/1.f\}, float vertical\+Fov\+In\+Degrees=20.f, const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \&up=\{0.f, 1.f, 0.f\}) noexcept
 \item 
-void \mbox{\hyperlink{class_camera_a677b055323fd01ae7a8e9f1ec53a531c}{On\+Viewport\+Resize}} (int viewport\+Width, int viewport\+Height) noexcept
+\Hypertarget{class_camera_a677b055323fd01ae7a8e9f1ec53a531c}\label{class_camera_a677b055323fd01ae7a8e9f1ec53a531c} 
+void {\bfseries On\+Viewport\+Resize} (int viewport\+Width, int viewport\+Height) noexcept
+\begin{DoxyCompactList}\small\item\em Reconstructs internal state based on new viewport size. \end{DoxyCompactList}\item 
+\Hypertarget{class_camera_ac59bca13c9f1241fbedcd549fdc2a0ba}\label{class_camera_ac59bca13c9f1241fbedcd549fdc2a0ba} 
+void {\bfseries Compute\+Ray\+Directions} () noexcept
+\begin{DoxyCompactList}\small\item\em Computes ray directions and saves them into private member. \end{DoxyCompactList}\item 
+\Hypertarget{class_camera_a1a8a35439bc91b308cd1c05b3704bf4f}\label{class_camera_a1a8a35439bc91b308cd1c05b3704bf4f} 
+constexpr std\+::span$<$ const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} $>$ {\bfseries Get\+Ray\+Directions} () const noexcept
+\begin{DoxyCompactList}\small\item\em Return span to array of ray directions. \end{DoxyCompactList}\item 
+\Hypertarget{class_camera_af78a93b7272b46ce0c7933b5aa51cb52}\label{class_camera_af78a93b7272b46ce0c7933b5aa51cb52} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries Get\+Position} () const noexcept
 \item 
-void \mbox{\hyperlink{class_camera_ac59bca13c9f1241fbedcd549fdc2a0ba}{Compute\+Ray\+Directions}} () noexcept
+\Hypertarget{class_camera_a8ee3b54d9d7dc908c2bfc6b68cab66ac}\label{class_camera_a8ee3b54d9d7dc908c2bfc6b68cab66ac} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \& {\bfseries Position} () noexcept
 \item 
-constexpr std\+::span$<$ const Math\+::\+Vector3f $>$ \mbox{\hyperlink{class_camera_a1a8a35439bc91b308cd1c05b3704bf4f}{Get\+Ray\+Directions}} () const noexcept
+\Hypertarget{class_camera_aaa412e7aa73fb1d1803d455bd84e01ee}\label{class_camera_aaa412e7aa73fb1d1803d455bd84e01ee} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries Get\+Target} () const noexcept
 \item 
-constexpr Math\+::\+Vector3f \mbox{\hyperlink{class_camera_af78a93b7272b46ce0c7933b5aa51cb52}{Get\+Position}} () const noexcept
+\Hypertarget{class_camera_a7fdba620f1163a9e9cfdedecf63320f1}\label{class_camera_a7fdba620f1163a9e9cfdedecf63320f1} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \& {\bfseries Target} () noexcept
 \item 
-constexpr Math\+::\+Vector3f \& \mbox{\hyperlink{class_camera_a8ee3b54d9d7dc908c2bfc6b68cab66ac}{Position}} () noexcept
+\Hypertarget{class_camera_ad6797df9fefa4e1f0776ebeecb895d40}\label{class_camera_ad6797df9fefa4e1f0776ebeecb895d40} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} {\bfseries Get\+Up} () const noexcept
 \item 
-constexpr Math\+::\+Vector3f \mbox{\hyperlink{class_camera_aaa412e7aa73fb1d1803d455bd84e01ee}{Get\+Target}} () const noexcept
+\Hypertarget{class_camera_a1e48db2d1eb86e679b8010c035e83ad6}\label{class_camera_a1e48db2d1eb86e679b8010c035e83ad6} 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \& {\bfseries Up} () noexcept
 \item 
-constexpr Math\+::\+Vector3f \& \mbox{\hyperlink{class_camera_a7fdba620f1163a9e9cfdedecf63320f1}{Target}} () noexcept
+\Hypertarget{class_camera_a06884ceee93c43eae5c624d5134a9347}\label{class_camera_a06884ceee93c43eae5c624d5134a9347} 
+constexpr float {\bfseries Get\+Vertical\+Fov\+In\+Degrees} () const noexcept
 \item 
-constexpr Math\+::\+Vector3f \mbox{\hyperlink{class_camera_ad6797df9fefa4e1f0776ebeecb895d40}{Get\+Up}} () const noexcept
-\item 
-constexpr Math\+::\+Vector3f \& \mbox{\hyperlink{class_camera_a1e48db2d1eb86e679b8010c035e83ad6}{Up}} () noexcept
-\item 
-constexpr float \mbox{\hyperlink{class_camera_a06884ceee93c43eae5c624d5134a9347}{Get\+Vertical\+Fov\+In\+Degrees}} () const noexcept
-\item 
-constexpr float \& \mbox{\hyperlink{class_camera_aecebbe3027180c8d908c185601b1dd00}{Vertical\+Fov\+In\+Degrees}} () noexcept
+\Hypertarget{class_camera_aecebbe3027180c8d908c185601b1dd00}\label{class_camera_aecebbe3027180c8d908c185601b1dd00} 
+constexpr float \& {\bfseries Vertical\+Fov\+In\+Degrees} () noexcept
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00009}{9}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_camera_a62b45cba39a7950ba61d7eccd9d5aced}\label{class_camera_a62b45cba39a7950ba61d7eccd9d5aced} 
-\index{Camera@{Camera}!Camera@{Camera}}
-\index{Camera@{Camera}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{Camera()}{Camera()}}
-{\footnotesize\ttfamily Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{int}]{viewport\+Width,  }\item[{int}]{viewport\+Height,  }\item[{const Math\+::\+Vector3f \&}]{position = {\ttfamily \{0.f,~0.f,~0.f\}},  }\item[{const Math\+::\+Vector3f \&}]{target = {\ttfamily \{0.f,~0.f,~-\/1.f\}},  }\item[{float}]{vertical\+Fov\+In\+Degrees = {\ttfamily 20.f},  }\item[{const Math\+::\+Vector3f \&}]{up = {\ttfamily \{0.f,~1.f,~0.f\}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
-\DoxyCodeLine{00005\ \ \ \ \ m\_ViewportWidth(viewportWidth),\ m\_ViewportHeight(viewportHeight),\ m\_Position(position),\ m\_Target(target),\ m\_VerticalFovInDegrees(verticalFovInDegrees),\ m\_Up(up)\ \{}
-\DoxyCodeLine{00006\ \ \ \ \ m\_RayDirections.resize(m\_ViewportWidth\ *\ m\_ViewportHeight);}
-\DoxyCodeLine{00007\ \ \ \ \ ComputeRayDirections();}
-\DoxyCodeLine{00008\ \}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_camera_ac59bca13c9f1241fbedcd549fdc2a0ba}\label{class_camera_ac59bca13c9f1241fbedcd549fdc2a0ba} 
-\index{Camera@{Camera}!ComputeRayDirections@{ComputeRayDirections}}
-\index{ComputeRayDirections@{ComputeRayDirections}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{ComputeRayDirections()}{ComputeRayDirections()}}
-{\footnotesize\ttfamily void Camera\+::\+Compute\+Ray\+Directions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{float}\ verticalFovInRadians\ =\ Math::ToRadians(m\_VerticalFovInDegrees);}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \ \ \ \ Math::Vector3f\ forward\ =\ m\_Target\ -\/\ m\_Position;}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ focalLength\ =\ Math::Length(forward);}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ viewportWorldHeight\ =\ 2.f\ *\ Math::Tan(verticalFovInRadians\ *\ 0.5f)\ *\ focalLength;}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ viewportWorldWidth\ =\ (viewportWorldHeight\ *\ m\_ViewportWidth)\ /\ m\_ViewportHeight;}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \ \ \ \ Math::Vector3f\ w\ =\ Math::Normalize(forward);\ \ }
-\DoxyCodeLine{00030\ \ \ \ \ Math::Vector3f\ u\ =\ Math::Normalize(Math::Cross(w,\ m\_Up));}
-\DoxyCodeLine{00031\ \ \ \ \ Math::Vector3f\ v\ =\ Math::Normalize(Math::Cross(w,\ u));}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \ \ \ \ Math::Vector3f\ horizontal\ =\ u\ *\ viewportWorldWidth;}
-\DoxyCodeLine{00034\ \ \ \ \ Math::Vector3f\ vertical\ =\ v\ *\ viewportWorldHeight;}
-\DoxyCodeLine{00035\ \ \ \ \ Math::Vector3f\ leftUpper\ =\ forward\ -\/\ horizontal\ *\ 0.5f\ -\/\ vertical\ *\ 0.5f;}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ m\_ViewportHeight;\ ++i)\ \{}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ m\_ViewportWidth;\ ++j)\ \{}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ uScale\ =\ (float)(j\ +\ Utilities::RandomFloatInNegativeHalfToHalf())\ /\ (m\_ViewportWidth\ -\/\ 1);}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ vScale\ =\ (float)(i\ +\ Utilities::RandomFloatInNegativeHalfToHalf())\ /\ (m\_ViewportHeight\ -\/\ 1);}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ m\_RayDirections[m\_ViewportWidth\ *\ i\ +\ j]\ =\ Math::Normalize(leftUpper\ +\ horizontal\ *\ uScale\ +\ vertical\ *\ vScale);}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00043\ \ \ \ \ \}}
-\DoxyCodeLine{00044\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_af78a93b7272b46ce0c7933b5aa51cb52}\label{class_camera_af78a93b7272b46ce0c7933b5aa51cb52} 
-\index{Camera@{Camera}!GetPosition@{GetPosition}}
-\index{GetPosition@{GetPosition}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{GetPosition()}{GetPosition()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f Camera\+::\+Get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00025}{25}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Position;}
-\DoxyCodeLine{00027\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a1a8a35439bc91b308cd1c05b3704bf4f}\label{class_camera_a1a8a35439bc91b308cd1c05b3704bf4f} 
-\index{Camera@{Camera}!GetRayDirections@{GetRayDirections}}
-\index{GetRayDirections@{GetRayDirections}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{GetRayDirections()}{GetRayDirections()}}
-{\footnotesize\ttfamily constexpr std\+::span$<$ const Math\+::\+Vector3f $>$ Camera\+::\+Get\+Ray\+Directions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00021}{21}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_RayDirections;}
-\DoxyCodeLine{00023\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_aaa412e7aa73fb1d1803d455bd84e01ee}\label{class_camera_aaa412e7aa73fb1d1803d455bd84e01ee} 
-\index{Camera@{Camera}!GetTarget@{GetTarget}}
-\index{GetTarget@{GetTarget}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{GetTarget()}{GetTarget()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f Camera\+::\+Get\+Target (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00033}{33}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Target;}
-\DoxyCodeLine{00035\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_ad6797df9fefa4e1f0776ebeecb895d40}\label{class_camera_ad6797df9fefa4e1f0776ebeecb895d40} 
-\index{Camera@{Camera}!GetUp@{GetUp}}
-\index{GetUp@{GetUp}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{GetUp()}{GetUp()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f Camera\+::\+Get\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00041}{41}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Up;}
-\DoxyCodeLine{00043\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a06884ceee93c43eae5c624d5134a9347}\label{class_camera_a06884ceee93c43eae5c624d5134a9347} 
-\index{Camera@{Camera}!GetVerticalFovInDegrees@{GetVerticalFovInDegrees}}
-\index{GetVerticalFovInDegrees@{GetVerticalFovInDegrees}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{GetVerticalFovInDegrees()}{GetVerticalFovInDegrees()}}
-{\footnotesize\ttfamily constexpr float Camera\+::\+Get\+Vertical\+Fov\+In\+Degrees (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00049}{49}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_VerticalFovInDegrees;}
-\DoxyCodeLine{00051\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a677b055323fd01ae7a8e9f1ec53a531c}\label{class_camera_a677b055323fd01ae7a8e9f1ec53a531c} 
-\index{Camera@{Camera}!OnViewportResize@{OnViewportResize}}
-\index{OnViewportResize@{OnViewportResize}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{OnViewportResize()}{OnViewportResize()}}
-{\footnotesize\ttfamily void Camera\+::\+On\+Viewport\+Resize (\begin{DoxyParamCaption}\item[{int}]{viewport\+Width,  }\item[{int}]{viewport\+Height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_ViewportWidth\ ==\ viewportWidth\ \&\&\ m\_ViewportHeight\ ==\ viewportHeight)\ \{}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00013\ \ \ \ \ \}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \ \ \ \ m\_ViewportWidth\ =\ viewportWidth;}
-\DoxyCodeLine{00016\ \ \ \ \ m\_ViewportHeight\ =\ viewportHeight;}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \ \ \ \ m\_RayDirections.resize(m\_ViewportWidth\ *\ m\_ViewportHeight);}
-\DoxyCodeLine{00019\ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a8ee3b54d9d7dc908c2bfc6b68cab66ac}\label{class_camera_a8ee3b54d9d7dc908c2bfc6b68cab66ac} 
-\index{Camera@{Camera}!Position@{Position}}
-\index{Position@{Position}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{Position()}{Position()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f \& Camera\+::\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00029}{29}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Position;}
-\DoxyCodeLine{00031\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a7fdba620f1163a9e9cfdedecf63320f1}\label{class_camera_a7fdba620f1163a9e9cfdedecf63320f1} 
-\index{Camera@{Camera}!Target@{Target}}
-\index{Target@{Target}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{Target()}{Target()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f \& Camera\+::\+Target (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00037}{37}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Target;}
-\DoxyCodeLine{00039\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_a1e48db2d1eb86e679b8010c035e83ad6}\label{class_camera_a1e48db2d1eb86e679b8010c035e83ad6} 
-\index{Camera@{Camera}!Up@{Up}}
-\index{Up@{Up}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{Up()}{Up()}}
-{\footnotesize\ttfamily constexpr Math\+::\+Vector3f \& Camera\+::\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00045}{45}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Up;}
-\DoxyCodeLine{00047\ \ \ \ \ \}}
-
-\end{DoxyCode}
-\Hypertarget{class_camera_aecebbe3027180c8d908c185601b1dd00}\label{class_camera_aecebbe3027180c8d908c185601b1dd00} 
-\index{Camera@{Camera}!VerticalFovInDegrees@{VerticalFovInDegrees}}
-\index{VerticalFovInDegrees@{VerticalFovInDegrees}!Camera@{Camera}}
-\doxysubsubsection{\texorpdfstring{VerticalFovInDegrees()}{VerticalFovInDegrees()}}
-{\footnotesize\ttfamily constexpr float \& Camera\+::\+Vertical\+Fov\+In\+Degrees (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
-
-
-
-Definition at line \mbox{\hyperlink{_camera_8h_source_l00053}{53}} of file \mbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_VerticalFovInDegrees;}
-\DoxyCodeLine{00055\ \ \ \ \ \}}
-
-\end{DoxyCode}
-
+Observerer class. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

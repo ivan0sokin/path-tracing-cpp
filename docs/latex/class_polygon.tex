@@ -1,0 +1,103 @@
+\doxysection{Polygon Class Reference}
+\hypertarget{class_polygon}{}\label{class_polygon}\index{Polygon@{Polygon}}
+Inheritance diagram for Polygon\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_polygon}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_polygon_a6bee500acef793c1b5c1535e2571e05b}\label{class_polygon_a6bee500acef793c1b5c1535e2571e05b} 
+constexpr {\bfseries Polygon} (const \mbox{\hyperlink{class_mesh}{Mesh}} \texorpdfstring{$\ast$}{*}mesh, const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*}material, int face\+Index) noexcept
+\item 
+constexpr bool \mbox{\hyperlink{class_polygon_ac4ebbde83eefd2edbba7dbff5be6bfb9}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_polygon_a4a00342d0d47bf2b3898ea7e98f8a2b3}{Get\+Centroid}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} \mbox{\hyperlink{class_polygon_a13d2640b2666513b834d2ba9809f2d15}{Get\+Bounding\+Box}} () const noexcept override
+\item 
+constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_polygon_a030cbd0302392b2e87c3324de2290354}{Sample\+Uniform}} (const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&sample) const noexcept override
+\item 
+constexpr float \mbox{\hyperlink{class_polygon_a4d270742ed868e33e9adcc8e430660fe}{Get\+Area}} () const noexcept override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+constexpr {\bfseries Hittable\+Object} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\item 
+constexpr {\bfseries Hittable\+Object} (\mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&\&)=default
+\item 
+constexpr \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}} \&)=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_polygon_a850ba3c403acf0edd7208b8efefdd2bb}\label{class_polygon_a850ba3c403acf0edd7208b8efefdd2bb} 
+const \mbox{\hyperlink{class_mesh}{Mesh}} \texorpdfstring{$\ast$}{*} {\bfseries mesh}
+\item 
+\Hypertarget{class_polygon_a811adc54f949408b35e04f7db688e774}\label{class_polygon_a811adc54f949408b35e04f7db688e774} 
+const \mbox{\hyperlink{struct_material}{Material}} \texorpdfstring{$\ast$}{*} {\bfseries material}
+\item 
+\Hypertarget{class_polygon_a0d40b0f694fe1dbdab3834e9217351f6}\label{class_polygon_a0d40b0f694fe1dbdab3834e9217351f6} 
+int {\bfseries face\+Index}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_polygon_a4d270742ed868e33e9adcc8e430660fe}\label{class_polygon_a4d270742ed868e33e9adcc8e430660fe} 
+\index{Polygon@{Polygon}!GetArea@{GetArea}}
+\index{GetArea@{GetArea}!Polygon@{Polygon}}
+\doxysubsubsection{\texorpdfstring{GetArea()}{GetArea()}}
+{\footnotesize\ttfamily constexpr float Polygon\+::\+Get\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_polygon_a13d2640b2666513b834d2ba9809f2d15}\label{class_polygon_a13d2640b2666513b834d2ba9809f2d15} 
+\index{Polygon@{Polygon}!GetBoundingBox@{GetBoundingBox}}
+\index{GetBoundingBox@{GetBoundingBox}!Polygon@{Polygon}}
+\doxysubsubsection{\texorpdfstring{GetBoundingBox()}{GetBoundingBox()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_a_a_b_b}{AABB}} Polygon\+::\+Get\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_polygon_a4a00342d0d47bf2b3898ea7e98f8a2b3}\label{class_polygon_a4a00342d0d47bf2b3898ea7e98f8a2b3} 
+\index{Polygon@{Polygon}!GetCentroid@{GetCentroid}}
+\index{GetCentroid@{GetCentroid}!Polygon@{Polygon}}
+\doxysubsubsection{\texorpdfstring{GetCentroid()}{GetCentroid()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Polygon\+::\+Get\+Centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_polygon_ac4ebbde83eefd2edbba7dbff5be6bfb9}\label{class_polygon_ac4ebbde83eefd2edbba7dbff5be6bfb9} 
+\index{Polygon@{Polygon}!Hit@{Hit}}
+\index{Hit@{Hit}!Polygon@{Polygon}}
+\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
+{\footnotesize\ttfamily constexpr bool Polygon\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+\Hypertarget{class_polygon_a030cbd0302392b2e87c3324de2290354}\label{class_polygon_a030cbd0302392b2e87c3324de2290354} 
+\index{Polygon@{Polygon}!SampleUniform@{SampleUniform}}
+\index{SampleUniform@{SampleUniform}!Polygon@{Polygon}}
+\doxysubsubsection{\texorpdfstring{SampleUniform()}{SampleUniform()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector3f}} Polygon\+::\+Sample\+Uniform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math\+::\+Vector2f}} \&}]{sample }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+Implements \mbox{\hyperlink{class_hittable_object}{Hittable\+Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+hittable/Polygon.\+h\end{DoxyCompactItemize}

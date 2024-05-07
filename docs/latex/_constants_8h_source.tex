@@ -1,0 +1,30 @@
+\doxysection{Constants.\+h}
+\hypertarget{_constants_8h_source}{}\label{_constants_8h_source}\index{math/Constants.h@{math/Constants.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_CONSTANTS\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_CONSTANTS\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <numbers>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Math\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{namespace\ }Constants\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ Pi\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::numbers::pi);}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ Tau\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(2.0\ *\ Pi<T>);}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ InversePi\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::numbers::inv\_pi);}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ HalfCircumferenceInDegrees\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(180.0);}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ InverseHalfCircumferenceInDegrees\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1)\ /\ HalfCircumferenceInDegrees<T>;}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ HalfCircumferenceInRadians\ =\ Pi<T>;}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ InverseHalfCircumferenceInRadians\ =\ InversePi<T>;}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ Epsilon\ =\ std::numeric\_limits<T>::epsilon();}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ Infinity\ =\ std::numeric\_limits<T>::infinity();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ T\ OneThird\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1.0\ /\ 3.0);}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

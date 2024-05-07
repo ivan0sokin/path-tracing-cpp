@@ -4,12 +4,14 @@
 #include <chrono>
 #include <functional>
 
+//! Time measuring struct
 class Timer {
 public:
     constexpr Timer() noexcept = delete;
     constexpr Timer(const Timer&) = delete;
     constexpr Timer(Timer&&) = delete;
 
+    //! Measures execution time in milliseconds
     inline static double MeasureInMillis(std::function<void()> f) {
         auto t1 = std::chrono::high_resolution_clock::now();
         f();

@@ -1,0 +1,40 @@
+\doxysection{Mesh Class Reference}
+\hypertarget{class_mesh}{}\label{class_mesh}\index{Mesh@{Mesh}}
+
+
+Class that holds information about vertices in particular mesh in model.  
+
+
+
+
+{\ttfamily \#include $<$Mesh.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_mesh_1_1_vertex}{Vertex}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_mesh_1_1_vertex}{Vertex} information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_mesh_a218658950716eba7c1546d774db075a8}\label{class_mesh_a218658950716eba7c1546d774db075a8} 
+{\bfseries Mesh} (std\+::vector$<$ \mbox{\hyperlink{struct_mesh_1_1_vertex}{Vertex}} $>$ \&\&vertices, std\+::vector$<$ int $>$ \&\&indices, std\+::vector$<$ int $>$ \&\&material\+Indices) noexcept
+\item 
+\Hypertarget{class_mesh_aa2730459618e287b0803ff14f1b96741}\label{class_mesh_aa2730459618e287b0803ff14f1b96741} 
+constexpr std\+::span$<$ const \mbox{\hyperlink{struct_mesh_1_1_vertex}{Vertex}} $>$ {\bfseries Get\+Vertices} () const noexcept
+\item 
+\Hypertarget{class_mesh_ab3df6697dfd7471385334d5365b93cb3}\label{class_mesh_ab3df6697dfd7471385334d5365b93cb3} 
+constexpr std\+::span$<$ const int $>$ {\bfseries Get\+Indices} () const noexcept
+\item 
+\Hypertarget{class_mesh_ac36375758de5e6f9415288dbe7e8d0a2}\label{class_mesh_ac36375758de5e6f9415288dbe7e8d0a2} 
+constexpr std\+::span$<$ const int $>$ {\bfseries Get\+Material\+Indices} () const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that holds information about vertices in particular mesh in model. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+hittable/Mesh.\+h\item 
+hittable/Mesh.\+cpp\end{DoxyCompactItemize}

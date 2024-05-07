@@ -1,0 +1,90 @@
+\doxysection{Model.\+h}
+\hypertarget{_model_8h_source}{}\label{_model_8h_source}\index{hittable/Model.h@{hittable/Model.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_MODEL\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_MODEL\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}HittableObject.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Mesh.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../BVHNode.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Polygon.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}../Light.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_model}{Model}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_hittable_object}{HittableObject}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_model_1_1_load_result}{LoadResult}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_model}{Model}}\ *model\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ std::string\ warning\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::string\ error\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_model_1_1_load_result}{LoadResult}}\ Error(\textcolor{keyword}{const}\ std::string\ \&error)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_model_1_1_load_result}{LoadResult}}\ result;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ result.error\ =\ error;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ IsFailure()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !error.empty();}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_model_1_1_load_result}{LoadResult}}\ LoadOBJ(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile,\ \textcolor{keyword}{const}\ std::filesystem::path\ \&materialDirectory)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ Hit(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray,\ \textcolor{keywordtype}{float}\ tMin,\ \textcolor{keywordtype}{float}\ tMax,\ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ \&payload)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}\ GetCentroid()\ const\ noexcept;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ GetBoundingBox()\ const\ noexcept;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ constexpr\ Math::Vector3f\ SampleUniform(const\ Math::Vector2f\ \&sample)\ const\ noexcept\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}(0.f);}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ GetArea()\ const\ noexcept\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0.f;}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ std::filesystem::path\ GetPathToFile()\ const\ noexcept\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_PathToFile;}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ std::filesystem::path\ GetMaterialDirectory()\ const\ noexcept\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_MaterialDirectory;}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ std::span<Material>\ GetMaterials()\ noexcept\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Materials;}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ std::span<const\ Light>\ GetLightSources()\ const\ noexcept\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_LightSources;}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{class_model}{Model}}(\textcolor{keyword}{const}\ std::filesystem::path\ \&pathToFile,\ \textcolor{keyword}{const}\ std::filesystem::path\ \&materialDirectory,\ std::vector<Mesh>\ \&\&meshes,\ std::vector<Material>\ \&\&materials)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ std::filesystem::path\ m\_PathToFile;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ std::filesystem::path\ m\_MaterialDirectory;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ std::vector<Mesh>\ m\_Meshes;}
+\DoxyCodeLine{00075\ \ \ \ \ std::vector<Polygon>\ m\_Polygons;}
+\DoxyCodeLine{00076\ \ \ \ \ std::vector<Material>\ m\_Materials;}
+\DoxyCodeLine{00077\ \ \ \ \ std::vector<Light>\ m\_LightSources;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}\ *m\_Root;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}\ centroid;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ c\_VerticesPerFace\ =\ 3;}
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

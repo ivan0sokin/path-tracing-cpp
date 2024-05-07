@@ -79,148 +79,29 @@ $(function() {
   <div class="headertitle"><div class="title">Light Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class that samples lights directly.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_light_8h_source.html">Light.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a38ce84cb5df8677e9ef08453d9b62b03" id="r_a38ce84cb5df8677e9ef08453d9b62b03"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38ce84cb5df8677e9ef08453d9b62b03">Light</a> (const HittableObjectPtr object, const Math::Vector3f &amp;emission) noexcept</td></tr>
+<tr class="memitem:a38ce84cb5df8677e9ef08453d9b62b03" id="r_a38ce84cb5df8677e9ef08453d9b62b03"><td class="memItemLeft" align="right" valign="top"><a id="a38ce84cb5df8677e9ef08453d9b62b03" name="a38ce84cb5df8677e9ef08453d9b62b03"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Light</b> (const <a class="el" href="class_hittable_object.html">HittableObjectPtr</a> object, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;emission) noexcept</td></tr>
 <tr class="separator:a38ce84cb5df8677e9ef08453d9b62b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbd623085decc9b311b1dc881a44b585" id="r_abbd623085decc9b311b1dc881a44b585"><td class="memItemLeft" align="right" valign="top">const HittableObject *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbd623085decc9b311b1dc881a44b585">GetObject</a> () const noexcept</td></tr>
+<tr class="memitem:abbd623085decc9b311b1dc881a44b585" id="r_abbd623085decc9b311b1dc881a44b585"><td class="memItemLeft" align="right" valign="top"><a id="abbd623085decc9b311b1dc881a44b585" name="abbd623085decc9b311b1dc881a44b585"></a>
+const <a class="el" href="class_hittable_object.html">HittableObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetObject</b> () const noexcept</td></tr>
+<tr class="memdesc:abbd623085decc9b311b1dc881a44b585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to <code>object</code> that light holds. <br /></td></tr>
 <tr class="separator:abbd623085decc9b311b1dc881a44b585"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a825912082123457b823d2ac6c17778a6" id="r_a825912082123457b823d2ac6c17778a6"><td class="memItemLeft" align="right" valign="top">Math::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a825912082123457b823d2ac6c17778a6">Sample</a> (const <a class="el" href="struct_ray.html">Ray</a> &amp;lightRay, const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;objectHitPayload, const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;lightHitPayload, float distance, float distanceSquared) const noexcept</td></tr>
+<tr class="memitem:a825912082123457b823d2ac6c17778a6" id="r_a825912082123457b823d2ac6c17778a6"><td class="memItemLeft" align="right" valign="top"><a id="a825912082123457b823d2ac6c17778a6" name="a825912082123457b823d2ac6c17778a6"></a>
+<a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Sample</b> (const <a class="el" href="struct_ray.html">Ray</a> &amp;lightRay, const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;objectHitPayload, const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;lightHitPayload, float distance, float distanceSquared) const noexcept</td></tr>
+<tr class="memdesc:a825912082123457b823d2ac6c17778a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns color sample using direct light sampling method. <br /></td></tr>
 <tr class="separator:a825912082123457b823d2ac6c17778a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_light_8h_source.html#l00009">9</a> of file <a class="el" href="_light_8h_source.html">Light.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a38ce84cb5df8677e9ef08453d9b62b03" name="a38ce84cb5df8677e9ef08453d9b62b03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38ce84cb5df8677e9ef08453d9b62b03">&#9670;&#160;</a></span>Light()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Light::Light </td>
-          <td>(</td>
-          <td class="paramtype">const HittableObjectPtr</td>          <td class="paramname"><span class="paramname"><em>object</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Math::Vector3f &amp;</td>          <td class="paramname"><span class="paramname"><em>emission</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_light_8h_source.html#l00011">11</a> of file <a class="el" href="_light_8h_source.html">Light.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   11</span>                                                                                           :</div>
-<div class="line"><span class="lineno">   12</span>        m_Object(<span class="keywordtype">object</span>), m_Emission(emission) {}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="abbd623085decc9b311b1dc881a44b585" name="abbd623085decc9b311b1dc881a44b585"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbd623085decc9b311b1dc881a44b585">&#9670;&#160;</a></span>GetObject()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const HittableObject * Light::GetObject </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_light_8h_source.html#l00014">14</a> of file <a class="el" href="_light_8h_source.html">Light.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   14</span>                                                     {</div>
-<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">return</span> m_Object;</div>
-<div class="line"><span class="lineno">   16</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a825912082123457b823d2ac6c17778a6" name="a825912082123457b823d2ac6c17778a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a825912082123457b823d2ac6c17778a6">&#9670;&#160;</a></span>Sample()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Math::Vector3f Light::Sample </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>lightRay</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>objectHitPayload</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>lightHitPayload</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>distance</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>distanceSquared</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_light_8h_source.html#l00018">18</a> of file <a class="el" href="_light_8h_source.html">Light.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   18</span>                                                                                                                                                                          {</div>
-<div class="line"><span class="lineno">   19</span>        <span class="keyword">constexpr</span> <span class="keywordtype">float</span> distanceEpsilon = 0.01f;</div>
-<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">if</span> (Math::Abs(lightHitPayload.t - distance) &gt; distanceEpsilon) {</div>
-<div class="line"><span class="lineno">   21</span>            <span class="keywordflow">return</span> Math::Vector3f(0.f);</div>
-<div class="line"><span class="lineno">   22</span>        }</div>
-<div class="line"><span class="lineno">   23</span>        </div>
-<div class="line"><span class="lineno">   24</span>        <span class="keywordtype">float</span> pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object-&gt;GetArea());</div>
-<div class="line"><span class="lineno">   25</span>        </div>
-<div class="line"><span class="lineno">   26</span>        <span class="keyword">constexpr</span> <span class="keywordtype">float</span> pdfEpsilon = 0.01f;</div>
-<div class="line"><span class="lineno">   27</span>        <span class="keywordflow">if</span> (pdf &lt;= pdfEpsilon) {</div>
-<div class="line"><span class="lineno">   28</span>            <span class="keywordflow">return</span> Math::Vector3f(0.f);</div>
-<div class="line"><span class="lineno">   29</span>        }</div>
-<div class="line"><span class="lineno">   30</span>        </div>
-<div class="line"><span class="lineno">   31</span>        Math::Vector3f brdf = objectHitPayload.material-&gt;albedo * Math::Constants::InversePi&lt;float&gt; * Math::Dot(objectHitPayload.normal, lightRay.direction) * m_Emission;</div>
-<div class="line"><span class="lineno">   32</span>        </div>
-<div class="line"><span class="lineno">   33</span>        <span class="keywordflow">return</span> brdf / pdf;</div>
-<div class="line"><span class="lineno">   34</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Class that samples lights directly. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_light_8h_source.html">Light.h</a></li>
 </ul>
 </div><!-- contents -->

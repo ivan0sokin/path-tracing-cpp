@@ -79,460 +79,59 @@ $(function() {
   <div class="headertitle"><div class="title">Camera Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Observerer class.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_camera_8h_source.html">Camera.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a62b45cba39a7950ba61d7eccd9d5aced" id="r_a62b45cba39a7950ba61d7eccd9d5aced"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62b45cba39a7950ba61d7eccd9d5aced">Camera</a> (int viewportWidth, int viewportHeight, const Math::Vector3f &amp;position={0.f, 0.f, 0.f}, const Math::Vector3f &amp;target={0.f, 0.f, -1.f}, float verticalFovInDegrees=20.f, const Math::Vector3f &amp;up={0.f, 1.f, 0.f}) noexcept</td></tr>
+<tr class="memitem:a62b45cba39a7950ba61d7eccd9d5aced" id="r_a62b45cba39a7950ba61d7eccd9d5aced"><td class="memItemLeft" align="right" valign="top"><a id="a62b45cba39a7950ba61d7eccd9d5aced" name="a62b45cba39a7950ba61d7eccd9d5aced"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Camera</b> (int viewportWidth, int viewportHeight, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;position={0.f, 0.f, 0.f}, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;target={0.f, 0.f, -1.f}, float verticalFovInDegrees=20.f, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;up={0.f, 1.f, 0.f}) noexcept</td></tr>
 <tr class="separator:a62b45cba39a7950ba61d7eccd9d5aced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a677b055323fd01ae7a8e9f1ec53a531c" id="r_a677b055323fd01ae7a8e9f1ec53a531c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a677b055323fd01ae7a8e9f1ec53a531c">OnViewportResize</a> (int viewportWidth, int viewportHeight) noexcept</td></tr>
+<tr class="memitem:a677b055323fd01ae7a8e9f1ec53a531c" id="r_a677b055323fd01ae7a8e9f1ec53a531c"><td class="memItemLeft" align="right" valign="top"><a id="a677b055323fd01ae7a8e9f1ec53a531c" name="a677b055323fd01ae7a8e9f1ec53a531c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OnViewportResize</b> (int viewportWidth, int viewportHeight) noexcept</td></tr>
+<tr class="memdesc:a677b055323fd01ae7a8e9f1ec53a531c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstructs internal state based on new viewport size. <br /></td></tr>
 <tr class="separator:a677b055323fd01ae7a8e9f1ec53a531c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac59bca13c9f1241fbedcd549fdc2a0ba" id="r_ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac59bca13c9f1241fbedcd549fdc2a0ba">ComputeRayDirections</a> () noexcept</td></tr>
+<tr class="memitem:ac59bca13c9f1241fbedcd549fdc2a0ba" id="r_ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="memItemLeft" align="right" valign="top"><a id="ac59bca13c9f1241fbedcd549fdc2a0ba" name="ac59bca13c9f1241fbedcd549fdc2a0ba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ComputeRayDirections</b> () noexcept</td></tr>
+<tr class="memdesc:ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes ray directions and saves them into private member. <br /></td></tr>
 <tr class="separator:ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a8a35439bc91b308cd1c05b3704bf4f" id="r_a1a8a35439bc91b308cd1c05b3704bf4f"><td class="memItemLeft" align="right" valign="top">constexpr std::span&lt; const Math::Vector3f &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a8a35439bc91b308cd1c05b3704bf4f">GetRayDirections</a> () const noexcept</td></tr>
+<tr class="memitem:a1a8a35439bc91b308cd1c05b3704bf4f" id="r_a1a8a35439bc91b308cd1c05b3704bf4f"><td class="memItemLeft" align="right" valign="top"><a id="a1a8a35439bc91b308cd1c05b3704bf4f" name="a1a8a35439bc91b308cd1c05b3704bf4f"></a>
+constexpr std::span&lt; const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetRayDirections</b> () const noexcept</td></tr>
+<tr class="memdesc:a1a8a35439bc91b308cd1c05b3704bf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return span to array of ray directions. <br /></td></tr>
 <tr class="separator:a1a8a35439bc91b308cd1c05b3704bf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af78a93b7272b46ce0c7933b5aa51cb52" id="r_af78a93b7272b46ce0c7933b5aa51cb52"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af78a93b7272b46ce0c7933b5aa51cb52">GetPosition</a> () const noexcept</td></tr>
+<tr class="memitem:af78a93b7272b46ce0c7933b5aa51cb52" id="r_af78a93b7272b46ce0c7933b5aa51cb52"><td class="memItemLeft" align="right" valign="top"><a id="af78a93b7272b46ce0c7933b5aa51cb52" name="af78a93b7272b46ce0c7933b5aa51cb52"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetPosition</b> () const noexcept</td></tr>
 <tr class="separator:af78a93b7272b46ce0c7933b5aa51cb52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ee3b54d9d7dc908c2bfc6b68cab66ac" id="r_a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ee3b54d9d7dc908c2bfc6b68cab66ac">Position</a> () noexcept</td></tr>
+<tr class="memitem:a8ee3b54d9d7dc908c2bfc6b68cab66ac" id="r_a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="memItemLeft" align="right" valign="top"><a id="a8ee3b54d9d7dc908c2bfc6b68cab66ac" name="a8ee3b54d9d7dc908c2bfc6b68cab66ac"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Position</b> () noexcept</td></tr>
 <tr class="separator:a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa412e7aa73fb1d1803d455bd84e01ee" id="r_aaa412e7aa73fb1d1803d455bd84e01ee"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa412e7aa73fb1d1803d455bd84e01ee">GetTarget</a> () const noexcept</td></tr>
+<tr class="memitem:aaa412e7aa73fb1d1803d455bd84e01ee" id="r_aaa412e7aa73fb1d1803d455bd84e01ee"><td class="memItemLeft" align="right" valign="top"><a id="aaa412e7aa73fb1d1803d455bd84e01ee" name="aaa412e7aa73fb1d1803d455bd84e01ee"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetTarget</b> () const noexcept</td></tr>
 <tr class="separator:aaa412e7aa73fb1d1803d455bd84e01ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fdba620f1163a9e9cfdedecf63320f1" id="r_a7fdba620f1163a9e9cfdedecf63320f1"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fdba620f1163a9e9cfdedecf63320f1">Target</a> () noexcept</td></tr>
+<tr class="memitem:a7fdba620f1163a9e9cfdedecf63320f1" id="r_a7fdba620f1163a9e9cfdedecf63320f1"><td class="memItemLeft" align="right" valign="top"><a id="a7fdba620f1163a9e9cfdedecf63320f1" name="a7fdba620f1163a9e9cfdedecf63320f1"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Target</b> () noexcept</td></tr>
 <tr class="separator:a7fdba620f1163a9e9cfdedecf63320f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6797df9fefa4e1f0776ebeecb895d40" id="r_ad6797df9fefa4e1f0776ebeecb895d40"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6797df9fefa4e1f0776ebeecb895d40">GetUp</a> () const noexcept</td></tr>
+<tr class="memitem:ad6797df9fefa4e1f0776ebeecb895d40" id="r_ad6797df9fefa4e1f0776ebeecb895d40"><td class="memItemLeft" align="right" valign="top"><a id="ad6797df9fefa4e1f0776ebeecb895d40" name="ad6797df9fefa4e1f0776ebeecb895d40"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetUp</b> () const noexcept</td></tr>
 <tr class="separator:ad6797df9fefa4e1f0776ebeecb895d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e48db2d1eb86e679b8010c035e83ad6" id="r_a1e48db2d1eb86e679b8010c035e83ad6"><td class="memItemLeft" align="right" valign="top">constexpr Math::Vector3f &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e48db2d1eb86e679b8010c035e83ad6">Up</a> () noexcept</td></tr>
+<tr class="memitem:a1e48db2d1eb86e679b8010c035e83ad6" id="r_a1e48db2d1eb86e679b8010c035e83ad6"><td class="memItemLeft" align="right" valign="top"><a id="a1e48db2d1eb86e679b8010c035e83ad6" name="a1e48db2d1eb86e679b8010c035e83ad6"></a>
+constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Up</b> () noexcept</td></tr>
 <tr class="separator:a1e48db2d1eb86e679b8010c035e83ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06884ceee93c43eae5c624d5134a9347" id="r_a06884ceee93c43eae5c624d5134a9347"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06884ceee93c43eae5c624d5134a9347">GetVerticalFovInDegrees</a> () const noexcept</td></tr>
+<tr class="memitem:a06884ceee93c43eae5c624d5134a9347" id="r_a06884ceee93c43eae5c624d5134a9347"><td class="memItemLeft" align="right" valign="top"><a id="a06884ceee93c43eae5c624d5134a9347" name="a06884ceee93c43eae5c624d5134a9347"></a>
+constexpr float&#160;</td><td class="memItemRight" valign="bottom"><b>GetVerticalFovInDegrees</b> () const noexcept</td></tr>
 <tr class="separator:a06884ceee93c43eae5c624d5134a9347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecebbe3027180c8d908c185601b1dd00" id="r_aecebbe3027180c8d908c185601b1dd00"><td class="memItemLeft" align="right" valign="top">constexpr float &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecebbe3027180c8d908c185601b1dd00">VerticalFovInDegrees</a> () noexcept</td></tr>
+<tr class="memitem:aecebbe3027180c8d908c185601b1dd00" id="r_aecebbe3027180c8d908c185601b1dd00"><td class="memItemLeft" align="right" valign="top"><a id="aecebbe3027180c8d908c185601b1dd00" name="aecebbe3027180c8d908c185601b1dd00"></a>
+constexpr float &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>VerticalFovInDegrees</b> () noexcept</td></tr>
 <tr class="separator:aecebbe3027180c8d908c185601b1dd00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00009">9</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a62b45cba39a7950ba61d7eccd9d5aced" name="a62b45cba39a7950ba61d7eccd9d5aced"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62b45cba39a7950ba61d7eccd9d5aced">&#9670;&#160;</a></span>Camera()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Camera::Camera </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>viewportWidth</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>viewportHeight</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Math::Vector3f &amp;</td>          <td class="paramname"><span class="paramname"><em>position</em><span class="paramdefsep"> = </span><span class="paramdefval">{0.f,&#160;0.f,&#160;0.f}</span>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Math::Vector3f &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em><span class="paramdefsep"> = </span><span class="paramdefval">{0.f,&#160;0.f,&#160;-1.f}</span>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>verticalFovInDegrees</em><span class="paramdefsep"> = </span><span class="paramdefval">20.f</span>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Math::Vector3f &amp;</td>          <td class="paramname"><span class="paramname"><em>up</em><span class="paramdefsep"> = </span><span class="paramdefval">{0.f,&#160;1.f,&#160;0.f}</span></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8cpp_source.html#l00004">4</a> of file <a class="el" href="_camera_8cpp_source.html">Camera.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    4</span>                                                                                                                                                                           :</div>
-<div class="line"><span class="lineno">    5</span>    m_ViewportWidth(viewportWidth), m_ViewportHeight(viewportHeight), m_Position(position), m_Target(target), m_VerticalFovInDegrees(verticalFovInDegrees), m_Up(up) {</div>
-<div class="line"><span class="lineno">    6</span>    m_RayDirections.resize(m_ViewportWidth * m_ViewportHeight);</div>
-<div class="line"><span class="lineno">    7</span>    ComputeRayDirections();</div>
-<div class="line"><span class="lineno">    8</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac59bca13c9f1241fbedcd549fdc2a0ba" name="ac59bca13c9f1241fbedcd549fdc2a0ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac59bca13c9f1241fbedcd549fdc2a0ba">&#9670;&#160;</a></span>ComputeRayDirections()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Camera::ComputeRayDirections </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8cpp_source.html#l00021">21</a> of file <a class="el" href="_camera_8cpp_source.html">Camera.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   21</span>                                           {</div>
-<div class="line"><span class="lineno">   22</span>    <span class="keywordtype">float</span> verticalFovInRadians = Math::ToRadians(m_VerticalFovInDegrees);</div>
-<div class="line"><span class="lineno">   23</span> </div>
-<div class="line"><span class="lineno">   24</span>    Math::Vector3f forward = m_Target - m_Position;</div>
-<div class="line"><span class="lineno">   25</span>    <span class="keywordtype">float</span> focalLength = Math::Length(forward);</div>
-<div class="line"><span class="lineno">   26</span>    <span class="keywordtype">float</span> viewportWorldHeight = 2.f * Math::Tan(verticalFovInRadians * 0.5f) * focalLength;</div>
-<div class="line"><span class="lineno">   27</span>    <span class="keywordtype">float</span> viewportWorldWidth = (viewportWorldHeight * m_ViewportWidth) / m_ViewportHeight;</div>
-<div class="line"><span class="lineno">   28</span> </div>
-<div class="line"><span class="lineno">   29</span>    Math::Vector3f w = Math::Normalize(forward);  </div>
-<div class="line"><span class="lineno">   30</span>    Math::Vector3f u = Math::Normalize(Math::Cross(w, m_Up));</div>
-<div class="line"><span class="lineno">   31</span>    Math::Vector3f v = Math::Normalize(Math::Cross(w, u));</div>
-<div class="line"><span class="lineno">   32</span> </div>
-<div class="line"><span class="lineno">   33</span>    Math::Vector3f horizontal = u * viewportWorldWidth;</div>
-<div class="line"><span class="lineno">   34</span>    Math::Vector3f vertical = v * viewportWorldHeight;</div>
-<div class="line"><span class="lineno">   35</span>    Math::Vector3f leftUpper = forward - horizontal * 0.5f - vertical * 0.5f;</div>
-<div class="line"><span class="lineno">   36</span> </div>
-<div class="line"><span class="lineno">   37</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; m_ViewportHeight; ++i) {</div>
-<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; m_ViewportWidth; ++j) {</div>
-<div class="line"><span class="lineno">   39</span>            <span class="keywordtype">float</span> uScale = (float)(j + Utilities::RandomFloatInNegativeHalfToHalf()) / (m_ViewportWidth - 1);</div>
-<div class="line"><span class="lineno">   40</span>            <span class="keywordtype">float</span> vScale = (float)(i + Utilities::RandomFloatInNegativeHalfToHalf()) / (m_ViewportHeight - 1);</div>
-<div class="line"><span class="lineno">   41</span>            m_RayDirections[m_ViewportWidth * i + j] = Math::Normalize(leftUpper + horizontal * uScale + vertical * vScale);</div>
-<div class="line"><span class="lineno">   42</span>        }</div>
-<div class="line"><span class="lineno">   43</span>    }</div>
-<div class="line"><span class="lineno">   44</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="af78a93b7272b46ce0c7933b5aa51cb52" name="af78a93b7272b46ce0c7933b5aa51cb52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af78a93b7272b46ce0c7933b5aa51cb52">&#9670;&#160;</a></span>GetPosition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f Camera::GetPosition </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00025">25</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   25</span>                                                        {</div>
-<div class="line"><span class="lineno">   26</span>        <span class="keywordflow">return</span> m_Position;</div>
-<div class="line"><span class="lineno">   27</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a1a8a35439bc91b308cd1c05b3704bf4f" name="a1a8a35439bc91b308cd1c05b3704bf4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a8a35439bc91b308cd1c05b3704bf4f">&#9670;&#160;</a></span>GetRayDirections()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr std::span&lt; const Math::Vector3f &gt; Camera::GetRayDirections </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00021">21</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   21</span>                                                                            {</div>
-<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">return</span> m_RayDirections;</div>
-<div class="line"><span class="lineno">   23</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aaa412e7aa73fb1d1803d455bd84e01ee" name="aaa412e7aa73fb1d1803d455bd84e01ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa412e7aa73fb1d1803d455bd84e01ee">&#9670;&#160;</a></span>GetTarget()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f Camera::GetTarget </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00033">33</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>                                                      {</div>
-<div class="line"><span class="lineno">   34</span>        <span class="keywordflow">return</span> m_Target;</div>
-<div class="line"><span class="lineno">   35</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="ad6797df9fefa4e1f0776ebeecb895d40" name="ad6797df9fefa4e1f0776ebeecb895d40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6797df9fefa4e1f0776ebeecb895d40">&#9670;&#160;</a></span>GetUp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f Camera::GetUp </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00041">41</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>                                                  {</div>
-<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> m_Up;</div>
-<div class="line"><span class="lineno">   43</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a06884ceee93c43eae5c624d5134a9347" name="a06884ceee93c43eae5c624d5134a9347"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06884ceee93c43eae5c624d5134a9347">&#9670;&#160;</a></span>GetVerticalFovInDegrees()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr float Camera::GetVerticalFovInDegrees </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00049">49</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>                                                             {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> m_VerticalFovInDegrees;</div>
-<div class="line"><span class="lineno">   51</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a677b055323fd01ae7a8e9f1ec53a531c" name="a677b055323fd01ae7a8e9f1ec53a531c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a677b055323fd01ae7a8e9f1ec53a531c">&#9670;&#160;</a></span>OnViewportResize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Camera::OnViewportResize </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>viewportWidth</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>viewportHeight</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8cpp_source.html#l00010">10</a> of file <a class="el" href="_camera_8cpp_source.html">Camera.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   10</span>                                                                            {</div>
-<div class="line"><span class="lineno">   11</span>    <span class="keywordflow">if</span> (m_ViewportWidth == viewportWidth &amp;&amp; m_ViewportHeight == viewportHeight) {</div>
-<div class="line"><span class="lineno">   12</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   13</span>    }</div>
-<div class="line"><span class="lineno">   14</span> </div>
-<div class="line"><span class="lineno">   15</span>    m_ViewportWidth = viewportWidth;</div>
-<div class="line"><span class="lineno">   16</span>    m_ViewportHeight = viewportHeight;</div>
-<div class="line"><span class="lineno">   17</span> </div>
-<div class="line"><span class="lineno">   18</span>    m_RayDirections.resize(m_ViewportWidth * m_ViewportHeight);</div>
-<div class="line"><span class="lineno">   19</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a8ee3b54d9d7dc908c2bfc6b68cab66ac" name="a8ee3b54d9d7dc908c2bfc6b68cab66ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ee3b54d9d7dc908c2bfc6b68cab66ac">&#9670;&#160;</a></span>Position()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f &amp; Camera::Position </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00029">29</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   29</span>                                                {</div>
-<div class="line"><span class="lineno">   30</span>        <span class="keywordflow">return</span> m_Position;</div>
-<div class="line"><span class="lineno">   31</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a7fdba620f1163a9e9cfdedecf63320f1" name="a7fdba620f1163a9e9cfdedecf63320f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fdba620f1163a9e9cfdedecf63320f1">&#9670;&#160;</a></span>Target()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f &amp; Camera::Target </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00037">37</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>                                              {</div>
-<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> m_Target;</div>
-<div class="line"><span class="lineno">   39</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a1e48db2d1eb86e679b8010c035e83ad6" name="a1e48db2d1eb86e679b8010c035e83ad6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e48db2d1eb86e679b8010c035e83ad6">&#9670;&#160;</a></span>Up()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr Math::Vector3f &amp; Camera::Up </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00045">45</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>                                          {</div>
-<div class="line"><span class="lineno">   46</span>        <span class="keywordflow">return</span> m_Up;</div>
-<div class="line"><span class="lineno">   47</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aecebbe3027180c8d908c185601b1dd00" name="aecebbe3027180c8d908c185601b1dd00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecebbe3027180c8d908c185601b1dd00">&#9670;&#160;</a></span>VerticalFovInDegrees()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr float &amp; Camera::VerticalFovInDegrees </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_camera_8h_source.html#l00053">53</a> of file <a class="el" href="_camera_8h_source.html">Camera.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   53</span>                                                     {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">return</span> m_VerticalFovInDegrees;</div>
-<div class="line"><span class="lineno">   55</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Observerer class. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_camera_8h_source.html">Camera.h</a></li>
-<li><a class="el" href="_camera_8cpp_source.html">Camera.cpp</a></li>
+<li><b>Camera.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -79,199 +79,40 @@ $(function() {
   <div class="headertitle"><div class="title">AccelerationStructure Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class which holds all information about accelerating scene.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_acceleration_structure_8h_source.html">AccelerationStructure.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa8461f36a09c413629f204fc8c301a58" id="r_aa8461f36a09c413629f204fc8c301a58"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8461f36a09c413629f204fc8c301a58">AccelerationStructure</a> (std::span&lt; HittableObjectPtr &gt; objects) noexcept</td></tr>
+<tr class="memitem:a0d62be56e05c15bd162665810f04a4d5" id="r_a0d62be56e05c15bd162665810f04a4d5"><td class="memItemLeft" align="right" valign="top"><a id="a0d62be56e05c15bd162665810f04a4d5" name="a0d62be56e05c15bd162665810f04a4d5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AccelerationStructure</b> () noexcept</td></tr>
+<tr class="memdesc:a0d62be56e05c15bd162665810f04a4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates Acceleration structure that cannot be hit. <br /></td></tr>
+<tr class="separator:a0d62be56e05c15bd162665810f04a4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8461f36a09c413629f204fc8c301a58" id="r_aa8461f36a09c413629f204fc8c301a58"><td class="memItemLeft" align="right" valign="top"><a id="aa8461f36a09c413629f204fc8c301a58" name="aa8461f36a09c413629f204fc8c301a58"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AccelerationStructure</b> (std::span&lt; <a class="el" href="class_hittable_object.html">HittableObjectPtr</a> &gt; objects) noexcept</td></tr>
+<tr class="memdesc:aa8461f36a09c413629f204fc8c301a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates Acceleration structure from list of objects. <br /></td></tr>
 <tr class="separator:aa8461f36a09c413629f204fc8c301a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcf60852f60cba8aba627e8e051d9df2" id="r_adcf60852f60cba8aba627e8e051d9df2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcf60852f60cba8aba627e8e051d9df2">Update</a> (std::span&lt; HittableObjectPtr &gt; objects) noexcept</td></tr>
+<tr class="memitem:a18a088639acc377d2dc789af1f72d6d3" id="r_a18a088639acc377d2dc789af1f72d6d3"><td class="memItemLeft" align="right" valign="top"><a id="a18a088639acc377d2dc789af1f72d6d3" name="a18a088639acc377d2dc789af1f72d6d3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~AccelerationStructure</b> () noexcept</td></tr>
+<tr class="memdesc:a18a088639acc377d2dc789af1f72d6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocates BVH. <br /></td></tr>
+<tr class="separator:a18a088639acc377d2dc789af1f72d6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf60852f60cba8aba627e8e051d9df2" id="r_adcf60852f60cba8aba627e8e051d9df2"><td class="memItemLeft" align="right" valign="top"><a id="adcf60852f60cba8aba627e8e051d9df2" name="adcf60852f60cba8aba627e8e051d9df2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> (std::span&lt; <a class="el" href="class_hittable_object.html">HittableObjectPtr</a> &gt; objects) noexcept</td></tr>
+<tr class="memdesc:adcf60852f60cba8aba627e8e051d9df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces old BVH with new one constructed with <code>objects</code> <br /></td></tr>
 <tr class="separator:adcf60852f60cba8aba627e8e051d9df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6205b0428d2cd4c98dcd1d39d1b5297" id="r_ad6205b0428d2cd4c98dcd1d39d1b5297"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6205b0428d2cd4c98dcd1d39d1b5297">Hit</a> (const <a class="el" href="struct_ray.html">Ray</a> &amp;ray, float tMin, float tMax, <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;payload) const noexcept</td></tr>
+<tr class="memitem:ad6205b0428d2cd4c98dcd1d39d1b5297" id="r_ad6205b0428d2cd4c98dcd1d39d1b5297"><td class="memItemLeft" align="right" valign="top"><a id="ad6205b0428d2cd4c98dcd1d39d1b5297" name="ad6205b0428d2cd4c98dcd1d39d1b5297"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Hit</b> (const <a class="el" href="struct_ray.html">Ray</a> &amp;ray, float tMin, float tMax, <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;payload) const noexcept</td></tr>
+<tr class="memdesc:ad6205b0428d2cd4c98dcd1d39d1b5297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves info about hit into <code>payload</code> <br /></td></tr>
 <tr class="separator:ad6205b0428d2cd4c98dcd1d39d1b5297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8h_source.html#l00013">13</a> of file <a class="el" href="_acceleration_structure_8h_source.html">AccelerationStructure.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0d62be56e05c15bd162665810f04a4d5" name="a0d62be56e05c15bd162665810f04a4d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d62be56e05c15bd162665810f04a4d5">&#9670;&#160;</a></span>AccelerationStructure() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">AccelerationStructure::AccelerationStructure </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8cpp_source.html#l00005">5</a> of file <a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    5</span>                                                      {</div>
-<div class="line"><span class="lineno">    6</span>    m_Root = <span class="keyword">new</span> <a class="code hl_struct" href="struct_b_v_h_node.html">BVHNode</a>(<span class="keyword">new</span> NonHittable());</div>
-<div class="line"><span class="lineno">    7</span>}</div>
-<div class="ttc" id="astruct_b_v_h_node_html"><div class="ttname"><a href="struct_b_v_h_node.html">BVHNode</a></div><div class="ttdef"><b>Definition</b> <a href="_b_v_h_node_8h_source.html#l00013">BVHNode.h:13</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aa8461f36a09c413629f204fc8c301a58" name="aa8461f36a09c413629f204fc8c301a58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8461f36a09c413629f204fc8c301a58">&#9670;&#160;</a></span>AccelerationStructure() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">AccelerationStructure::AccelerationStructure </td>
-          <td>(</td>
-          <td class="paramtype">std::span&lt; HittableObjectPtr &gt;</td>          <td class="paramname"><span class="paramname"><em>objects</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8cpp_source.html#l00009">9</a> of file <a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    9</span>                                                                                        {</div>
-<div class="line"><span class="lineno">   10</span>    Update(objects);</div>
-<div class="line"><span class="lineno">   11</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a18a088639acc377d2dc789af1f72d6d3" name="a18a088639acc377d2dc789af1f72d6d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18a088639acc377d2dc789af1f72d6d3">&#9670;&#160;</a></span>~AccelerationStructure()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">AccelerationStructure::~AccelerationStructure </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8cpp_source.html#l00013">13</a> of file <a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   13</span>                                                       {</div>
-<div class="line"><span class="lineno">   14</span>    <span class="keywordflow">if</span> (m_Root != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">   15</span>        BVHNode::FreeMemory(m_Root);</div>
-<div class="line"><span class="lineno">   16</span>    }</div>
-<div class="line"><span class="lineno">   17</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad6205b0428d2cd4c98dcd1d39d1b5297" name="ad6205b0428d2cd4c98dcd1d39d1b5297"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6205b0428d2cd4c98dcd1d39d1b5297">&#9670;&#160;</a></span>Hit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AccelerationStructure::Hit </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ray</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tMin</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tMax</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>payload</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8cpp_source.html#l00031">31</a> of file <a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   31</span>                                                                                                          {</div>
-<div class="line"><span class="lineno">   32</span>    m_Root-&gt;Hit(ray, tMin, tMax, payload);</div>
-<div class="line"><span class="lineno">   33</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="adcf60852f60cba8aba627e8e051d9df2" name="adcf60852f60cba8aba627e8e051d9df2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcf60852f60cba8aba627e8e051d9df2">&#9670;&#160;</a></span>Update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AccelerationStructure::Update </td>
-          <td>(</td>
-          <td class="paramtype">std::span&lt; HittableObjectPtr &gt;</td>          <td class="paramname"><span class="paramname"><em>objects</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_acceleration_structure_8cpp_source.html#l00019">19</a> of file <a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>                                                                              {</div>
-<div class="line"><span class="lineno">   20</span>    <span class="keywordflow">if</span> (m_Root != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">   21</span>        BVHNode::FreeMemory(m_Root);</div>
-<div class="line"><span class="lineno">   22</span>    }</div>
-<div class="line"><span class="lineno">   23</span> </div>
-<div class="line"><span class="lineno">   24</span>    <span class="keywordflow">if</span> (objects.empty()) {</div>
-<div class="line"><span class="lineno">   25</span>        m_Root = <span class="keyword">new</span> <a class="code hl_struct" href="struct_b_v_h_node.html">BVHNode</a>(<span class="keyword">new</span> NonHittable());</div>
-<div class="line"><span class="lineno">   26</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   27</span>        m_Root = BVHNode::MakeHierarchySAH(objects, 0, <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(objects.size()));</div>
-<div class="line"><span class="lineno">   28</span>    }</div>
-<div class="line"><span class="lineno">   29</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Class which holds all information about accelerating scene. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_acceleration_structure_8h_source.html">AccelerationStructure.h</a></li>
-<li><a class="el" href="_acceleration_structure_8cpp_source.html">AccelerationStructure.cpp</a></li>
+<li><b>AccelerationStructure.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

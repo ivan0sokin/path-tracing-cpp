@@ -1,25 +1,25 @@
 \doxysection{BSDF.\+h}
 \hypertarget{_b_s_d_f_8h_source}{}\label{_b_s_d_f_8h_source}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_BSDF\_H}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_BSDF\_H}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}Ray.h"{}}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}HitPayload.h"{}}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00008}00008\ }
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00009}\mbox{\hyperlink{class_b_s_d_f}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_b_s_d_f}{BSDF}}\ \{}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00010}00010\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_b_s_d_f}{BSDF}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_material}{Material}}\ *material)\ noexcept\ :}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ m\_Material(material)\ \{\}}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00014}00014\ \ \ \ \ Math::Vector3f\ Sample(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ \&payload,\ Math::Vector3f\ \&throughput)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00016}00016\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_material}{Material}}\ *m\_Material;}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00018}00018\ \};}
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00019}00019\ }
-\DoxyCodeLine{\Hypertarget{_b_s_d_f_8h_source_l00020}00020\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_BSDF\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_BSDF\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Ray.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}HitPayload.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_b_s_d_f}{BSDF}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_b_s_d_f_a503815ea28489a8d781549bdae5c53be}{BSDF}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_material}{Material}}\ *material)\ noexcept\ :}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ m\_Material(material)\ \{\}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}\ \mbox{\hyperlink{class_b_s_d_f_a6a901f6fba26a37868bb383f7559860f}{Sample}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ \&payload,\ \mbox{\hyperlink{struct_math_1_1_types_1_1_vector}{Math::Vector3f}}\ \&throughput)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_material}{Material}}\ *m\_Material;}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

@@ -6,15 +6,18 @@
 #include "Ray.h"
 #include "HitPayload.h"
 
+//! Class that samples lights directly
 class Light {
 public:
     constexpr Light(const HittableObjectPtr object, const Math::Vector3f &emission) noexcept :
         m_Object(object), m_Emission(emission) {}
 
+    //! Return pointer to ```object``` that light holds
     const HittableObject* GetObject() const noexcept {
         return m_Object;
     }
 
+    //! Returns color sample using direct light sampling method
     Math::Vector3f Sample(const Ray &lightRay, const HitPayload &objectHitPayload, const HitPayload &lightHitPayload, float distance, float distanceSquared) const noexcept {
         constexpr float distanceEpsilon = 0.01f;
         if (Math::Abs(lightHitPayload.t - distance) > distanceEpsilon) {

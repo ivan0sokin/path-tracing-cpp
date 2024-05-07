@@ -79,169 +79,32 @@ $(function() {
   <div class="headertitle"><div class="title">Image Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>OpenGL image.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_image_8h_source.html">Image.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad85bf8d739d5625fa8dba383c2130c3f" id="r_ad85bf8d739d5625fa8dba383c2130c3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad85bf8d739d5625fa8dba383c2130c3f">Image</a> (int width, int height, const uint32_t *data) noexcept</td></tr>
+<tr class="memitem:ad85bf8d739d5625fa8dba383c2130c3f" id="r_ad85bf8d739d5625fa8dba383c2130c3f"><td class="memItemLeft" align="right" valign="top"><a id="ad85bf8d739d5625fa8dba383c2130c3f" name="ad85bf8d739d5625fa8dba383c2130c3f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Image</b> (int width, int height, const uint32_t *data) noexcept</td></tr>
+<tr class="memdesc:ad85bf8d739d5625fa8dba383c2130c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new image with RGBA <code>data</code> <br /></td></tr>
 <tr class="separator:ad85bf8d739d5625fa8dba383c2130c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c0c67244a354e2d68352dac6e0ee50d" id="r_a2c0c67244a354e2d68352dac6e0ee50d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c0c67244a354e2d68352dac6e0ee50d">UpdateData</a> (const uint32_t *data) noexcept</td></tr>
+<tr class="memitem:a2c0c67244a354e2d68352dac6e0ee50d" id="r_a2c0c67244a354e2d68352dac6e0ee50d"><td class="memItemLeft" align="right" valign="top"><a id="a2c0c67244a354e2d68352dac6e0ee50d" name="a2c0c67244a354e2d68352dac6e0ee50d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateData</b> (const uint32_t *data) noexcept</td></tr>
+<tr class="memdesc:a2c0c67244a354e2d68352dac6e0ee50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates image with same size using new <code>data</code> <br /></td></tr>
 <tr class="separator:a2c0c67244a354e2d68352dac6e0ee50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf14a6f918d001ab6da529c7b1eb27bd" id="r_adf14a6f918d001ab6da529c7b1eb27bd"><td class="memItemLeft" align="right" valign="top">constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf14a6f918d001ab6da529c7b1eb27bd">GetDescriptor</a> () const noexcept</td></tr>
+<tr class="memitem:adf14a6f918d001ab6da529c7b1eb27bd" id="r_adf14a6f918d001ab6da529c7b1eb27bd"><td class="memItemLeft" align="right" valign="top"><a id="adf14a6f918d001ab6da529c7b1eb27bd" name="adf14a6f918d001ab6da529c7b1eb27bd"></a>
+constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>GetDescriptor</b> () const noexcept</td></tr>
+<tr class="memdesc:adf14a6f918d001ab6da529c7b1eb27bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns OpenGL descriptor to texture. <br /></td></tr>
 <tr class="separator:adf14a6f918d001ab6da529c7b1eb27bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_image_8h_source.html#l00007">7</a> of file <a class="el" href="_image_8h_source.html">Image.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad85bf8d739d5625fa8dba383c2130c3f" name="ad85bf8d739d5625fa8dba383c2130c3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad85bf8d739d5625fa8dba383c2130c3f">&#9670;&#160;</a></span>Image()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Image::Image </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint32_t *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_image_8cpp_source.html#l00004">4</a> of file <a class="el" href="_image_8cpp_source.html">Image.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    4</span>                                                                 :</div>
-<div class="line"><span class="lineno">    5</span>    m_Width(width), m_Height(height) {</div>
-<div class="line"><span class="lineno">    6</span>    glGenTextures(1, &amp;m_Descriptor);</div>
-<div class="line"><span class="lineno">    7</span>    glBindTexture(GL_TEXTURE_2D, m_Descriptor);</div>
-<div class="line"><span class="lineno">    8</span> </div>
-<div class="line"><span class="lineno">    9</span>    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</div>
-<div class="line"><span class="lineno">   10</span>    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</div>
-<div class="line"><span class="lineno">   11</span> </div>
-<div class="line"><span class="lineno">   12</span>    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (<span class="keywordtype">void</span>*)data);</div>
-<div class="line"><span class="lineno">   13</span> </div>
-<div class="line"><span class="lineno">   14</span>    glBindTexture(GL_TEXTURE_2D, 0);</div>
-<div class="line"><span class="lineno">   15</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aeab8c1ba230200c873908525186f9c94" name="aeab8c1ba230200c873908525186f9c94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeab8c1ba230200c873908525186f9c94">&#9670;&#160;</a></span>~Image()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Image::~Image </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_image_8cpp_source.html#l00017">17</a> of file <a class="el" href="_image_8cpp_source.html">Image.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   17</span>                       {</div>
-<div class="line"><span class="lineno">   18</span>    glDeleteTextures(1, &amp;m_Descriptor);</div>
-<div class="line"><span class="lineno">   19</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="adf14a6f918d001ab6da529c7b1eb27bd" name="adf14a6f918d001ab6da529c7b1eb27bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf14a6f918d001ab6da529c7b1eb27bd">&#9670;&#160;</a></span>GetDescriptor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr unsigned int Image::GetDescriptor </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_image_8h_source.html#l00017">17</a> of file <a class="el" href="_image_8h_source.html">Image.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   17</span>                                                          {</div>
-<div class="line"><span class="lineno">   18</span>        <span class="keywordflow">return</span> m_Descriptor;</div>
-<div class="line"><span class="lineno">   19</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a2c0c67244a354e2d68352dac6e0ee50d" name="a2c0c67244a354e2d68352dac6e0ee50d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c0c67244a354e2d68352dac6e0ee50d">&#9670;&#160;</a></span>UpdateData()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Image::UpdateData </td>
-          <td>(</td>
-          <td class="paramtype">const uint32_t *</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_image_8cpp_source.html#l00021">21</a> of file <a class="el" href="_image_8cpp_source.html">Image.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   21</span>                                                    {</div>
-<div class="line"><span class="lineno">   22</span>    glBindTexture(GL_TEXTURE_2D, m_Descriptor);</div>
-<div class="line"><span class="lineno">   23</span> </div>
-<div class="line"><span class="lineno">   24</span>    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</div>
-<div class="line"><span class="lineno">   25</span>    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</div>
-<div class="line"><span class="lineno">   26</span> </div>
-<div class="line"><span class="lineno">   27</span>    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, (<span class="keywordtype">void</span>*)data);</div>
-<div class="line"><span class="lineno">   28</span> </div>
-<div class="line"><span class="lineno">   29</span>    glBindTexture(GL_TEXTURE_2D, 0);</div>
-<div class="line"><span class="lineno">   30</span>}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>OpenGL image. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_image_8h_source.html">Image.h</a></li>
-<li><a class="el" href="_image_8cpp_source.html">Image.cpp</a></li>
+<li><b>Image.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

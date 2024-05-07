@@ -6,10 +6,10 @@
 #include <vector>
 #include <span>
 
-class Model;
-
+//! Class that holds information about vertices in particular mesh in model
 class Mesh {
 public:
+    //! Vertex information
     struct Vertex {
         Math::Vector3f position;
         Math::Vector3f normal;
