@@ -1,0 +1,125 @@
+\doxysection{Acceleration\+Structure Class Reference}
+\hypertarget{class_acceleration_structure}{}\label{class_acceleration_structure}\index{AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_acceleration_structure_aa8461f36a09c413629f204fc8c301a58}{Acceleration\+Structure}} (std\+::span$<$ Hittable\+Object\+Ptr $>$ objects) noexcept
+\item 
+void \mbox{\hyperlink{class_acceleration_structure_adcf60852f60cba8aba627e8e051d9df2}{Update}} (std\+::span$<$ Hittable\+Object\+Ptr $>$ objects) noexcept
+\item 
+void \mbox{\hyperlink{class_acceleration_structure_ad6205b0428d2cd4c98dcd1d39d1b5297}{Hit}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray, float t\+Min, float t\+Max, \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&payload) const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8h_source_l00013}{13}} of file \mbox{\hyperlink{_acceleration_structure_8h_source}{Acceleration\+Structure.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_acceleration_structure_a0d62be56e05c15bd162665810f04a4d5}\label{class_acceleration_structure_a0d62be56e05c15bd162665810f04a4d5} 
+\index{AccelerationStructure@{AccelerationStructure}!AccelerationStructure@{AccelerationStructure}}
+\index{AccelerationStructure@{AccelerationStructure}!AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection{\texorpdfstring{AccelerationStructure()}{AccelerationStructure()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Acceleration\+Structure\+::\+Acceleration\+Structure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{_acceleration_structure_8cpp_source}{Acceleration\+Structure.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00006\ \ \ \ \ m\_Root\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(\textcolor{keyword}{new}\ NonHittable());}
+\DoxyCodeLine{00007\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_acceleration_structure_aa8461f36a09c413629f204fc8c301a58}\label{class_acceleration_structure_aa8461f36a09c413629f204fc8c301a58} 
+\index{AccelerationStructure@{AccelerationStructure}!AccelerationStructure@{AccelerationStructure}}
+\index{AccelerationStructure@{AccelerationStructure}!AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection{\texorpdfstring{AccelerationStructure()}{AccelerationStructure()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Acceleration\+Structure\+::\+Acceleration\+Structure (\begin{DoxyParamCaption}\item[{std\+::span$<$ Hittable\+Object\+Ptr $>$}]{objects }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{_acceleration_structure_8cpp_source}{Acceleration\+Structure.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00010\ \ \ \ \ Update(objects);}
+\DoxyCodeLine{00011\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_acceleration_structure_a18a088639acc377d2dc789af1f72d6d3}\label{class_acceleration_structure_a18a088639acc377d2dc789af1f72d6d3} 
+\index{AccelerationStructure@{AccelerationStructure}!````~AccelerationStructure@{\texorpdfstring{$\sim$}{\string~}AccelerationStructure}}
+\index{````~AccelerationStructure@{\texorpdfstring{$\sim$}{\string~}AccelerationStructure}!AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AccelerationStructure()}{\string~AccelerationStructure()}}
+{\footnotesize\ttfamily Acceleration\+Structure\+::\texorpdfstring{$\sim$}{\string~}\+Acceleration\+Structure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{_acceleration_structure_8cpp_source}{Acceleration\+Structure.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Root\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ BVHNode::FreeMemory(m\_Root);}
+\DoxyCodeLine{00016\ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_acceleration_structure_ad6205b0428d2cd4c98dcd1d39d1b5297}\label{class_acceleration_structure_ad6205b0428d2cd4c98dcd1d39d1b5297} 
+\index{AccelerationStructure@{AccelerationStructure}!Hit@{Hit}}
+\index{Hit@{Hit}!AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection{\texorpdfstring{Hit()}{Hit()}}
+{\footnotesize\ttfamily void Acceleration\+Structure\+::\+Hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray,  }\item[{float}]{t\+Min,  }\item[{float}]{t\+Max,  }\item[{\mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{payload }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{_acceleration_structure_8cpp_source}{Acceleration\+Structure.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ m\_Root-\/>Hit(ray,\ tMin,\ tMax,\ payload);}
+\DoxyCodeLine{00033\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_acceleration_structure_adcf60852f60cba8aba627e8e051d9df2}\label{class_acceleration_structure_adcf60852f60cba8aba627e8e051d9df2} 
+\index{AccelerationStructure@{AccelerationStructure}!Update@{Update}}
+\index{Update@{Update}!AccelerationStructure@{AccelerationStructure}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Acceleration\+Structure\+::\+Update (\begin{DoxyParamCaption}\item[{std\+::span$<$ Hittable\+Object\+Ptr $>$}]{objects }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_acceleration_structure_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{_acceleration_structure_8cpp_source}{Acceleration\+Structure.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Root\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ BVHNode::FreeMemory(m\_Root);}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (objects.empty())\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ m\_Root\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{struct_b_v_h_node}{BVHNode}}(\textcolor{keyword}{new}\ NonHittable());}
+\DoxyCodeLine{00026\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ m\_Root\ =\ BVHNode::MakeHierarchySAH(objects,\ 0,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(objects.size()));}
+\DoxyCodeLine{00028\ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Acceleration\+Structure.\+h\item 
+Acceleration\+Structure.\+cpp\end{DoxyCompactItemize}

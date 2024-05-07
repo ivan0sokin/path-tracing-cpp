@@ -11,6 +11,7 @@
 #include <cstring>
 #include <filesystem>
 
+//! Path tracing application class which holds basic logic
 class Application {
 public:
     Application(int windowWidth, int windowHeight) noexcept;

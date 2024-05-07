@@ -1,0 +1,306 @@
+\begin{theindex}
+
+  \item {\texorpdfstring{$\sim$}{\string~}AccelerationStructure}
+    \subitem {AccelerationStructure}, \hyperpage{7}
+  \item {\texorpdfstring{$\sim$}{\string~}Image}
+    \subitem {Image}, \hyperpage{22}
+  \item {\texorpdfstring{$\sim$}{\string~}Renderer}
+    \subitem {Renderer}, \hyperpage{27}
+
+  \indexspace
+
+  \item {AABB}, \hyperpage{5}
+    \subitem {AABB}, \hyperpage{5}
+    \subitem {Empty}, \hyperpage{6}
+    \subitem {GetSurfaceArea}, \hyperpage{6}
+    \subitem {IntersectsRay}, \hyperpage{6}
+    \subitem {max}, \hyperpage{7}
+    \subitem {min}, \hyperpage{7}
+  \item {aabb}
+    \subitem {BVHNode}, \hyperpage{16}
+  \item {Accelerate}
+    \subitem {Renderer}, \hyperpage{28}
+  \item {AccelerationStructure}, \hyperpage{7}
+    \subitem {\texorpdfstring{$\sim$}{\string~}AccelerationStructure}, 
+		\hyperpage{7}
+    \subitem {AccelerationStructure}, \hyperpage{7}
+    \subitem {Hit}, \hyperpage{8}
+    \subitem {Update}, \hyperpage{8}
+  \item {Accumulate}
+    \subitem {Renderer}, \hyperpage{28}
+  \item {albedo}
+    \subitem {Material}, \hyperpage{25}
+  \item {Application}, \hyperpage{8}
+    \subitem {Application}, \hyperpage{9}
+    \subitem {Run}, \hyperpage{10}
+
+  \indexspace
+
+  \item {boxes}
+    \subitem {Scene}, \hyperpage{33}
+  \item {BSDF}, \hyperpage{10}
+    \subitem {BSDF}, \hyperpage{11}
+    \subitem {Sample}, \hyperpage{11}
+  \item {BVHNode}, \hyperpage{13}
+    \subitem {aabb}, \hyperpage{16}
+    \subitem {BVHNode}, \hyperpage{14}
+    \subitem {c\_ComparatorsNaive}, \hyperpage{16}
+    \subitem {c\_ComparatorsSAH}, \hyperpage{17}
+    \subitem {FreeMemory}, \hyperpage{14}
+    \subitem {Hit}, \hyperpage{14}
+    \subitem {IsTerminating}, \hyperpage{14}
+    \subitem {left}, \hyperpage{17}
+    \subitem {MakeHierarchyNaive}, \hyperpage{15}
+    \subitem {MakeHierarchySAH}, \hyperpage{15}
+    \subitem {object}, \hyperpage{17}
+    \subitem {right}, \hyperpage{17}
+
+  \indexspace
+
+  \item {c\_ComparatorsNaive}
+    \subitem {BVHNode}, \hyperpage{16}
+  \item {c\_ComparatorsSAH}
+    \subitem {BVHNode}, \hyperpage{17}
+  \item {Camera}, \hyperpage{18}
+    \subitem {Camera}, \hyperpage{18}
+    \subitem {ComputeRayDirections}, \hyperpage{19}
+    \subitem {GetPosition}, \hyperpage{19}
+    \subitem {GetRayDirections}, \hyperpage{19}
+    \subitem {GetTarget}, \hyperpage{19}
+    \subitem {GetUp}, \hyperpage{19}
+    \subitem {GetVerticalFovInDegrees}, \hyperpage{20}
+    \subitem {OnViewportResize}, \hyperpage{20}
+    \subitem {Position}, \hyperpage{20}
+    \subitem {Target}, \hyperpage{20}
+    \subitem {Up}, \hyperpage{20}
+    \subitem {VerticalFovInDegrees}, \hyperpage{21}
+  \item {camera}
+    \subitem {Scene}, \hyperpage{33}
+  \item {ComputeRayDirections}
+    \subitem {Camera}, \hyperpage{19}
+
+  \indexspace
+
+  \item {Deserialize}
+    \subitem {Scene}, \hyperpage{33}
+  \item {direction}
+    \subitem {Ray}, \hyperpage{26}
+
+  \indexspace
+
+  \item {emissionPower}
+    \subitem {Material}, \hyperpage{25}
+  \item {Empty}
+    \subitem {AABB}, \hyperpage{6}
+
+  \indexspace
+
+  \item {FreeMemory}
+    \subitem {BVHNode}, \hyperpage{14}
+
+  \indexspace
+
+  \item {Gamma}
+    \subitem {Renderer}, \hyperpage{28}
+  \item {GetAvailableThreadCount}
+    \subitem {Renderer}, \hyperpage{28}
+  \item {GetDescriptor}
+    \subitem {Image}, \hyperpage{23}
+  \item {GetEmission}
+    \subitem {Material}, \hyperpage{25}
+  \item {GetFrameIndex}
+    \subitem {Renderer}, \hyperpage{28}
+  \item {GetImage}
+    \subitem {Renderer}, \hyperpage{29}
+  \item {GetObject}
+    \subitem {Light}, \hyperpage{24}
+  \item {GetPosition}
+    \subitem {Camera}, \hyperpage{19}
+  \item {GetRayDirections}
+    \subitem {Camera}, \hyperpage{19}
+  \item {GetSurfaceArea}
+    \subitem {AABB}, \hyperpage{6}
+  \item {GetTarget}
+    \subitem {Camera}, \hyperpage{19}
+  \item {GetUp}
+    \subitem {Camera}, \hyperpage{19}
+  \item {GetUsedThreadCount}
+    \subitem {Renderer}, \hyperpage{29}
+  \item {GetVerticalFovInDegrees}
+    \subitem {Camera}, \hyperpage{20}
+
+  \indexspace
+
+  \item {Hit}
+    \subitem {AccelerationStructure}, \hyperpage{8}
+    \subitem {BVHNode}, \hyperpage{14}
+  \item {HitPayload}, \hyperpage{21}
+    \subitem {material}, \hyperpage{21}
+    \subitem {normal}, \hyperpage{21}
+    \subitem {t}, \hyperpage{21}
+
+  \indexspace
+
+  \item {Image}, \hyperpage{22}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Image}, \hyperpage{22}
+    \subitem {GetDescriptor}, \hyperpage{23}
+    \subitem {Image}, \hyperpage{22}
+    \subitem {UpdateData}, \hyperpage{23}
+  \item {index}
+    \subitem {Material}, \hyperpage{25}
+  \item {IntersectsRay}
+    \subitem {AABB}, \hyperpage{6}
+  \item {IsTerminating}
+    \subitem {BVHNode}, \hyperpage{14}
+
+  \indexspace
+
+  \item {left}
+    \subitem {BVHNode}, \hyperpage{17}
+  \item {Light}, \hyperpage{23}
+    \subitem {GetObject}, \hyperpage{24}
+    \subitem {Light}, \hyperpage{23}
+    \subitem {Sample}, \hyperpage{24}
+
+  \indexspace
+
+  \item {MakeHierarchyNaive}
+    \subitem {BVHNode}, \hyperpage{15}
+  \item {MakeHierarchySAH}
+    \subitem {BVHNode}, \hyperpage{15}
+  \item {Material}, \hyperpage{24}
+    \subitem {albedo}, \hyperpage{25}
+    \subitem {emissionPower}, \hyperpage{25}
+    \subitem {GetEmission}, \hyperpage{25}
+    \subitem {index}, \hyperpage{25}
+    \subitem {metallic}, \hyperpage{25}
+    \subitem {roughness}, \hyperpage{25}
+    \subitem {specular}, \hyperpage{25}
+  \item {material}
+    \subitem {HitPayload}, \hyperpage{21}
+  \item {materials}
+    \subitem {Scene}, \hyperpage{33}
+  \item {max}
+    \subitem {AABB}, \hyperpage{7}
+  \item {MeasureInMillis}
+    \subitem {Timer}, \hyperpage{34}
+  \item {metallic}
+    \subitem {Material}, \hyperpage{25}
+  \item {min}
+    \subitem {AABB}, \hyperpage{7}
+  \item {models}
+    \subitem {Scene}, \hyperpage{33}
+
+  \indexspace
+
+  \item {normal}
+    \subitem {HitPayload}, \hyperpage{21}
+
+  \indexspace
+
+  \item {object}
+    \subitem {BVHNode}, \hyperpage{17}
+  \item {OnRayMiss}
+    \subitem {Renderer}, \hyperpage{29}
+  \item {OnResize}
+    \subitem {Renderer}, \hyperpage{29}
+  \item {OnViewportResize}
+    \subitem {Camera}, \hyperpage{20}
+  \item {origin}
+    \subitem {Ray}, \hyperpage{26}
+
+  \indexspace
+
+  \item {Position}
+    \subitem {Camera}, \hyperpage{20}
+
+  \indexspace
+
+  \item {Ray}, \hyperpage{26}
+    \subitem {direction}, \hyperpage{26}
+    \subitem {origin}, \hyperpage{26}
+  \item {RayDepth}
+    \subitem {Renderer}, \hyperpage{29}
+  \item {Render}
+    \subitem {Renderer}, \hyperpage{30}
+  \item {Renderer}, \hyperpage{26}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Renderer}, 
+		\hyperpage{27}
+    \subitem {Accelerate}, \hyperpage{28}
+    \subitem {Accumulate}, \hyperpage{28}
+    \subitem {Gamma}, \hyperpage{28}
+    \subitem {GetAvailableThreadCount}, \hyperpage{28}
+    \subitem {GetFrameIndex}, \hyperpage{28}
+    \subitem {GetImage}, \hyperpage{29}
+    \subitem {GetUsedThreadCount}, \hyperpage{29}
+    \subitem {OnRayMiss}, \hyperpage{29}
+    \subitem {OnResize}, \hyperpage{29}
+    \subitem {RayDepth}, \hyperpage{29}
+    \subitem {Render}, \hyperpage{30}
+    \subitem {Renderer}, \hyperpage{27}
+    \subitem {SaveImage}, \hyperpage{31}
+    \subitem {SetUsedThreadCount}, \hyperpage{31}
+    \subitem {typ\_t}, \hyperpage{27}
+    \subitem {UsedThreadCount}, \hyperpage{32}
+  \item {right}
+    \subitem {BVHNode}, \hyperpage{17}
+  \item {roughness}
+    \subitem {Material}, \hyperpage{25}
+  \item {Run}
+    \subitem {Application}, \hyperpage{10}
+
+  \indexspace
+
+  \item {Sample}
+    \subitem {BSDF}, \hyperpage{11}
+    \subitem {Light}, \hyperpage{24}
+  \item {SaveImage}
+    \subitem {Renderer}, \hyperpage{31}
+  \item {Scene}, \hyperpage{32}
+    \subitem {boxes}, \hyperpage{33}
+    \subitem {camera}, \hyperpage{33}
+    \subitem {Deserialize}, \hyperpage{33}
+    \subitem {materials}, \hyperpage{33}
+    \subitem {models}, \hyperpage{33}
+    \subitem {Serialize}, \hyperpage{33}
+    \subitem {spheres}, \hyperpage{34}
+    \subitem {triangles}, \hyperpage{34}
+  \item {Serialize}
+    \subitem {Scene}, \hyperpage{33}
+  \item {SetUsedThreadCount}
+    \subitem {Renderer}, \hyperpage{31}
+  \item {specular}
+    \subitem {Material}, \hyperpage{25}
+  \item {spheres}
+    \subitem {Scene}, \hyperpage{34}
+
+  \indexspace
+
+  \item {t}
+    \subitem {HitPayload}, \hyperpage{21}
+  \item {Target}
+    \subitem {Camera}, \hyperpage{20}
+  \item {Timer}, \hyperpage{34}
+    \subitem {MeasureInMillis}, \hyperpage{34}
+  \item {triangles}
+    \subitem {Scene}, \hyperpage{34}
+  \item {typ\_t}
+    \subitem {Renderer}, \hyperpage{27}
+
+  \indexspace
+
+  \item {Up}
+    \subitem {Camera}, \hyperpage{20}
+  \item {Update}
+    \subitem {AccelerationStructure}, \hyperpage{8}
+  \item {UpdateData}
+    \subitem {Image}, \hyperpage{23}
+  \item {UsedThreadCount}
+    \subitem {Renderer}, \hyperpage{32}
+
+  \indexspace
+
+  \item {VerticalFovInDegrees}
+    \subitem {Camera}, \hyperpage{21}
+
+\end{theindex}

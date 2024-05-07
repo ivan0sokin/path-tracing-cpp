@@ -1,0 +1,218 @@
+\doxysection{Scene.\+h}
+\hypertarget{_scene_8h_source}{}\label{_scene_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_SCENE\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_SCENE\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}hittable/Sphere.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}hittable/Triangle.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}hittable/Box.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}hittable/Model.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <exception>}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00017}\mbox{\hyperlink{struct_scene}{00017}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_scene}{Scene}}\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00018}00018\ \ \ \ \ std::vector<Shapes::Sphere>\ spheres;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00019}00019\ \ \ \ \ std::vector<Shapes::Triangle>\ triangles;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00020}00020\ \ \ \ \ std::vector<Shapes::Box>\ boxes;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00021}00021\ \ \ \ \ std::vector<Model*>\ models;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00022}00022\ \ \ \ \ std::vector<Material>\ materials;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00025}00025\ \ \ \ \ std::optional<std::string>\ Serialize(std::ostream\ \&os)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ os.exceptions(std::ios::badbit\ |\ std::ios::failbit);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ TrySerialize(os);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (std::exception\ \&e)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ e.what();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00037}00037\ \ \ \ \ std::optional<std::string>\ Deserialize(std::istream\ \&is)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ is.exceptions(std::ios::eofbit\ |\ std::ios::badbit\ |\ std::ios::failbit);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ TryDeserialize(is);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (std::exception\ \&e)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ e.what();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00049}00049\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{void}\ TrySerialize(std::ostream\ \&os)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialCount\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(materials.size());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ sphereCount\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(spheres.size());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ triangleCount\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(triangles.size());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ boxCount\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(boxes.size());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ modelCount\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(models.size());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialCount),\ \textcolor{keyword}{sizeof}(materialCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&sphereCount),\ \textcolor{keyword}{sizeof}(sphereCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&triangleCount),\ \textcolor{keyword}{sizeof}(triangleCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&boxCount),\ \textcolor{keyword}{sizeof}(boxCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&modelCount),\ \textcolor{keyword}{sizeof}(modelCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&material\ :\ materials)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&material),\ \textcolor{keyword}{sizeof}(material));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&sphere\ :\ spheres)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&sphere.center),\ \textcolor{keyword}{sizeof}(sphere.center));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&sphere.radius),\ \textcolor{keyword}{sizeof}(sphere.radius));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&sphere.material-\/>index),\ \textcolor{keyword}{sizeof}(sphere.material-\/>index));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&triangle\ :\ triangles)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&triangle.vertices),\ \textcolor{keyword}{sizeof}(triangle.vertices));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&triangle.normal),\ \textcolor{keyword}{sizeof}(triangle.normal));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&triangle.material-\/>index),\ \textcolor{keyword}{sizeof}(triangle.material-\/>index));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&box\ :\ boxes)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&box.min),\ \textcolor{keyword}{sizeof}(box.min));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&box.max),\ \textcolor{keyword}{sizeof}(box.max));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&box.material-\/>index),\ \textcolor{keyword}{sizeof}(box.material-\/>index));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ model\ :\ models)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pathToFile\ =\ model-\/>GetPathToFile().string();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathToFileLength\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(pathToFile.length());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ materialDirectory\ =\ model-\/>GetMaterialDirectory().string();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialDirectoryLength\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(materialDirectory.length());}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&pathToFileLength),\ \textcolor{keyword}{sizeof}(pathToFileLength));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(pathToFile.data(),\ pathToFileLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialDirectoryLength),\ \textcolor{keyword}{sizeof}(materialDirectoryLength));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ os.write(materialDirectory.data(),\ materialDirectoryLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ todo!\ loop\ for\ models\ here}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ position\ =\ camera.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ target\ =\ camera.GetTarget();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ verticalFovInDegrees\ =\ camera.GetVerticalFovInDegrees();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ up\ =\ camera.GetUp();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&position),\ \textcolor{keyword}{sizeof}(position));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&target),\ \textcolor{keyword}{sizeof}(target));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&verticalFovInDegrees),\ \textcolor{keyword}{sizeof}(verticalFovInDegrees));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ os.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&up),\ \textcolor{keyword}{sizeof}(up));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{void}\ TryDeserialize(std::istream\ \&is)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialCount;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ sphereCount;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ triangleCount;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ boxCount;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ modelCount;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialCount),\ \textcolor{keyword}{sizeof}(materialCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&sphereCount),\ \textcolor{keyword}{sizeof}(sphereCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&triangleCount),\ \textcolor{keyword}{sizeof}(triangleCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&boxCount),\ \textcolor{keyword}{sizeof}(boxCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&modelCount),\ \textcolor{keyword}{sizeof}(modelCount));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ materials.clear();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ materials.resize(materialCount);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&material\ :\ materials)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&material),\ \textcolor{keyword}{sizeof}(material));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ materials.shrink\_to\_fit();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ spheres.clear();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ spheres.reserve(sphereCount);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (sphereCount-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ center;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialIndex;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&center),\ \textcolor{keyword}{sizeof}(center));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&radius),\ \textcolor{keyword}{sizeof}(radius));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialIndex),\ \textcolor{keyword}{sizeof}(materialIndex));\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ spheres.emplace\_back(center,\ radius,\ \&materials[materialIndex]);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ spheres.shrink\_to\_fit();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ triangles.clear();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ triangles.reserve(triangleCount);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (triangleCount-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ vertices[3];}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ normal;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialIndex;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&vertices),\ \textcolor{keyword}{sizeof}(vertices));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&normal),\ \textcolor{keyword}{sizeof}(normal));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialIndex),\ \textcolor{keyword}{sizeof}(materialIndex));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ triangles.emplace\_back(std::array<Math::Vector3f,\ 3>\{vertices[0],\ vertices[1],\ vertices[2]\},\ normal,\ \&materials[materialIndex]);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ triangles.shrink\_to\_fit();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ boxes.clear();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ boxes.reserve(boxCount);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (boxCount-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ min,\ max;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialIndex;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&min),\ \textcolor{keyword}{sizeof}(min));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&max),\ \textcolor{keyword}{sizeof}(max));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialIndex),\ \textcolor{keyword}{sizeof}(materialIndex));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ boxes.emplace\_back(min,\ max,\ \&materials[materialIndex]);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ boxes.shrink\_to\_fit();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ model\ :\ models)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ model;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ models.clear();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ models.reserve(modelCount);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (modelCount-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathToFileLength;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&pathToFileLength),\ \textcolor{keyword}{sizeof}(pathToFileLength));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<char>\ buffer(pathToFileLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(buffer.data(),\ pathToFileLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ pathToFile(buffer.data(),\ pathToFileLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialDirectoryLength;}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&materialDirectoryLength),\ \textcolor{keyword}{sizeof}(materialDirectoryLength));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ buffer.resize(materialDirectoryLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ is.read(buffer.data(),\ materialDirectoryLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ materialDirectory(buffer.data(),\ materialDirectoryLength);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ Model::LoadOBJ(pathToFile,\ materialDirectory);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result.IsFailure())\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ models.push\_back(result.model);}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ models.shrink\_to\_fit();}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&camera.Position()),\ \textcolor{keyword}{sizeof}(camera.Position()));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&camera.Target()),\ \textcolor{keyword}{sizeof}(camera.Target()));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&camera.VerticalFovInDegrees()),\ \textcolor{keyword}{sizeof}(camera.VerticalFovInDegrees()));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ is.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&camera.Up()),\ \textcolor{keyword}{sizeof}(camera.Up()));}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00210}00210\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00211}00211\ \};}
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_scene_8h_source_l00213}00213\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

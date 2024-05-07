@@ -1,0 +1,93 @@
+\doxysection{Light Class Reference}
+\hypertarget{class_light}{}\label{class_light}\index{Light@{Light}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \mbox{\hyperlink{class_light_a38ce84cb5df8677e9ef08453d9b62b03}{Light}} (const Hittable\+Object\+Ptr object, const Math\+::\+Vector3f \&emission) noexcept
+\item 
+const Hittable\+Object \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_light_abbd623085decc9b311b1dc881a44b585}{Get\+Object}} () const noexcept
+\item 
+Math\+::\+Vector3f \mbox{\hyperlink{class_light_a825912082123457b823d2ac6c17778a6}{Sample}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&light\+Ray, const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&object\+Hit\+Payload, const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&light\+Hit\+Payload, float distance, float distance\+Squared) const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_light_8h_source_l00009}{9}} of file \mbox{\hyperlink{_light_8h_source}{Light.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_light_a38ce84cb5df8677e9ef08453d9b62b03}\label{class_light_a38ce84cb5df8677e9ef08453d9b62b03} 
+\index{Light@{Light}!Light@{Light}}
+\index{Light@{Light}!Light@{Light}}
+\doxysubsubsection{\texorpdfstring{Light()}{Light()}}
+{\footnotesize\ttfamily constexpr Light\+::\+Light (\begin{DoxyParamCaption}\item[{const Hittable\+Object\+Ptr}]{object,  }\item[{const Math\+::\+Vector3f \&}]{emission }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_light_8h_source_l00011}{11}} of file \mbox{\hyperlink{_light_8h_source}{Light.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ m\_Object(\textcolor{keywordtype}{object}),\ m\_Emission(emission)\ \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_light_abbd623085decc9b311b1dc881a44b585}\label{class_light_abbd623085decc9b311b1dc881a44b585} 
+\index{Light@{Light}!GetObject@{GetObject}}
+\index{GetObject@{GetObject}!Light@{Light}}
+\doxysubsubsection{\texorpdfstring{GetObject()}{GetObject()}}
+{\footnotesize\ttfamily const Hittable\+Object \texorpdfstring{$\ast$}{*} Light\+::\+Get\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_light_8h_source_l00014}{14}} of file \mbox{\hyperlink{_light_8h_source}{Light.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Object;}
+\DoxyCodeLine{00016\ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_light_a825912082123457b823d2ac6c17778a6}\label{class_light_a825912082123457b823d2ac6c17778a6} 
+\index{Light@{Light}!Sample@{Sample}}
+\index{Sample@{Sample}!Light@{Light}}
+\doxysubsubsection{\texorpdfstring{Sample()}{Sample()}}
+{\footnotesize\ttfamily Math\+::\+Vector3f Light\+::\+Sample (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{light\+Ray,  }\item[{const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{object\+Hit\+Payload,  }\item[{const \mbox{\hyperlink{struct_hit_payload}{Hit\+Payload}} \&}]{light\+Hit\+Payload,  }\item[{float}]{distance,  }\item[{float}]{distance\+Squared }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_light_8h_source_l00018}{18}} of file \mbox{\hyperlink{_light_8h_source}{Light.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ distanceEpsilon\ =\ 0.01f;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Math::Abs(lightHitPayload.t\ -\/\ distance)\ >\ distanceEpsilon)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Math::Vector3f(0.f);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pdf\ =\ distanceSquared\ /\ (Math::Dot(lightHitPayload.normal,\ -\/lightRay.direction)\ *\ m\_Object-\/>GetArea());}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ pdfEpsilon\ =\ 0.01f;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pdf\ <=\ pdfEpsilon)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Math::Vector3f(0.f);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ Math::Vector3f\ brdf\ =\ objectHitPayload.material-\/>albedo\ *\ Math::Constants::InversePi<float>\ *\ Math::Dot(objectHitPayload.normal,\ lightRay.direction)\ *\ m\_Emission;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ brdf\ /\ pdf;}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Light.\+h\end{DoxyCompactItemize}

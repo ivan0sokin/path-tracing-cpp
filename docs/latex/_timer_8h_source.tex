@@ -1,0 +1,27 @@
+\doxysection{Timer.\+h}
+\hypertarget{_timer_8h_source}{}\label{_timer_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_TIMER\_H}}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_TIMER\_H}}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00007}\mbox{\hyperlink{class_timer}{00007}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_timer}{Timer}}\ \{}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00008}00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00009}00009\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_timer}{Timer}}()\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_timer}{Timer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_timer}{Timer}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_timer}{Timer}}(\mbox{\hyperlink{class_timer}{Timer}}\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ MeasureInMillis(std::function<\textcolor{keywordtype}{void}()>\ f)\ \{}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t1\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00015}00015\ \ \ \ \ \ \ \ \ f();}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t2\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}std::chrono::duration<float,\ std::milli>\textcolor{keyword}{>}(t2\ -\/\ t1).count();}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::chrono::duration\_cast<std::chrono::duration<float,\ std::milli>>(t2\ -\/\ t1).count();}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00019}00019\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00020}00020\ \};}
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_timer_8h_source_l00022}00022\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

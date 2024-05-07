@@ -1,0 +1,46 @@
+\doxysection{Light.\+h}
+\hypertarget{_light_8h_source}{}\label{_light_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_LIGHT\_H}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_LIGHT\_H}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}hittable/HittableObject.h"{}}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}Ray.h"{}}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}HitPayload.h"{}}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00009}\mbox{\hyperlink{class_light}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_light}{Light}}\ \{}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00010}00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_light}{Light}}(\textcolor{keyword}{const}\ HittableObjectPtr\ \textcolor{keywordtype}{object},\ \textcolor{keyword}{const}\ Math::Vector3f\ \&emission)\ noexcept\ :}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ m\_Object(\textcolor{keywordtype}{object}),\ m\_Emission(emission)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{const}\ HittableObject*\ GetObject()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_Object;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00016}00016\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00018}00018\ \ \ \ \ Math::Vector3f\ Sample(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&lightRay,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ \&objectHitPayload,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_hit_payload}{HitPayload}}\ \&lightHitPayload,\ \textcolor{keywordtype}{float}\ distance,\ \textcolor{keywordtype}{float}\ distanceSquared)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ distanceEpsilon\ =\ 0.01f;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Math::Abs(lightHitPayload.t\ -\/\ distance)\ >\ distanceEpsilon)\ \{}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Math::Vector3f(0.f);}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pdf\ =\ distanceSquared\ /\ (Math::Dot(lightHitPayload.normal,\ -\/lightRay.direction)\ *\ m\_Object-\/>GetArea());}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ pdfEpsilon\ =\ 0.01f;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pdf\ <=\ pdfEpsilon)\ \{}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Math::Vector3f(0.f);}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ Math::Vector3f\ brdf\ =\ objectHitPayload.material-\/>albedo\ *\ Math::Constants::InversePi<float>\ *\ Math::Dot(objectHitPayload.normal,\ lightRay.direction)\ *\ m\_Emission;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ brdf\ /\ pdf;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00036}00036\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{const}\ HittableObject*\ m\_Object;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00038}00038\ \ \ \ \ Math::Vector3f\ m\_Emission;}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00039}00039\ \};}
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_light_8h_source_l00041}00041\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

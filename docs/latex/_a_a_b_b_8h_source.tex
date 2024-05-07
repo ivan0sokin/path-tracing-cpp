@@ -1,0 +1,70 @@
+\doxysection{AABB.\+h}
+\hypertarget{_a_a_b_b_8h_source}{}\label{_a_a_b_b_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_AABB\_H}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_AABB\_H}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}math/Math.h"{}}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00006}\mbox{\hyperlink{struct_a_a_b_b}{00006}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00007}00007\ \ \ \ \ Math::Vector3f\ min,\ max;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00009}00009\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}()\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(\textcolor{keyword}{const}\ Math::Vector3f\ \&a,\ \textcolor{keyword}{const}\ Math::Vector3f\ \&b)\ noexcept\ :}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ min(Math::Min(a,\ b)),\ max(Math::Max(a,\ b))\ \{\}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ \&other)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ \&a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ \&b)\ noexcept\ :}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ min(Math::Min(a.min,\ b.min)),\ max(Math::Max(a.max,\ b.max))\ \{\}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ GetSurfaceArea()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a,\ b,\ c;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ a\ =\ max.x\ -\/\ min.x;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ b\ =\ max.y\ -\/\ min.y;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ c\ =\ max.z\ -\/\ min.z;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 2.f\ *\ a\ *\ b\ +\ 2.f\ *\ b\ *\ c\ +\ 2.f\ *\ a\ *\ c;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ IntersectsRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_ray}{Ray}}\ \&ray,\ \textcolor{keywordtype}{float}\ t\_min,\ \textcolor{keywordtype}{float}\ t\_max)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ one\_over\_direction\ =\ 1.f\ /\ ray.direction;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ origin\ =\ ray.origin;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t0\ =\ (min\ -\/\ origin)\ *\ one\_over\_direction;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t1\ =\ (max\ -\/\ origin)\ *\ one\_over\_direction;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (one\_over\_direction.x\ <\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(t0.x,\ t1.x);}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (one\_over\_direction.y\ <\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(t0.y,\ t1.y);}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (one\_over\_direction.z\ <\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(t0.z,\ t1.z);}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ t\_min\ =\ Math::Max(t\_min,\ Math::Max(Math::Max(t0.x,\ t0.y),\ t0.z));}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ t\_max\ =\ Math::Min(t\_max,\ Math::Min(Math::Min(t1.x,\ t1.y),\ t1.z));}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\_max\ <=\ t\_min)\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ Empty()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_a_a_b_b}{AABB}}\ aabb;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ aabb.min\ =\ Math::Vector3f(+Math::Constants::Infinity<float>);}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ aabb.max\ =\ Math::Vector3f(-\/Math::Constants::Infinity<float>);}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ aabb;}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00063}00063\ \};}
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_a_a_b_b_8h_source_l00065}00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

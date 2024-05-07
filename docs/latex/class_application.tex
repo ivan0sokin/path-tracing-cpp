@@ -1,0 +1,158 @@
+\doxysection{Application Class Reference}
+\hypertarget{class_application}{}\label{class_application}\index{Application@{Application}}
+
+
+Path tracing application class which holds basic logic.  
+
+
+
+
+{\ttfamily \#include $<$Application.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_application_a7e16acc4775189b71c6f795df5fc7cbb}{Application}} (int window\+Width, int window\+Height) noexcept
+\item 
+int \mbox{\hyperlink{class_application_a5c63f622cc0fd7ca14f9a19b3f24742f}{Run}} () noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Path tracing application class which holds basic logic. 
+
+Definition at line \mbox{\hyperlink{_application_8h_source_l00015}{15}} of file \mbox{\hyperlink{_application_8h_source}{Application.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_application_a7e16acc4775189b71c6f795df5fc7cbb}\label{class_application_a7e16acc4775189b71c6f795df5fc7cbb} 
+\index{Application@{Application}!Application@{Application}}
+\index{Application@{Application}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{Application()}{Application()}}
+{\footnotesize\ttfamily Application\+::\+Application (\begin{DoxyParamCaption}\item[{int}]{window\+Width,  }\item[{int}]{window\+Height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_application_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_application_8cpp_source}{Application.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :}
+\DoxyCodeLine{00022\ \ \ \ \ m\_InitialWindowWidth(windowWidth),\ m\_InitialWindowHeight(windowHeight),}
+\DoxyCodeLine{00023\ \ \ \ \ m\_LastViewportWidth(-\/1),\ m\_LastViewportHeight(-\/1),}
+\DoxyCodeLine{00024\ \ \ \ \ m\_Renderer(windowWidth,\ windowHeight),}
+\DoxyCodeLine{00025\ \ \ \ \ m\_TotalRenderTime(0.f),\ m\_LastRenderTime(0.f)\ \{}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ m\_SaveImageFilePath\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[c\_AnyInputFilePathLength];}
+\DoxyCodeLine{00028\ \ \ \ \ m\_SceneFilePath\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[c\_AnyInputFilePathLength];}
+\DoxyCodeLine{00029\ \ \ \ \ m\_ModelFilePath\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[c\_AnyInputFilePathLength];}
+\DoxyCodeLine{00030\ \ \ \ \ m\_MaterialDirectory\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[c\_AnyInputFilePathLength];}
+\DoxyCodeLine{00031\ \ \ \ \ memset(m\_SaveImageFilePath,\ 0,\ \textcolor{keyword}{sizeof}(m\_SaveImageFilePath));}
+\DoxyCodeLine{00032\ \ \ \ \ memset(m\_SceneFilePath,\ 0,\ \textcolor{keyword}{sizeof}(m\_SceneFilePath));}
+\DoxyCodeLine{00033\ \ \ \ \ memset(m\_ModelFilePath,\ 0,\ \textcolor{keyword}{sizeof}(m\_ModelFilePath));}
+\DoxyCodeLine{00034\ \ \ \ \ memset(m\_MaterialDirectory,\ 0,\ \textcolor{keyword}{sizeof}(m\_MaterialDirectory));}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ m\_AddMaterial.albedo\ =\ \{0.f,\ 0.f,\ 0.f\};}
+\DoxyCodeLine{00037\ \ \ \ \ m\_AddMaterial.metallic\ =\ 0.f;}
+\DoxyCodeLine{00038\ \ \ \ \ m\_AddMaterial.specular\ =\ 0.f;}
+\DoxyCodeLine{00039\ \ \ \ \ m\_AddMaterial.roughness\ =\ 0.f;}
+\DoxyCodeLine{00040\ \ \ \ \ m\_AddMaterial.emissionPower\ =\ 0.f;}
+\DoxyCodeLine{00041\ \ \ \ \ m\_AddMaterial.index\ =\ -\/1;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ m\_AddSphere\ =\ Shapes::Sphere(Math::Vector3f(0.f),\ 0.f,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00044\ \ \ \ \ m\_AddTriangle\ =\ Shapes::Triangle(Math::Vector3f(0.f),\ Math::Vector3f(0.f),\ Math::Vector3f(0.f),\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00045\ \ \ \ \ m\_AddBox\ =\ Shapes::Box(Math::Vector3f(0.f),\ Math::Vector3f(0.f),\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ m\_AddSphereMaterialIndex\ =\ -\/1;}
+\DoxyCodeLine{00048\ \ \ \ \ m\_AddTriangleMaterialIndex\ =\ -\/1;}
+\DoxyCodeLine{00049\ \ \ \ \ m\_AddBoxMaterialIndex\ =\ -\/1;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ m\_RayMissColor\ =\ Math::Vector3f(0.f);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ m\_Scene.camera\ =\ \mbox{\hyperlink{class_camera}{Camera}}(windowWidth,\ windowHeight);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ LoadSceneFromFile(c\_DefaultScenePath);}
+\DoxyCodeLine{00056\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_application_a5c63f622cc0fd7ca14f9a19b3f24742f}\label{class_application_a5c63f622cc0fd7ca14f9a19b3f24742f} 
+\index{Application@{Application}!Run@{Run}}
+\index{Run@{Run}!Application@{Application}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily int Application\+::\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{_application_8cpp_source_l00058}{58}} of file \mbox{\hyperlink{_application_8cpp_source}{Application.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{if}\ (!glfwInit())\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ initialize\ GLFW\(\backslash\)n"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00062\ \ \ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#if\ defined(IMGUI\_IMPL\_OPENGL\_ES2) }}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ glsl\_version\ =\ \textcolor{stringliteral}{"{}\#version\ 100"{}};}
+\DoxyCodeLine{00066\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MAJOR,\ 2);}
+\DoxyCodeLine{00067\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MINOR,\ 0);}
+\DoxyCodeLine{00068\ \ \ \ \ glfwWindowHint(GLFW\_CLIENT\_API,\ GLFW\_OPENGL\_ES\_API);}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#elif\ defined(\_\_APPLE\_\_) }}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ glsl\_version\ =\ \textcolor{stringliteral}{"{}\#version\ 150"{}};}
+\DoxyCodeLine{00071\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MAJOR,\ 3);}
+\DoxyCodeLine{00072\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MINOR,\ 2);}
+\DoxyCodeLine{00073\ \ \ \ \ glfwWindowHint(GLFW\_OPENGL\_PROFILE,\ GLFW\_OPENGL\_CORE\_PROFILE);}
+\DoxyCodeLine{00074\ \ \ \ \ glfwWindowHint(GLFW\_OPENGL\_FORWARD\_COMPAT,\ GL\_TRUE);}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#else }}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ glsl\_version\ =\ \textcolor{stringliteral}{"{}\#version\ 130"{}};}
+\DoxyCodeLine{00077\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MAJOR,\ 3);}
+\DoxyCodeLine{00078\ \ \ \ \ glfwWindowHint(GLFW\_CONTEXT\_VERSION\_MINOR,\ 0);}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#endif }}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ m\_Window\ =\ glfwCreateWindow(m\_InitialWindowWidth,\ m\_InitialWindowHeight,\ c\_WindowTitle,\ \textcolor{keyword}{nullptr},\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Window\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ create\ window\(\backslash\)n"{}};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ GLFWimage\ *icon\ =\ \textcolor{keyword}{new}\ GLFWimage();}
+\DoxyCodeLine{00088\ \ \ \ \ icon-\/>pixels\ =\ stbi\_load(\textcolor{stringliteral}{"{}icon/icon.png"{}},\ \&icon-\/>width,\ \&icon-\/>height,\ 0,\ 4);}
+\DoxyCodeLine{00089\ \ \ \ \ glfwSetWindowIcon(m\_Window,\ 1,\ icon);}
+\DoxyCodeLine{00090\ \ \ \ \ stbi\_image\_free(icon-\/>pixels);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{delete}\ icon;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ glfwMakeContextCurrent(m\_Window);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ ImGui::CreateContext();}
+\DoxyCodeLine{00096\ \ \ \ \ ImGuiIO\ \&io\ =\ ImGui::GetIO();}
+\DoxyCodeLine{00097\ \ \ \ \ io.ConfigFlags\ |=\ ImGuiConfigFlags\_NavEnableKeyboard;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ UpdateThemeStyle();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ ImGui\_ImplGlfw\_InitForOpenGL(m\_Window,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00102\ \ \ \ \ ImGui\_ImplOpenGL3\_Init(glsl\_version);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ MainLoop();}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ ImGui\_ImplOpenGL3\_Shutdown();}
+\DoxyCodeLine{00107\ \ \ \ \ ImGui\_ImplGlfw\_Shutdown();}
+\DoxyCodeLine{00108\ \ \ \ \ ImGui::DestroyContext();}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ glfwDestroyWindow(m\_Window);}
+\DoxyCodeLine{00111\ \ \ \ \ glfwTerminate();}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00114\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Application.\+h\item 
+Application.\+cpp\end{DoxyCompactItemize}
