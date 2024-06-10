@@ -31,7 +31,7 @@ struct AABB {
     }
 
     //! Returns true if ray intersects AABB on give interval
-    constexpr bool IntersectsRay(const Ray &ray, float tMin, float tMax) const noexcept {
+    constexpr float Intersect(const Ray &ray, float tMin, float tMax) const noexcept {
         auto oneOverDirection = ray.oneOverDirection;
         auto origin = ray.origin;
 
@@ -54,10 +54,11 @@ struct AABB {
         tMax = Math::Min(tMax, Math::Min(Math::Min(t1.x, t1.y), t1.z));
 
         if (tMax <= tMin) {
-            return false;
+            // return false;
+            return Math::Constants::Infinity<float>;
         }
 
-        return true;
+        return tMin;
     }
 
     //! Returns empty AABB i.e. where min = +inf, max = -inf

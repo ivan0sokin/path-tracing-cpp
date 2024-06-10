@@ -9,6 +9,7 @@
 #include <span>
 #include <vector>
 #include <functional>
+#include <stack>
 
 //! Bounding volume hierarchy node
 struct BVHNode {
@@ -29,18 +30,60 @@ struct BVHNode {
         return object != nullptr;
     }
 
-    //! Saves hit info into ```payload```
+    //! Frees allocated memory of tree with root ```node```
+    constexpr static void FreeMemory(BVHNode *node) noexcept {
+        if (node == nullptr) {
+            return;
+        }
+
+        FreeMemory(node->left);
+        FreeMemory(node->right);
+
+        delete node;
+    }
+
+    //! Saves ray-BVH intersection info into ```payload```
     inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) noexcept {
-        if (!aabb.IntersectsRay(ray, tMin, tMax)) {
+        if (this->aabb.Intersect(ray, tMin, tMax) == Math::Constants::Infinity<float>) {
             return false;
         }
 
-        if (IsTerminating()) {
-            return object->Hit(ray, tMin, tMax, payload);
-        }
+        BVHNode *node = this;
+        BVHNode* nodes[1024];
+        int stackPointer = 1;
 
-        bool anyHit = left->Hit(ray, tMin, tMax, payload);
-        anyHit |= right->Hit(ray, tMin, Math::Min(tMax, payload.t), payload);
+        bool anyHit = false;
+        while (stackPointer > 0) {
+            if (node->IsTerminating()) {
+                anyHit |= node->object->Hit(ray, tMin, tMax, payload);
+                tMax = Math::Min(tMax, payload.t);
+                
+                node = nodes[--stackPointer];
+                continue;
+            }
+
+            BVHNode *closestChild = node->left;
+            BVHNode *furtherChild = node->right;
+
+            float closestT = closestChild->aabb.Intersect(ray, tMin, tMax);
+            float furtherT = furtherChild->aabb.Intersect(ray, tMin, tMax);
+
+            if (closestT > furtherT) {
+                std::swap(closestT, furtherT);
+                std::swap(closestChild, furtherChild);
+            }
+
+            if (closestT == Math::Constants::Infinity<float>) {
+                node = nodes[--stackPointer];
+                continue;
+            }
+
+            node = closestChild;
+
+            if (furtherT != Math::Constants::Infinity<float>) {
+                nodes[stackPointer++] = furtherChild;
+            }
+        }
 
         return anyHit;
     }
@@ -155,18 +198,6 @@ struct BVHNode {
             return a->GetBoundingBox().min.z < b->GetBoundingBox().min.z;
         }
     };
-
-    //! Frees allocated memory of tree with root ```node```
-    constexpr static void FreeMemory(BVHNode *node) noexcept {
-        if (node == nullptr) {
-            return;
-        }
-
-        FreeMemory(node->left);
-        FreeMemory(node->right);
-
-        delete node;
-    }
 };
 
 #endif
