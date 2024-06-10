@@ -77,7 +77,7 @@ private:
     std::vector<int> m_TriangleMaterialIndices;
     std::vector<int> m_BoxMaterialIndices;
 
-    std::vector<HittableObject*> m_Objects;
+    std::vector<IHittable*> m_Objects;
     std::vector<Light> m_Lights;
 
     Material m_AddMaterial;

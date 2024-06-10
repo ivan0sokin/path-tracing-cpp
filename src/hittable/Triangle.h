@@ -9,7 +9,7 @@
 #include <array>
 #include <cstdio>
 namespace Shapes {
-    class Triangle : public HittableObject {
+    class Triangle : public IHittable {
     public:
         Math::Vector3f vertices[3];
         Math::Vector3f edges[2];
@@ -25,12 +25,10 @@ namespace Shapes {
             vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), material(material) {}
 
         constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
-            constexpr float epsilon = Math::Constants::Epsilon<float>;
-
             Math::Vector3f rayCrossEdge2 = Math::Cross(ray.direction, edges[1]);
             float determinant = Math::Dot(edges[0], rayCrossEdge2);
 
-            if (Math::Abs(determinant) < epsilon) {
+            if (Math::Abs(determinant) < Math::Constants::Epsilon<float>) {
                 return false;
             }
 

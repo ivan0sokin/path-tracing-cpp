@@ -25,7 +25,7 @@ public:
     //! Deallocates image data
     ~Renderer() noexcept;
 
-    using typ_t = HittableObject*;
+    using typ_t = IHittable*;
 
     //! Renders without object acceleration (but with model accelerator for speed purpose)
     void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;

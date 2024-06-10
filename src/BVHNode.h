@@ -14,14 +14,14 @@
 struct BVHNode {
     AABB aabb = AABB::Empty();
     BVHNode *left = nullptr, *right = nullptr;
-    const HittableObject *object = nullptr;
+    const IHittable *object = nullptr;
 
     constexpr BVHNode() noexcept = default;
 
     constexpr BVHNode(BVHNode *left, BVHNode *right) noexcept :
         left(left), right(right), aabb(left->aabb, right->aabb) {}
 
-    constexpr BVHNode(const HittableObject *object) noexcept :
+    constexpr BVHNode(const IHittable *object) noexcept :
         object(object), aabb(object->GetBoundingBox()) {}
 
     //! Returns true if this node contains pointer to primitive

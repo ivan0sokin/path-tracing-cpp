@@ -1,5 +1,5 @@
-#ifndef _HITTABLE_OBJECT_H
-#define _HITTABLE_OBJECT_H
+#ifndef _IHITTABLE_H
+#define _IHITTABLE_H
 
 #include "../HitPayload.h"
 #include "../math/Math.h"
@@ -7,14 +7,14 @@
 #include "../AABB.h"
 
 //! Abstraction for hittable object
-class HittableObject {
+class IHittable {
 public:
-    constexpr HittableObject() = default;
-    constexpr HittableObject(const HittableObject&) = default;
-    constexpr HittableObject(HittableObject&&) = default;
-    constexpr HittableObject& operator=(const HittableObject&) = default;
+    constexpr IHittable() = default;
+    constexpr IHittable(const IHittable&) = default;
+    constexpr IHittable(IHittable&&) = default;
+    constexpr IHittable& operator=(const IHittable&) = default;
 
-    constexpr virtual ~HittableObject() = default;
+    constexpr virtual ~IHittable() = default;
 
     virtual bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;
 
@@ -27,6 +27,6 @@ public:
     virtual float GetArea() const noexcept = 0;
 };
 
-using HittableObjectPtr = HittableObject*;
+using HittableObjectPtr = IHittable*;
 
 #endif

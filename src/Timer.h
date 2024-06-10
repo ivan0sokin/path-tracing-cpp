@@ -16,8 +16,7 @@ public:
         auto t1 = std::chrono::high_resolution_clock::now();
         f();
         auto t2 = std::chrono::high_resolution_clock::now();
-        static_cast<std::chrono::duration<float, std::milli>>(t2 - t1).count();
-        return std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(t2 - t1).count();
+        return std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(t2 - t1).count();
     }
 };
 

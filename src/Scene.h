@@ -7,6 +7,7 @@
 #include "hittable/Model.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Timer.h"
 
 #include <vector>
 #include <fstream>
@@ -23,7 +24,7 @@ struct Scene {
     std::vector<Material> materials;
     Camera camera;
 
-    //! Serializes scene into ```os```
+    //! Serializes scene into ```std::ostream```
     std::optional<std::string> Serialize(std::ostream &os) const noexcept {
         os.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -36,7 +37,7 @@ struct Scene {
         return {};
     }
 
-    //! Deserializes scene from ```is```
+    //! Deserializes scene from ```std::istream```
     std::optional<std::string> Deserialize(std::istream &is) noexcept {
         is.exceptions(std::ios::eofbit | std::ios::badbit | std::ios::failbit);
 
@@ -64,7 +65,12 @@ private:
         os.write(reinterpret_cast<const char*>(&modelCount), sizeof(modelCount));
 
         for (const auto &material : materials) {
-            os.write(reinterpret_cast<const char*>(&material), sizeof(material));
+            os.write(reinterpret_cast<const char*>(material.albedo.GetData()), sizeof(Math::Vector3f));
+            os.write(reinterpret_cast<const char*>(material.metallic.GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(material.specular.GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(material.roughness.GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(&material.emissionPower), sizeof(material.emissionPower));
+            os.write(reinterpret_cast<const char*>(&material.index), sizeof(material.index));
         }
 
         for (const auto &sphere : spheres) {
@@ -99,8 +105,6 @@ private:
             os.write(materialDirectory.data(), materialDirectoryLength);
         }
 
-        // todo! loop for models here
-
         auto position = camera.GetPosition();
         auto target = camera.GetTarget();
         auto verticalFovInDegrees = camera.GetVerticalFovInDegrees();
@@ -128,7 +132,12 @@ private:
         materials.clear();
         materials.resize(materialCount);
         for (auto &material : materials) {
-            is.read(reinterpret_cast<char*>(&material), sizeof(material));
+            is.read(reinterpret_cast<char*>(material.albedo.GetData()), sizeof(Math::Vector3f));
+            is.read(reinterpret_cast<char*>(material.metallic.GetData()), sizeof(float));
+            is.read(reinterpret_cast<char*>(material.specular.GetData()), sizeof(float));
+            is.read(reinterpret_cast<char*>(material.roughness.GetData()), sizeof(float));
+            is.read(reinterpret_cast<char*>(&material.emissionPower), sizeof(material.emissionPower));
+            is.read(reinterpret_cast<char*>(&material.index), sizeof(material.index));
         }
         materials.shrink_to_fit();
 
@@ -173,7 +182,6 @@ private:
         }
         boxes.shrink_to_fit();
 
-
         for (const auto model : models) {
             delete model;
         }
@@ -197,10 +205,16 @@ private:
             
             std::string materialDirectory(buffer.data(), materialDirectoryLength);
 
-            auto result = Model::LoadOBJ(pathToFile, materialDirectory);
+            Model::LoadResult result;
+            double loadTime = Timer::MeasureInMillis([&](){
+                result = Model::LoadOBJ(pathToFile, materialDirectory);
+            });
+
             if (result.IsFailure()) {
                 continue;
             }
+
+            printf("Time to load model %s is %fms\n", pathToFile.c_str(), loadTime);
 
             models.push_back(result.model);
         }

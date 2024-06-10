@@ -33,10 +33,10 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     memset(m_ModelFilePath, 0, sizeof(m_ModelFilePath));
     memset(m_MaterialDirectory, 0, sizeof(m_MaterialDirectory));
 
-    m_AddMaterial.albedo = {0.f, 0.f, 0.f};
-    m_AddMaterial.metallic = 0.f;
-    m_AddMaterial.specular = 0.f;
-    m_AddMaterial.roughness = 0.f;
+    m_AddMaterial.albedo = Texture(Math::Vector3f(0.f));
+    m_AddMaterial.metallic = Texture(Math::Vector3f(0.f));
+    m_AddMaterial.specular = Texture(Math::Vector3f(0.f));
+    m_AddMaterial.roughness = Texture(Math::Vector3f(1.f));
     m_AddMaterial.emissionPower = 0.f;
     m_AddMaterial.index = -1;
 
@@ -487,22 +487,6 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             auto model = m_Scene.models[i];
 
             ImGui::Text("Model: %d", i);
-        
-            auto materials = model->GetMaterials();
-            for (int i = 0; i < (int)materials.size(); ++i) {
-                ImGui::PushID(m_LastID++);
-
-                Material &material = materials[i];
-                ImGui::Text("Material %d:", material.index);
-
-                ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
-                ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
-                ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
-                ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
-                ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
-
-                ImGui::PopID();
-            }
 
             if (ImGui::Button("Delete")) {
                 deleteIndex = i;
@@ -514,7 +498,10 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
         ImGui::PushID(m_LastID++);
 
         if (ImGui::Button("Import")) {
-            auto result = Model::LoadOBJ(m_ModelFilePath, m_MaterialDirectory);
+            Model::LoadResult result;
+            double loadTime = Timer::MeasureInMillis([&](){
+                result = Model::LoadOBJ(m_ModelFilePath, m_MaterialDirectory);
+            });
             
             if (!result.warning.empty()) {
                 std::cout << "Warnings occured while loading model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << ": " << result.warning << '\n';
@@ -523,7 +510,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             if (result.IsFailure()) {
                 std::cerr << "Failed to import model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
             } else {
-                std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
+                std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << "in " << loadTime << "ms\n";
 
                 m_Scene.models.push_back(result.model);
                 m_SomeObjectChanged = true;
@@ -559,11 +546,11 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
                 deleteIndex = i;
             }
 
-            ImGui::ColorEdit3("Albedo", Math::ValuePointer(material.albedo));
+            ImGui::ColorEdit3("Albedo", material.albedo.GetData());
             ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
-            ImGui::InputFloat("Metallic", Math::ValuePointer(material.metallic));
-            ImGui::InputFloat("Roughness", Math::ValuePointer(material.roughness));
-            ImGui::InputFloat("Specular", Math::ValuePointer(material.specular));
+            ImGui::InputFloat("Metallic", material.metallic.GetData());
+            ImGui::InputFloat("Roughness", material.roughness.GetData());
+            ImGui::InputFloat("Specular", material.specular.GetData());
 
             ImGui::PopID();
         }
@@ -581,11 +568,11 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
             UpdateObjectMaterials();
         }
 
-        ImGui::ColorEdit3("Albedo", Math::ValuePointer(m_AddMaterial.albedo));
+        ImGui::ColorEdit3("Albedo", m_AddMaterial.albedo.GetData());
         ImGui::InputFloat("Emission power", Math::ValuePointer(m_AddMaterial.emissionPower));
-        ImGui::InputFloat("Metallic", Math::ValuePointer(m_AddMaterial.metallic));
-        ImGui::InputFloat("Roughness", Math::ValuePointer(m_AddMaterial.roughness));
-        ImGui::InputFloat("Specular", Math::ValuePointer(m_AddMaterial.specular));
+        ImGui::InputFloat("Metallic", m_AddMaterial.metallic.GetData());
+        ImGui::InputFloat("Roughness", m_AddMaterial.roughness.GetData());
+        ImGui::InputFloat("Specular", m_AddMaterial.specular.GetData());
 
         ImGui::PopID();
 
@@ -659,19 +646,19 @@ void Application::UpdateLights() noexcept {
     
     for (auto &sphere : m_Scene.spheres) {
         if (sphere.material->emissionPower > 0.f) {
-            m_Lights.emplace_back(&sphere, sphere.material->GetEmission());
+            m_Lights.emplace_back(&sphere);
         }
     }
 
     for (auto &triangle : m_Scene.triangles) {
         if (triangle.material->emissionPower > 0.f) {
-            m_Lights.emplace_back(&triangle, triangle.material->GetEmission());
+            m_Lights.emplace_back(&triangle);
         }
     }
 
     for (auto &box : m_Scene.boxes) {
         if (box.material->emissionPower > 0.f) {
-            m_Lights.emplace_back(&box, box.material->GetEmission());
+            m_Lights.emplace_back(&box);
         }
     }
 

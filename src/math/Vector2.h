@@ -9,7 +9,7 @@ namespace Math {
         struct Vector<T, 2> {
             union {
                 struct { T x, y; };
-                struct { T s, t; };
+                struct { T u, v; };
             };
 
             constexpr Vector() noexcept :

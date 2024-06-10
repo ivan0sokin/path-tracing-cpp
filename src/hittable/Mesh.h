@@ -13,9 +13,10 @@ public:
     struct Vertex {
         Math::Vector3f position;
         Math::Vector3f normal;
+        Math::Vector2f texcoord;
     
         friend constexpr bool operator==(const Vertex &a, const Vertex &b) noexcept {
-            return a.position == b.position && a.normal == b.normal;
+            return a.position == b.position && a.normal == b.normal && a.texcoord == b.texcoord;
         }
     };
 
@@ -38,16 +39,5 @@ private:
     std::vector<int> m_Indices;
     std::vector<int> m_MaterialIndices;
 };
-
-namespace std {
-    template<>
-    struct hash<Mesh::Vertex> {
-        size_t operator()(const Mesh::Vertex &vertex) const noexcept {
-            auto h1 = hash<Math::Vector3f>{}(vertex.position);
-            auto h2 = hash<Math::Vector3f>{}(vertex.normal);
-            return h1 ^ (h2 << 1);
-        }
-    };
-}
 
 #endif

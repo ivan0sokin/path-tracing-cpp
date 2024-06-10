@@ -8,7 +8,7 @@
 #include "Triangle.h"
 
 //! Slightly differs from Triangle. It is connected with mesh and stores its face index
-class Polygon : public HittableObject {
+class Polygon : public IHittable {
 public:
     const Mesh *mesh;
     const Material *material;
@@ -18,11 +18,6 @@ public:
         mesh(mesh), material(material), faceIndex(faceIndex) {}
 
     constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
-        HitPayload hitPayload;
-        hitPayload.t = Math::Constants::Infinity<float>;
-        hitPayload.normal = Math::Vector3f(0.f);
-        hitPayload.material = nullptr;
-
         if (MakeTriangle().Hit(ray, tMin, tMax, payload)) {
             auto vertices = mesh->GetVertices();
             auto indices = mesh->GetIndices();
@@ -39,6 +34,10 @@ public:
             n1 = Math::Dot(ray.direction, n1) > Math::Constants::Epsilon<float> ? -n1 : n1;
             n2 = Math::Dot(ray.direction, n2) > Math::Constants::Epsilon<float> ? -n2 : n2;
 
+            auto t0 = vertices[indices[3 * faceIndex + 0]].texcoord;
+            auto t1 = vertices[indices[3 * faceIndex + 1]].texcoord;
+            auto t2 = vertices[indices[3 * faceIndex + 2]].texcoord;
+
             Math::Vector3f p = ray.origin + ray.direction * payload.t;
 
             float u0 = Math::Length(Math::Cross(v1 - p, v2 - p)) / Math::Length(Math::Cross(v1 - v0, v2 - v0));
@@ -46,6 +45,8 @@ public:
             float u2 = 1.f - u1 - u0;
 
             payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
+            payload.texcoord = t0 * u0 + t1 * u1 + t2 * u2;
+            // payload.normal = 2.f * material->bump.PickValue(payload.texcoord) - 1.f;
 
             return true;
         }

@@ -4,7 +4,7 @@
 #include "HittableObject.h"
 
 //! Hittable object that cannot be hit
-class NonHittable : public HittableObject {
+class NonHittable : public IHittable {
 public:
     constexpr NonHittable() noexcept = default;
     

@@ -2,7 +2,12 @@
 #include "Utilities.hpp"
 
 Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
-    float diffuseRatio = 0.5f * (1.f - m_Material->metallic);
+    Math::Vector3f albedo = m_Material->albedo.PickValue(payload.texcoord);
+    float metallic = m_Material->metallic.PickValue(payload.texcoord).r;
+    float roughness = m_Material->roughness.PickValue(payload.texcoord).r;
+    float specular = m_Material->specular.PickValue(payload.texcoord).r;
+
+    float diffuseRatio = 0.5f * (1.f - metallic);
     float specularRatio = 1.f - diffuseRatio;
 
     Math::Vector3f V = -ray.direction;
@@ -16,7 +21,7 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
             Math::Vector2f Xi{Utilities::RandomFloatInZeroToOne(), Utilities::RandomFloatInZeroToOne()};
             Math::Vector3f N = payload.normal;
 
-            float a = m_Material->roughness * m_Material->roughness;
+            float a = roughness * roughness;
 
             float phi = Math::Constants::Tau<float> * Xi.x;
             float cosTheta = Math::Sqrt((1.f - Xi.y) / (1.f + (a * a - 1.f) * Xi.y));
@@ -107,21 +112,21 @@ Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vec
     float NdotV = Math::Abs(Math::Dot(payload.normal, V));
     
     Math::Vector3f F0 = Math::Vector3f(0.08f, 0.08f, 0.08f);
-    F0 = Math::Lerp(F0 * m_Material->specular, m_Material->albedo, m_Material->metallic);
+    F0 = Math::Lerp(F0 * specular, albedo, metallic);
 
-    float NDF = DistributionGGX(payload.normal, H, m_Material->roughness);
-    float G = GeometrySmith(payload.normal, V, L, m_Material->roughness);
+    float NDF = DistributionGGX(payload.normal, H, roughness);
+    float G = GeometrySmith(payload.normal, V, L, roughness);
     Math::Vector3f F = FresnelSchlick(Math::Max(Math::Dot(H, V), 0.f), F0);
 
     Math::Vector3f kS = F;
     Math::Vector3f kD = 1.f - kS;
-    kD *= 1.0 - m_Material->metallic;
+    kD *= 1.0 - metallic;
 
     Math::Vector3f specularBrdf = SpecularBRDF(NDF, G, F, V, L, payload.normal);
         
     float specularPdf = ImportanceSampleGGXPDF(NDF, NdotH, VdotH);
     
-    Math::Vector3f diffuseBrdf = DiffuseBRDF(m_Material->albedo);
+    Math::Vector3f diffuseBrdf = DiffuseBRDF(albedo);
     float diffusePdf = CosineSamplingPDF(NdotL);
 
     Math::Vector3f totalBrdf = (diffuseBrdf * kD + specularBrdf) * NdotL;

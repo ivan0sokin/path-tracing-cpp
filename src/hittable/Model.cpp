@@ -3,8 +3,10 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "../../tinyobjloader/tiny_obj_loader.h"
 
-Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : 
-    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
+#include "../../stb-master/stb_image.h"
+
+Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials, std::vector<std::vector<uint32_t>> &&textures) noexcept : 
+    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)), m_Textures(std::move(textures)) {
     int totalVertexCount = 0;
     for (const auto &mesh : m_Meshes) {
         Math::Vector3f sum(0.f);
@@ -36,7 +38,7 @@ Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::pat
             m_Polygons.emplace_back(&mesh, &material, f);
 
             if (material.emissionPower > 0.f) {
-                m_LightSources.emplace_back(&m_Polygons.back(), material.GetEmission());
+                m_LightSources.emplace_back(&m_Polygons.back());
             }
         }
     }
@@ -61,16 +63,60 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
         return LoadResult::Error(error);
     }
 
+    std::vector<std::vector<uint32_t>> textures;
+
     std::vector<Material> pbrMaterials;
     pbrMaterials.reserve(materials.size());
     for (const auto &material : materials) {
         Material pbrMaterial;
-        pbrMaterial.emissionPower = Math::Max(material.ambient[0], Math::Max(material.ambient[1], material.ambient[2]));
-        pbrMaterial.albedo = Math::Vector3f(material.diffuse[0], material.diffuse[1], material.diffuse[2]);
-        pbrMaterial.metallic = Math::Max(material.specular[0], Math::Max(material.specular[1], material.specular[2]));
-        pbrMaterial.roughness = 0.5f;
-        pbrMaterial.specular = 0.f;
+        // pbrMaterial.emissionPower = Math::Max(material.ambient[0], Math::Max(material.ambient[1], material.ambient[2]));
+        pbrMaterial.albedo = Texture(Math::Vector3f(material.diffuse[0], material.diffuse[1], material.diffuse[2]));
+        pbrMaterial.metallic = Texture(Math::Vector3f(Math::Max(material.specular[0], Math::Max(material.specular[1], material.specular[2]))));
+        pbrMaterial.roughness = Texture(Math::Vector3f(0.5f));
+        pbrMaterial.specular = Texture(Math::Vector3f(0.f));
         pbrMaterial.index = static_cast<int>(pbrMaterials.size());
+
+        auto textureNames = {material.diffuse_texname, material.specular_highlight_texname, material.reflection_texname, material.specular_texname, material.bump_texname};
+
+        for (int i = 0; i < (int)textureNames.size(); ++i) {
+            const auto &textureName = *(textureNames.begin() + i);
+
+            if (textureName.empty()) {
+                continue;
+            }
+
+            std::filesystem::path pathToTexture = materialDirectory / std::filesystem::path(textureName);
+
+            const int desiredChannels = 3;
+            int width, height, channels;
+            unsigned char *textureData = stbi_load(pathToTexture.string().c_str(), &width, &height, &channels, desiredChannels);
+
+            printf("%s: %dx%d with %d channels\n", pathToTexture.string().c_str(), width, height, channels);
+
+            Texture texture(std::span<const unsigned char>{textureData, std::dynamic_extent}, width, height, desiredChannels);
+
+            stbi_image_free(textureData);
+
+            switch (i)
+            {
+            case 0:
+                pbrMaterial.albedo = texture;
+                break;
+            case 1:
+                pbrMaterial.roughness = texture;
+                break;
+            case 2:
+                pbrMaterial.metallic = texture;
+                break;
+            case 3:
+                pbrMaterial.specular = texture;
+            case 4:
+                pbrMaterial.bump = texture;
+                break;
+            default:
+                break;
+            }
+        }
 
         pbrMaterials.push_back(pbrMaterial);
     }
@@ -92,13 +138,16 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
         materialIndices.reserve(faceCount);
 
         int offset = 0;
-        for (int f = 0; f < faceCount; ++f) {
-            for (int v = 0; v < c_VerticesPerFace; ++v) {
-                auto index = mesh.indices[offset + v];
-                float x = attrib.vertices[3 * index.vertex_index + 0];
-                float y = attrib.vertices[3 * index.vertex_index + 1];
-                float z = attrib.vertices[3 * index.vertex_index + 2];
+        for (int faceIndex = 0; faceIndex < faceCount; ++faceIndex) {
+            for (int vertexIndex = 0; vertexIndex < c_VerticesPerFace; ++vertexIndex) {
+                auto index = mesh.indices[offset + vertexIndex];
 
+                float x = 0.f, y = 0.f, z = 0.f;
+                if (!attrib.vertices.empty()) {
+                    x = attrib.vertices[3 * index.vertex_index + 0];
+                    y = attrib.vertices[3 * index.vertex_index + 1];
+                    z = attrib.vertices[3 * index.vertex_index + 2];
+                }
 
                 float nx = 0.f, ny = 0.f, nz = 0.f;
                 if (!attrib.normals.empty()) {
@@ -107,16 +156,23 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
                     nz = attrib.normals[3 * index.normal_index + 2];
                 }
 
+                float u = 0.f, v = 0.f;
+                if (!attrib.texcoords.empty()) {
+                    u = attrib.texcoords[2 * index.texcoord_index + 0];
+                    v = attrib.texcoords[2 * index.texcoord_index + 1];
+                }
+
                 Mesh::Vertex vertex;
-                vertex.position = Math::Vector3f(x, y, z);
-                vertex.normal = Math::Vector3f(nx, ny, nz);
+                vertex.position = {x, y, z};
+                vertex.normal = {nx, ny, nz};
+                vertex.texcoord = {u, v};
 
                 int i = static_cast<int>(vertices.size());
                 vertices.push_back(vertex);
                 indices.push_back(i);
             }
 
-            materialIndices.push_back(mesh.material_ids[f]);
+            materialIndices.push_back(mesh.material_ids[faceIndex]);
 
             offset += c_VerticesPerFace;
         }
@@ -139,7 +195,7 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
     }
 
     LoadResult result;
-    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
+    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), std::move(textures));
     result.warning = warning;
 
     return result;

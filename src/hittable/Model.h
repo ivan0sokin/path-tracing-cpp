@@ -12,7 +12,7 @@
 #include <string>
 
 //! Class that allows to load .obj models and store them
-class Model : public HittableObject {
+class Model : public IHittable {
 public:
     //! Model loading result
     struct LoadResult {
@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept;
+    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials, std::vector<std::vector<uint32_t>> &&textures) noexcept;
 
 private:
     const std::filesystem::path m_PathToFile;

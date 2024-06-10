@@ -9,11 +9,11 @@
 //! Class that samples lights directly
 class Light {
 public:
-    constexpr Light(const HittableObjectPtr object, const Math::Vector3f &emission) noexcept :
-        m_Object(object), m_Emission(emission) {}
+    constexpr Light(const HittableObjectPtr object) noexcept :
+        m_Object(object) {}
 
     //! Return pointer to ```object``` that light holds
-    const HittableObject* GetObject() const noexcept {
+    const IHittable* GetObject() const noexcept {
         return m_Object;
     }
 
@@ -30,15 +30,14 @@ public:
         if (pdf <= pdfEpsilon) {
             return Math::Vector3f(0.f);
         }
-        
-        Math::Vector3f brdf = objectHitPayload.material->albedo * Math::Constants::InversePi<float> * Math::Dot(objectHitPayload.normal, lightRay.direction) * m_Emission;
-        
+
+        Math::Vector3f brdf = objectHitPayload.material->albedo.PickValue(objectHitPayload.texcoord) * lightHitPayload.material->GetEmission(lightHitPayload.texcoord) * Math::Constants::InversePi<float> * Math::Dot(objectHitPayload.normal, lightRay.direction);
+
         return brdf / pdf;
     }
 
 private:
-    const HittableObject* m_Object;
-    Math::Vector3f m_Emission;
+    const IHittable* m_Object;
 };
 
 #endif

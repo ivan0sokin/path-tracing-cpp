@@ -17,3 +17,4 @@ libglad.a
 *.exe
 .vscode
 *.a
+imgui.ini

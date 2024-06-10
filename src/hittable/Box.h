@@ -8,7 +8,7 @@
 #include "../AABB.h"
 
 namespace Shapes {
-    class Box : public HittableObject {
+    class Box : public IHittable {
     public:
         Math::Vector3f min, max;
         AABB aabb;
@@ -51,11 +51,14 @@ namespace Shapes {
         }
 
         constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
-            return Math::Vector3f(0.f);
+            return triangles[Utilities::RandomIntInRange(0, 12)].SampleUniform(sample);
         }
 
         constexpr float GetArea() const noexcept override {
-            return 0.f;
+            float a = max.x - min.x;
+            float b = max.y - min.y;
+            float c = max.z - min.z;
+            return 2.f * (a * b + b * c + a * c);
         }
     };
 }

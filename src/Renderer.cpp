@@ -175,7 +175,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         }
 
         const Material *material = payload.material;
-        auto emission = material->GetEmission();
+        auto emission = material->GetEmission(payload.texcoord);
             
         light += emission * throughput;
 
@@ -223,10 +223,10 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
         }
 
         const Material *material = payload.material;
-        Math::Vector3f emission = material->GetEmission();
+        Math::Vector3f emission = material->GetEmission(payload.texcoord);
 
         light += emission * throughput;
-
+        
         if (material->emissionPower > 0.f) {
             break;
         }

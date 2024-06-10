@@ -8,7 +8,7 @@
 #include "../HitPayload.h"
 
 namespace Shapes {
-    class Sphere : public HittableObject {
+    class Sphere : public IHittable {
     public:
         Math::Vector3f center;
         float radius, radiusSquared, inverseRadius;
