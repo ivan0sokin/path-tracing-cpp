@@ -164,6 +164,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     Ray ray;
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
+    ray.oneOverDirection = 1.f / ray.direction;
 
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
@@ -203,6 +204,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
 
         ray.origin = hitPoint;
         ray.direction = direction;
+        ray.oneOverDirection = 1.f / ray.direction;
     }
  
     return {light.r, light.g, light.b, 1.f};
@@ -212,6 +214,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     Ray ray;
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
+    ray.oneOverDirection = 1.f / ray.direction;
 
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
@@ -251,6 +254,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
 
         ray.origin += ray.direction * payload.t;
         ray.direction = direction;
+        ray.oneOverDirection = 1.f / ray.direction;
     }
  
     return {light.r, light.g, light.b, 1.f};

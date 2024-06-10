@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials, std::vector<std::vector<uint32_t>> &&textures) noexcept;
+    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept;
 
 private:
     const std::filesystem::path m_PathToFile;

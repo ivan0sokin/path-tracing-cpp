@@ -5,8 +5,8 @@
 
 #include "../../stb-master/stb_image.h"
 
-Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials, std::vector<std::vector<uint32_t>> &&textures) noexcept : 
-    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)), m_Textures(std::move(textures)) {
+Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : 
+    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
     int totalVertexCount = 0;
     for (const auto &mesh : m_Meshes) {
         Math::Vector3f sum(0.f);
@@ -195,7 +195,7 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
     }
 
     LoadResult result;
-    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), std::move(textures));
+    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
     result.warning = warning;
 
     return result;

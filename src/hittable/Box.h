@@ -6,6 +6,7 @@
 #include "HittableObject.h"
 #include "../HitPayload.h" 
 #include "../AABB.h"
+#include "../Utilities.hpp"
 
 namespace Shapes {
     class Box : public IHittable {
@@ -50,7 +51,7 @@ namespace Shapes {
             return aabb;
         }
 
-        constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
+        inline Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
             return triangles[Utilities::RandomIntInRange(0, 12)].SampleUniform(sample);
         }
 

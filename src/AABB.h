@@ -32,21 +32,21 @@ struct AABB {
 
     //! Returns true if ray intersects AABB on give interval
     constexpr bool IntersectsRay(const Ray &ray, float tMin, float tMax) const noexcept {
-        auto one_over_direction = 1.f / ray.direction;
+        auto oneOverDirection = ray.oneOverDirection;
         auto origin = ray.origin;
 
-        auto t0 = (min - origin) * one_over_direction;
-        auto t1 = (max - origin) * one_over_direction;
+        auto t0 = (min - origin) * oneOverDirection;
+        auto t1 = (max - origin) * oneOverDirection;
 
-        if (one_over_direction.x < 0.f) {
+        if (oneOverDirection.x < 0.f) {
             std::swap(t0.x, t1.x);
         }
         
-        if (one_over_direction.y < 0.f) {
+        if (oneOverDirection.y < 0.f) {
             std::swap(t0.y, t1.y);
         }
 
-        if (one_over_direction.z < 0.f) {
+        if (oneOverDirection.z < 0.f) {
             std::swap(t0.z, t1.z);
         }
 
