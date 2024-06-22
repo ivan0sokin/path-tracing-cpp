@@ -24,7 +24,7 @@ public:
 
     virtual Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept = 0;
 
-    virtual float GetArea() const noexcept = 0;
+    virtual float GetSurfaceArea() const noexcept = 0;
 };
 
 using HittableObjectPtr = IHittable*;

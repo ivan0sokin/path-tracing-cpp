@@ -64,7 +64,7 @@ namespace Shapes {
             return center + radius * Math::Vector3f(r * Math::Cos(phi), r * Math::Sin(phi), z);
         }
 
-        constexpr float GetArea() const noexcept override {
+        constexpr float GetSurfaceArea() const noexcept override {
             return 4.f * Math::Constants::Pi<float> * radiusSquared;
         }
     };

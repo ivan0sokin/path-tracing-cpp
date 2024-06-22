@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../monitor_guide.html#monitor_name',1,'Human-readable name'],['../input_guide.html#joystick_name',1,'Joystick name']]],
+  ['name_0',['Name',['../monitor_guide.html#monitor_name',1,'Human-readable name'],['../input_guide.html#joystick_name',1,'Joystick name']]],
   ['name_20change_20tables_1',['Name change tables',['../moving_guide.html#moving_tables',1,'']]],
   ['names_2',['Key names',['../input_guide.html#input_key_name',1,'']]],
   ['native_20access_3',['Native access',['../group__native.html',1,'']]],

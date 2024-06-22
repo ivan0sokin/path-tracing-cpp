@@ -66,8 +66,8 @@ public:
         return MakeTriangle().SampleUniform(sample);
     }
 
-    constexpr float GetArea() const noexcept override {
-        return MakeTriangle().GetArea();
+    constexpr float GetSurfaceArea() const noexcept override {
+        return MakeTriangle().GetSurfaceArea();
     }
 
 private:

@@ -165,6 +165,8 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
     ray.oneOverDirection = 1.f / ray.direction;
+    
+    ray.opticalDensity = 1.f;
 
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
@@ -192,19 +194,31 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             float distanceSquared = Math::Dot(toLight, toLight);
             float distance = Math::Sqrt(distanceSquared);
             
-            Ray lightRay(hitPoint, toLight / distance);
+            Ray lightRay;
+            lightRay.origin = hitPoint;
+            lightRay.direction = toLight / distance;
+            lightRay.oneOverDirection = 1.f / lightRay.direction;
 
             HitPayload lightHitPayload = TraceRay(lightRay);
             
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BSDF bsdf(material);
+        BXDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);
 
-        ray.origin = hitPoint;
-        ray.direction = direction;
+        // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
+        // if (Utilities::RandomFloatInZeroToOne() > p) {
+        //     break;
+        // }
+
+        // throughput *= 1 / p;
+
+        // ray.origin = hitPoint;
+        // ray.direction = direction;
         ray.oneOverDirection = 1.f / ray.direction;
+        
+        ray.opticalDensity = material->refractionIndex;
     }
  
     return {light.r, light.g, light.b, 1.f};
@@ -215,6 +229,9 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
     ray.oneOverDirection = 1.f / ray.direction;
+    
+    
+    ray.opticalDensity = 1.f;
 
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
@@ -242,19 +259,31 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             float distanceSquared = Math::Dot(toLight, toLight);
             float distance = Math::Sqrt(distanceSquared);
             
-            Ray lightRay(hitPoint, toLight / distance);
+            Ray lightRay;
+            lightRay.origin = hitPoint;
+            lightRay.direction = toLight / distance;
+            lightRay.oneOverDirection = 1.f / lightRay.direction;
 
             HitPayload lightHitPayload = TraceRay(lightRay);
             
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BSDF bsdf(material);
+        BXDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);
 
-        ray.origin += ray.direction * payload.t;
-        ray.direction = direction;
+        // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
+        // if (Utilities::RandomFloatInZeroToOne() > p) {
+        //     break;
+        // }
+
+        // throughput *= 1 / p;        
+
+        // ray.origin += ray.direction * payload.t;
+        // ray.direction = direction;
         ray.oneOverDirection = 1.f / ray.direction;
+
+        ray.opticalDensity = material->refractionIndex;
     }
  
     return {light.r, light.g, light.b, 1.f};
@@ -266,12 +295,13 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     payload.normal = Math::Vector3f(0.f);
     payload.material = nullptr;
 
+    bool anyHit = false;
     int objectCount = (int)m_Objects.size();
     for (int i = 0; i < objectCount; ++i) {
-        m_Objects[i]->Hit(ray, 0.01f, Math::Min(payload.t, Math::Constants::Infinity<float>), payload);
+        anyHit |= m_Objects[i]->Hit(ray, 0.01f, Math::Min(payload.t, Math::Constants::Infinity<float>), payload);
     }
 
-    if (payload.material == nullptr) {
+    if (anyHit == false) {
         return Miss(ray);
     }
 
@@ -286,9 +316,7 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     payload.normal = Math::Vector3f(0.f);
     payload.material = nullptr;
 
-    m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload);
-
-    if (payload.material == nullptr) {
+    if (m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload) == false) {
         return Miss(ray);
     }
 

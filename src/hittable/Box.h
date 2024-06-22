@@ -55,7 +55,7 @@ namespace Shapes {
             return triangles[Utilities::RandomIntInRange(0, 12)].SampleUniform(sample);
         }
 
-        constexpr float GetArea() const noexcept override {
+        constexpr float GetSurfaceArea() const noexcept override {
             float a = max.x - min.x;
             float b = max.y - min.y;
             float c = max.z - min.z;

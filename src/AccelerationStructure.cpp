@@ -28,6 +28,6 @@ void AccelerationStructure::Update(std::span<HittableObjectPtr> objects) noexcep
     }
 }
 
-void AccelerationStructure::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
-    m_Root->Hit(ray, tMin, tMax, payload);
+bool AccelerationStructure::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
+    return m_Root->Hit(ray, tMin, tMax, payload);
 }

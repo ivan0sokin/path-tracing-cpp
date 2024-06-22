@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['values_0',['values',['../intro_guide.html#init_hints_values',1,'Supported and default values'],['../window_guide.html#window_hints_values',1,'Supported and default values']]],
-  ['version_1',['version',['../intro_guide.html#intro_version_compile',1,'Compile-time version'],['../intro_guide.html#intro_version_runtime',1,'Run-time version']]],
+  ['values_0',['Values',['../intro_guide.html#init_hints_values',1,'Supported and default values'],['../window_guide.html#window_hints_values',1,'Supported and default values']]],
+  ['version_1',['Version',['../intro_guide.html#intro_version_compile',1,'Compile-time version'],['../intro_guide.html#intro_version_runtime',1,'Run-time version']]],
   ['version_203_204_2',['Release notes for version 3.4',['../news.html',1,'']]],
   ['version_20and_20error_20reference_3',['Initialization, version and error reference',['../group__init.html',1,'']]],
   ['version_20compatibility_4',['Version compatibility',['../intro_guide.html#compatibility',1,'']]],

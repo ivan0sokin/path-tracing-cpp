@@ -18,6 +18,10 @@ struct Material {
 
     int index;
 
+    float transparency = 0.f;
+    float refractionIndex = 1.f;
+    Texture refract;
+
     //! Returns emmision of material 
     inline Math::Vector3f GetEmission(const Math::Vector2f &texcoords) const noexcept {
         return albedo.PickValue(texcoords) * emissionPower;

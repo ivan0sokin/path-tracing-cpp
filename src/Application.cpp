@@ -551,6 +551,9 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
             ImGui::InputFloat("Metallic", material.metallic.GetData());
             ImGui::InputFloat("Roughness", material.roughness.GetData());
             ImGui::InputFloat("Specular", material.specular.GetData());
+            
+            ImGui::InputFloat("Transparency", &material.transparency);
+            ImGui::InputFloat("Refraction", &material.refractionIndex);
 
             ImGui::PopID();
         }

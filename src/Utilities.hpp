@@ -48,8 +48,8 @@ namespace Utilities {
 	}
 
 	inline Math::Vector3f RandomInHemisphere(const Math::Vector3f &normal) {
-    	Math::Vector3f randomUnitVector = RandomUnitVector();
-		if (Math::Dot(randomUnitVector, normal) < 0.f) {
+		Math::Vector3f randomUnitVector = RandomUnitVector();
+		if (Math::Dot(randomUnitVector, normal) <= 0.f) {
 			return -randomUnitVector;
 		}
 

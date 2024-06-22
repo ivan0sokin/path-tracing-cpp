@@ -1,7 +1,7 @@
 #ifndef _ELEMENTARY_FUNCTIONS_H
 #define _ELEMENTARY_FUNCTIONS_H
 
-#include "Vector.h"
+#include "Types.h"
 
 #include <cmath>
 

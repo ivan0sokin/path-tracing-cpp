@@ -5,14 +5,14 @@
 
 #include <vector>
 #include <span>
-
+#include <cstdio>
 class Texture {
 public:
     inline Texture(const Math::Vector3f &color) noexcept :
         m_Data(1, color), m_Width(1), m_Height(1) {}
 
     inline Texture() noexcept :
-        Texture({1.f, 0.f, 1.f}) {}
+        Texture({1.f, 1.f, 1.f}) {}
 
     inline Texture(std::span<const unsigned char> dataInBytes, int width, int height, int channels) noexcept :
         m_Width(width), m_Height(height) {

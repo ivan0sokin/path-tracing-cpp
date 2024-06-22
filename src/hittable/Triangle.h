@@ -77,7 +77,7 @@ namespace Shapes {
             return b0 * vertices[0] + b1 * vertices[1] + (1.f - b0 - b1) * vertices[2];
         }
 
-        constexpr float GetArea() const noexcept override {
+        constexpr float GetSurfaceArea() const noexcept override {
             return Math::Length(Math::Cross(edges[0], edges[1])) * 0.5f;
         }   
     };

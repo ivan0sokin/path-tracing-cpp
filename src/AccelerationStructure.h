@@ -26,7 +26,7 @@ public:
     void Update(std::span<HittableObjectPtr> objects) noexcept;
 
     //! Saves info about hit into ```payload```
-    void Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept;
+    bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept;
 
 private:
     BVHNode *m_Root = nullptr;

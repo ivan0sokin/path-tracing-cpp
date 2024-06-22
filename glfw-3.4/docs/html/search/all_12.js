@@ -5,7 +5,7 @@ var searchData=
   ['leave_20events_2',['Cursor enter/leave events',['../input_guide.html#cursor_enter',1,'']]],
   ['libdecor_20decorations_3',['Wayland libdecor decorations',['../news.html#wayland_libdecor_decorations',1,'']]],
   ['libraries_4',['Link with the right libraries',['../build_guide.html#build_link',1,'']]],
-  ['library_5',['library',['../compile_guide.html#compile_compile',1,'Compiling the library'],['../context_guide.html#context_glext_auto',1,'Loading extension with a loader library']]],
+  ['library_5',['Library',['../compile_guide.html#compile_compile',1,'Compiling the library'],['../context_guide.html#context_glext_auto',1,'Loading extension with a loader library']]],
   ['library_20and_20header_20file_6',['Renamed library and header file',['../moving_guide.html#moving_renamed_files',1,'']]],
   ['lifetimes_7',['Pointer lifetimes',['../intro_guide.html#lifetime',1,'']]],
   ['like_20system_20specific_20cmake_20options_8',['Unix-like system specific CMake options',['../compile_guide.html#compile_options_unix',1,'']]],

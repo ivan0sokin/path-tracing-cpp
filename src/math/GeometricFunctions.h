@@ -1,7 +1,7 @@
 #ifndef _GEOMETRIC_FUNCTIONS_H
 #define _GEOMETRIC_FUNCTIONS_H
 
-#include "Vector.h"
+#include "Types.h"
 #include "ElementaryFunctions.h"
 
 namespace Math {
@@ -51,7 +51,7 @@ namespace Math {
 
     template<typename T>
     constexpr Types::Vector<T, 2> Normalize(const Types::Vector<T, 2> &v) noexcept {
-        T inverseLength = static_cast<T>(1) / Length(v); 
+        T inverseLength = static_cast<T>(1) / Length(v);
         return v * inverseLength;
     }
 
@@ -65,6 +65,21 @@ namespace Math {
     constexpr Types::Vector<T, 4> Normalize(const Types::Vector<T, 4> &v) noexcept {
         T inverseLength = static_cast<T>(1) / Length(v); 
         return v * inverseLength;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Reflect(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n) {
+        return i - static_cast<T>(2) * Math::Dot(n, i) * n;
+    }
+
+    template<typename T>
+    constexpr Types::Vector<T, 3> Refract(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n, float eta) {
+        float k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - Math::Dot(n, i) * Math::Dot(n, i));
+        if (k < static_cast<T>(0)) {
+            return Types::Vector<T, 3>(0.f);
+        }
+
+        return eta * i - (eta * Math::Dot(n, i) + Math::Sqrt(k)) * n;
     }
 }
 

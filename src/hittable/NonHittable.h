@@ -24,7 +24,7 @@ public:
         return Math::Vector3f(0.f);
     }
 
-    constexpr float GetArea() const noexcept override {
+    constexpr float GetSurfaceArea() const noexcept override {
         return 0.f;
     }
 };

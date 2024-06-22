@@ -75,8 +75,14 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
         pbrMaterial.roughness = Texture(Math::Vector3f(0.5f));
         pbrMaterial.specular = Texture(Math::Vector3f(0.f));
         pbrMaterial.index = static_cast<int>(pbrMaterials.size());
-
-        auto textureNames = {material.diffuse_texname, material.specular_highlight_texname, material.reflection_texname, material.specular_texname, material.bump_texname};
+        
+        auto textureNames = {
+            material.diffuse_texname,
+            material.specular_highlight_texname,
+            material.reflection_texname,
+            material.specular_texname,
+            material.bump_texname
+        };
 
         for (int i = 0; i < (int)textureNames.size(); ++i) {
             const auto &textureName = *(textureNames.begin() + i);
@@ -95,8 +101,6 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
 
             Texture texture(std::span<const unsigned char>{textureData, std::dynamic_extent}, width, height, desiredChannels);
 
-            stbi_image_free(textureData);
-
             switch (i)
             {
             case 0:
@@ -110,13 +114,21 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
                 break;
             case 3:
                 pbrMaterial.specular = texture;
+                break;
             case 4:
                 pbrMaterial.bump = texture;
                 break;
             default:
                 break;
             }
+
+            stbi_image_free(textureData);
         }
+        
+        printf("Transparent: %f, refraction index: %f\n", material.dissolve, material.ior);
+
+        pbrMaterial.transparency = material.dissolve;
+        pbrMaterial.refractionIndex = material.ior;
 
         pbrMaterials.push_back(pbrMaterial);
     }

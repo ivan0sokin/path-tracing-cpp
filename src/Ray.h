@@ -9,6 +9,7 @@ struct Ray {
     //! Direction must always be unit
     Math::Vector3f direction;
     Math::Vector3f oneOverDirection;
+    float opticalDensity;
 };
 
 #endif

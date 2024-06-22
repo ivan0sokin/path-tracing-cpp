@@ -1,8 +1,8 @@
 var searchData=
 [
   ['tables_0',['Name change tables',['../moving_guide.html#moving_tables',1,'']]],
-  ['terminating_20glfw_1',['terminating glfw',['../quick_guide.html#quick_init_term',1,'Initializing and terminating GLFW'],['../intro_guide.html#intro_init_terminate',1,'Terminating GLFW']]],
-  ['termination_2',['termination',['../moving_guide.html#moving_terminate',1,'Automatic termination'],['../intro_guide.html#intro_init',1,'Initialization and termination']]],
+  ['terminating_20glfw_1',['Terminating GLFW',['../quick_guide.html#quick_init_term',1,'Initializing and terminating GLFW'],['../intro_guide.html#intro_init_terminate',1,'Terminating GLFW']]],
+  ['termination_2',['Termination',['../moving_guide.html#moving_terminate',1,'Automatic termination'],['../intro_guide.html#intro_init',1,'Initialization and termination']]],
   ['tests_20and_20examples_20are_20disabled_20when_20built_20as_20a_20subproject_3',['Tests and examples are disabled when built as a subproject',['../news.html#standalone_caveat',1,'']]],
   ['text_20input_4',['Text input',['../input_guide.html#input_char',1,'']]],
   ['texture_20loading_5',['Removal of image and texture loading',['../moving_guide.html#moving_image',1,'']]],
@@ -23,17 +23,18 @@ var searchData=
   ['thread_20safety_20',['Thread safety',['../intro_guide.html#thread_safety',1,'']]],
   ['threading_20functions_21',['Removal of threading functions',['../moving_guide.html#moving_threads',1,'']]],
   ['time_20input_22',['Time input',['../input_guide.html#time',1,'']]],
-  ['time_20version_23',['time version',['../intro_guide.html#intro_version_compile',1,'Compile-time version'],['../intro_guide.html#intro_version_runtime',1,'Run-time version']]],
+  ['time_20version_23',['Time version',['../intro_guide.html#intro_version_compile',1,'Compile-time version'],['../intro_guide.html#intro_version_runtime',1,'Run-time version']]],
   ['timer_24',['Reading the timer',['../quick_guide.html#quick_timer',1,'']]],
-  ['title_25',['title',['../news.html#window_title_function',1,'Ability to get window title'],['../window_guide.html#window_title',1,'Window title']]],
+  ['title_25',['Title',['../news.html#window_title_function',1,'Ability to get window title'],['../window_guide.html#window_title',1,'Window title']]],
   ['to_203_26',['Moving from GLFW 2 to 3',['../moving_guide.html',1,'']]],
   ['to_20get_20window_20title_27',['Ability to get window title',['../news.html#window_title_function',1,'']]],
   ['to_20server_28',['X11 empty events no longer round-trip to server',['../news.html#x11_emptyevent_caveat',1,'']]],
   ['to_20the_20api_29',['Introduction to the API',['../intro_guide.html',1,'']]],
   ['together_30',['Putting it together',['../quick_guide.html#quick_example',1,'']]],
-  ['tokens_31',['tokens',['../group__keys.html',1,'Keyboard key tokens'],['../moving_guide.html#moving_renamed_tokens',1,'Renamed tokens']]],
-  ['transparency_32',['Window transparency',['../window_guide.html#window_transparency',1,'']]],
-  ['transparency_20requires_20dwm_20transparency_33',['Windows 7 framebuffer transparency requires DWM transparency',['../news.html#win7_framebuffer_caveat',1,'']]],
-  ['trip_20to_20server_34',['X11 empty events no longer round-trip to server',['../news.html#x11_emptyevent_caveat',1,'']]],
-  ['types_35',['types',['../news.html#new_types',1,'New types'],['../moving_guide.html#moving_renamed_types',1,'Renamed types']]]
+  ['tokens_31',['Keyboard key tokens',['../group__keys.html',1,'']]],
+  ['tokens_32',['Renamed tokens',['../moving_guide.html#moving_renamed_tokens',1,'']]],
+  ['transparency_33',['Window transparency',['../window_guide.html#window_transparency',1,'']]],
+  ['transparency_20requires_20dwm_20transparency_34',['Windows 7 framebuffer transparency requires DWM transparency',['../news.html#win7_framebuffer_caveat',1,'']]],
+  ['trip_20to_20server_35',['X11 empty events no longer round-trip to server',['../news.html#x11_emptyevent_caveat',1,'']]],
+  ['types_36',['Types',['../news.html#new_types',1,'New types'],['../moving_guide.html#moving_renamed_types',1,'Renamed types']]]
 ];

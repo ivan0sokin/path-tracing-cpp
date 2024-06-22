@@ -1,7 +1,7 @@
 #ifndef _VALUE_POINTER_H
 #define _VALUE_POINTER_H
 
-#include "Vector.h"
+#include "Types.h"
 
 namespace Math {
     template<typename T>

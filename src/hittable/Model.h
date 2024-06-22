@@ -44,7 +44,7 @@ public:
         return Math::Vector3f(0.f);
     }
 
-    constexpr float GetArea() const noexcept override {
+    constexpr float GetSurfaceArea() const noexcept override {
         return 0.f;
     }
 
@@ -79,6 +79,8 @@ private:
     BVHNode *m_Root;
 
     Math::Vector3f centroid;
+
+    Math::Matrix4x4f inverseTransormationMatrix = Math::IdentityMatrix<float, 4>();
 
     constexpr static int c_VerticesPerFace = 3;
 };

@@ -12,8 +12,8 @@ var searchData=
   ['reference_9',['reference',['../group__context.html',1,'Context reference'],['../group__init.html',1,'Initialization, version and error reference'],['../group__input.html',1,'Input reference'],['../group__monitor.html',1,'Monitor reference'],['../group__vulkan.html',1,'Vulkan support reference'],['../group__window.html',1,'Window reference']]],
   ['refresh_10',['Window damage and refresh',['../window_guide.html#window_refresh',1,'']]],
   ['refreshrate_11',['refreshRate',['../struct_g_l_f_wvidmode.html#a791bdd6c7697b09f7e9c97054bf05649',1,'GLFWvidmode']]],
-  ['related_20attributes_12',['related attributes',['../window_guide.html#window_attribs_ctx',1,'Context related attributes'],['../window_guide.html#window_attribs_fb',1,'Framebuffer related attributes'],['../window_guide.html#window_attribs_wnd',1,'Window related attributes']]],
-  ['related_20hints_13',['related hints',['../window_guide.html#window_hints_ctx',1,'Context related hints'],['../window_guide.html#window_hints_fb',1,'Framebuffer related hints'],['../window_guide.html#window_hints_mtr',1,'Monitor related hints'],['../window_guide.html#window_hints_wnd',1,'Window related hints']]],
+  ['related_20attributes_12',['Related attributes',['../window_guide.html#window_attribs_ctx',1,'Context related attributes'],['../window_guide.html#window_attribs_fb',1,'Framebuffer related attributes'],['../window_guide.html#window_attribs_wnd',1,'Window related attributes']]],
+  ['related_20hints_13',['Related hints',['../window_guide.html#window_hints_ctx',1,'Context related hints'],['../window_guide.html#window_hints_fb',1,'Framebuffer related hints'],['../window_guide.html#window_hints_mtr',1,'Monitor related hints'],['../window_guide.html#window_hints_wnd',1,'Window related hints']]],
   ['release_20notes_20for_20earlier_20versions_14',['Release notes for earlier versions',['../news.html#news_archive',1,'']]],
   ['release_20notes_20for_20version_203_204_15',['Release notes for version 3.4',['../news.html',1,'']]],
   ['removal_20of_20automatic_20event_20polling_16',['Removal of automatic event polling',['../moving_guide.html#moving_autopoll',1,'']]],
@@ -22,7 +22,7 @@ var searchData=
   ['removal_20of_20image_20and_20texture_20loading_19',['Removal of image and texture loading',['../moving_guide.html#moving_image',1,'']]],
   ['removal_20of_20threading_20functions_20',['Removal of threading functions',['../moving_guide.html#moving_threads',1,'']]],
   ['removals_21',['Removals',['../news.html#removals',1,'']]],
-  ['removed_22',['removed',['../news.html#use_osmesa_removed',1,'GLFW_USE_OSMESA CMake option has been removed'],['../news.html#use_wayland_removed',1,'GLFW_USE_WAYLAND CMake option has been removed'],['../news.html#vulkan_static_removed',1,'GLFW_VULKAN_STATIC CMake option has been removed'],['../news.html#corevideo_caveat',1,'macOS CoreVideo dependency has been removed'],['../news.html#wl_shell_removed',1,'wl_shell protocol support has been removed']]],
+  ['removed_22',['Removed',['../news.html#use_osmesa_removed',1,'GLFW_USE_OSMESA CMake option has been removed'],['../news.html#use_wayland_removed',1,'GLFW_USE_WAYLAND CMake option has been removed'],['../news.html#vulkan_static_removed',1,'GLFW_VULKAN_STATIC CMake option has been removed'],['../news.html#corevideo_caveat',1,'macOS CoreVideo dependency has been removed'],['../news.html#wl_shell_removed',1,'wl_shell protocol support has been removed']]],
   ['removed_20features_23',['Changed and removed features',['../moving_guide.html#moving_removed',1,'']]],
   ['renamed_20functions_24',['Renamed functions',['../moving_guide.html#moving_renamed_functions',1,'']]],
   ['renamed_20library_20and_20header_20file_25',['Renamed library and header file',['../moving_guide.html#moving_renamed_files',1,'']]],
@@ -40,5 +40,5 @@ var searchData=
   ['right_20libraries_37',['Link with the right libraries',['../build_guide.html#build_link',1,'']]],
   ['round_20trip_20to_20server_38',['X11 empty events no longer round-trip to server',['../news.html#x11_emptyevent_caveat',1,'']]],
   ['run_20time_20version_39',['Run-time version',['../intro_guide.html#intro_version_runtime',1,'']]],
-  ['runtime_20platform_20selection_40',['runtime platform selection',['../intro_guide.html#platform',1,'Runtime platform selection'],['../news.html#runtime_platform_selection',1,'Runtime platform selection']]]
+  ['runtime_20platform_20selection_40',['Runtime platform selection',['../news.html#runtime_platform_selection',1,'Runtime platform selection'],['../intro_guide.html#platform',1,'Runtime platform selection']]]
 ];

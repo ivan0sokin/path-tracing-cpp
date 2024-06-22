@@ -7,14 +7,19 @@
 #include "math/Math.h"
 
 //! Bidirectional scattering distribution function class
-class BSDF {
+class BXDF {
 public:
     //! Creates BSDF based on passed material
-    constexpr BSDF(const Material *material) noexcept :
+    constexpr BXDF(const Material *material) noexcept :
         m_Material(material) {}
 
     //! Returns direction of reflected ray and modifies throughput
-    Math::Vector3f Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
+    Math::Vector3f Sample(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
+
+private:
+    Math::Vector3f SampleBRDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
+    
+    Math::Vector3f SampleBSDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
 
 private:
     const Material *m_Material;

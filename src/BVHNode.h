@@ -10,7 +10,7 @@
 #include <vector>
 #include <functional>
 #include <stack>
-
+#include <cstdio>
 //! Bounding volume hierarchy node
 struct BVHNode {
     AABB aabb = AABB::Empty();
@@ -42,14 +42,25 @@ struct BVHNode {
         delete node;
     }
 
+    // Math::Matrix4x4f invTrf = Math::Inverse(Math::TranslationMatrix(Math::Vector3f(0.2f, 0.f, 0.f)));
+    Math::Matrix4x4f invTrf = Math::Inverse(Math::RotationMatrix(Math::Vector3f(0.f, Math::ToRadians(90.f), 0.f)));
+
     //! Saves ray-BVH intersection info into ```payload```
-    inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) noexcept {
+    inline bool Hit(const Ray &worldRay, float tMin, float tMax, HitPayload &payload) noexcept {
+        // Ray ray = r;
+        Ray ray;
+        ray.origin = Math::TransformPoint(invTrf, worldRay.origin);
+        ray.direction = Math::TransformVector(invTrf, worldRay.direction);
+        ray.oneOverDirection = 1.f / ray.direction;
+
         if (this->aabb.Intersect(ray, tMin, tMax) == Math::Constants::Infinity<float>) {
             return false;
         }
 
+        const int TREE_DEPTH = 1024;
+
         BVHNode *node = this;
-        BVHNode* nodes[1024];
+        BVHNode* nodes[TREE_DEPTH];
         int stackPointer = 1;
 
         bool anyHit = false;

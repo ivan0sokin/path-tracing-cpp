@@ -1,6 +1,7 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
 
+#include <numeric>
 #include <numbers>
 
 namespace Math {
@@ -17,6 +18,8 @@ namespace Math {
         template<typename T> constexpr static T Epsilon = std::numeric_limits<T>::epsilon();
         template<typename T> constexpr static T Infinity = std::numeric_limits<T>::infinity();
 
+        template<typename T> constexpr static T Zero = static_cast<T>(0);
+        template<typename T> constexpr static T One = static_cast<T>(1);
         template<typename T> constexpr static T OneThird = static_cast<T>(1.0 / 3.0);
     }
 }

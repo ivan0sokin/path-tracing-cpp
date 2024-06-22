@@ -24,7 +24,7 @@ public:
             return Math::Vector3f(0.f);
         }
         
-        float pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object->GetArea());
+        float pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object->GetSurfaceArea());
         
         constexpr float pdfEpsilon = 0.01f;
         if (pdf <= pdfEpsilon) {
@@ -37,7 +37,7 @@ public:
     }
 
 private:
-    const IHittable* m_Object;
+    const IHittable *m_Object;
 };
 
 #endif

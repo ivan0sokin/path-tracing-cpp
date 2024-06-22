@@ -1,7 +1,7 @@
 #ifndef _VECTOR_4_H
 #define _VECTOR_4_H
 
-#include "Vector.h"
+#include "Types.h"
 
 namespace Math {
     namespace Types {
@@ -10,6 +10,7 @@ namespace Math {
             union {
                 struct { T x, y, z, w; };
                 struct { T r, g, b, a; };
+                struct { T data[4]; };
             };
 
             constexpr Vector() noexcept :
@@ -20,6 +21,17 @@ namespace Math {
 
             constexpr Vector(T x, T y, T z, T w) noexcept :
                 x(x), y(y), z(z), w(w) {}
+
+            constexpr Vector(const Types::Vector<T, 3> &v, float w) noexcept :
+                x(v.x), y(v.y), z(v.z), w(w) {}
+
+            constexpr T operator[](std::size_t index) const noexcept {
+                return data[index];
+            }
+
+            constexpr T& operator[](std::size_t index) noexcept {
+                return data[index];
+            }
         };
 
         
