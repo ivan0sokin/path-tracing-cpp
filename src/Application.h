@@ -5,8 +5,9 @@
 
 #include "Scene.h"
 #include "Camera.h"
-#include "AccelerationStructure.h"
 #include "Renderer.h"
+#include "hittable/NonHittable.h"
+#include "acceleration/TLAS.h"
 
 #include <cstring>
 #include <filesystem>
@@ -51,6 +52,8 @@ private:
 
     void UpdateObjectMaterials() noexcept;
 
+    void UpdateTLAS() noexcept;
+
 private:
     int m_InitialWindowWidth, m_InitialWindowHeight;
     int m_LastViewportWidth, m_LastViewportHeight;
@@ -68,8 +71,13 @@ private:
     char *m_SceneFilePath;
 
     Scene m_Scene;
-    AccelerationStructure m_AccelerationStructure;
     Renderer m_Renderer;
+
+    TLAS *m_AccelerationStructure;
+    BLAS *m_ObjectsBLAS;
+
+    NonHittable *m_NonHittable;
+    BLAS *m_NonHittableBLAS;
 
     Math::Vector3f m_RayMissColor;
 

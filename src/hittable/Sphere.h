@@ -2,7 +2,7 @@
 #define _SPHERE_H
 
 #include "../Material.h"
-#include "HittableObject.h"
+#include "IHittable.h"
 #include "../math/Math.h"
 #include "../AABB.h"
 #include "../HitPayload.h"

@@ -1,5 +1,5 @@
-#ifndef _MATRIX_4_4_H
-#define _MATRIX_4_4_H
+#ifndef _MATRIX_4_H
+#define _MATRIX_4_H
 
 #include "Constants.h"
 #include "Types.h"

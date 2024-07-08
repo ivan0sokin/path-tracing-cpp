@@ -1,4 +1,4 @@
-#include "BSDF.h"
+#include "BXDF.h"
 #include "Utilities.hpp"
 #include <cassert>
 
@@ -13,7 +13,7 @@ Math::Vector3f BXDF::Sample(Ray &ray, const HitPayload &payload, Math::Vector3f 
     // return SampleBSDF(ray, payload, throughput);
 }
 
-Math::Vector3f BXDF::SampleBRDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
+Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     Math::Vector3f albedo = m_Material->albedo.PickValue(payload.texcoord);
     float metallic = m_Material->metallic.PickValue(payload.texcoord).r;
     float roughness = m_Material->roughness.PickValue(payload.texcoord).r;
@@ -146,8 +146,8 @@ Math::Vector3f BXDF::SampleBRDF(Ray &ray, const HitPayload &payload, Math::Vecto
 
     Math::Vector3f hitPoint = ray.origin + ray.direction * payload.t;
 
-    ray.origin = hitPoint + payload.normal * 0.001f;
-    ray.direction = reflectionDirection;
+    // ray.origin = hitPoint + payload.normal * 0.001f;
+    // ray.direction = reflectionDirection;
 
     if (totalPdf > Math::Constants::Epsilon<float>) {
         throughput *= totalBrdf / totalPdf;

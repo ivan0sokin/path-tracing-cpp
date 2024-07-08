@@ -1,7 +1,7 @@
 #ifndef _LIGHT_H
 #define _LIGHT_H
 
-#include "hittable/HittableObject.h"
+#include "hittable/IHittable.h"
 #include "math/Math.h"
 #include "Ray.h"
 #include "HitPayload.h"
@@ -9,7 +9,7 @@
 //! Class that samples lights directly
 class Light {
 public:
-    constexpr Light(const HittableObjectPtr object) noexcept :
+    constexpr Light(const IHittable *object) noexcept :
         m_Object(object) {}
 
     //! Return pointer to ```object``` that light holds

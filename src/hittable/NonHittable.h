@@ -1,7 +1,7 @@
 #ifndef _NON_HITTABLE_H
 #define _NON_HITTABLE_H
 
-#include "HittableObject.h"
+#include "IHittable.h"
 
 //! Hittable object that cannot be hit
 class NonHittable : public IHittable {

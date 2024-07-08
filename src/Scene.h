@@ -4,7 +4,7 @@
 #include "hittable/Sphere.h"
 #include "hittable/Triangle.h"
 #include "hittable/Box.h"
-#include "hittable/Model.h"
+#include "assets/AssetLoader.h"
 #include "Material.h"
 #include "Camera.h"
 #include "Timer.h"
@@ -20,7 +20,7 @@ struct Scene {
     std::vector<Shapes::Sphere> spheres;
     std::vector<Shapes::Triangle> triangles;
     std::vector<Shapes::Box> boxes;
-    std::vector<Model*> models;
+    std::vector<ModelInstance*> modelInstances;
     std::vector<Material> materials;
     Camera camera;
 
@@ -52,11 +52,18 @@ struct Scene {
 
 private:
     void TrySerialize(std::ostream &os) const {
+        int loadedModelCount = 0;
+        for (const auto model : AssetLoader::Instance().GetModels()) {
+            if (model != nullptr) {
+                ++loadedModelCount;
+            }
+        }
+
         int materialCount = static_cast<int>(materials.size());
         int sphereCount = static_cast<int>(spheres.size());
         int triangleCount = static_cast<int>(triangles.size());
         int boxCount = static_cast<int>(boxes.size());
-        int modelCount = static_cast<int>(models.size());
+        int modelCount = loadedModelCount;
 
         os.write(reinterpret_cast<const char*>(&materialCount), sizeof(materialCount));
         os.write(reinterpret_cast<const char*>(&sphereCount), sizeof(sphereCount));
@@ -91,7 +98,11 @@ private:
             os.write(reinterpret_cast<const char*>(&box.material->index), sizeof(box.material->index));
         }
 
-        for (const auto model : models) {
+        for (const auto model : AssetLoader::Instance().GetModels()) {
+            if (model == nullptr) {
+                continue;
+            }
+
             auto pathToFile = model->GetPathToFile().string();
             int pathToFileLength = static_cast<int>(pathToFile.length());
             
@@ -182,12 +193,12 @@ private:
         }
         boxes.shrink_to_fit();
 
-        for (const auto model : models) {
+        for (const auto model : modelInstances) {
             delete model;
         }
 
-        models.clear();
-        models.reserve(modelCount);
+        modelInstances.clear();
+        modelInstances.reserve(modelCount);
         while (modelCount--) {
             int pathToFileLength;
             is.read(reinterpret_cast<char*>(&pathToFileLength), sizeof(pathToFileLength));
@@ -205,20 +216,24 @@ private:
             
             std::string materialDirectory(buffer.data(), materialDirectoryLength);
 
-            Model::LoadResult result;
+            ModelInstance *modelInstance;
+            AssetLoader::Result result;
             double loadTime = Timer::MeasureInMillis([&](){
-                result = Model::LoadOBJ(pathToFile, materialDirectory);
+                auto [instance, res] = AssetLoader::Instance().LoadOBJ(pathToFile, materialDirectory);
+                modelInstance = instance;
+                result = res;
             });
 
             if (result.IsFailure()) {
+                printf("Failed to load model %s, error:\n%s", pathToFile.c_str(), result.error.c_str());
                 continue;
             }
 
             printf("Time to load model %s is %fms\n", pathToFile.c_str(), loadTime);
 
-            models.push_back(result.model);
+            modelInstances.push_back(modelInstance);
         }
-        models.shrink_to_fit();
+        modelInstances.shrink_to_fit();
 
         is.read(reinterpret_cast<char*>(&camera.Position()), sizeof(camera.Position()));
         is.read(reinterpret_cast<char*>(&camera.Target()), sizeof(camera.Target()));

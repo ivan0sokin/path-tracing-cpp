@@ -44,13 +44,13 @@ namespace Math {
     }
 
     template<typename T>
-    constexpr Types::Vector<T, 3> TransformVector(const Types::Matrix<T, 4, 4> &transformation, const Types::Vector<T, 3> &v) noexcept {
-        return transformation * Types::Vector<T, 4>(v, 0.f);
+    constexpr Types::Vector<T, 3> TransformVector(const Types::Matrix<T, 4, 4> &transform, const Types::Vector<T, 3> &v) noexcept {
+        return transform * Types::Vector<T, 4>(v, Constants::Zero<T>);
     }
 
     template<typename T>
-    constexpr Types::Vector<T, 3> TransformPoint(const Types::Matrix<T, 4, 4> &transformation, const Types::Vector<T, 3> &v) noexcept {
-        return transformation * Types::Vector<T, 4>(v, 1.f);
+    constexpr Types::Vector<T, 3> TransformPoint(const Types::Matrix<T, 4, 4> &transform, const Types::Vector<T, 3> &v) noexcept {
+        return transform * Types::Vector<T, 4>(v, Constants::One<T>);
     }
 }
 

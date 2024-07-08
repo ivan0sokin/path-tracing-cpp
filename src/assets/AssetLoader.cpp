@@ -1,66 +1,28 @@
-#include "Model.h"
+#include "AssetLoader.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "../../tinyobjloader/tiny_obj_loader.h"
 
 #include "../../stb-master/stb_image.h"
 
-Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept : 
-    m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
-    int totalVertexCount = 0;
-    for (const auto &mesh : m_Meshes) {
-        Math::Vector3f sum(0.f);
-        auto vertices = mesh.GetVertices();
-        for (const auto &vertex : vertices) {
-            sum += vertex.position;
-        }
-
-        totalVertexCount += static_cast<int>(vertices.size());
-        centroid += sum;
-    }
-
-    centroid /= static_cast<float>(totalVertexCount);
-
-    int totalFaceCount = 0;
-    for (const auto &mesh : m_Meshes) {
-        totalFaceCount += static_cast<int>(mesh.GetIndices().size() / 3);
-    }
-
-    m_Polygons.reserve(totalFaceCount);
-    for (auto &mesh : m_Meshes) {
-        auto vertices = mesh.GetVertices();
-        auto indices = mesh.GetIndices();
-        auto materialIndices = mesh.GetMaterialIndices();
-
-        int faceCount = static_cast<int>(indices.size() / 3);
-        for (int f = 0; f < faceCount; ++f) {
-            auto &material = m_Materials[materialIndices[f]];
-            m_Polygons.emplace_back(&mesh, &material, f);
-
-            if (material.emissionPower > 0.f) {
-                m_LightSources.emplace_back(&m_Polygons.back());
-            }
+AssetLoader::~AssetLoader() noexcept {
+    for (auto &model : m_Models) {
+        if (model != nullptr) {
+            delete model;
+            model = nullptr;
         }
     }
-
-    std::vector<HittableObjectPtr> objects;
-    for (auto &polygon : m_Polygons) {
-        objects.push_back(&polygon);
-    }
-
-    m_Root = BVHNode::MakeHierarchySAH(objects, 0, static_cast<int>(objects.size()));
 }
 
-Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory) noexcept {
+std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory) noexcept {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-    std::string warning;
-    std::string error;
-    tinyobj::LoadObj(&attrib, &shapes, &materials, &warning, &error, pathToFile.string().c_str(), materialDirectory.string().c_str());
+    Result result;
+    tinyobj::LoadObj(&attrib, &shapes, &materials, &result.warning, &result.error, pathToFile.string().c_str(), materialDirectory.string().c_str());
     
-    if (!error.empty()) {
-        return LoadResult::Error(error);
+    if (result.IsFailure()) {
+        return {nullptr, result};
     }
 
     std::vector<std::vector<uint32_t>> textures;
@@ -101,6 +63,8 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
 
             Texture texture(std::span<const unsigned char>{textureData, std::dynamic_extent}, width, height, desiredChannels);
 
+            stbi_image_free(textureData);
+
             switch (i)
             {
             case 0:
@@ -121,8 +85,6 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
             default:
                 break;
             }
-
-            stbi_image_free(textureData);
         }
         
         printf("Transparent: %f, refraction index: %f\n", material.dissolve, material.ior);
@@ -136,22 +98,24 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
     std::vector<Mesh> meshes;
     meshes.reserve(shapes.size());
 
+    const int VERTICES_PER_FACE = 3;
+
     for (const auto &shape : shapes) {
         const auto &mesh = shape.mesh;
 
         std::vector<Mesh::Vertex> vertices;
         int faceCount = static_cast<int>(mesh.num_face_vertices.size());
-        vertices.reserve(faceCount * c_VerticesPerFace);
+        vertices.reserve(faceCount * VERTICES_PER_FACE);
     
         std::vector<int> indices;
-        indices.reserve(faceCount * c_VerticesPerFace);
+        indices.reserve(faceCount * VERTICES_PER_FACE);
 
         std::vector<int> materialIndices;
         materialIndices.reserve(faceCount);
 
         int offset = 0;
         for (int faceIndex = 0; faceIndex < faceCount; ++faceIndex) {
-            for (int vertexIndex = 0; vertexIndex < c_VerticesPerFace; ++vertexIndex) {
+            for (int vertexIndex = 0; vertexIndex < VERTICES_PER_FACE; ++vertexIndex) {
                 auto index = mesh.indices[offset + vertexIndex];
 
                 float x = 0.f, y = 0.f, z = 0.f;
@@ -186,7 +150,7 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
 
             materialIndices.push_back(mesh.material_ids[faceIndex]);
 
-            offset += c_VerticesPerFace;
+            offset += VERTICES_PER_FACE;
         }
 
         if (attrib.normals.empty()) {
@@ -206,21 +170,22 @@ Model::LoadResult Model::LoadOBJ(const std::filesystem::path &pathToFile, const 
         meshes.emplace_back(std::move(vertices), std::move(indices), std::move(materialIndices));
     }
 
-    LoadResult result;
-    result.model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
-    result.warning = warning;
+    Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
+    m_Models.push_back(model);
 
-    return result;
+    m_InstanceCount.push_back(0);
+    ModelInstance *modelInstance = new ModelInstance(static_cast<int>(m_Models.size()), model->GetBVH());
+    
+    return {modelInstance, result};
 }
 
-bool Model::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
-    return m_Root->Hit(ray, tMin, tMax, payload);
+void AssetLoader::IncreaseInstanceCount(int modelIndex) noexcept {
+    ++m_InstanceCount[modelIndex];
 }
 
-Math::Vector3f Model::GetCentroid() const noexcept {
-    return centroid;
-}
-
-AABB Model::GetBoundingBox() const noexcept {
-    return m_Root->aabb;
+void AssetLoader::DecreaseInstanceCount(int modelIndex) noexcept{
+    if (--m_InstanceCount[modelIndex] == 0) {
+        delete m_Models[modelIndex];
+        m_Models[modelIndex] = nullptr;
+    }
 }

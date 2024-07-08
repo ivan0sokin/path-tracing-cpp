@@ -52,6 +52,13 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
 
     m_Scene.camera = Camera(windowWidth, windowHeight);
 
+    m_AccelerationStructure = nullptr;
+    m_ObjectsBLAS = nullptr;
+    
+    m_NonHittable = new NonHittable();
+    std::array<IHittable*, 1> m_NonHittableArray = {m_NonHittable};
+    m_NonHittableBLAS = new BLAS(new BVH(m_NonHittableArray));
+
     LoadSceneFromFile(c_DefaultScenePath);
 }
 
@@ -278,7 +285,7 @@ void Application::ProcessSceneCollapsingHeaders() noexcept {
     }
 
     if (m_SomeGeometryChanged) {
-        m_AccelerationStructure.Update(m_Objects);
+        UpdateTLAS();
     }
 }
 
@@ -480,16 +487,31 @@ void Application::ProcessBoxesCollapsingHeader() noexcept {
 
 void Application::ProcessModelsCollapsingHeader() noexcept {
     int deleteIndex = -1;
+    int cloneIndex = -1;
     if (ImGui::CollapsingHeader("Models", nullptr)) {
-        for (int i = 0; i < (int)m_Scene.models.size(); ++i) {
+        for (int i = 0; i < (int)m_Scene.modelInstances.size(); ++i) {
             ImGui::PushID(m_LastID++);
-
-            auto model = m_Scene.models[i];
 
             ImGui::Text("Model: %d", i);
 
             if (ImGui::Button("Delete")) {
                 deleteIndex = i;
+            }
+
+            auto modelInstance = m_Scene.modelInstances[i];
+            
+            if (ImGui::Button("Clone")) {
+                cloneIndex = i;
+            }
+            
+            if (ImGui::InputFloat3("Translation", Math::ValuePointer(modelInstance->Translation()))) {
+                modelInstance->Update();
+                m_SomeGeometryChanged = true;
+            }
+
+            if (ImGui::InputFloat3("Angles", Math::ValuePointer(modelInstance->Angles()))) {
+                modelInstance->Update();
+                m_SomeGeometryChanged = true;
             }
 
             ImGui::PopID();
@@ -498,9 +520,12 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
         ImGui::PushID(m_LastID++);
 
         if (ImGui::Button("Import")) {
-            Model::LoadResult result;
+            ModelInstance *modelInstance;
+            AssetLoader::Result result;
             double loadTime = Timer::MeasureInMillis([&](){
-                result = Model::LoadOBJ(m_ModelFilePath, m_MaterialDirectory);
+                auto [instance, res] = AssetLoader::Instance().LoadOBJ(m_ModelFilePath, m_MaterialDirectory);
+                modelInstance = instance;
+                result = res;
             });
             
             if (!result.warning.empty()) {
@@ -512,7 +537,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             } else {
                 std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << "in " << loadTime << "ms\n";
 
-                m_Scene.models.push_back(result.model);
+                m_Scene.modelInstances.push_back(modelInstance);
                 m_SomeObjectChanged = true;
                 m_SomeGeometryChanged = true;
             }
@@ -524,11 +549,15 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
         ImGui::PopID();
 
         if (deleteIndex >= 0) {
-            delete m_Scene.models[deleteIndex];
-            m_Scene.models.erase(m_Scene.models.cbegin() + deleteIndex);
-
+            delete m_Scene.modelInstances[deleteIndex];
+            m_Scene.modelInstances.erase(m_Scene.modelInstances.cbegin() + deleteIndex);
+ 
             m_SomeObjectChanged = true;
             m_SomeGeometryChanged = true;
+        }
+
+        if (deleteIndex != cloneIndex && cloneIndex >= 0) {
+            m_Scene.modelInstances.push_back(m_Scene.modelInstances[cloneIndex]->Clone());
         }
     }
 }
@@ -602,7 +631,29 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
 
     UpdateObjects();
     UpdateLights();
-    m_AccelerationStructure.Update(m_Objects);
+    UpdateTLAS();    
+}
+
+void Application::UpdateTLAS() noexcept {
+    if (m_AccelerationStructure != nullptr) {
+        delete m_AccelerationStructure;
+        m_AccelerationStructure = nullptr;
+    }
+
+    std::vector<BLAS*> blas;
+    if (m_ObjectsBLAS != nullptr) {
+        blas.push_back(m_ObjectsBLAS);
+    }
+
+    for (auto modelInstance : m_Scene.modelInstances) {
+        blas.push_back(modelInstance->GetBLAS());
+    }
+
+    if (blas.empty()) {
+        blas.push_back(m_NonHittableBLAS);
+    }
+
+    m_AccelerationStructure = new TLAS(blas);
 }
 
 void Application::SaveSceneToFile(const std::filesystem::path &pathToFile) const noexcept {
@@ -639,9 +690,18 @@ void Application::UpdateObjects() noexcept {
         m_BoxMaterialIndices.push_back(box.material->index);
     }
 
-    for (auto model : m_Scene.models) {
-        m_Objects.push_back(model);
+    if (m_ObjectsBLAS != nullptr) {
+        delete m_ObjectsBLAS->GetBVH();
+        delete m_ObjectsBLAS;
+        m_ObjectsBLAS = nullptr;
     }
+
+    if (m_Objects.empty()) {
+        return;
+    }
+
+    BVH *bvh = new BVH(m_Objects);
+    m_ObjectsBLAS = new BLAS(bvh);
 }
 
 void Application::UpdateLights() noexcept {
@@ -665,10 +725,10 @@ void Application::UpdateLights() noexcept {
         }
     }
 
-    for (auto model : m_Scene.models) {
-        auto lights = model->GetLightSources();
-        m_Lights.insert(m_Lights.cend(), lights.begin(), lights.end());
-    }
+    // for (auto model : m_Scene.models) {
+    //     auto lights = model->GetLightSources();
+    //     m_Lights.insert(m_Lights.cend(), lights.begin(), lights.end());
+    // }
 }
 
 void Application::UpdateObjectMaterials() noexcept {

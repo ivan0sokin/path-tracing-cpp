@@ -27,6 +27,4 @@ public:
     virtual float GetSurfaceArea() const noexcept = 0;
 };
 
-using HittableObjectPtr = IHittable*;
-
 #endif

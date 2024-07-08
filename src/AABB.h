@@ -23,11 +23,10 @@ struct AABB {
 
     //! Returns surface area
     constexpr float GetSurfaceArea() const noexcept {
-        float a, b, c;
-        a = max.x - min.x;
-        b = max.y - min.y;
-        c = max.z - min.z;
-        return 2.f * a * b + 2.f * b * c + 2.f * a * c;
+        float a = max.x - min.x;
+        float b = max.y - min.y;
+        float c = max.z - min.z;
+        return 2.f * (a * b + b * c + a * c);
     }
 
     //! Returns true if ray intersects AABB on give interval

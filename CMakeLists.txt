@@ -22,10 +22,11 @@ set(SOURCES src/Renderer.cpp
             src/Image.cpp
             src/Application.cpp
             src/Camera.cpp
-            src/BSDF.cpp
-            src/AccelerationStructure.cpp
-            src/hittable/Mesh.cpp
-            src/hittable/Model.cpp
+            src/BXDF.cpp
+            src/assets/Model.cpp
+            src/assets/ModelInstance.cpp
+            src/assets/AssetLoader.cpp
+            src/hittable/Polygon.cpp
             src/Entrypoint.cpp)
 
 add_executable(ptrace ${SOURCES} ${IMGUI_SOURCES})

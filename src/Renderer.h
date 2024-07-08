@@ -7,9 +7,9 @@
 #include "HitPayload.h"
 #include "Ray.h"
 #include "math/Math.h"
-#include "AccelerationStructure.h"
 #include "Material.h"
 #include "Light.h"
+#include "acceleration/TLAS.h"
 
 #include <functional>
 #include <span>
@@ -28,10 +28,10 @@ public:
     using typ_t = IHittable*;
 
     //! Renders without object acceleration (but with model accelerator for speed purpose)
-    void Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
+    void Render(const Camera &camera, std::span<IHittable* const> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
     //! Renders with object acceleration
-    void Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
+    void Render(const Camera &camera, const TLAS *accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept;
 
     constexpr bool& Accumulate() noexcept {
         return m_Accumulate;
@@ -109,9 +109,9 @@ private:
     int m_RayDepth = 5;
 
     const Camera *m_Camera = nullptr;
-    std::span<const HittableObjectPtr> m_Objects;
+    std::span<IHittable* const> m_Objects;
     std::span<const Light> m_LightSources;
-    const AccelerationStructure *m_AccelerationStructure = nullptr;
+    const TLAS *m_AccelerationStructure = nullptr;
     std::span<const Material> m_Materials;
 
     bool m_Accumulate = false;

@@ -1,5 +1,5 @@
-#ifndef _BSDF_H
-#define _BSDF_H
+#ifndef _BXDF_H
+#define _BXDF_H
 
 #include "Material.h"
 #include "Ray.h"
@@ -17,7 +17,7 @@ public:
     Math::Vector3f Sample(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
 
 private:
-    Math::Vector3f SampleBRDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
+    Math::Vector3f SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
     
     Math::Vector3f SampleBSDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
 

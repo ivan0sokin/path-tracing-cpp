@@ -2,12 +2,13 @@
 #define _TRIANGLE_H
 
 #include "../math/Math.h"
-#include "HittableObject.h"
+#include "IHittable.h"
 #include "../AABB.h"
 #include "../HitPayload.h"
 
 #include <array>
 #include <cstdio>
+
 namespace Shapes {
     class Triangle : public IHittable {
     public:

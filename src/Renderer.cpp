@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "Utilities.hpp"
-#include "BSDF.h"
+#include "BXDF.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../stb-master/stb_image_write.h"
@@ -58,7 +58,7 @@ void Renderer::OnResize(int width, int height) noexcept {
     }
 }
 
-void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, std::span<IHittable* const> objects, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
     m_Objects = objects;
     m_LightSources = lightSources;
@@ -109,9 +109,9 @@ void Renderer::Render(const Camera &camera, std::span<const HittableObjectPtr> o
     }
 }
 
-void Renderer::Render(const Camera &camera, const AccelerationStructure &accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
+void Renderer::Render(const Camera &camera, const TLAS *accelerationStructure, std::span<const Light> lightSources, std::span<const Material> materials) noexcept {
     m_Camera = &camera;
-    m_AccelerationStructure = &accelerationStructure;
+    m_AccelerationStructure = accelerationStructure;
     m_LightSources = lightSources;
     m_Materials = materials;
 
@@ -172,6 +172,8 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
         
+        std::swap(ray, payload.transformedRay);
+
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
             break;
@@ -204,8 +206,11 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BXDF bsdf(material);
-        auto direction = bsdf.Sample(ray, payload, throughput);
+        BXDF bxdf(material);
+        auto direction = bxdf.Sample(ray, payload, throughput);
+
+        ray.origin = hitPoint;
+        ray.direction = direction;
 
         // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
         // if (Utilities::RandomFloatInZeroToOne() > p) {
@@ -230,13 +235,14 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
     ray.oneOverDirection = 1.f / ray.direction;
     
-    
     ray.opticalDensity = 1.f;
 
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = AcceleratedTraceRay(ray);
         
+        std::swap(ray, payload.transformedRay);
+
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
             break;
@@ -272,6 +278,9 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
         BXDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);
 
+        ray.origin = hitPoint;
+        ray.direction = direction;
+
         // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
         // if (Utilities::RandomFloatInZeroToOne() > p) {
         //     break;
@@ -293,6 +302,7 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
+    payload.transformedRay = ray;
     payload.material = nullptr;
 
     bool anyHit = false;
@@ -314,6 +324,7 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
+    payload.transformedRay = ray;
     payload.material = nullptr;
 
     if (m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload) == false) {

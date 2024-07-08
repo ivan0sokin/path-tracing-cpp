@@ -3,7 +3,7 @@
 
 #include "../math/Math.h"
 #include "Triangle.h"
-#include "HittableObject.h"
+#include "IHittable.h"
 #include "../HitPayload.h" 
 #include "../AABB.h"
 #include "../Utilities.hpp"
