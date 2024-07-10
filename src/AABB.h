@@ -49,11 +49,10 @@ struct AABB {
             std::swap(t0.z, t1.z);
         }
 
-        tMin = Math::Max(tMin, Math::Max(Math::Max(t0.x, t0.y), t0.z));
-        tMax = Math::Min(tMax, Math::Min(Math::Min(t1.x, t1.y), t1.z));
+        tMin = Math::Max(tMin, Math::MaxComponent(t0));
+        tMax = Math::Min(tMax, Math::MinComponent(t1));
 
         if (tMax <= tMin) {
-            // return false;
             return Math::Constants::Infinity<float>;
         }
 

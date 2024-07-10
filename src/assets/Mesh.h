@@ -23,6 +23,10 @@ public:
     Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept : 
         m_Vertices(std::move(vertices)), m_Indices(std::move(indices)), m_MaterialIndices(std::move(materialIndices)) {}
 
+    inline int GetFaceCount() const noexcept {
+        return static_cast<int>(m_Indices.size() / 3);
+    }
+
     constexpr std::span<const Vertex> GetVertices() const noexcept {
         return m_Vertices;
     }

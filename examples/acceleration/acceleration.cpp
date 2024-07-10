@@ -102,7 +102,7 @@ int main() {
                                     | ImGuiWindowFlags_NoCollapse
                                     | ImGuiWindowFlags_NoResize;
 
-        int viewportWidth = (int)(viewport->WorkSize.x * 0.7f);
+        int viewportWidth = (viewport->WorkSize.x * 0.7f);
         int viewportHeight = (int)(viewport->WorkSize.y);
 
         ImGui::SetNextWindowPos(viewport->WorkPos);

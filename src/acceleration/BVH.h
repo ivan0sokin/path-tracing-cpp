@@ -157,4 +157,51 @@ private:
     };
 };
 
+// //! Makes BVH using naive implementation sorting by lengths of axes
+    // inline static BVHNode* MakeHierarchyNaive(std::span<HittableObjectPtr> objects, int low, int high) noexcept {
+    //     AABB aabb = AABB::Empty();
+    //     for (int i = low; i < high; ++i) {
+    //         aabb = AABB(aabb, objects[i]->GetBoundingBox());
+    //     }
+
+    //     int longestAxisIndex = 0;
+    //     float longestAxisLength = aabb.max.x - aabb.min.x;
+        
+    //     if (aabb.max.y - aabb.min.y > longestAxisLength) {
+    //         longestAxisIndex = 1;
+    //         longestAxisLength = aabb.max.y - aabb.min.y;
+    //     }
+
+    //     if (aabb.max.z - aabb.min.z > longestAxisLength) {
+    //         longestAxisIndex = 2;
+    //         longestAxisLength = aabb.max.z - aabb.min.z;
+    //     }
+        
+    //     auto comparator = c_ComparatorsNaive[longestAxisIndex];
+
+    //     if (low + 1 == high) {
+    //         return new BVHNode(objects[low]);
+    //     }
+
+    //     std::sort(objects.begin() + low, objects.begin() + high, comparator);
+        
+    //     int mid = (low + high) / 2;
+    //     BVHNode *left = MakeHierarchyNaive(objects, low, mid);
+    //     BVHNode *right = MakeHierarchyNaive(objects, mid, high);
+
+    //     return new BVHNode(left, right);
+    // }
+
+    // inline static const std::function<bool(HittableObjectPtr, HittableObjectPtr)> c_ComparatorsNaive[3] = {
+    //     [](HittableObjectPtr a, HittableObjectPtr b){
+    //         return a->GetBoundingBox().min.x < b->GetBoundingBox().min.x;
+    //     },
+    //     [](HittableObjectPtr a, HittableObjectPtr b){
+    //         return a->GetBoundingBox().min.y < b->GetBoundingBox().min.y;
+    //     },
+    //     [](HittableObjectPtr a, HittableObjectPtr b){
+    //         return a->GetBoundingBox().min.z < b->GetBoundingBox().min.z;
+    //     }
+    // };
+
 #endif

@@ -172,6 +172,8 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
 
+        std::swap(ray, payload.localRay);
+
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
             break;
@@ -207,8 +209,8 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
         BXDF bxdf(material);
         auto direction = bxdf.Sample(ray, payload, throughput);
 
-        ray.origin = hitPoint;
-        ray.direction = direction;
+        ray.origin = Math::TransformPoint(payload.transform, hitPoint);
+        ray.direction = Math::TransformVector(payload.transform, direction);
 
         // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
         // if (Utilities::RandomFloatInZeroToOne() > p) {
@@ -238,9 +240,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = AcceleratedTraceRay(ray);
-        
-        ray.origin = Math::TransformPoint(payload.inverseTransform, ray.origin);
-        ray.direction = Math::TransformVector(payload.inverseTransform, ray.direction);
+
+        std::swap(ray, payload.localRay);
 
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
@@ -274,8 +275,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BXDF bsdf(material);
-        auto direction = bsdf.Sample(ray, payload, throughput);
+        BXDF bxdf(material);
+        auto direction = bxdf.Sample(ray, payload, throughput);
 
         ray.origin = Math::TransformPoint(payload.transform, hitPoint);
         ray.direction = Math::TransformVector(payload.transform, direction);
@@ -301,8 +302,8 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
+    payload.localRay = ray;
     payload.transform = Math::IdentityMatrix<float, 4>();
-    payload.inverseTransform = Math::IdentityMatrix<float, 4>();
     payload.material = nullptr;
 
     bool anyHit = false;
@@ -315,7 +316,7 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
         return Miss(ray);
     }
 
-    payload.normal = Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
+    payload.normal = Math::Dot(payload.localRay.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
 
     return payload;
 }
@@ -324,15 +325,15 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
+    payload.localRay = ray;
     payload.transform = Math::IdentityMatrix<float, 4>();
-    payload.inverseTransform = Math::IdentityMatrix<float, 4>();
     payload.material = nullptr;
 
     if (m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload) == false) {
         return Miss(ray);
     }
 
-    payload.normal = Math::Dot(ray.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
+    payload.normal = Math::Dot(payload.localRay.direction, payload.normal) > Math::Constants::Epsilon<float> ? -payload.normal : payload.normal;
 
     return payload;
 }

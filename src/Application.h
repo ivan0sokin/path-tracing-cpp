@@ -18,6 +18,8 @@ public:
     //! Creates new Application with initial window size
     Application(int windowWidth, int windowHeight) noexcept;
 
+    ~Application() noexcept;
+
     //! Runs application
     int Run() noexcept;
 
@@ -101,6 +103,7 @@ private:
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
     constexpr static const char *c_DefaultScenePath = "assets/dft2.scn";
+    constexpr static const char *c_DebugScenePath = "assets/cube.scn";
     constexpr static int c_AnyInputFilePathLength = 128;
 };
 

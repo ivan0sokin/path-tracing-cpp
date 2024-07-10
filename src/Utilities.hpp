@@ -47,13 +47,32 @@ namespace Utilities {
 		return Math::Normalize(RandomInUnitSphere());
 	}
 
-	inline Math::Vector3f RandomInHemisphere(const Math::Vector3f &normal) {
-		Math::Vector3f randomUnitVector = RandomUnitVector();
-		if (Math::Dot(randomUnitVector, normal) <= 0.f) {
-			return -randomUnitVector;
-		}
+	// inline Math::Vector3f RandomInHemisphere(const Math::Vector3f &normal) {
+	// 	Math::Vector3f randomUnitVector = RandomUnitVector();
 
-		return randomUnitVector;
+	// 	if (Math::Dot(randomUnitVector, normal) <= 0.f) {
+	// 		return -randomUnitVector;
+	// 	}
+
+	// 	return randomUnitVector;
+	// }
+
+	inline Math::Vector3f RandomInHemisphere(const Math::Vector3f &normal) {
+		float cosTheta = Math::Pow(Utilities::RandomFloatInZeroToOne(), 1.0f / (1.f + 1.0f));
+		float sinTheta = Math::Sqrt(1.0f - cosTheta * cosTheta);
+		float phi = Math::Constants::Tau<float> * Utilities::RandomFloatInZeroToOne();
+		Math::Vector3f tangentSpaceDir = Math::Vector3f(Math::Cos(phi) * sinTheta, Math::Sin(phi) * sinTheta, cosTheta);
+
+		// Transform direction to be centered around whatever noraml we need
+		Math::Vector3f helper = Math::Vector3f(1, 0, 0);
+		if (Math::Abs(normal.x) > 0.99f)
+			helper = Math::Vector3f(0, 0, 1);
+
+		// Generate vectors
+		Math::Vector3f tangent = Math::Normalize(Math::Cross(normal, helper));
+		Math::Vector3f binormal = Math::Normalize(Math::Cross(normal, tangent));
+
+		return tangent * tangentSpaceDir.x + binormal * tangentSpaceDir.y + normal * tangentSpaceDir.z; 
 	}
 
 	constexpr float InverseSqrtFast(float x) {

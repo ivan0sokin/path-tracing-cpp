@@ -76,6 +76,36 @@ namespace Math {
     }
 
     template<typename T>
+    constexpr T MinComponent(const Types::Vector<T, 2> &v) noexcept {
+        return Min(v.x, v.y);
+    }
+
+    template<typename T>
+    constexpr T MinComponent(const Types::Vector<T, 3> &v) noexcept {
+        return Min(Min(v.x, v.y), v.z);
+    }
+
+    template<typename T>
+    constexpr T MinComponent(const Types::Vector<T, 4> &v) noexcept {
+        return Min(Min(v.x, v.y), Min(v.z, v.w));
+    }
+
+    template<typename T>
+    constexpr T MaxComponent(const Types::Vector<T, 2> &v) noexcept {
+        return Max(v.x, v.y);
+    }
+
+    template<typename T>
+    constexpr T MaxComponent(const Types::Vector<T, 3> &v) noexcept {
+        return Max(Max(v.x, v.y), v.z);
+    }
+
+    template<typename T>
+    constexpr T MaxComponent(const Types::Vector<T, 4> &v) noexcept {
+        return Max(Max(v.x, v.y), Max(v.z, v.w));
+    }
+
+    template<typename T>
     constexpr T Clamp(T value, T min, T max) noexcept {
         return Max(min, Min(max, value));
     }

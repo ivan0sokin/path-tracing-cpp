@@ -32,7 +32,7 @@ public:
 
     ~AssetLoader() noexcept;
 
-    constexpr std::span<Model*> GetModels() noexcept {
+    constexpr std::span<Model* const> GetModels() noexcept {
         return m_Models;
     }
 

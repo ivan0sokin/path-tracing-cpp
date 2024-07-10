@@ -87,7 +87,7 @@ public:
 private:
     inline void MakeHierarchyNaive(int index, int low, int high, int &usedNodes) noexcept {
         if (low + 1 == high) {
-            m_Nodes[index] = Node(-low, m_BLAS[low]->GetTransformedBoundingBox());
+            m_Nodes[index] = Node(-low, m_BLAS[low]->GetLocalBoundingBox());
             return;
         }
 

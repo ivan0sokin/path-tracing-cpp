@@ -10,8 +10,8 @@ struct HitPayload {
     float t;
     Math::Vector3f normal;
     Math::Vector2f texcoord;
+    Ray localRay;
     Math::Matrix4f transform;
-    Math::Matrix4f inverseTransform;
     const Material *material;
 };
 

@@ -25,8 +25,6 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
         return {nullptr, result};
     }
 
-    std::vector<std::vector<uint32_t>> textures;
-
     std::vector<Material> pbrMaterials;
     pbrMaterials.reserve(materials.size());
     for (const auto &material : materials) {
@@ -46,7 +44,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
             material.bump_texname
         };
 
-        for (int i = 0; i < (int)textureNames.size(); ++i) {
+        for (int i = 0; i < static_cast<int>(textureNames.size()); ++i) {
             const auto &textureName = *(textureNames.begin() + i);
 
             if (textureName.empty()) {
@@ -98,13 +96,17 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     std::vector<Mesh> meshes;
     meshes.reserve(shapes.size());
 
+    int totalFaceCount = 0;
+
     const int VERTICES_PER_FACE = 3;
 
     for (const auto &shape : shapes) {
         const auto &mesh = shape.mesh;
 
-        std::vector<Mesh::Vertex> vertices;
         int faceCount = static_cast<int>(mesh.num_face_vertices.size());
+        totalFaceCount += faceCount;
+        
+        std::vector<Mesh::Vertex> vertices;
         vertices.reserve(faceCount * VERTICES_PER_FACE);
     
         std::vector<int> indices;
@@ -170,7 +172,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
         meshes.emplace_back(std::move(vertices), std::move(indices), std::move(materialIndices));
     }
 
-    Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
+    Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), totalFaceCount);
 
     m_InstanceCount.push_back(0);
     ModelInstance *modelInstance = new ModelInstance(static_cast<int>(m_Models.size()), model->GetBVH());
@@ -185,7 +187,6 @@ void AssetLoader::IncreaseInstanceCount(int modelIndex) noexcept {
 }
 
 void AssetLoader::DecreaseInstanceCount(int modelIndex) noexcept{
-    printf("OOOOH1 %d %d", modelIndex, m_InstanceCount.size());
     if (--m_InstanceCount[modelIndex] == 0) {
         delete m_Models[modelIndex];
         m_Models[modelIndex] = nullptr;

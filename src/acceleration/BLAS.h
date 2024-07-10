@@ -12,14 +12,46 @@ public:
 
     inline BLAS(const BVH *bvh) noexcept :
         m_BVH(bvh),
-        m_TransformedAABB(bvh->GetBoundingBox()),
+        m_LocalAABB(bvh->GetBoundingBox()),
         m_Transform(Math::IdentityMatrix<float, 4>()),
         m_InverseTransform(Math::IdentityMatrix<float, 4>()) {}
 
     inline void SetTransform(const Math::Matrix4f &transform) noexcept {
         m_Transform = transform;
         m_InverseTransform = Math::Inverse(transform);
+        m_LocalAABB = ComputeLocalAABB(transform);
+    }
 
+    inline bool Hit(const Ray &worldRay, float tMin, float tMax, HitPayload &payload) const noexcept {
+        if (m_LocalAABB.Intersect(worldRay, tMin, tMax) == Math::Constants::Infinity<float>) {
+            return false;
+        }
+
+        Ray localRay;
+        localRay.origin = Math::TransformPoint(m_InverseTransform, worldRay.origin);
+        localRay.direction = Math::TransformVector(m_InverseTransform, worldRay.direction);
+        localRay.oneOverDirection = 1.f / localRay.direction;
+
+        if (!m_BVH->Hit(localRay, tMin, tMax, payload)) {
+            return false;
+        }
+        
+        payload.localRay = localRay;
+        payload.transform = m_Transform;
+
+        return true;
+    }
+
+    constexpr AABB GetLocalBoundingBox() const noexcept {
+        return m_LocalAABB;
+    }
+
+    constexpr const BVH* GetBVH() const noexcept {
+        return m_BVH;
+    }
+
+private:
+    inline AABB ComputeLocalAABB(const Math::Matrix4f transform) const noexcept {
         AABB aabb = m_BVH->GetBoundingBox();
         Math::Vector3f min, max;
         for (int i = 0; i < 8; ++i) {
@@ -33,39 +65,12 @@ public:
             max = Math::Max(max, point);
         }
 
-        m_TransformedAABB = AABB(min, max);
-    }
-
-    inline bool Hit(const Ray &worldRay, float tMin, float tMax, HitPayload &payload) const noexcept {
-        if (m_TransformedAABB.Intersect(worldRay, tMin, tMax) == Math::Constants::Infinity<float>) {
-            return false;
-        }
-
-        Ray ray;
-        ray.origin = Math::TransformPoint(m_InverseTransform, worldRay.origin);
-        ray.direction = Math::Normalize(Math::TransformVector(m_InverseTransform, worldRay.direction));
-        ray.oneOverDirection = 1.f / ray.direction;
-
-        if (!m_BVH->Hit(ray, tMin, tMax, payload)) {
-            return false;
-        }
-        
-        payload.transform = m_Transform;
-        payload.inverseTransform = m_InverseTransform;
-        return true;
-    }
-
-    constexpr AABB GetTransformedBoundingBox() const noexcept {
-        return m_TransformedAABB;
-    }
-
-    constexpr const BVH* GetBVH() const noexcept {
-        return m_BVH;
+        return AABB(min, max);
     }
 
 private:
     const BVH *m_BVH;
-    AABB m_TransformedAABB;
+    AABB m_LocalAABB;
     Math::Matrix4f m_Transform;
     Math::Matrix4f m_InverseTransform;
 };

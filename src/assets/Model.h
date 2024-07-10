@@ -13,7 +13,7 @@
 //! Class that holds information about .obj model
 class Model {
 public:
-    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials) noexcept;
+    Model(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory, std::vector<Mesh> &&meshes, std::vector<Material> &&materials, int totalFaceCount) noexcept;
 
     ~Model() noexcept;
 

@@ -62,6 +62,25 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     LoadSceneFromFile(c_DefaultScenePath);
 }
 
+Application::~Application() noexcept {
+    if (m_AccelerationStructure != nullptr) {
+        delete m_AccelerationStructure;
+    }
+
+    if (m_ObjectsBLAS != nullptr) {
+        delete m_ObjectsBLAS;
+    }
+
+    if (m_NonHittable != nullptr) {
+        delete m_NonHittable;
+    }
+
+    if (m_NonHittableBLAS != nullptr) {
+        delete m_NonHittableBLAS->GetBVH();
+        delete m_NonHittableBLAS;
+    }
+}
+
 int Application::Run() noexcept {
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW\n";
@@ -558,6 +577,9 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
 
         if (deleteIndex != cloneIndex && cloneIndex >= 0) {
             m_Scene.modelInstances.push_back(m_Scene.modelInstances[cloneIndex]->Clone());
+
+            m_SomeObjectChanged = true;
+            m_SomeGeometryChanged = true;
         }
     }
 }
