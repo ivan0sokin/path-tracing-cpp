@@ -11,9 +11,13 @@ public:
     constexpr ~BLAS() noexcept = default;
 
     inline BLAS(const BVH *bvh) noexcept :
-        m_BVH(bvh), m_TransformedAABB(bvh->GetBoundingBox()), m_InverseTransform(Math::IdentityMatrix<float, 4>()) {}
+        m_BVH(bvh),
+        m_TransformedAABB(bvh->GetBoundingBox()),
+        m_Transform(Math::IdentityMatrix<float, 4>()),
+        m_InverseTransform(Math::IdentityMatrix<float, 4>()) {}
 
     inline void SetTransform(const Math::Matrix4f &transform) noexcept {
+        m_Transform = transform;
         m_InverseTransform = Math::Inverse(transform);
 
         AABB aabb = m_BVH->GetBoundingBox();
@@ -46,7 +50,8 @@ public:
             return false;
         }
         
-        payload.transformedRay = ray;
+        payload.transform = m_Transform;
+        payload.inverseTransform = m_InverseTransform;
         return true;
     }
 
@@ -61,6 +66,7 @@ public:
 private:
     const BVH *m_BVH;
     AABB m_TransformedAABB;
+    Math::Matrix4f m_Transform;
     Math::Matrix4f m_InverseTransform;
 };
 

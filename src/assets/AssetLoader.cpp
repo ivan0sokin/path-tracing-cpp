@@ -171,11 +171,12 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     }
 
     Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials));
-    m_Models.push_back(model);
 
     m_InstanceCount.push_back(0);
     ModelInstance *modelInstance = new ModelInstance(static_cast<int>(m_Models.size()), model->GetBVH());
-    
+
+    m_Models.push_back(model);
+
     return {modelInstance, result};
 }
 
@@ -184,6 +185,7 @@ void AssetLoader::IncreaseInstanceCount(int modelIndex) noexcept {
 }
 
 void AssetLoader::DecreaseInstanceCount(int modelIndex) noexcept{
+    printf("OOOOH1 %d %d", modelIndex, m_InstanceCount.size());
     if (--m_InstanceCount[modelIndex] == 0) {
         delete m_Models[modelIndex];
         m_Models[modelIndex] = nullptr;

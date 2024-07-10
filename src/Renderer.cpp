@@ -171,8 +171,6 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     Math::Vector3f light(0.f), throughput(1.f);
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = TraceRay(ray);
-        
-        std::swap(ray, payload.transformedRay);
 
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
@@ -241,7 +239,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     for (int i = 0; i < m_RayDepth; ++i) {
         HitPayload payload = AcceleratedTraceRay(ray);
         
-        std::swap(ray, payload.transformedRay);
+        ray.origin = Math::TransformPoint(payload.inverseTransform, ray.origin);
+        ray.direction = Math::TransformVector(payload.inverseTransform, ray.direction);
 
         if (payload.t < 0.f) {
             light += throughput * m_OnRayMiss(ray);
@@ -278,8 +277,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
         BXDF bsdf(material);
         auto direction = bsdf.Sample(ray, payload, throughput);
 
-        ray.origin = hitPoint;
-        ray.direction = direction;
+        ray.origin = Math::TransformPoint(payload.transform, hitPoint);
+        ray.direction = Math::TransformVector(payload.transform, direction);
 
         // float p = Math::Max(throughput.x, Math::Max(throughput.y, throughput.z));
         // if (Utilities::RandomFloatInZeroToOne() > p) {
@@ -302,7 +301,8 @@ HitPayload Renderer::TraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.transformedRay = ray;
+    payload.transform = Math::IdentityMatrix<float, 4>();
+    payload.inverseTransform = Math::IdentityMatrix<float, 4>();
     payload.material = nullptr;
 
     bool anyHit = false;
@@ -324,7 +324,8 @@ HitPayload Renderer::AcceleratedTraceRay(const Ray &ray) const noexcept {
     HitPayload payload;
     payload.t = Math::Constants::Infinity<float>;
     payload.normal = Math::Vector3f(0.f);
-    payload.transformedRay = ray;
+    payload.transform = Math::IdentityMatrix<float, 4>();
+    payload.inverseTransform = Math::IdentityMatrix<float, 4>();
     payload.material = nullptr;
 
     if (m_AccelerationStructure->Hit(ray, 0.01f, Math::Constants::Infinity<float>, payload) == false) {
