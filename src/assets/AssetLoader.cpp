@@ -238,6 +238,10 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
             v2.tangent += tangent;
         }
 
+        for (auto &vertex : vertices) {
+            vertex.tangent = Math::Normalize(vertex.tangent - Math::Dot(vertex.tangent, vertex.normal) * vertex.normal);
+        }
+
         vertices.shrink_to_fit();
         meshes.emplace_back(std::move(vertices), std::move(indices), std::move(materialIndices));
     }

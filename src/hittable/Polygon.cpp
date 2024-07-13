@@ -52,26 +52,12 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
     const auto &bump = m_Model->GetMaterials()[materialIndices[m_FaceIndex]].bump;
     
     if (bump.GetTexelCount() > 1) {
-        auto edge1 = v1 - v0;
-        auto edge2 = v2 - v0;
-        auto deltaUV1 = t1 - t0;
-        auto deltaUV2 = t2 - t0;  
+        auto tan0 = vertices[indices[3 * m_FaceIndex + 0]].tangent;
+        auto tan1 = vertices[indices[3 * m_FaceIndex + 1]].tangent;
+        auto tan2 = vertices[indices[3 * m_FaceIndex + 2]].tangent;
 
-        float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-
-        Math::Vector3f tangent, bitangent;
-
-        tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-        tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-        tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-
-        auto N = Math::Normalize(Math::Cross(edge1, edge2));
-        N = Math::Dot(ray.direction, N) > Math::Constants::Epsilon<float> ? -N : N;
-
-        tangent = Math::Normalize(tangent);
-        tangent = Math::Normalize(tangent - Math::Dot(tangent, payload.normal) * payload.normal);
-
-        bitangent = Math::Cross(payload.normal, tangent);
+        auto tangent = Math::Normalize(tan0 * u0 + tan1 * u1 + tan2 * u2);
+        auto bitangent = Math::Cross(payload.normal, tangent);
 
         Math::Matrix3f TBN({tangent, bitangent, payload.normal});
 
