@@ -19,7 +19,8 @@ set(GLM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/glm/include)
 add_subdirectory(glfw-3.4)
 
 set(SOURCES src/Renderer.cpp
-            src/Image.cpp
+            src/image/Image.cpp
+            src/image/ImageSaver.cpp
             src/Application.cpp
             src/Camera.cpp
             src/BXDF.cpp

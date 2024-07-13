@@ -263,7 +263,7 @@ void Application::OnUpdate() noexcept {
         ImGui::InputText("##save_image", m_SaveImageFilePath, c_AnyInputFilePathLength);
         ImGui::SameLine();
         if (ImGui::Button("Save image")) {
-            m_Renderer.SaveImage(m_SaveImageFilePath);
+            ImageSaver(m_Renderer.GetImage()).Save(m_SaveImageFilePath);
         }
 
         ImGui::InputText("##save_scene", m_SceneFilePath, c_AnyInputFilePathLength);

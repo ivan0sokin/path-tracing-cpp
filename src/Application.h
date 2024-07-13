@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "Renderer.h"
+#include "image/ImageSaver.h"
 #include "hittable/NonHittable.h"
 #include "acceleration/TLAS.h"
 

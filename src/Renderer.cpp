@@ -2,38 +2,25 @@
 #include "Utilities.hpp"
 #include "BXDF.h"
 
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../stb-master/stb_image_write.h"
-
 #include <vector>
 #include <thread>
 #include <cstring>
 
 Renderer::Renderer(int width, int height) noexcept :
-    m_Width(width), m_Height(height) {
-    m_ImageData = new uint32_t[m_Width * m_Height];
-    m_Image = new Image(m_Width, m_Height, m_ImageData);
-    m_AccumulationData = new Math::Vector4f[m_Width * m_Height];
-
-    m_AvailableThreads = std::thread::hardware_concurrency();
-    m_UsedThreads = 1;
-    m_LinesPerThread = (m_Height + m_UsedThreads - 1) / m_UsedThreads;
-}
+    m_Width(width), m_Height(height),
+    m_Image(new Image(m_Width, m_Height)),
+    m_AccumulationData(new Math::Vector4f[m_Width * m_Height]),
+    m_AvailableThreads(std::thread::hardware_concurrency()),
+    m_UsedThreads(1),
+    m_LinesPerThread(height) {}
 
 Renderer::~Renderer() noexcept {
     if (m_Image != nullptr) {
         delete m_Image;
     }
-    if (m_ImageData != nullptr) {
-        delete[] m_ImageData;
-    }
     if (m_AccumulationData != nullptr) {
         delete[] m_AccumulationData;
     }
-}
-
-void Renderer::SaveImage(const std::filesystem::path &pathToFile) const noexcept {
-    stbi_write_png(pathToFile.string().c_str(), m_Width, m_Height, 4, m_ImageData, m_Width * 4);
 }
 
 void Renderer::OnResize(int width, int height) noexcept {
@@ -44,13 +31,9 @@ void Renderer::OnResize(int width, int height) noexcept {
     m_Width = width;
     m_Height = height;
 
-    if (m_ImageData != nullptr) {
-        delete m_ImageData;
-        m_ImageData = new uint32_t[m_Width * m_Height];
-    }
     if (m_Image != nullptr) {
         delete m_Image;
-        m_Image = new Image(m_Width, m_Height, m_ImageData);
+        m_Image = new Image(m_Width, m_Height);
     }
     if (m_AccumulationData != nullptr) {
         delete m_AccumulationData;
@@ -92,7 +75,7 @@ void Renderer::Render(const Camera &camera, std::span<IHittable* const> objects,
                     color = Utilities::CorrectGamma(color, inverseGamma);
                     color = Math::Clamp(color, 0.f, 1.f);
 
-                    m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
+                    m_Image->SetPixel(m_Width * t + j, Utilities::ConvertColorToRGBA(color));
                 }
             }
         });
@@ -102,7 +85,7 @@ void Renderer::Render(const Camera &camera, std::span<IHittable* const> objects,
         handle.join();
     }
 
-    m_Image->UpdateData(m_ImageData);
+    m_Image->Update();
 
     if (m_Accumulate) {
         ++m_FrameIndex;
@@ -143,7 +126,7 @@ void Renderer::Render(const Camera &camera, const TLAS *accelerationStructure, s
                     color = Utilities::CorrectGamma(color, inverseGamma);
                     color = Math::Clamp(color, 0.f, 1.f);
 
-                    m_ImageData[m_Width * t + j] = Utilities::ConvertColorToRGBA(color);
+                    m_Image->SetPixel(m_Width * t + j, Utilities::ConvertColorToRGBA(color));
                 }
             }
         });
@@ -153,7 +136,7 @@ void Renderer::Render(const Camera &camera, const TLAS *accelerationStructure, s
         handle.join();
     }
 
-    m_Image->UpdateData(m_ImageData);
+    m_Image->Update();
 
     if (m_Accumulate) {
         ++m_FrameIndex;

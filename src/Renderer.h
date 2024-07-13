@@ -1,7 +1,7 @@
 #ifndef _RENDERER_H
 #define _RENDERER_H
 
-#include "Image.h"
+#include "image/Image.h"
 #include "Camera.h"
 #include "Scene.h"
 #include "HitPayload.h"
@@ -49,10 +49,7 @@ public:
         return m_Image;
     }
 
-    //! Saves image to file
-    void SaveImage(const std::filesystem::path &pathToFile) const noexcept;
-
-    //! Resizez image data
+    //! Resizes image data
     void OnResize(int width, int height) noexcept;
 
     constexpr int GetAvailableThreadCount() const noexcept {
@@ -97,16 +94,15 @@ private:
 
 private:
     int m_Width, m_Height;
-    Image *m_Image = nullptr;
-    uint32_t *m_ImageData = nullptr;
-
-    std::function<Math::Vector3f(const Ray&)> m_OnRayMiss = [](const Ray&){ return Math::Vector3f(0.f, 0.f, 0.f); };
+    Image *m_Image;
 
     int m_AvailableThreads;
     int m_UsedThreads;
     int m_LinesPerThread;
 
     int m_RayDepth = 5;
+
+    std::function<Math::Vector3f(const Ray&)> m_OnRayMiss = [](const Ray&){ return Math::Vector3f(0.f, 0.f, 0.f); };
 
     const Camera *m_Camera = nullptr;
     std::span<IHittable* const> m_Objects;
