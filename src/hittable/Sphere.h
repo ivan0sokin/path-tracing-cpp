@@ -1,11 +1,7 @@
 #ifndef _SPHERE_H
 #define _SPHERE_H
 
-#include "../Material.h"
 #include "IHittable.h"
-#include "../math/Math.h"
-#include "../AABB.h"
-#include "../HitPayload.h"
 
 namespace Shapes {
     class Sphere : public IHittable {

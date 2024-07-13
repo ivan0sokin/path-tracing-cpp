@@ -4,7 +4,7 @@
 #include "../HitPayload.h"
 #include "../math/Math.h"
 #include "../Ray.h"
-#include "../AABB.h"
+#include "../acceleration/AABB.h"
 
 //! Abstraction for hittable object
 class IHittable {

@@ -2,13 +2,13 @@
 #include "Polygon.h"
 
 Shapes::Triangle Polygon::MakeTriangle() const noexcept {
-    const Mesh &mesh = m_Model->GetMeshes()[m_MeshIndex];
+    auto mesh = m_Model->GetMeshes()[m_MeshIndex];
     
-    auto vertices = mesh.GetVertices();
-    auto indices = mesh.GetIndices();
+    auto vertices = mesh->GetVertices();
+    auto indices = mesh->GetIndices();
 
     auto materials = m_Model->GetMaterials();
-    auto materialIndices = mesh.GetMaterialIndices();
+    auto materialIndices = mesh->GetMaterialIndices();
         
     return Shapes::Triangle(vertices[indices[3 * m_FaceIndex + 0]].position, vertices[indices[3 * m_FaceIndex + 1]].position, vertices[indices[3 * m_FaceIndex + 2]].position, &materials[materialIndices[m_FaceIndex]]);
 }
@@ -18,10 +18,10 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
         return false;
     }
 
-    const Mesh &mesh = m_Model->GetMeshes()[m_MeshIndex];
+    auto mesh = m_Model->GetMeshes()[m_MeshIndex];
 
-    auto vertices = mesh.GetVertices();
-    auto indices = mesh.GetIndices();
+    auto vertices = mesh->GetVertices();
+    auto indices = mesh->GetIndices();
 
     auto v0 = vertices[indices[3 * m_FaceIndex + 0]].position;
     auto v1 = vertices[indices[3 * m_FaceIndex + 1]].position;
@@ -48,10 +48,10 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
     payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
     payload.texcoord = t0 * u0 + t1 * u1 + t2 * u2;
 
-    auto materialIndices = mesh.GetMaterialIndices();
-    const auto &bump = m_Model->GetMaterials()[materialIndices[m_FaceIndex]].bump;
+    auto materialIndices = mesh->GetMaterialIndices();
+    auto bump = m_Model->GetMaterials()[materialIndices[m_FaceIndex]].textures[TextureIndex::Bump];
     
-    if (bump.GetTexelCount() > 1) {
+    if (bump != nullptr) {
         auto tan0 = vertices[indices[3 * m_FaceIndex + 0]].tangent;
         auto tan1 = vertices[indices[3 * m_FaceIndex + 1]].tangent;
         auto tan2 = vertices[indices[3 * m_FaceIndex + 2]].tangent;
@@ -61,9 +61,9 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
 
         Math::Matrix3f TBN({tangent, bitangent, payload.normal});
 
-        Math::Vector3f normal = bump.PickValue(payload.texcoord);
+        Math::Vector3f normal = bump->PickValue(payload.texcoord);
         normal = 2.f * normal - 1.f;
-        normal = Math::Normalize(TBN * normal);
+        normal = Math::Normalize(normal * TBN);
 
         payload.normal = normal;
     }

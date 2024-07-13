@@ -33,10 +33,10 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     memset(m_ModelFilePath, 0, sizeof(m_ModelFilePath));
     memset(m_MaterialDirectory, 0, sizeof(m_MaterialDirectory));
 
-    m_AddMaterial.albedo = Texture(Math::Vector3f(0.f));
-    m_AddMaterial.metallic = Texture(Math::Vector3f(0.f));
-    m_AddMaterial.specular = Texture(Math::Vector3f(0.f));
-    m_AddMaterial.roughness = Texture(Math::Vector3f(1.f));
+    m_AddMaterial.textures[TextureIndex::Albedo] = new Texture(Math::Vector3f(0.f));
+    m_AddMaterial.textures[TextureIndex::Metallic] = new Texture(Math::Vector3f(0.f));
+    m_AddMaterial.textures[TextureIndex::Specular] = new Texture(Math::Vector3f(0.f));
+    m_AddMaterial.textures[TextureIndex::Roughness] = new Texture(Math::Vector3f(1.f));
     m_AddMaterial.emissionPower = 0.f;
     m_AddMaterial.index = -1;
 
@@ -599,14 +599,14 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
                 deleteIndex = i;
             }
 
-            ImGui::ColorEdit3("Albedo", material.albedo.GetData());
+            ImGui::ColorEdit3("Albedo", material.textures[TextureIndex::Albedo]->GetData());
             ImGui::InputFloat("Emission power", Math::ValuePointer(material.emissionPower));
-            ImGui::InputFloat("Metallic", material.metallic.GetData());
-            ImGui::InputFloat("Roughness", material.roughness.GetData());
-            ImGui::InputFloat("Specular", material.specular.GetData());
+            ImGui::InputFloat("Metallic", material.textures[TextureIndex::Metallic]->GetData());
+            ImGui::InputFloat("Roughness", material.textures[TextureIndex::Roughness]->GetData());
+            ImGui::InputFloat("Specular", material.textures[TextureIndex::Specular]->GetData());
             
-            ImGui::InputFloat("Transparency", &material.transparency);
-            ImGui::InputFloat("Refraction", &material.refractionIndex);
+            // ImGui::InputFloat("Transparency", &material.transparency);
+            // ImGui::InputFloat("Refraction", &material.refractionIndex);
 
             ImGui::PopID();
         }
@@ -624,11 +624,11 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
             UpdateObjectMaterials();
         }
 
-        ImGui::ColorEdit3("Albedo", m_AddMaterial.albedo.GetData());
+        ImGui::ColorEdit3("Albedo", m_AddMaterial.textures[TextureIndex::Albedo]->GetData());
         ImGui::InputFloat("Emission power", Math::ValuePointer(m_AddMaterial.emissionPower));
-        ImGui::InputFloat("Metallic", m_AddMaterial.metallic.GetData());
-        ImGui::InputFloat("Roughness", m_AddMaterial.roughness.GetData());
-        ImGui::InputFloat("Specular", m_AddMaterial.specular.GetData());
+        ImGui::InputFloat("Metallic", m_AddMaterial.textures[TextureIndex::Metallic]->GetData());
+        ImGui::InputFloat("Roughness", m_AddMaterial.textures[TextureIndex::Roughness]->GetData());
+        ImGui::InputFloat("Specular", m_AddMaterial.textures[TextureIndex::Specular]->GetData());
 
         ImGui::PopID();
 
@@ -757,11 +757,6 @@ void Application::UpdateLights() noexcept {
             m_Lights.emplace_back(&box);
         }
     }
-
-    // for (auto model : m_Scene.models) {
-    //     auto lights = model->GetLightSources();
-    //     m_Lights.insert(m_Lights.cend(), lights.begin(), lights.end());
-    // }
 }
 
 void Application::UpdateObjectMaterials() noexcept {

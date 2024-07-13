@@ -1,7 +1,8 @@
 #ifndef _AABB_H
 #define _AABB_H
 
-#include "math/Math.h"
+#include "../math/Math.h"
+#include "../Ray.h"
 
 //! Axis aligned bounding box, structure used to make faster ray-model intersections
 struct AABB {
@@ -31,21 +32,21 @@ struct AABB {
 
     //! Returns true if ray intersects AABB on give interval
     constexpr float Intersect(const Ray &ray, float tMin, float tMax) const noexcept {
-        auto oneOverDirection = ray.oneOverDirection;
+        auto inverseDirection = ray.inverseDirection;
         auto origin = ray.origin;
 
-        auto t0 = (min - origin) * oneOverDirection;
-        auto t1 = (max - origin) * oneOverDirection;
+        auto t0 = (min - origin) * inverseDirection;
+        auto t1 = (max - origin) * inverseDirection;
 
-        if (oneOverDirection.x < 0.f) {
+        if (inverseDirection.x < 0.f) {
             std::swap(t0.x, t1.x);
         }
         
-        if (oneOverDirection.y < 0.f) {
+        if (inverseDirection.y < 0.f) {
             std::swap(t0.y, t1.y);
         }
 
-        if (oneOverDirection.z < 0.f) {
+        if (inverseDirection.z < 0.f) {
             std::swap(t0.z, t1.z);
         }
 

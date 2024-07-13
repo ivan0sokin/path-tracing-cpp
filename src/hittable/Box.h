@@ -1,11 +1,7 @@
 #ifndef _BOX_H
 #define _BOX_H
 
-#include "../math/Math.h"
 #include "Triangle.h"
-#include "IHittable.h"
-#include "../HitPayload.h" 
-#include "../AABB.h"
 #include "../Utilities.hpp"
 
 namespace Shapes {

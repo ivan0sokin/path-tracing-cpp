@@ -14,10 +14,10 @@ Math::Vector3f BXDF::Sample(Ray &ray, const HitPayload &payload, Math::Vector3f 
 }
 
 Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
-    Math::Vector3f albedo = m_Material->albedo.PickValue(payload.texcoord);
-    float metallic = m_Material->metallic.PickValue(payload.texcoord).r;
-    float roughness = m_Material->roughness.PickValue(payload.texcoord).r;
-    float specular = m_Material->specular.PickValue(payload.texcoord).r;
+    Math::Vector3f albedo = m_Material->textures[TextureIndex::Albedo]->PickValue(payload.texcoord);
+    float metallic = m_Material->textures[TextureIndex::Metallic]->PickValue(payload.texcoord).r;
+    float specular = m_Material->textures[TextureIndex::Specular]->PickValue(payload.texcoord).r;
+    float roughness = m_Material->textures[TextureIndex::Roughness]->PickValue(payload.texcoord).r;
 
     float diffuseRatio = 0.5f * (1.f - metallic);
     float specularRatio = 1.f - diffuseRatio;
@@ -69,10 +69,10 @@ Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math:
 }
 
 Math::Vector3f BXDF::SampleBSDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
-    Math::Vector3f albedo = m_Material->albedo.PickValue(payload.texcoord);
-    float metallic = m_Material->metallic.PickValue(payload.texcoord).r;
-    float roughness = m_Material->roughness.PickValue(payload.texcoord).r;
-    float specular = m_Material->specular.PickValue(payload.texcoord).r;
+    Math::Vector3f albedo = m_Material->textures[TextureIndex::Albedo]->PickValue(payload.texcoord);
+    float metallic = m_Material->textures[TextureIndex::Metallic]->PickValue(payload.texcoord).r;
+    float specular = m_Material->textures[TextureIndex::Specular]->PickValue(payload.texcoord).r;
+    float roughness = m_Material->textures[TextureIndex::Roughness]->PickValue(payload.texcoord).r;
     
     Math::Vector3f hitPoint = ray.origin + ray.direction * payload.t;
 
@@ -81,7 +81,8 @@ Math::Vector3f BXDF::SampleBSDF(Ray &ray, const HitPayload &payload, Math::Vecto
     Math::Vector3f bias = N * 0.001f;
     
     float etai = ray.opticalDensity;
-    float etat = m_Material->refractionIndex;
+    // float etat = m_Material->refractionIndex;
+    float etat = 1.f;
     
     auto ImportanceSampleGGX = [](const Math::Vector2f &Xi, const Math::Vector3f &N, const Math::Vector3f &V, float roughness){
         float a = roughness * roughness;

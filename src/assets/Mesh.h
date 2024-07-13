@@ -27,8 +27,10 @@ public:
         }
     };
 
-    Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept : 
+    inline Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept : 
         m_Vertices(std::move(vertices)), m_Indices(std::move(indices)), m_MaterialIndices(std::move(materialIndices)) {}
+
+    inline ~Mesh() noexcept = default;
 
     inline int GetFaceCount() const noexcept {
         return static_cast<int>(m_Indices.size() / 3);

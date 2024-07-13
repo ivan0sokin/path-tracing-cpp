@@ -164,7 +164,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
     Ray ray;
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
-    ray.oneOverDirection = 1.f / ray.direction;
+    ray.inverseDirection = 1.f / ray.direction;
     
     ray.opticalDensity = 1.f;
 
@@ -199,7 +199,7 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             Ray lightRay;
             lightRay.origin = hitPoint;
             lightRay.direction = toLight / distance;
-            lightRay.oneOverDirection = 1.f / lightRay.direction;
+            lightRay.inverseDirection = 1.f / lightRay.direction;
 
             HitPayload lightHitPayload = TraceRay(lightRay);
             
@@ -221,9 +221,9 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
 
         // ray.origin = hitPoint;
         // ray.direction = direction;
-        ray.oneOverDirection = 1.f / ray.direction;
+        ray.inverseDirection = 1.f / ray.direction;
         
-        ray.opticalDensity = material->refractionIndex;
+        // ray.opticalDensity = material->refractionIndex;
     }
  
     return {light.r, light.g, light.b, 1.f};
@@ -233,7 +233,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
     Ray ray;
     ray.origin = m_Camera->GetPosition();
     ray.direction = m_Camera->GetRayDirections()[m_Width * i + j];
-    ray.oneOverDirection = 1.f / ray.direction;
+    ray.inverseDirection = 1.f / ray.direction;
     
     ray.opticalDensity = 1.f;
 
@@ -268,7 +268,7 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             Ray lightRay;
             lightRay.origin = hitPoint;
             lightRay.direction = toLight / distance;
-            lightRay.oneOverDirection = 1.f / lightRay.direction;
+            lightRay.inverseDirection = 1.f / lightRay.direction;
 
             HitPayload lightHitPayload = TraceRay(lightRay);
             
@@ -290,9 +290,9 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
 
         // ray.origin += ray.direction * payload.t;
         // ray.direction = direction;
-        ray.oneOverDirection = 1.f / ray.direction;
+        ray.inverseDirection = 1.f / ray.direction;
 
-        ray.opticalDensity = material->refractionIndex;
+        // ray.opticalDensity = material->refractionIndex;
     }
  
     return {light.r, light.g, light.b, 1.f};

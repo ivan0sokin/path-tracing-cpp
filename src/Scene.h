@@ -72,10 +72,10 @@ private:
         os.write(reinterpret_cast<const char*>(&modelCount), sizeof(modelCount));
 
         for (const auto &material : materials) {
-            os.write(reinterpret_cast<const char*>(material.albedo.GetData()), sizeof(Math::Vector3f));
-            os.write(reinterpret_cast<const char*>(material.metallic.GetData()), sizeof(float));
-            os.write(reinterpret_cast<const char*>(material.specular.GetData()), sizeof(float));
-            os.write(reinterpret_cast<const char*>(material.roughness.GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(material.textures[TextureIndex::Albedo]->GetData()), sizeof(Math::Vector3f));
+            os.write(reinterpret_cast<const char*>(material.textures[TextureIndex::Metallic]->GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(material.textures[TextureIndex::Specular]->GetData()), sizeof(float));
+            os.write(reinterpret_cast<const char*>(material.textures[TextureIndex::Roughness]->GetData()), sizeof(float));
             os.write(reinterpret_cast<const char*>(&material.emissionPower), sizeof(material.emissionPower));
             os.write(reinterpret_cast<const char*>(&material.index), sizeof(material.index));
         }
@@ -143,10 +143,16 @@ private:
         materials.clear();
         materials.resize(materialCount);
         for (auto &material : materials) {
-            is.read(reinterpret_cast<char*>(material.albedo.GetData()), sizeof(Math::Vector3f));
-            is.read(reinterpret_cast<char*>(material.metallic.GetData()), sizeof(float));
-            is.read(reinterpret_cast<char*>(material.specular.GetData()), sizeof(float));
-            is.read(reinterpret_cast<char*>(material.roughness.GetData()), sizeof(float));
+            for (int i = TextureIndex::Albedo; i <= TextureIndex::Bump; ++i) {
+                if (material.textures[i] == nullptr) {
+                    material.textures[i] = new Texture();
+                }
+            }
+
+            is.read(reinterpret_cast<char*>(material.textures[TextureIndex::Albedo]->GetData()), sizeof(Math::Vector3f));
+            is.read(reinterpret_cast<char*>(material.textures[TextureIndex::Metallic]->GetData()), sizeof(float));
+            is.read(reinterpret_cast<char*>(material.textures[TextureIndex::Specular]->GetData()), sizeof(float));
+            is.read(reinterpret_cast<char*>(material.textures[TextureIndex::Roughness]->GetData()), sizeof(float));
             is.read(reinterpret_cast<char*>(&material.emissionPower), sizeof(material.emissionPower));
             is.read(reinterpret_cast<char*>(&material.index), sizeof(material.index));
         }

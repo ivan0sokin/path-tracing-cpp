@@ -3,8 +3,12 @@
 
 #include "Model.h"
 #include "ModelInstance.h"
+#include "../Texture.h"
+
+#include "../../tinyobjloader/tiny_obj_loader.h"
 
 #include <string>
+#include <unordered_map>
 #include <filesystem>
 #include <utility>
 
@@ -52,8 +56,19 @@ public:
     void DecreaseInstanceCount(int modelIndex) noexcept;
 
 private:
+    Texture* LoadTexture(const std::filesystem::path &pathToTexture) noexcept;
+
+    Mesh* ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::mesh_t &mesh) noexcept;
+
+    void UnloadModel(int modelIndex) noexcept;
+
+private:
     std::vector<Model*> m_Models;
     std::vector<int> m_InstanceCount;
+    std::vector<std::vector<std::string>> m_TextureAbsolutePaths;
+
+    std::unordered_map<std::string, Texture*> m_Textures;
+    
     LoadingProperties m_LoadingProperties;
 
 protected:

@@ -30,7 +30,7 @@ public:
         Ray localRay;
         localRay.origin = Math::TransformPoint(m_InverseTransform, worldRay.origin);
         localRay.direction = Math::TransformVector(m_InverseTransform, worldRay.direction);
-        localRay.oneOverDirection = 1.f / localRay.direction;
+        localRay.inverseDirection = 1.f / localRay.direction;
 
         if (!m_BVH->Hit(localRay, tMin, tMax, payload)) {
             return false;

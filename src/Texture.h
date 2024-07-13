@@ -14,18 +14,21 @@ public:
     inline Texture() noexcept :
         Texture({1.f, 1.f, 1.f}) {}
 
-    inline Texture(std::span<const unsigned char> dataInBytes, int width, int height, int channels) noexcept :
+    inline Texture(const unsigned char *dataInBytes, int width, int height, int channels) noexcept :
         m_Width(width), m_Height(height) {
         int texelCount = width * height;
         m_Data.resize(texelCount);
 
+        const float inverseByteMax = 1.f / 255.f;
         for (int i = 0; i < texelCount; ++i) {
             float r = static_cast<float>(dataInBytes[channels * i + 0]);
             float g = static_cast<float>(dataInBytes[channels * i + 1]);
             float b = static_cast<float>(dataInBytes[channels * i + 2]);
-            m_Data[i] = {r / 255.f, g / 255.f, b / 255.f};
+            m_Data[i] = {r * inverseByteMax, g * inverseByteMax, b * inverseByteMax};
         }
     }
+
+    inline ~Texture() noexcept = default;
 
     inline Math::Vector3f PickValue(const Math::Vector2f &texcoord) const noexcept {
         int i = static_cast<int>(static_cast<float>(m_Height - 1) * (1.f - texcoord.v));

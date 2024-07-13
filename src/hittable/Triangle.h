@@ -1,10 +1,7 @@
 #ifndef _TRIANGLE_H
 #define _TRIANGLE_H
 
-#include "../math/Math.h"
 #include "IHittable.h"
-#include "../AABB.h"
-#include "../HitPayload.h"
 
 #include <array>
 #include <cstdio>

@@ -3,9 +3,6 @@
 
 class Model;
 
-#include "IHittable.h"
-#include "../Material.h"
-
 #include "Triangle.h"
 
 //! Slightly differs from Triangle. It is connected with mesh and stores its face index

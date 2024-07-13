@@ -31,7 +31,7 @@ public:
             return Math::Vector3f(0.f);
         }
 
-        Math::Vector3f brdf = objectHitPayload.material->albedo.PickValue(objectHitPayload.texcoord) * lightHitPayload.material->GetEmission(lightHitPayload.texcoord) * Math::Constants::InversePi<float> * Math::Dot(objectHitPayload.normal, lightRay.direction);
+        Math::Vector3f brdf = objectHitPayload.material->textures[TextureIndex::Albedo]->PickValue(objectHitPayload.texcoord) * lightHitPayload.material->GetEmission(lightHitPayload.texcoord) * Math::Constants::InversePi<float> * Math::Dot(objectHitPayload.normal, lightRay.direction);
 
         return brdf / pdf;
     }
