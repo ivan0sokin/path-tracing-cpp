@@ -2,6 +2,7 @@
 #define _TRANSFORMATION_H
 
 #include "MatrixCommon.h"
+#include "GeometricFunctions.h"
 #include "TrigonometricFunctions.h"
 
 namespace Math {
@@ -51,6 +52,18 @@ namespace Math {
     template<typename T>
     constexpr Types::Vector<T, 3> TransformPoint(const Types::Matrix<T, 4, 4> &transform, const Types::Vector<T, 3> &v) noexcept {
         return transform * Types::Vector<T, 4>(v, Constants::One<T>);
+    }
+
+    template<typename T>
+    constexpr Types::Matrix<T, 3, 3> GenerateTangentSpace(const Types::Vector<T, 3> &normal) noexcept {
+        Types::Vector<T, 3> axis(Math::Constants::One<T>, Math::Constants::Zero<T>, Math::Constants::Zero<T>);
+        if (Math::Abs(normal.x) > static_cast<T>(0.99)) {
+            axis = Types::Vector<T, 3>(Math::Constants::Zero<T>, Math::Constants::Zero<T>, Math::Constants::One<T>);
+        }
+
+        Types::Vector<T, 3> tangent = Math::Normalize(Math::Cross(normal, axis));
+        Types::Vector<T, 3> binormal = Math::Cross(normal, tangent);
+        return Types::Matrix<T, 3, 3>({tangent, binormal, normal});
     }
 }
 

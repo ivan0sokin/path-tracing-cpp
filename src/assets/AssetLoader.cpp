@@ -5,6 +5,8 @@
 
 #include "../../stb-master/stb_image.h"
 
+#include <unordered_map>
+
 AssetLoader::~AssetLoader() noexcept {
     for (auto &model : m_Models) {
         if (model != nullptr) {
@@ -105,7 +107,9 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
 
         int faceCount = static_cast<int>(mesh.num_face_vertices.size());
         totalFaceCount += faceCount;
-        
+
+        std::unordered_map<Mesh::Vertex, int> uniqueVertices;
+
         std::vector<Mesh::Vertex> vertices;
         vertices.reserve(faceCount * VERTICES_PER_FACE);
     
@@ -119,7 +123,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
         for (int faceIndex = 0; faceIndex < faceCount; ++faceIndex) {
             for (int vertexIndex = 0; vertexIndex < VERTICES_PER_FACE; ++vertexIndex) {
                 auto index = mesh.indices[offset + vertexIndex];
-
+                
                 float x = 0.f, y = 0.f, z = 0.f;
                 if (!attrib.vertices.empty()) {
                     x = attrib.vertices[3 * index.vertex_index + 0];
@@ -139,15 +143,16 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
                     u = attrib.texcoords[2 * index.texcoord_index + 0];
                     v = attrib.texcoords[2 * index.texcoord_index + 1];
                 }
-
+                
                 Mesh::Vertex vertex;
                 vertex.position = {x, y, z};
                 vertex.normal = {nx, ny, nz};
                 vertex.texcoord = {u, v};
+                vertex.tangent = Math::Vector3f(0.f);
 
-                int i = static_cast<int>(vertices.size());
-                vertices.push_back(vertex);
-                indices.push_back(i);
+                int i = static_cast<int>(uniqueVertices.size());
+                auto [it, inserted] = uniqueVertices.insert({vertex, i});
+                indices.push_back(inserted ? i : it->second);
             }
 
             materialIndices.push_back(mesh.material_ids[faceIndex]);
@@ -155,23 +160,75 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
             offset += VERTICES_PER_FACE;
         }
 
+        vertices.reserve(uniqueVertices.size());
+        for (const auto &[vertex, index] : uniqueVertices) {
+            vertices.push_back(vertex);
+        }
+
+        std::sort(vertices.begin(), vertices.end(), [&](const auto &a, const auto &b) {
+            return uniqueVertices.at(a) < uniqueVertices.at(b);
+        });
+
         if (attrib.normals.empty()) {
             for (int f = 0; f < faceCount; ++f) {
                 auto &v0 = vertices[indices[3 * f + 0]];
                 auto &v1 = vertices[indices[3 * f + 1]];
                 auto &v2 = vertices[indices[3 * f + 2]];
 
-                Math::Vector3f faceNormal = Math::Normalize(Math::Cross(v1.position - v0.position, v2.position - v0.position));
-                v0.normal = faceNormal;
-                v1.normal = faceNormal;
-                v2.normal = faceNormal;
+                const auto &p0 = v0.position;
+                const auto &p1 = v1.position;
+                const auto &p2 = v2.position;
+
+                auto normal = Math::Cross(p1 - p0, p2 - p0);
+
+                float a0 = Math::Angle(p1 - p0, p2 - p0);
+                float a1 = Math::Angle(p2 - p1, p0 - p1);
+                float a2 = Math::Angle(p0 - p2, p1 - p2);
+
+                v0.normal += normal * a0;
+                v1.normal += normal * a1;
+                v2.normal += normal * a2;
             }
+
+            for (auto &vertex : vertices) {
+                vertex.normal = Math::Normalize(vertex.normal);
+            }
+        }
+
+        for (int f = 0; f < faceCount; ++f) {
+            auto &v0 = vertices[indices[3 * f + 0]];
+            auto &v1 = vertices[indices[3 * f + 1]];
+            auto &v2 = vertices[indices[3 * f + 2]];
+
+            const auto &p0 = v0.position;
+            const auto &p1 = v1.position;
+            const auto &p2 = v2.position;
+
+            const auto &t0 = v0.texcoord;
+            const auto &t1 = v1.texcoord;
+            const auto &t2 = v2.texcoord;
+
+            auto dp1 = p1 - p0;
+            auto dp2 = p2 - p0;
+            auto dt1 = t1 - t0;
+            auto dt2 = t2 - t0;
+
+            float oneOverDeterminant = 1.f / (dt1.x * dt2.y - dt2.x * dt1.y);
+
+            Math::Vector3f tangent;
+            tangent.x = oneOverDeterminant * (dt2.y * dp1.x - dt1.y * dp2.x);
+            tangent.y = oneOverDeterminant * (dt2.y * dp1.y - dt1.y * dp2.y);
+            tangent.z = oneOverDeterminant * (dt2.y * dp1.z - dt1.y * dp2.z);
+        
+            v0.tangent += tangent;
+            v1.tangent += tangent;
+            v2.tangent += tangent;
         }
 
         vertices.shrink_to_fit();
         meshes.emplace_back(std::move(vertices), std::move(indices), std::move(materialIndices));
     }
-
+    
     Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), totalFaceCount);
 
     m_InstanceCount.push_back(0);

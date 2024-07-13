@@ -50,6 +50,16 @@ namespace Math {
     }
 
     template<typename T>
+    constexpr T Angle(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b) noexcept {
+        return std::atan2(Math::Cross(a, b), Math::Dot(a, b));
+    }
+
+    template<typename T>
+    constexpr T Angle(const Types::Vector<T, 3> &a, const Types::Vector<T, 3> &b) noexcept {
+        return std::atan2(Math::Length(Math::Cross(a, b)), Math::Dot(a, b));
+    }
+
+    template<typename T>
     constexpr Types::Vector<T, 2> Normalize(const Types::Vector<T, 2> &v) noexcept {
         T inverseLength = static_cast<T>(1) / Length(v);
         return v * inverseLength;

@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <span>
+#include <cstdint>
 
 //! Class that holds information about vertices in particular mesh in model
 class Mesh {
@@ -14,9 +15,15 @@ public:
         Math::Vector3f position;
         Math::Vector3f normal;
         Math::Vector2f texcoord;
-    
+        Math::Vector3f tangent;
+
+        constexpr Vertex() noexcept = default;
+
         friend constexpr bool operator==(const Vertex &a, const Vertex &b) noexcept {
-            return a.position == b.position && a.normal == b.normal && a.texcoord == b.texcoord;
+            return a.position == b.position &&
+                   a.normal == b.normal &&
+                   a.texcoord == b.texcoord &&
+                   a.tangent == b.tangent;
         }
     };
 
@@ -44,5 +51,18 @@ private:
     std::vector<int> m_Indices;
     std::vector<int> m_MaterialIndices;
 };
+
+namespace std {
+    template<>
+    struct hash<Mesh::Vertex> {
+        constexpr size_t operator()(const Mesh::Vertex &v) const noexcept {
+            auto h1 = hash<Math::Vector3f>{}(v.position);
+            auto h2 = hash<Math::Vector3f>{}(v.normal);
+            auto h3 = hash<Math::Vector2f>{}(v.texcoord);
+            auto h4 = hash<Math::Vector3f>{}(v.tangent);
+            return Math::CombineHashes(Math::CombineHashes(h1, h2), Math::CombineHashes(h3, h4));
+        }
+    };
+}
 
 #endif

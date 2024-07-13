@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <span>
-#include <cstdio>
+
 class Texture {
 public:
     inline Texture(const Math::Vector3f &color) noexcept :
@@ -39,6 +39,10 @@ public:
 
     inline const float* GetData() const noexcept {
         return &m_Data[0].r;
+    }
+
+    constexpr int GetTexelCount() const noexcept {
+        return m_Width * m_Height;
     }
 
 private:

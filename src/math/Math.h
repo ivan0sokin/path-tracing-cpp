@@ -5,6 +5,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include "Matrix3.h"
 #include "Matrix4.h"
 #include "MatrixCommon.h"
 #include "ElementaryFunctions.h"
@@ -20,6 +21,7 @@ namespace Math {
     using Vector3f = Types::Vector<float, 3>;
     using Vector4f = Types::Vector<float, 4>;
 
+    using Matrix3f = Types::Matrix<float, 3, 3>;
     using Matrix4f = Types::Matrix<float, 4, 4>;
 }
 

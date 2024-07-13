@@ -103,7 +103,7 @@ private:
 
     constexpr static const char *c_WindowTitle = "Path Tracing";
     constexpr static const char *c_DefaultScenePath = "assets/dft2.scn";
-    constexpr static const char *c_DebugScenePath = "assets/cube.scn";
+    constexpr static const char *c_DebugScenePath = "assets/teapot_with_spheres.scn";
     constexpr static int c_AnyInputFilePathLength = 128;
 };
 

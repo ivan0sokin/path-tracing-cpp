@@ -59,7 +59,8 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     std::array<IHittable*, 1> m_NonHittableArray = {m_NonHittable};
     m_NonHittableBLAS = new BLAS(new BVH(m_NonHittableArray));
 
-    LoadSceneFromFile(c_DefaultScenePath);
+    // LoadSceneFromFile(c_DefaultScenePath);
+    LoadSceneFromFile(c_DebugScenePath);
 }
 
 Application::~Application() noexcept {

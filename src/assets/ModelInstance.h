@@ -11,7 +11,7 @@ public:
 
     inline void Update() const noexcept {
         Math::Matrix4f translationMatrix = Math::TranslationMatrix(m_Translation);
-        Math::Vector3f m_AnglesInRadians(Math::ToRadians(m_Angles.x), Math::ToRadians(m_Angles.y), Math::ToRadians(m_Angles.z));
+        Math::Vector3f m_AnglesInRadians(Math::ToRadians(m_AnglesInDegrees.x), Math::ToRadians(m_AnglesInDegrees.y), Math::ToRadians(m_AnglesInDegrees.z));
         Math::Matrix4f rotationMatrix = Math::RotationMatrix(m_AnglesInRadians);
         m_BLAS->SetTransform(translationMatrix * rotationMatrix);
     }
@@ -25,7 +25,7 @@ public:
     }
 
     Math::Vector3f& Angles() noexcept {
-        return m_Angles;
+        return m_AnglesInDegrees;
     }
 
     constexpr BLAS* const GetBLAS() const noexcept {
@@ -37,7 +37,7 @@ private:
     BLAS *m_BLAS;
 
     Math::Vector3f m_Translation;
-    Math::Vector3f m_Angles;
+    Math::Vector3f m_AnglesInDegrees;
 };
 
 #endif

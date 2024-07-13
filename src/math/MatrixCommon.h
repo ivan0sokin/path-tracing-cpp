@@ -56,6 +56,18 @@ namespace Math {
         }
     }
 
+    template<typename T, std::size_t N>
+    constexpr Types::Matrix<T, N, N> Transpose(const Types::Matrix<T, N, N> &m) noexcept {
+        Types::Matrix<T, N, N> result;
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                result[i][j] = m[j][i];
+            }
+        }
+
+        return result;
+    }
+
     template<typename T>
     constexpr Types::Matrix<T, 4, 4> Inverse(const Types::Matrix<T, 4, 4> &m) noexcept {
         Types::Matrix<T, 4, 4> inverse;
