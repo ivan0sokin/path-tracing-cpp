@@ -299,6 +299,7 @@ void Application::ProcessSceneCollapsingHeaders() noexcept {
     ProcessBoxesCollapsingHeader();
     ProcessModelsCollapsingHeader();
     ProcessMaterialsCollapsingHeader();
+    ProcessLoadingPropertiesHeader();
 
     if (m_SomeObjectChanged) {
         UpdateObjects();
@@ -634,6 +635,15 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
         if (deleteIndex >= 0) {
             m_Scene.materials.erase(m_Scene.materials.cbegin() + deleteIndex);
         }
+    }
+}
+
+void Application::ProcessLoadingPropertiesHeader() noexcept {
+    if (ImGui::CollapsingHeader("Loading properties", nullptr)) {
+        auto &loadingProperties = AssetLoader::Instance().GetLoadingProperties();
+
+        ImGui::Checkbox("Generate smooth normals", &loadingProperties.generateSmoothNormals);
+        ImGui::Checkbox("Surface area weighting", &loadingProperties.surfaceAreaWeighting);
     }
 }
 

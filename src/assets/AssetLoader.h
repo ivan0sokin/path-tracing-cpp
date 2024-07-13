@@ -19,6 +19,11 @@ public:
         }
     };
 
+    struct LoadingProperties {
+        bool generateSmoothNormals;
+        bool surfaceAreaWeighting;
+    };
+
 public:
     AssetLoader(const AssetLoader&) = delete;
     AssetLoader(AssetLoader&&) = delete;
@@ -36,6 +41,10 @@ public:
         return m_Models;
     }
 
+    constexpr LoadingProperties& GetLoadingProperties() noexcept {
+        return m_LoadingProperties;
+    }
+
     std::pair<ModelInstance*, Result> LoadOBJ(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory) noexcept;
 
     void IncreaseInstanceCount(int modelIndex) noexcept;
@@ -45,9 +54,10 @@ public:
 private:
     std::vector<Model*> m_Models;
     std::vector<int> m_InstanceCount;
+    LoadingProperties m_LoadingProperties;
 
 protected:
-    AssetLoader() noexcept = default;
+    AssetLoader() noexcept;
 };
 
 #endif

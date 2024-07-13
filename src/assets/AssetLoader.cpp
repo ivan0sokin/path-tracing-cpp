@@ -7,6 +7,11 @@
 
 #include <unordered_map>
 
+AssetLoader::AssetLoader() noexcept {
+    m_LoadingProperties.generateSmoothNormals = true;
+    m_LoadingProperties.surfaceAreaWeighting = true;
+}
+
 AssetLoader::~AssetLoader() noexcept {
     for (auto &model : m_Models) {
         if (model != nullptr) {
@@ -180,6 +185,14 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
                 const auto &p2 = v2.position;
 
                 auto normal = Math::Cross(p1 - p0, p2 - p0);
+
+                if (!m_LoadingProperties.generateSmoothNormals) {
+                    break;
+                }
+
+                if (!m_LoadingProperties.surfaceAreaWeighting) {
+                    normal = Math::Normalize(normal);
+                }
 
                 float a0 = Math::Angle(p1 - p0, p2 - p0);
                 float a1 = Math::Angle(p2 - p1, p0 - p1);

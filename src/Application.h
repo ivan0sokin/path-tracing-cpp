@@ -42,6 +42,8 @@ private:
 
     void ProcessMaterialsCollapsingHeader() noexcept;
 
+    void ProcessLoadingPropertiesHeader() noexcept;
+
     void UpdateThemeStyle() noexcept;
 
     void LoadSceneFromFile(const std::filesystem::path &pathToFile) noexcept;
