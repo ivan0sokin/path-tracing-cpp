@@ -31,7 +31,7 @@ public:
     inline ~Texture() noexcept = default;
 
     inline Math::Vector3f PickValue(const Math::Vector2f &texcoord) const noexcept {
-        int i = static_cast<int>(static_cast<float>(m_Height - 1) * (1.f - texcoord.v));
+        int i = static_cast<int>(static_cast<float>(m_Height - 1) * texcoord.v);
         int j = static_cast<int>(static_cast<float>(m_Width - 1) * texcoord.u);
         return m_Data[m_Width * i + j];
     }

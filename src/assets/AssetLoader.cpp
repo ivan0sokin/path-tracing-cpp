@@ -33,55 +33,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     pbrMaterials.reserve(materials.size());
     m_TextureAbsolutePaths.emplace_back();
     for (const auto &material : materials) {
-        Material pbrMaterial;
-        pbrMaterial.textures[TextureIndex::Albedo] = new Texture(Math::Vector3f(material.diffuse[0], material.diffuse[1], material.diffuse[2]));
-        pbrMaterial.textures[TextureIndex::Metallic] = new Texture(Math::Vector3f(Math::Max(material.specular[0], Math::Max(material.specular[1], material.specular[2]))));
-        pbrMaterial.textures[TextureIndex::Roughness] = new Texture(Math::Vector3f(0.5f));
-        pbrMaterial.textures[TextureIndex::Specular] = new Texture(Math::Vector3f(0.f));
-        pbrMaterial.index = static_cast<int>(pbrMaterials.size());
-        
-        const std::array<std::string, 5> textureNames = {
-            material.diffuse_texname,
-            material.reflection_texname,
-            material.specular_texname,
-            material.specular_highlight_texname,
-            material.bump_texname
-        };
-
-        for (int i = 0; i < static_cast<int>(textureNames.size()); ++i) {
-            const auto &textureName = textureNames[i];
-
-            if (textureName.empty()) {
-                continue;
-            }
-
-            std::filesystem::path pathToTexture = materialDirectory / std::filesystem::path(textureName);
-
-            std::string absolutePathToTexture = std::filesystem::absolute(pathToTexture).string();
-
-            Texture *texture = nullptr;
-
-            auto it = m_Textures.find(absolutePathToTexture);
-            if (it != m_Textures.cend()) {
-                texture = it->second;                
-            } else {
-                texture = LoadTexture(pathToTexture);
-                m_TextureAbsolutePaths.back().push_back(absolutePathToTexture);
-            }
-
-            if (pbrMaterial.textures[i] != nullptr) {
-                delete pbrMaterial.textures[i];
-            }
-
-            pbrMaterial.textures[i] = texture;
-        }
-        
-        // printf("Transparent: %f, refraction index: %f\n", material.dissolve, material.ior);
-
-        // pbrMaterial.transparency = material.dissolve;
-        // pbrMaterial.refractionIndex = material.ior;
-
-        pbrMaterials.push_back(pbrMaterial);
+        pbrMaterials.push_back(ProcessMaterial(material, static_cast<int>(pbrMaterials.size()), materialDirectory));
     }
 
     std::vector<Mesh*> meshes;
@@ -105,6 +57,57 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     m_Models.push_back(model);
 
     return {modelInstance, result};
+}
+
+Material AssetLoader::ProcessMaterial(const tinyobj::material_t &material, int index, const std::filesystem::path &materialDirectory) noexcept {
+    Material resultMaterial;
+    resultMaterial.textures[TextureIndex::Albedo] = new Texture(Math::Vector3f(material.diffuse[0], material.diffuse[1], material.diffuse[2]));
+    resultMaterial.textures[TextureIndex::Metallic] = new Texture(Math::Vector3f(Math::Max(material.specular[0], Math::Max(material.specular[1], material.specular[2]))));
+    resultMaterial.textures[TextureIndex::Roughness] = new Texture(Math::Vector3f(0.5f));
+    resultMaterial.textures[TextureIndex::Specular] = new Texture(Math::Vector3f(0.f));
+    resultMaterial.index = index;
+    
+    const std::array<std::string, 5> textureNames = {
+        material.diffuse_texname,
+        material.reflection_texname,
+        material.specular_texname,
+        material.specular_highlight_texname,
+        material.bump_texname
+    };
+
+    for (int i = 0; i < static_cast<int>(textureNames.size()); ++i) {
+        const auto &textureName = textureNames[i];
+
+        if (textureName.empty()) {
+            continue;
+        }
+
+        std::filesystem::path pathToTexture = materialDirectory / std::filesystem::path(textureName);
+        std::string absolutePathToTexture = std::filesystem::absolute(pathToTexture).string();
+
+        Texture *texture = nullptr;
+
+        auto it = m_Textures.find(absolutePathToTexture);
+        if (it != m_Textures.cend()) {
+            texture = it->second;                
+        } else {
+            texture = LoadTexture(pathToTexture);
+            m_TextureAbsolutePaths.back().push_back(absolutePathToTexture);
+        }
+
+        if (resultMaterial.textures[i] != nullptr) {
+            delete resultMaterial.textures[i];
+        }
+
+        resultMaterial.textures[i] = texture;
+    }
+
+    // printf("Transparent: %f, refraction index: %f\n", material.dissolve, material.ior);
+
+    // pbrMaterial.transparency = material.dissolve;
+    // pbrMaterial.refractionIndex = material.ior;
+
+    return resultMaterial;
 }
 
 Texture* AssetLoader::LoadTexture(const std::filesystem::path &pathToTexture) noexcept {
@@ -142,32 +145,7 @@ Mesh* AssetLoader::ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::m
     for (int faceIndex = 0; faceIndex < faceCount; ++faceIndex) {
         for (int vertexIndex = 0; vertexIndex < VERTICES_PER_FACE; ++vertexIndex) {
             auto index = mesh.indices[offset + vertexIndex];
-            
-            float x = 0.f, y = 0.f, z = 0.f;
-            if (!attrib.vertices.empty()) {
-                x = attrib.vertices[3 * index.vertex_index + 0];
-                y = attrib.vertices[3 * index.vertex_index + 1];
-                z = attrib.vertices[3 * index.vertex_index + 2];
-            }
-
-            float nx = 0.f, ny = 0.f, nz = 0.f;
-            if (!attrib.normals.empty()) {
-                nx = attrib.normals[3 * index.normal_index + 0];
-                ny = attrib.normals[3 * index.normal_index + 1];
-                nz = attrib.normals[3 * index.normal_index + 2];
-            }
-
-            float u = 0.f, v = 0.f;
-            if (!attrib.texcoords.empty()) {
-                u = attrib.texcoords[2 * index.texcoord_index + 0];
-                v = attrib.texcoords[2 * index.texcoord_index + 1];
-            }
-            
-            Mesh::Vertex vertex;
-            vertex.position = {x, y, z};
-            vertex.normal = {nx, ny, nz};
-            vertex.texcoord = {u, v};
-            vertex.tangent = Math::Vector3f(0.f);
+            auto vertex = ProcessVertex(attrib, index);
 
             int i = static_cast<int>(uniqueVertices.size());
             auto [it, inserted] = uniqueVertices.insert({vertex, i});
@@ -189,39 +167,83 @@ Mesh* AssetLoader::ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::m
     });
 
     if (attrib.normals.empty()) {
-        for (int f = 0; f < faceCount; ++f) {
-            auto &v0 = vertices[indices[3 * f + 0]];
-            auto &v1 = vertices[indices[3 * f + 1]];
-            auto &v2 = vertices[indices[3 * f + 2]];
-
-            const auto &p0 = v0.position;
-            const auto &p1 = v1.position;
-            const auto &p2 = v2.position;
-
-            auto normal = Math::Cross(p1 - p0, p2 - p0);
-
-            if (!m_LoadingProperties.generateSmoothNormals) {
-                break;
-            }
-
-            if (!m_LoadingProperties.surfaceAreaWeighting) {
-                normal = Math::Normalize(normal);
-            }
-
-            float a0 = Math::Angle(p1 - p0, p2 - p0);
-            float a1 = Math::Angle(p2 - p1, p0 - p1);
-            float a2 = Math::Angle(p0 - p2, p1 - p2);
-
-            v0.normal += normal * a0;
-            v1.normal += normal * a1;
-            v2.normal += normal * a2;
-        }
-
-        for (auto &vertex : vertices) {
-            vertex.normal = Math::Normalize(vertex.normal);
-        }
+        GenerateNormals(vertices, indices, faceCount);
     }
 
+    GenerateTangents(vertices, indices, faceCount);
+
+    vertices.shrink_to_fit();
+    indices.shrink_to_fit();
+    materialIndices.shrink_to_fit();
+
+    return new Mesh(std::move(vertices), std::move(indices), std::move(materialIndices));
+}
+
+Mesh::Vertex AssetLoader::ProcessVertex(const tinyobj::attrib_t &attrib, const tinyobj::index_t &index) noexcept {
+    Mesh::Vertex vertex;
+    
+    if (!attrib.vertices.empty()) {
+        vertex.position = {
+            attrib.vertices[3 * index.vertex_index + 0],
+            attrib.vertices[3 * index.vertex_index + 1],
+            attrib.vertices[3 * index.vertex_index + 2]
+        };
+    }
+
+    if (!attrib.normals.empty()) {
+        vertex.normal = {
+            attrib.normals[3 * index.normal_index + 0],
+            attrib.normals[3 * index.normal_index + 1],
+            attrib.normals[3 * index.normal_index + 2]
+        };
+    }
+
+    if (!attrib.texcoords.empty()) {
+        vertex.texcoord = {
+            attrib.texcoords[2 * index.texcoord_index + 0],
+            1.f - attrib.texcoords[2 * index.texcoord_index + 1]
+        };
+    }
+    
+    return vertex;
+}
+
+void AssetLoader::GenerateNormals(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept {
+    for (int f = 0; f < faceCount; ++f) {
+        auto &v0 = vertices[indices[3 * f + 0]];
+        auto &v1 = vertices[indices[3 * f + 1]];
+        auto &v2 = vertices[indices[3 * f + 2]];
+
+        const auto &p0 = v0.position;
+        const auto &p1 = v1.position;
+        const auto &p2 = v2.position;
+
+        auto normal = Math::Cross(p1 - p0, p2 - p0);
+
+        if (!m_LoadingProperties.generateSmoothNormals) {
+            break;
+        }
+
+        if (!m_LoadingProperties.surfaceAreaWeighting) {
+            normal = Math::Normalize(normal);
+        }
+
+        float a0 = Math::Angle(p1 - p0, p2 - p0);
+        float a1 = Math::Angle(p2 - p1, p0 - p1);
+        float a2 = Math::Angle(p0 - p2, p1 - p2);
+
+        v0.normal += normal * a0;
+        v1.normal += normal * a1;
+        v2.normal += normal * a2;
+    }
+
+    for (auto &vertex : vertices) {
+        vertex.normal = Math::Normalize(vertex.normal);
+    }
+}
+
+
+void AssetLoader::GenerateTangents(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept {
     for (int f = 0; f < faceCount; ++f) {
         auto &v0 = vertices[indices[3 * f + 0]];
         auto &v1 = vertices[indices[3 * f + 1]];
@@ -255,12 +277,6 @@ Mesh* AssetLoader::ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::m
     for (auto &vertex : vertices) {
         vertex.tangent = Math::Normalize(vertex.tangent - Math::Dot(vertex.tangent, vertex.normal) * vertex.normal);
     }
-
-    vertices.shrink_to_fit();
-    indices.shrink_to_fit();
-    materialIndices.shrink_to_fit();
-
-    return new Mesh(std::move(vertices), std::move(indices), std::move(materialIndices));
 }
 
 void AssetLoader::IncreaseInstanceCount(int modelIndex) noexcept {

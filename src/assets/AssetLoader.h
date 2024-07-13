@@ -58,7 +58,15 @@ public:
 private:
     Texture* LoadTexture(const std::filesystem::path &pathToTexture) noexcept;
 
+    Material ProcessMaterial(const tinyobj::material_t &material, int index, const std::filesystem::path &materialDirectory) noexcept;
+
     Mesh* ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::mesh_t &mesh) noexcept;
+
+    Mesh::Vertex ProcessVertex(const tinyobj::attrib_t &attrib, const tinyobj::index_t &index) noexcept;
+
+    void GenerateNormals(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept;
+
+    void GenerateTangents(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept;
 
     void UnloadModel(int modelIndex) noexcept;
 
