@@ -6,6 +6,7 @@
 #include "BLAS.h"
 #include "../Utilities.hpp"
 
+//! Top-level acceleration structure. Used to combine multiple BLAS in one structure, also binary tree structured.
 class TLAS {
 private:
     struct Node {
@@ -27,6 +28,7 @@ private:
     };
 
 public:
+    //! Constructs TLAS with given span of BLAS
     inline TLAS(std::span<BLAS* const> blas) noexcept :
         m_BLAS(blas.begin(), blas.end()) {
         int n = static_cast<int>(blas.size());
@@ -36,6 +38,7 @@ public:
         MakeHierarchyNaive(1, 0, n, usedNodes);
     }
 
+    //! Performs worldray-TLAS intersection
     inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
         if (m_Nodes[1].aabb.Intersect(ray, tMin, tMax) == Math::Constants::Infinity<float>) {
             return false;
@@ -51,7 +54,8 @@ public:
         bool anyHit = false;
         while (stackPointer > 0) {
             if (m_Nodes[nodeIndex].IsLeaf()) {
-                anyHit |= m_BLAS[-m_Nodes[nodeIndex].index]->Hit(ray, tMin, tMax, payload);
+                int blasIndex = -m_Nodes[nodeIndex].index;
+                anyHit |= m_BLAS[blasIndex]->Hit(ray, tMin, tMax, payload);
                 tMax = Math::Min(tMax, payload.t);
                 
                 nodeIndex = nodeIndices[--stackPointer];

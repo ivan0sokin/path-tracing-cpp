@@ -40,7 +40,7 @@ public:
         m_AABB = m_Nodes[1].aabb;
     }
 
-    //! Performs local-space-ray-bvh intersection
+    //! Performs localray-bvh intersection
     inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
         const int TREE_DEPTH = 1024;
 
@@ -85,6 +85,7 @@ public:
         return anyHit;
     }
 
+    //! Returns AABB of all objects
     constexpr AABB GetBoundingBox() const noexcept {
         return m_AABB;
     }

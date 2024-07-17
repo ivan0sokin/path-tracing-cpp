@@ -193,10 +193,10 @@ namespace Math {
             return IdentityMatrix<T, 4>();
         }
 
-        T oneOverDeterminant = Constants::One<T> / determinant;
+        T inverseDeterminant = Constants::One<T> / determinant;
 
         for (int i = 0; i < 16; i++) {
-            inverse.data[i] *= oneOverDeterminant;
+            inverse.data[i] *= inverseDeterminant;
         }
 
         return inverse;
