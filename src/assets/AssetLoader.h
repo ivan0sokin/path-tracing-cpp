@@ -50,7 +50,7 @@ public:
         return m_Models;
     }
 
-    //! Returns reference to loading properties structure for convenience
+    //! Returns reference to loading properties structure. GUI convenience
     constexpr LoadingProperties& GetLoadingProperties() noexcept {
         return m_LoadingProperties;
     }
