@@ -525,12 +525,12 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             }
             
             if (ImGui::InputFloat3("Translation", Math::ValuePointer(modelInstance->Translation()))) {
-                modelInstance->Update();
+                modelInstance->UpdateTransform();
                 m_SomeGeometryChanged = true;
             }
 
             if (ImGui::InputFloat3("Angles", Math::ValuePointer(modelInstance->Angles()))) {
-                modelInstance->Update();
+                modelInstance->UpdateTransform();
                 m_SomeGeometryChanged = true;
             }
 
@@ -555,7 +555,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             if (result.IsFailure()) {
                 std::cerr << "Failed to import model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << '\n';
             } else {
-                std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << "in " << loadTime << "ms\n";
+                std::cout << "Loaded model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << " in " << loadTime << "ms\n";
 
                 m_Scene.modelInstances.push_back(modelInstance);
                 m_SomeObjectChanged = true;

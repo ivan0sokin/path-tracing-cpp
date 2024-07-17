@@ -27,23 +27,28 @@ public:
         }
     };
 
+    //! Constructs Mesh from moved vector of vertices, indices and materialIndices
     inline Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept : 
         m_Vertices(std::move(vertices)), m_Indices(std::move(indices)), m_MaterialIndices(std::move(materialIndices)) {}
 
     inline ~Mesh() noexcept = default;
 
+    //! Returns face count of mesh, i.e. number of vertices divided by three
     inline int GetFaceCount() const noexcept {
         return static_cast<int>(m_Indices.size() / 3);
     }
 
+    //! Returns span of reduced vertices
     constexpr std::span<const Vertex> GetVertices() const noexcept {
         return m_Vertices;
     }
 
+    //! Returns span of indices
     constexpr std::span<const int> GetIndices() const noexcept {
         return m_Indices;
     }
 
+    //! Returns span of material indices
     constexpr std::span<const int> GetMaterialIndices() const noexcept {
         return m_MaterialIndices;
     }

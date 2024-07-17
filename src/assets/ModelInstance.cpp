@@ -1,11 +1,11 @@
 #include "ModelInstance.h"
 #include "AssetLoader.h"
 
-ModelInstance::ModelInstance(int modelIndex, const BVH *bvh) noexcept :
-    m_ModelIndex(modelIndex), m_BLAS(new BLAS(bvh)) {
-    AssetLoader::Instance().IncreaseInstanceCount(m_ModelIndex);
+ModelInstance::ModelInstance(const BVH *bvh, std::function<void()> onCreate, std::function<void()> onDestroy) noexcept :
+    m_BLAS(new BLAS(bvh)), m_OnCreate(onCreate), m_OnDestroy(onDestroy) {
+    m_OnCreate();
 }
 
 ModelInstance::~ModelInstance() noexcept {
-    AssetLoader::Instance().DecreaseInstanceCount(m_ModelIndex);
+    m_OnDestroy();
 }

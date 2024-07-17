@@ -29,9 +29,10 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
         return {nullptr, result};
     }
 
+    m_TextureAbsolutePaths.emplace_back();
+
     std::vector<Material> pbrMaterials;
     pbrMaterials.reserve(materials.size());
-    m_TextureAbsolutePaths.emplace_back();
     for (const auto &material : materials) {
         pbrMaterials.push_back(ProcessMaterial(material, static_cast<int>(pbrMaterials.size()), materialDirectory));
     }
@@ -51,8 +52,18 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     
     Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), totalFaceCount);
 
+    int modelIndex = static_cast<int>(m_Models.size());
+
     m_InstanceCount.push_back(0);
-    ModelInstance *modelInstance = new ModelInstance(static_cast<int>(m_Models.size()), model->GetBVH());
+    ModelInstance *modelInstance = new ModelInstance(
+        model->GetBVH(),
+        [this, modelIndex]() {
+            IncreaseInstanceCount(modelIndex);
+        },
+        [this, modelIndex]() {
+            DecreaseInstanceCount(modelIndex);
+        }
+    );
 
     m_Models.push_back(model);
 

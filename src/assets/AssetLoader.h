@@ -12,8 +12,10 @@
 #include <filesystem>
 #include <utility>
 
+//! Class that holds all model loading information and operations
 class AssetLoader {
 public:
+    //! Result of model loading structure
     struct Result {
         std::string warning = "";
         std::string error = "";
@@ -23,6 +25,7 @@ public:
         }
     };
 
+    //! Properties of loading that user can change
     struct LoadingProperties {
         bool generateSmoothNormals;
         bool surfaceAreaWeighting;
@@ -34,26 +37,26 @@ public:
     AssetLoader& operator=(const AssetLoader&) = delete;
     AssetLoader& operator=(AssetLoader&&) = delete;
 
+    ~AssetLoader() noexcept;
+
+    //! Singleton instance of AssetLoader
     inline static AssetLoader& Instance() noexcept {
         static AssetLoader assetLoader;
         return assetLoader;
     }
 
-    ~AssetLoader() noexcept;
-
+    //! Returns all models that were loaded during execution including unloaded models (nullptr)
     constexpr std::span<Model* const> GetModels() noexcept {
         return m_Models;
     }
 
+    //! Returns reference to loading properties structure for convenience
     constexpr LoadingProperties& GetLoadingProperties() noexcept {
         return m_LoadingProperties;
     }
 
+    //! Loads .obj model from ```pathToFile```. Returns pair of pointer to ModelInstance and loading Result
     std::pair<ModelInstance*, Result> LoadOBJ(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory) noexcept;
-
-    void IncreaseInstanceCount(int modelIndex) noexcept;
-
-    void DecreaseInstanceCount(int modelIndex) noexcept;
 
 private:
     Texture* LoadTexture(const std::filesystem::path &pathToTexture) noexcept;
@@ -67,6 +70,10 @@ private:
     void GenerateNormals(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept;
 
     void GenerateTangents(std::vector<Mesh::Vertex> &vertices, const std::vector<int> &indices, int faceCount) noexcept;
+
+    void IncreaseInstanceCount(int modelIndex) noexcept;
+
+    void DecreaseInstanceCount(int modelIndex) noexcept;
 
     void UnloadModel(int modelIndex) noexcept;
 
