@@ -20,6 +20,7 @@ public:
         std::string warning = "";
         std::string error = "";
 
+        //! Returns true if error is not empty
         inline bool IsFailure() const noexcept {
             return !error.empty();
         }
