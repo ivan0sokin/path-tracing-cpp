@@ -6,22 +6,26 @@
 #include "BVH.h"
 #include "../Ray.h"
 
+//! Bottom-level acceleration structure. Works as BVH instance, holds information about transformation
 class BLAS {
 public:
     constexpr ~BLAS() noexcept = default;
 
-    inline BLAS(const BVH *bvh) noexcept :
+    //! Constructs BLAS with given BVH and no transformation
+    constexpr BLAS(const BVH *bvh) noexcept :
         m_BVH(bvh),
         m_LocalAABB(bvh->GetBoundingBox()),
         m_Transform(Math::IdentityMatrix<float, 4>()),
         m_InverseTransform(Math::IdentityMatrix<float, 4>()) {}
 
-    inline void SetTransform(const Math::Matrix4f &transform) noexcept {
+    //! Sets transformation matrix
+    constexpr void SetTransform(const Math::Matrix4f &transform) noexcept {
         m_Transform = transform;
         m_InverseTransform = Math::Inverse(transform);
         m_LocalAABB = ComputeLocalAABB(transform);
     }
 
+    //! Ray-BLAS intersection. Transforms ray into local space and saves it if hit
     inline bool Hit(const Ray &worldRay, float tMin, float tMax, HitPayload &payload) const noexcept {
         if (m_LocalAABB.Intersect(worldRay, tMin, tMax) == Math::Constants::Infinity<float>) {
             return false;
@@ -42,16 +46,18 @@ public:
         return true;
     }
 
+    //! Returns AABB in local space
     constexpr AABB GetLocalBoundingBox() const noexcept {
         return m_LocalAABB;
     }
 
+    //! Returns its BVH
     constexpr const BVH* GetBVH() const noexcept {
         return m_BVH;
     }
 
 private:
-    inline AABB ComputeLocalAABB(const Math::Matrix4f transform) const noexcept {
+    constexpr AABB ComputeLocalAABB(const Math::Matrix4f transform) const noexcept {
         AABB aabb = m_BVH->GetBoundingBox();
         Math::Vector3f min, max;
         for (int i = 0; i < 8; ++i) {

@@ -7,6 +7,7 @@
 #include <span>
 #include <functional>
 
+//! Bounding volume hierarchy. Binary tree structure that improves ray-model in average O(logn)
 class BVH {
 private:
     struct Node {
@@ -22,13 +23,13 @@ private:
         constexpr Node(int index, const Node &left, const Node &right) noexcept :
             index(index), aabb(left.aabb, right.aabb) {}
 
-        //! Returns true if this node is leaf
         constexpr bool IsLeaf() const noexcept {
             return index <= 0;
         }
     };
     
 public:
+    //! Constructs a binary tree with given array of hittables
     inline BVH(std::span<IHittable* const> hittables) noexcept :
         m_Hittables(hittables.begin(), hittables.end()) {
         int n = static_cast<int>(hittables.size());
@@ -36,8 +37,10 @@ public:
 
         int usedNodes = 1;
         MakeHierarchySAH(1, 0, n, usedNodes);
+        m_AABB = m_Nodes[1].aabb;
     }
 
+    //! Performs local-space-ray-bvh intersection
     inline bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
         const int TREE_DEPTH = 1024;
 
@@ -48,7 +51,8 @@ public:
         bool anyHit = false;
         while (stackPointer > 0) {
             if (m_Nodes[nodeIndex].IsLeaf()) {
-                anyHit |= m_Hittables[-m_Nodes[nodeIndex].index]->Hit(ray, tMin, tMax, payload);
+                int hittableIndex = -m_Nodes[nodeIndex].index;
+                anyHit |= m_Hittables[hittableIndex]->Hit(ray, tMin, tMax, payload);
                 tMax = Math::Min(tMax, payload.t);
                 
                 nodeIndex = nodeIndices[--stackPointer];
@@ -81,8 +85,8 @@ public:
         return anyHit;
     }
 
-    inline AABB GetBoundingBox() const noexcept {
-        return m_Nodes[1].aabb;
+    constexpr AABB GetBoundingBox() const noexcept {
+        return m_AABB;
     }
 
 private:
@@ -98,10 +102,10 @@ private:
 
         float minValue = Math::Constants::Infinity<float>;
         int mid = -1;
-        int dimension = -1;
+        int axis = -1;
 
         for (int d = 0; d < 3; ++d) {
-            std::sort(m_Hittables.begin() + low, m_Hittables.begin() + high, c_ComparatorsSAH[d]);
+            std::sort(m_Hittables.begin() + low, m_Hittables.begin() + high, GetCentroidComparatorByAxis(d));
 
             pref[0] = AABB::Empty();
             for (int i = 0; i < n; ++i) {
@@ -126,11 +130,11 @@ private:
             if (minValueAlongAxis < minValue) {
                 minValue = minValueAlongAxis;
                 mid = index + 1;
-                dimension = d;
+                axis = d;
             }
         }
 
-        std::sort(m_Hittables.begin() + low, m_Hittables.begin() + high, c_ComparatorsSAH[dimension]);
+        std::sort(m_Hittables.begin() + low, m_Hittables.begin() + high, GetCentroidComparatorByAxis(axis));
         
         int leftIndex = ++usedNodes;
         int rightIndex = ++usedNodes;
@@ -140,68 +144,16 @@ private:
         m_Nodes[index] = Node(leftIndex, m_Nodes[leftIndex], m_Nodes[rightIndex]);
     }
 
+    inline std::function<bool(const IHittable*, const IHittable*)> GetCentroidComparatorByAxis(int axis) const noexcept {
+        return [axis](const IHittable * const a, const IHittable * const b) {
+            return a->GetCentroid()[axis] < b->GetCentroid()[axis];
+        };
+    }
+
 private:
     std::vector<Node> m_Nodes;
     std::vector<const IHittable*> m_Hittables;
-
-    inline static const std::function<bool(const IHittable*, const IHittable*)> c_ComparatorsSAH[3] = {
-        [](const IHittable *a, const IHittable *b) {
-            return a->GetCentroid().x < b->GetCentroid().x;
-        },
-        [](const IHittable *a, const IHittable *b) {
-            return a->GetCentroid().y < b->GetCentroid().y;
-        },
-        [](const IHittable *a, const IHittable *b) {
-            return a->GetCentroid().z < b->GetCentroid().z;
-        }
-    };
+    AABB m_AABB;
 };
-
-// //! Makes BVH using naive implementation sorting by lengths of axes
-    // inline static BVHNode* MakeHierarchyNaive(std::span<HittableObjectPtr> objects, int low, int high) noexcept {
-    //     AABB aabb = AABB::Empty();
-    //     for (int i = low; i < high; ++i) {
-    //         aabb = AABB(aabb, objects[i]->GetBoundingBox());
-    //     }
-
-    //     int longestAxisIndex = 0;
-    //     float longestAxisLength = aabb.max.x - aabb.min.x;
-        
-    //     if (aabb.max.y - aabb.min.y > longestAxisLength) {
-    //         longestAxisIndex = 1;
-    //         longestAxisLength = aabb.max.y - aabb.min.y;
-    //     }
-
-    //     if (aabb.max.z - aabb.min.z > longestAxisLength) {
-    //         longestAxisIndex = 2;
-    //         longestAxisLength = aabb.max.z - aabb.min.z;
-    //     }
-        
-    //     auto comparator = c_ComparatorsNaive[longestAxisIndex];
-
-    //     if (low + 1 == high) {
-    //         return new BVHNode(objects[low]);
-    //     }
-
-    //     std::sort(objects.begin() + low, objects.begin() + high, comparator);
-        
-    //     int mid = (low + high) / 2;
-    //     BVHNode *left = MakeHierarchyNaive(objects, low, mid);
-    //     BVHNode *right = MakeHierarchyNaive(objects, mid, high);
-
-    //     return new BVHNode(left, right);
-    // }
-
-    // inline static const std::function<bool(HittableObjectPtr, HittableObjectPtr)> c_ComparatorsNaive[3] = {
-    //     [](HittableObjectPtr a, HittableObjectPtr b){
-    //         return a->GetBoundingBox().min.x < b->GetBoundingBox().min.x;
-    //     },
-    //     [](HittableObjectPtr a, HittableObjectPtr b){
-    //         return a->GetBoundingBox().min.y < b->GetBoundingBox().min.y;
-    //     },
-    //     [](HittableObjectPtr a, HittableObjectPtr b){
-    //         return a->GetBoundingBox().min.z < b->GetBoundingBox().min.z;
-    //     }
-    // };
 
 #endif

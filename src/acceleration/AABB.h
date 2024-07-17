@@ -30,7 +30,7 @@ struct AABB {
         return 2.f * (a * b + b * c + a * c);
     }
 
-    //! Returns true if ray intersects AABB on give interval
+    //! Returns multiplier ```t``` if ray intersects AABB on given interval, otherwise returns +inf
     constexpr float Intersect(const Ray &ray, float tMin, float tMax) const noexcept {
         auto inverseDirection = ray.inverseDirection;
         auto origin = ray.origin;
