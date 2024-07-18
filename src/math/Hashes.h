@@ -8,6 +8,7 @@
 #include <functional>
 
 namespace Math {
+    //! Combines hashes somehow to get good combined hash
     constexpr size_t CombineHashes(size_t a, size_t b) noexcept {
         a ^= b + 0x9e3779b9 + (a << 6) + (a >> 2);
         return a;
@@ -15,6 +16,7 @@ namespace Math {
 }
 
 namespace std {
+    //! Hash for 2D Vector
     template<typename T>
     struct hash<Math::Types::Vector<T, 2>> {
         constexpr size_t operator()(const Math::Types::Vector<T, 2> &v) const noexcept {
@@ -24,6 +26,7 @@ namespace std {
         }
     };
 
+    //! Hash for 3D Vector
     template<typename T>
     struct hash<Math::Types::Vector<T, 3>> {
         constexpr size_t operator()(const Math::Types::Vector<T, 3> &v) const noexcept {
@@ -33,6 +36,7 @@ namespace std {
         }
     };
 
+    //! Hash for 4D Vector
     template<typename T>
     struct hash<Math::Types::Vector<T, 4>> {
         constexpr size_t operator()(const Math::Types::Vector<T, 4> &v) const noexcept {

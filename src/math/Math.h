@@ -16,6 +16,7 @@
 #include "Hashes.h"
 #include "Transform.h"
 
+//! Linear algebra and basic geometric, trigonometric math
 namespace Math {
     using Vector2f = Types::Vector<float, 2>;
     using Vector3f = Types::Vector<float, 3>;

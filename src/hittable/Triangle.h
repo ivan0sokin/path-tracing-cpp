@@ -7,6 +7,7 @@
 #include <cstdio>
 
 namespace Shapes {
+    //! Primitive shape. Holds vertices and material
     class Triangle : public IHittable {
     public:
         Math::Vector3f vertices[3];
@@ -14,14 +15,18 @@ namespace Shapes {
         Math::Vector3f normal;
         const Material *material;
 
+        //! Constructs Triangle by default
         constexpr Triangle() = default;
 
+        //! Constructs Triangle with given points and ```material```
         constexpr Triangle(const Math::Vector3f &a, const Math::Vector3f &b, const Math::Vector3f &c, const Material *material) noexcept :
             vertices{a, b, c}, edges{b - a, c - a}, normal(Math::Normalize(Math::Cross(edges[0], edges[1]))), material(material) {}
 
+        //! Constructs Triangle with given ```vertices```, ```normal``` and ```material```
         constexpr Triangle(const std::array<Math::Vector3f, 3> &vertices, const Math::Vector3f &normal, const Material *material) noexcept :
             vertices{vertices[0], vertices[1], vertices[2]}, edges{vertices[1] - vertices[0], vertices[2] - vertices[0]}, normal(normal), material(material) {}
 
+        //! Performs Ray-Triangle intersection using Moller-Trumbore algorithm. Returns true if hit
         constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             Math::Vector3f rayCrossEdge2 = Math::Cross(ray.direction, edges[1]);
             float determinant = Math::Dot(edges[0], rayCrossEdge2);
@@ -58,15 +63,18 @@ namespace Shapes {
             return true;
         }
 
+        //! Returns center of Triangle
         constexpr Math::Vector3f GetCentroid() const noexcept override {
             return (vertices[0] + vertices[1] + vertices[2]) * Math::Constants::OneThird<float>;
         }
 
+        //! Returns AABB of Triangle with offset of 0.01
         constexpr AABB GetBoundingBox() const noexcept override {
             return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.01f,
                         Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.01f);
         }
 
+        //! Samples Triangle surface uniformly
         constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
             float sqrt = Math::Sqrt(sample.x);
             float b0 = 1.f - sqrt;
@@ -75,6 +83,7 @@ namespace Shapes {
             return b0 * vertices[0] + b1 * vertices[1] + (1.f - b0 - b1) * vertices[2];
         }
 
+        //! Returns Triangle surface area
         constexpr float GetSurfaceArea() const noexcept override {
             return Math::Length(Math::Cross(edges[0], edges[1])) * 0.5f;
         }   

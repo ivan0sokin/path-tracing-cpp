@@ -112,7 +112,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>(0.f);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">float</span> pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object-&gt;GetSurfaceArea());</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">float</span> pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object-&gt;<a class="code hl_function" href="class_i_hittable.html#a0588f29f3f634ff56500589ef7881b3b">GetSurfaceArea</a>());</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        </div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">constexpr</span> <span class="keywordtype">float</span> pdfEpsilon = 0.01f;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">if</span> (pdf &lt;= pdfEpsilon) {</div>
@@ -132,11 +132,12 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_i_hittable_html"><div class="ttname"><a href="class_i_hittable.html">IHittable</a></div><div class="ttdoc">Abstraction for hittable object.</div><div class="ttdef"><b>Definition</b> IHittable.h:10</div></div>
+<div class="ttc" id="aclass_i_hittable_html_a0588f29f3f634ff56500589ef7881b3b"><div class="ttname"><a href="class_i_hittable.html#a0588f29f3f634ff56500589ef7881b3b">IHittable::GetSurfaceArea</a></div><div class="ttdeci">virtual float GetSurfaceArea() const noexcept=0</div><div class="ttdoc">Returns surface area of shape.</div></div>
 <div class="ttc" id="aclass_light_html"><div class="ttname"><a href="class_light.html">Light</a></div><div class="ttdoc">Class that samples lights directly.</div><div class="ttdef"><b>Definition</b> Light.h:10</div></div>
 <div class="ttc" id="aclass_light_html_a756d53800a3156ca06ec0b31e1a0c600"><div class="ttname"><a href="class_light.html#a756d53800a3156ca06ec0b31e1a0c600">Light::GetObject</a></div><div class="ttdeci">const IHittable * GetObject() const noexcept</div><div class="ttdoc">Return pointer to object that light holds.</div><div class="ttdef"><b>Definition</b> Light.h:16</div></div>
 <div class="ttc" id="aclass_light_html_a825912082123457b823d2ac6c17778a6"><div class="ttname"><a href="class_light.html#a825912082123457b823d2ac6c17778a6">Light::Sample</a></div><div class="ttdeci">Math::Vector3f Sample(const Ray &amp;lightRay, const HitPayload &amp;objectHitPayload, const HitPayload &amp;lightHitPayload, float distance, float distanceSquared) const noexcept</div><div class="ttdoc">Returns color sample using direct light sampling method.</div><div class="ttdef"><b>Definition</b> Light.h:21</div></div>
 <div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdoc">Holds information about ray-surface interaction.</div><div class="ttdef"><b>Definition</b> HitPayload.h:9</div></div>
-<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdef"><b>Definition</b> Types.h:9</div></div>
+<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdoc">N-dimensional Vector</div><div class="ttdef"><b>Definition</b> Types.h:11</div></div>
 <div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdoc">Ray representation, P(t) = origin + direction * t.</div><div class="ttdef"><b>Definition</b> Ray.h:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

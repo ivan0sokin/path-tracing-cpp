@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['sample_0',['Sample',['../class_b_x_d_f.html#a1da53b6f193fd9d49fcbfd5491585b06',1,'BXDF::Sample()'],['../class_light.html#a825912082123457b823d2ac6c17778a6',1,'Light::Sample()']]],
-  ['serialize_1',['Serialize',['../struct_scene.html#a14f9707a4b2bb121d676a1ce33eb5996',1,'Scene']]],
-  ['settransform_2',['SetTransform',['../class_b_l_a_s.html#a3538b7353ab68f19b4cda1d1956d0164',1,'BLAS']]]
+  ['raydepth_0',['RayDepth',['../class_renderer.html#abbd2924832fd11fc0499967825277fa5',1,'Renderer']]],
+  ['render_1',['Render',['../class_renderer.html#a90c87f7f2c933d0d1116ed1176abdd38',1,'Renderer::Render(const Camera &amp;camera, std::span&lt; IHittable *const &gt; objects, std::span&lt; const Light &gt; lightSources, std::span&lt; const Material &gt; materials) noexcept'],['../class_renderer.html#a954850fde82e3e27480f232f7a7b134b',1,'Renderer::Render(const Camera &amp;camera, const TLAS *accelerationStructure, std::span&lt; const Light &gt; lightSources, std::span&lt; const Material &gt; materials) noexcept']]],
+  ['renderer_2',['Renderer',['../class_renderer.html#a59f28059536f30f80c16022a61047694',1,'Renderer']]],
+  ['run_3',['Run',['../class_application.html#a5c63f622cc0fd7ca14f9a19b3f24742f',1,'Application']]]
 ];

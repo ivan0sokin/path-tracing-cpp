@@ -74,24 +74,17 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_renderer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Renderer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class that renders scene to image.  
+<p>Class that renders <a class="el" href="struct_scene.html" title="Struct that holds camera, all primitives and models. Can be serialized/deserialized.">Scene</a> to <a class="el" href="class_image.html" title="RGBA image.">Image</a>.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_renderer_8h_source.html">Renderer.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:ae400bd53c113ea1822445878f2e466f0" id="r_ae400bd53c113ea1822445878f2e466f0"><td class="memItemLeft" align="right" valign="top"><a id="ae400bd53c113ea1822445878f2e466f0" name="ae400bd53c113ea1822445878f2e466f0"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>typ_t</b> = <a class="el" href="class_i_hittable.html">IHittable</a>*</td></tr>
-<tr class="separator:ae400bd53c113ea1822445878f2e466f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a59f28059536f30f80c16022a61047694" id="r_a59f28059536f30f80c16022a61047694"><td class="memItemLeft" align="right" valign="top"><a id="a59f28059536f30f80c16022a61047694" name="a59f28059536f30f80c16022a61047694"></a>
@@ -112,44 +105,55 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Render</b> (const <a 
 <tr class="separator:a954850fde82e3e27480f232f7a7b134b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab529593cee20524c0baa5e5284fd11c1" id="r_ab529593cee20524c0baa5e5284fd11c1"><td class="memItemLeft" align="right" valign="top"><a id="ab529593cee20524c0baa5e5284fd11c1" name="ab529593cee20524c0baa5e5284fd11c1"></a>
 constexpr bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Accumulate</b> () noexcept</td></tr>
+<tr class="memdesc:ab529593cee20524c0baa5e5284fd11c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to accumulation flag. GUI convinience. <br /></td></tr>
 <tr class="separator:ab529593cee20524c0baa5e5284fd11c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a642f7f8741a9c5662d3dc704bf77ad24" id="r_a642f7f8741a9c5662d3dc704bf77ad24"><td class="memItemLeft" align="right" valign="top"><a id="a642f7f8741a9c5662d3dc704bf77ad24" name="a642f7f8741a9c5662d3dc704bf77ad24"></a>
 constexpr bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Accelerate</b> () noexcept</td></tr>
+<tr class="memdesc:a642f7f8741a9c5662d3dc704bf77ad24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to acceleration flag. GUI convinience. <br /></td></tr>
 <tr class="separator:a642f7f8741a9c5662d3dc704bf77ad24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5fead09791606e2ce29c7f4874e0a09" id="r_ad5fead09791606e2ce29c7f4874e0a09"><td class="memItemLeft" align="right" valign="top"><a id="ad5fead09791606e2ce29c7f4874e0a09" name="ad5fead09791606e2ce29c7f4874e0a09"></a>
 constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFrameIndex</b> () const noexcept</td></tr>
+<tr class="memdesc:ad5fead09791606e2ce29c7f4874e0a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current frame index. <br /></td></tr>
 <tr class="separator:ad5fead09791606e2ce29c7f4874e0a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f0bb877016b8357a734853a53950e85" id="r_a5f0bb877016b8357a734853a53950e85"><td class="memItemLeft" align="right" valign="top"><a id="a5f0bb877016b8357a734853a53950e85" name="a5f0bb877016b8357a734853a53950e85"></a>
 constexpr <a class="el" href="class_image.html">Image</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetImage</b> () const noexcept</td></tr>
+<tr class="memdesc:a5f0bb877016b8357a734853a53950e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to rendered <a class="el" href="class_image.html" title="RGBA image.">Image</a>. <br /></td></tr>
 <tr class="separator:a5f0bb877016b8357a734853a53950e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a479bec0669d53d441558a1e7e2399683" id="r_a479bec0669d53d441558a1e7e2399683"><td class="memItemLeft" align="right" valign="top"><a id="a479bec0669d53d441558a1e7e2399683" name="a479bec0669d53d441558a1e7e2399683"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>OnResize</b> (int width, int height) noexcept</td></tr>
-<tr class="memdesc:a479bec0669d53d441558a1e7e2399683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes image data. <br /></td></tr>
+<tr class="memdesc:a479bec0669d53d441558a1e7e2399683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes <a class="el" href="class_image.html" title="RGBA image.">Image</a>. <br /></td></tr>
 <tr class="separator:a479bec0669d53d441558a1e7e2399683"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f58745da15ca94a511c809023cf0eed" id="r_a9f58745da15ca94a511c809023cf0eed"><td class="memItemLeft" align="right" valign="top"><a id="a9f58745da15ca94a511c809023cf0eed" name="a9f58745da15ca94a511c809023cf0eed"></a>
 constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>GetAvailableThreadCount</b> () const noexcept</td></tr>
+<tr class="memdesc:a9f58745da15ca94a511c809023cf0eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns not used number of threads. <br /></td></tr>
 <tr class="separator:a9f58745da15ca94a511c809023cf0eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75d44f763f1e1b11b77a927a66fbd1d7" id="r_a75d44f763f1e1b11b77a927a66fbd1d7"><td class="memItemLeft" align="right" valign="top"><a id="a75d44f763f1e1b11b77a927a66fbd1d7" name="a75d44f763f1e1b11b77a927a66fbd1d7"></a>
 constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>GetUsedThreadCount</b> () const noexcept</td></tr>
+<tr class="memdesc:a75d44f763f1e1b11b77a927a66fbd1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of threads used in rendering. <br /></td></tr>
 <tr class="separator:a75d44f763f1e1b11b77a927a66fbd1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d7bccf9bfc047ae5b4ebf4b7855178b" id="r_a8d7bccf9bfc047ae5b4ebf4b7855178b"><td class="memItemLeft" align="right" valign="top"><a id="a8d7bccf9bfc047ae5b4ebf4b7855178b" name="a8d7bccf9bfc047ae5b4ebf4b7855178b"></a>
 constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>SetUsedThreadCount</b> (int usedThreads) noexcept</td></tr>
+<tr class="memdesc:a8d7bccf9bfc047ae5b4ebf4b7855178b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets used threads. <br /></td></tr>
 <tr class="separator:a8d7bccf9bfc047ae5b4ebf4b7855178b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ec221255674e8b346104f63ac204f47" id="r_a4ec221255674e8b346104f63ac204f47"><td class="memItemLeft" align="right" valign="top"><a id="a4ec221255674e8b346104f63ac204f47" name="a4ec221255674e8b346104f63ac204f47"></a>
 constexpr int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>UsedThreadCount</b> () noexcept</td></tr>
+<tr class="memdesc:a4ec221255674e8b346104f63ac204f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to number of threads used in rendering. GUI convinience. <br /></td></tr>
 <tr class="separator:a4ec221255674e8b346104f63ac204f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1750bb3fd139b923e9f1ee3eed915ab5" id="r_a1750bb3fd139b923e9f1ee3eed915ab5"><td class="memItemLeft" align="right" valign="top"><a id="a1750bb3fd139b923e9f1ee3eed915ab5" name="a1750bb3fd139b923e9f1ee3eed915ab5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>OnRayMiss</b> (std::function&lt; <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>(const <a class="el" href="struct_ray.html">Ray</a> &amp;)&gt; onRayMiss) noexcept</td></tr>
+<tr class="memdesc:a1750bb3fd139b923e9f1ee3eed915ab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets rule on which missing ray is lightened. <br /></td></tr>
 <tr class="separator:a1750bb3fd139b923e9f1ee3eed915ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbd2924832fd11fc0499967825277fa5" id="r_abbd2924832fd11fc0499967825277fa5"><td class="memItemLeft" align="right" valign="top"><a id="abbd2924832fd11fc0499967825277fa5" name="abbd2924832fd11fc0499967825277fa5"></a>
 constexpr int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>RayDepth</b> () noexcept</td></tr>
+<tr class="memdesc:abbd2924832fd11fc0499967825277fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to ray depth. GUI convinience. <br /></td></tr>
 <tr class="separator:abbd2924832fd11fc0499967825277fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4630139a57e75ed8cf77aa55c5a9c86a" id="r_a4630139a57e75ed8cf77aa55c5a9c86a"><td class="memItemLeft" align="right" valign="top"><a id="a4630139a57e75ed8cf77aa55c5a9c86a" name="a4630139a57e75ed8cf77aa55c5a9c86a"></a>
 constexpr float &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Gamma</b> () noexcept</td></tr>
+<tr class="memdesc:a4630139a57e75ed8cf77aa55c5a9c86a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to gamma. GUI convinience. <br /></td></tr>
 <tr class="separator:a4630139a57e75ed8cf77aa55c5a9c86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class that renders scene to image. </p>
+<div class="textblock"><p>Class that renders <a class="el" href="struct_scene.html" title="Struct that holds camera, all primitives and models. Can be serialized/deserialized.">Scene</a> to <a class="el" href="class_image.html" title="RGBA image.">Image</a>. </p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="_renderer_8h_source.html">Renderer.h</a></li>
 <li>src/<b>Renderer.cpp</b></li>

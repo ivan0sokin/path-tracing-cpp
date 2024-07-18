@@ -9,6 +9,7 @@
 
 namespace Math {
     namespace Types {
+        //! 3x3 Matrix
         template<typename T>
         struct Matrix<T, 3, 3> {
             union {

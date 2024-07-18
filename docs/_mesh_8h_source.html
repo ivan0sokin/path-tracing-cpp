@@ -154,28 +154,29 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">namespace </span>std {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">template</span>&lt;&gt;</div>
-<div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01_mesh_1_1_vertex_01_4.html">   64</a></span>    <span class="keyword">struct </span>hash&lt;<a class="code hl_class" href="class_mesh.html">Mesh</a>::Vertex&gt; {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> operator()(<span class="keyword">const</span> <a class="code hl_struct" href="struct_mesh_1_1_vertex.html">Mesh::Vertex</a> &amp;v) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keyword">auto</span> h1 = hash&lt;Math::Vector3f&gt;{}(v.position);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keyword">auto</span> h2 = hash&lt;Math::Vector3f&gt;{}(v.normal);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keyword">auto</span> h3 = hash&lt;Math::Vector2f&gt;{}(v.texcoord);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keyword">auto</span> h4 = hash&lt;Math::Vector3f&gt;{}(v.tangent);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keywordflow">return</span> Math::CombineHashes(Math::CombineHashes(h1, h2), Math::CombineHashes(h3, h4));</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="};">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01_mesh_1_1_vertex_01_4.html">   65</a></span>    <span class="keyword">struct </span>hash&lt;<a class="code hl_class" href="class_mesh.html">Mesh</a>::Vertex&gt; {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> operator()(<span class="keyword">const</span> <a class="code hl_struct" href="struct_mesh_1_1_vertex.html">Mesh::Vertex</a> &amp;v) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keyword">auto</span> h1 = hash&lt;Math::Vector3f&gt;{}(v.position);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keyword">auto</span> h2 = hash&lt;Math::Vector3f&gt;{}(v.normal);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keyword">auto</span> h3 = hash&lt;Math::Vector2f&gt;{}(v.texcoord);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keyword">auto</span> h4 = hash&lt;Math::Vector3f&gt;{}(v.tangent);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_math.html#aa6906477792057d287f67f728c3e43b2">Math::CombineHashes</a>(<a class="code hl_function" href="namespace_math.html#aa6906477792057d287f67f728c3e43b2">Math::CombineHashes</a>(h1, h2), <a class="code hl_function" href="namespace_math.html#aa6906477792057d287f67f728c3e43b2">Math::CombineHashes</a>(h3, h4));</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    };</div>
 </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>}</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdoc">Class that holds information about vertices in particular mesh in model.</div><div class="ttdef"><b>Definition</b> Mesh.h:11</div></div>
 <div class="ttc" id="aclass_mesh_html_a218658950716eba7c1546d774db075a8"><div class="ttname"><a href="class_mesh.html#a218658950716eba7c1546d774db075a8">Mesh::Mesh</a></div><div class="ttdeci">Mesh(std::vector&lt; Vertex &gt; &amp;&amp;vertices, std::vector&lt; int &gt; &amp;&amp;indices, std::vector&lt; int &gt; &amp;&amp;materialIndices) noexcept</div><div class="ttdoc">Constructs Mesh from moved vector of vertices, indices and materialIndices.</div><div class="ttdef"><b>Definition</b> Mesh.h:31</div></div>
 <div class="ttc" id="aclass_mesh_html_aa2730459618e287b0803ff14f1b96741"><div class="ttname"><a href="class_mesh.html#aa2730459618e287b0803ff14f1b96741">Mesh::GetVertices</a></div><div class="ttdeci">constexpr std::span&lt; const Vertex &gt; GetVertices() const noexcept</div><div class="ttdoc">Returns span of reduced vertices.</div><div class="ttdef"><b>Definition</b> Mesh.h:42</div></div>
 <div class="ttc" id="aclass_mesh_html_ab3df6697dfd7471385334d5365b93cb3"><div class="ttname"><a href="class_mesh.html#ab3df6697dfd7471385334d5365b93cb3">Mesh::GetIndices</a></div><div class="ttdeci">constexpr std::span&lt; const int &gt; GetIndices() const noexcept</div><div class="ttdoc">Returns span of indices.</div><div class="ttdef"><b>Definition</b> Mesh.h:47</div></div>
 <div class="ttc" id="aclass_mesh_html_ac36375758de5e6f9415288dbe7e8d0a2"><div class="ttname"><a href="class_mesh.html#ac36375758de5e6f9415288dbe7e8d0a2">Mesh::GetMaterialIndices</a></div><div class="ttdeci">constexpr std::span&lt; const int &gt; GetMaterialIndices() const noexcept</div><div class="ttdoc">Returns span of material indices.</div><div class="ttdef"><b>Definition</b> Mesh.h:52</div></div>
 <div class="ttc" id="aclass_mesh_html_ad8cbb363166543aaff59f5ac211b85f9"><div class="ttname"><a href="class_mesh.html#ad8cbb363166543aaff59f5ac211b85f9">Mesh::GetFaceCount</a></div><div class="ttdeci">int GetFaceCount() const noexcept</div><div class="ttdoc">Returns face count of mesh, i.e. number of vertices divided by three.</div><div class="ttdef"><b>Definition</b> Mesh.h:37</div></div>
-<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdef"><b>Definition</b> Types.h:9</div></div>
+<div class="ttc" id="anamespace_math_html_aa6906477792057d287f67f728c3e43b2"><div class="ttname"><a href="namespace_math.html#aa6906477792057d287f67f728c3e43b2">Math::CombineHashes</a></div><div class="ttdeci">constexpr size_t CombineHashes(size_t a, size_t b) noexcept</div><div class="ttdoc">Combines hashes somehow to get good combined hash.</div><div class="ttdef"><b>Definition</b> Hashes.h:12</div></div>
+<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdoc">N-dimensional Vector</div><div class="ttdef"><b>Definition</b> Types.h:11</div></div>
 <div class="ttc" id="astruct_mesh_1_1_vertex_html"><div class="ttname"><a href="struct_mesh_1_1_vertex.html">Mesh::Vertex</a></div><div class="ttdoc">Vertex information.</div><div class="ttdef"><b>Definition</b> Mesh.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -1,16 +1,9 @@
 #include "BXDF.h"
-#include "Utilities.hpp"
-#include "sampling/Sampling.h"
+#include "../Utilities.hpp"
+#include "Sampling.h"
 
 Math::Vector3f BXDF::Sample(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     return SampleBRDF(ray, payload, throughput);
-    // float transparency = m_Material->transparency;
-    
-    // if (Utilities::RandomFloatInZeroToOne() < 1.f - m_Material->refract.PickValue(payload.texcoord).r) {
-    //     return SampleBRDF(ray, payload, throughput); 
-    // }
-
-    // return SampleBSDF(ray, payload, throughput);
 }
 
 Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {

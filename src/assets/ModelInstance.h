@@ -3,6 +3,7 @@
 
 #include "../acceleration/BLAS.h"
 
+//! Connects different BLAS with Model 
 class ModelInstance {
 public:
     //! Creates model instance from Model, should not be used except by AssetLoader

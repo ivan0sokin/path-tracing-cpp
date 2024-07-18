@@ -5,6 +5,7 @@
 
 namespace Math {
     namespace Types {
+        //! 4D Vector
         template<typename T>
         struct Vector<T, 4> {
             union {

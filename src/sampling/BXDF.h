@@ -1,15 +1,15 @@
 #ifndef _BXDF_H
 #define _BXDF_H
 
-#include "Material.h"
-#include "Ray.h"
-#include "HitPayload.h"
-#include "math/Math.h"
+#include "../Material.h"
+#include "../Ray.h"
+#include "../HitPayload.h"
+#include "../math/Math.h"
 
-//! Bidirectional scattering distribution function class
+//! Bidirectional reflectance/scattering/x distribution function class
 class BXDF {
 public:
-    //! Creates BSDF based on passed material
+    //! Creates BxDF based on passed material
     constexpr BXDF(const Material *material) noexcept :
         m_Material(material) {}
 

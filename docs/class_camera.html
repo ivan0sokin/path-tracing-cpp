@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Observerer class.  
+<p>Observerer class. Perspective projection onto screen.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_camera_8h_source.html">Camera.h</a>&gt;</code></p>
@@ -89,6 +89,7 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a62b45cba39a7950ba61d7eccd9d5aced" id="r_a62b45cba39a7950ba61d7eccd9d5aced"><td class="memItemLeft" align="right" valign="top"><a id="a62b45cba39a7950ba61d7eccd9d5aced" name="a62b45cba39a7950ba61d7eccd9d5aced"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Camera</b> (int viewportWidth, int viewportHeight, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;position={0.f, 0.f, 0.f}, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;target={0.f, 0.f, -1.f}, float verticalFovInDegrees=20.f, const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;up={0.f, 1.f, 0.f}) noexcept</td></tr>
+<tr class="memdesc:a62b45cba39a7950ba61d7eccd9d5aced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs <a class="el" href="class_camera.html" title="Observerer class. Perspective projection onto screen.">Camera</a> with given parameters. <br /></td></tr>
 <tr class="separator:a62b45cba39a7950ba61d7eccd9d5aced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a677b055323fd01ae7a8e9f1ec53a531c" id="r_a677b055323fd01ae7a8e9f1ec53a531c"><td class="memItemLeft" align="right" valign="top"><a id="a677b055323fd01ae7a8e9f1ec53a531c" name="a677b055323fd01ae7a8e9f1ec53a531c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>OnViewportResize</b> (int viewportWidth, int viewportHeight) noexcept</td></tr>
@@ -96,7 +97,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OnViewportResize</b> 
 <tr class="separator:a677b055323fd01ae7a8e9f1ec53a531c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac59bca13c9f1241fbedcd549fdc2a0ba" id="r_ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="memItemLeft" align="right" valign="top"><a id="ac59bca13c9f1241fbedcd549fdc2a0ba" name="ac59bca13c9f1241fbedcd549fdc2a0ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ComputeRayDirections</b> () noexcept</td></tr>
-<tr class="memdesc:ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes ray directions and saves them into private member. <br /></td></tr>
+<tr class="memdesc:ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes ray directions and saves them. <br /></td></tr>
 <tr class="separator:ac59bca13c9f1241fbedcd549fdc2a0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a8a35439bc91b308cd1c05b3704bf4f" id="r_a1a8a35439bc91b308cd1c05b3704bf4f"><td class="memItemLeft" align="right" valign="top"><a id="a1a8a35439bc91b308cd1c05b3704bf4f" name="a1a8a35439bc91b308cd1c05b3704bf4f"></a>
 constexpr std::span&lt; const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetRayDirections</b> () const noexcept</td></tr>
@@ -104,31 +105,39 @@ constexpr std::span&lt; const <a class="el" href="struct_math_1_1_types_1_1_vect
 <tr class="separator:a1a8a35439bc91b308cd1c05b3704bf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af78a93b7272b46ce0c7933b5aa51cb52" id="r_af78a93b7272b46ce0c7933b5aa51cb52"><td class="memItemLeft" align="right" valign="top"><a id="af78a93b7272b46ce0c7933b5aa51cb52" name="af78a93b7272b46ce0c7933b5aa51cb52"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetPosition</b> () const noexcept</td></tr>
+<tr class="memdesc:af78a93b7272b46ce0c7933b5aa51cb52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns position of <a class="el" href="class_camera.html" title="Observerer class. Perspective projection onto screen.">Camera</a>. <br /></td></tr>
 <tr class="separator:af78a93b7272b46ce0c7933b5aa51cb52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ee3b54d9d7dc908c2bfc6b68cab66ac" id="r_a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="memItemLeft" align="right" valign="top"><a id="a8ee3b54d9d7dc908c2bfc6b68cab66ac" name="a8ee3b54d9d7dc908c2bfc6b68cab66ac"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Position</b> () noexcept</td></tr>
+<tr class="memdesc:a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to position. GUI convenience. <br /></td></tr>
 <tr class="separator:a8ee3b54d9d7dc908c2bfc6b68cab66ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa412e7aa73fb1d1803d455bd84e01ee" id="r_aaa412e7aa73fb1d1803d455bd84e01ee"><td class="memItemLeft" align="right" valign="top"><a id="aaa412e7aa73fb1d1803d455bd84e01ee" name="aaa412e7aa73fb1d1803d455bd84e01ee"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetTarget</b> () const noexcept</td></tr>
+<tr class="memdesc:aaa412e7aa73fb1d1803d455bd84e01ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns target of <a class="el" href="class_camera.html" title="Observerer class. Perspective projection onto screen.">Camera</a>. GUI convenience. <br /></td></tr>
 <tr class="separator:aaa412e7aa73fb1d1803d455bd84e01ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fdba620f1163a9e9cfdedecf63320f1" id="r_a7fdba620f1163a9e9cfdedecf63320f1"><td class="memItemLeft" align="right" valign="top"><a id="a7fdba620f1163a9e9cfdedecf63320f1" name="a7fdba620f1163a9e9cfdedecf63320f1"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Target</b> () noexcept</td></tr>
+<tr class="memdesc:a7fdba620f1163a9e9cfdedecf63320f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to target. GUI convenience. <br /></td></tr>
 <tr class="separator:a7fdba620f1163a9e9cfdedecf63320f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6797df9fefa4e1f0776ebeecb895d40" id="r_ad6797df9fefa4e1f0776ebeecb895d40"><td class="memItemLeft" align="right" valign="top"><a id="ad6797df9fefa4e1f0776ebeecb895d40" name="ad6797df9fefa4e1f0776ebeecb895d40"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetUp</b> () const noexcept</td></tr>
+<tr class="memdesc:ad6797df9fefa4e1f0776ebeecb895d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns up vector of <a class="el" href="class_camera.html" title="Observerer class. Perspective projection onto screen.">Camera</a>. <br /></td></tr>
 <tr class="separator:ad6797df9fefa4e1f0776ebeecb895d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e48db2d1eb86e679b8010c035e83ad6" id="r_a1e48db2d1eb86e679b8010c035e83ad6"><td class="memItemLeft" align="right" valign="top"><a id="a1e48db2d1eb86e679b8010c035e83ad6" name="a1e48db2d1eb86e679b8010c035e83ad6"></a>
 constexpr <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Up</b> () noexcept</td></tr>
+<tr class="memdesc:a1e48db2d1eb86e679b8010c035e83ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to up vector. GUI convenience. <br /></td></tr>
 <tr class="separator:a1e48db2d1eb86e679b8010c035e83ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06884ceee93c43eae5c624d5134a9347" id="r_a06884ceee93c43eae5c624d5134a9347"><td class="memItemLeft" align="right" valign="top"><a id="a06884ceee93c43eae5c624d5134a9347" name="a06884ceee93c43eae5c624d5134a9347"></a>
 constexpr float&#160;</td><td class="memItemRight" valign="bottom"><b>GetVerticalFovInDegrees</b> () const noexcept</td></tr>
+<tr class="memdesc:a06884ceee93c43eae5c624d5134a9347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns vertical fov of <a class="el" href="class_camera.html" title="Observerer class. Perspective projection onto screen.">Camera</a> in degrees. <br /></td></tr>
 <tr class="separator:a06884ceee93c43eae5c624d5134a9347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecebbe3027180c8d908c185601b1dd00" id="r_aecebbe3027180c8d908c185601b1dd00"><td class="memItemLeft" align="right" valign="top"><a id="aecebbe3027180c8d908c185601b1dd00" name="aecebbe3027180c8d908c185601b1dd00"></a>
 constexpr float &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>VerticalFovInDegrees</b> () noexcept</td></tr>
+<tr class="memdesc:aecebbe3027180c8d908c185601b1dd00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to vertical fov in degrees. GUI convenience. <br /></td></tr>
 <tr class="separator:aecebbe3027180c8d908c185601b1dd00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Observerer class. </p>
+<div class="textblock"><p>Observerer class. Perspective projection onto screen. </p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="_camera_8h_source.html">Camera.h</a></li>
 <li>src/<b>Camera.cpp</b></li>

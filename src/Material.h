@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "math/Math.h"
 
+//! This namespace is used for indexing textures by name
 namespace TextureIndex {
     enum {
         Albedo = 0,
@@ -27,6 +28,7 @@ struct Material {
     // float transparency = 0.f;
     // float refractionIndex = 1.f;
 
+    //! Constructs materual by default
     constexpr Material() noexcept :
         textures{nullptr, nullptr, nullptr, nullptr, nullptr}, emissionPower(0.f), index(-1) {}
 

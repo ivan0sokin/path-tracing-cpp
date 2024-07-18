@@ -79,29 +79,46 @@ $(function() {
   <div class="headertitle"><div class="title">Texture Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class that determines colours or images that used in albedo/metallic/specular/... maps and values.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_texture_8h_source.html">Texture.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a155cd1c03a094dfd3fcb701c9a9af973" id="r_a155cd1c03a094dfd3fcb701c9a9af973"><td class="memItemLeft" align="right" valign="top"><a id="a155cd1c03a094dfd3fcb701c9a9af973" name="a155cd1c03a094dfd3fcb701c9a9af973"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Texture</b> (const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;color) noexcept</td></tr>
+<tr class="memdesc:a155cd1c03a094dfd3fcb701c9a9af973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs 1x1 <a class="el" href="class_texture.html" title="Class that determines colours or images that used in albedo/metallic/specular/... maps and values.">Texture</a> with given value. <br /></td></tr>
 <tr class="separator:a155cd1c03a094dfd3fcb701c9a9af973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae99888efccf2f8fb9f59f460a8746a81" id="r_ae99888efccf2f8fb9f59f460a8746a81"><td class="memItemLeft" align="right" valign="top"><a id="ae99888efccf2f8fb9f59f460a8746a81" name="ae99888efccf2f8fb9f59f460a8746a81"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Texture</b> () noexcept</td></tr>
+<tr class="memdesc:ae99888efccf2f8fb9f59f460a8746a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs 1x1 <a class="el" href="class_texture.html" title="Class that determines colours or images that used in albedo/metallic/specular/... maps and values.">Texture</a> with white color. <br /></td></tr>
+<tr class="separator:ae99888efccf2f8fb9f59f460a8746a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa179270cdb1b729826b27e9c36e4928b" id="r_aa179270cdb1b729826b27e9c36e4928b"><td class="memItemLeft" align="right" valign="top"><a id="aa179270cdb1b729826b27e9c36e4928b" name="aa179270cdb1b729826b27e9c36e4928b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Texture</b> (const unsigned char *dataInBytes, int width, int height, int channels) noexcept</td></tr>
+<tr class="memdesc:aa179270cdb1b729826b27e9c36e4928b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs texture with given data, resolution and channels. <br /></td></tr>
 <tr class="separator:aa179270cdb1b729826b27e9c36e4928b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add7832058a3559ea6a50d9cb19a7d6af" id="r_add7832058a3559ea6a50d9cb19a7d6af"><td class="memItemLeft" align="right" valign="top"><a id="add7832058a3559ea6a50d9cb19a7d6af" name="add7832058a3559ea6a50d9cb19a7d6af"></a>
 <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PickValue</b> (const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector2f</a> &amp;texcoord) const noexcept</td></tr>
+<tr class="memdesc:add7832058a3559ea6a50d9cb19a7d6af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns color/value of <a class="el" href="class_texture.html" title="Class that determines colours or images that used in albedo/metallic/specular/... maps and values.">Texture</a> at <code>texcooord</code>. <code>texcoord</code> vertical component must be already flipped. <br /></td></tr>
 <tr class="separator:add7832058a3559ea6a50d9cb19a7d6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ffaec12d6f6f0da1d16a964c0b8aed8" id="r_a5ffaec12d6f6f0da1d16a964c0b8aed8"><td class="memItemLeft" align="right" valign="top"><a id="a5ffaec12d6f6f0da1d16a964c0b8aed8" name="a5ffaec12d6f6f0da1d16a964c0b8aed8"></a>
 float *&#160;</td><td class="memItemRight" valign="bottom"><b>GetData</b> () noexcept</td></tr>
+<tr class="memdesc:a5ffaec12d6f6f0da1d16a964c0b8aed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns modifiable pointer to <a class="el" href="class_texture.html" title="Class that determines colours or images that used in albedo/metallic/specular/... maps and values.">Texture</a> data. <br /></td></tr>
 <tr class="separator:a5ffaec12d6f6f0da1d16a964c0b8aed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab27825997d55e2dd60acefea26d60e41" id="r_ab27825997d55e2dd60acefea26d60e41"><td class="memItemLeft" align="right" valign="top"><a id="ab27825997d55e2dd60acefea26d60e41" name="ab27825997d55e2dd60acefea26d60e41"></a>
 const float *&#160;</td><td class="memItemRight" valign="bottom"><b>GetData</b> () const noexcept</td></tr>
+<tr class="memdesc:ab27825997d55e2dd60acefea26d60e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns constant pointer to <a class="el" href="class_texture.html" title="Class that determines colours or images that used in albedo/metallic/specular/... maps and values.">Texture</a> data. <br /></td></tr>
 <tr class="separator:ab27825997d55e2dd60acefea26d60e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd9cfa89eb21c3bdbcc429cc6dbcd68" id="r_a7fd9cfa89eb21c3bdbcc429cc6dbcd68"><td class="memItemLeft" align="right" valign="top"><a id="a7fd9cfa89eb21c3bdbcc429cc6dbcd68" name="a7fd9cfa89eb21c3bdbcc429cc6dbcd68"></a>
 constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>GetTexelCount</b> () const noexcept</td></tr>
+<tr class="memdesc:a7fd9cfa89eb21c3bdbcc429cc6dbcd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of texels, i.e. width times height. <br /></td></tr>
 <tr class="separator:a7fd9cfa89eb21c3bdbcc429cc6dbcd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class that determines colours or images that used in albedo/metallic/specular/... maps and values. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="_texture_8h_source.html">Texture.h</a></li>
 </ul>
 </div><!-- contents -->

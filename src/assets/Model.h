@@ -2,13 +2,14 @@
 #define _MODEL_H
 
 #include "Mesh.h"
-#include "../hittable/Polygon.h"
 #include "../Light.h"
 #include "../acceleration/BVH.h"
 
 #include <vector>
 #include <filesystem>
 #include <string>
+
+class Polygon;
 
 //! Class that holds information about .obj model
 class Model {

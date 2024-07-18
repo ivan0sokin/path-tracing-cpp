@@ -1,17 +1,4 @@
-#include "../assets/Model.h"
 #include "Polygon.h"
-
-Shapes::Triangle Polygon::MakeTriangle() const noexcept {
-    auto mesh = m_Model->GetMeshes()[m_MeshIndex];
-    
-    auto vertices = mesh->GetVertices();
-    auto indices = mesh->GetIndices();
-
-    auto materials = m_Model->GetMaterials();
-    auto materialIndices = mesh->GetMaterialIndices();
-        
-    return Shapes::Triangle(vertices[indices[3 * m_FaceIndex + 0]].position, vertices[indices[3 * m_FaceIndex + 1]].position, vertices[indices[3 * m_FaceIndex + 2]].position, &materials[materialIndices[m_FaceIndex]]);
-}
 
 bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept {
     if (!MakeTriangle().Hit(ray, tMin, tMax, payload)) {

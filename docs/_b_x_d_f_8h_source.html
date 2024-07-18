@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Path tracing: src/BXDF.h Source File</title>
+<title>Path tracing: src/sampling/BXDF.h Source File</title>
 <link rel="icon" href="icon.png" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -78,7 +78,7 @@ $(function() { codefold.init(0); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_24a3817a3c61c11f04a0a72057522f4f.html">sampling</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -88,10 +88,10 @@ $(function() { codefold.init(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef _BXDF_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define _BXDF_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Material.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Ray.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;HitPayload.h&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;math/Math.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../Material.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;../Ray.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;../HitPayload.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;../math/Math.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_b_x_d_f.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="class_b_x_d_f.html">BXDF</a> {</div>
@@ -114,12 +114,12 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_b_x_d_f_html"><div class="ttname"><a href="class_b_x_d_f.html">BXDF</a></div><div class="ttdoc">Bidirectional scattering distribution function class.</div><div class="ttdef"><b>Definition</b> BXDF.h:10</div></div>
-<div class="ttc" id="aclass_b_x_d_f_html_a0ab6f9304f05ce61ab66f8e2d587cf05"><div class="ttname"><a href="class_b_x_d_f.html#a0ab6f9304f05ce61ab66f8e2d587cf05">BXDF::BXDF</a></div><div class="ttdeci">constexpr BXDF(const Material *material) noexcept</div><div class="ttdoc">Creates BSDF based on passed material.</div><div class="ttdef"><b>Definition</b> BXDF.h:13</div></div>
+<div class="ttc" id="aclass_b_x_d_f_html"><div class="ttname"><a href="class_b_x_d_f.html">BXDF</a></div><div class="ttdoc">Bidirectional reflectance/scattering/x distribution function class.</div><div class="ttdef"><b>Definition</b> BXDF.h:10</div></div>
+<div class="ttc" id="aclass_b_x_d_f_html_a0ab6f9304f05ce61ab66f8e2d587cf05"><div class="ttname"><a href="class_b_x_d_f.html#a0ab6f9304f05ce61ab66f8e2d587cf05">BXDF::BXDF</a></div><div class="ttdeci">constexpr BXDF(const Material *material) noexcept</div><div class="ttdoc">Creates BxDF based on passed material.</div><div class="ttdef"><b>Definition</b> BXDF.h:13</div></div>
 <div class="ttc" id="aclass_b_x_d_f_html_a1da53b6f193fd9d49fcbfd5491585b06"><div class="ttname"><a href="class_b_x_d_f.html#a1da53b6f193fd9d49fcbfd5491585b06">BXDF::Sample</a></div><div class="ttdeci">Math::Vector3f Sample(Ray &amp;ray, const HitPayload &amp;payload, Math::Vector3f &amp;throughput) noexcept</div><div class="ttdoc">Returns direction of reflected ray and modifies throughput.</div><div class="ttdef"><b>Definition</b> BXDF.cpp:5</div></div>
 <div class="ttc" id="astruct_hit_payload_html"><div class="ttname"><a href="struct_hit_payload.html">HitPayload</a></div><div class="ttdoc">Holds information about ray-surface interaction.</div><div class="ttdef"><b>Definition</b> HitPayload.h:9</div></div>
-<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">Physically based material type. Also can be serialized/deserialized.</div><div class="ttdef"><b>Definition</b> Material.h:21</div></div>
-<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdef"><b>Definition</b> Types.h:9</div></div>
+<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">Physically based material type. Also can be serialized/deserialized.</div><div class="ttdef"><b>Definition</b> Material.h:22</div></div>
+<div class="ttc" id="astruct_math_1_1_types_1_1_vector_html"><div class="ttname"><a href="struct_math_1_1_types_1_1_vector.html">Math::Types::Vector</a></div><div class="ttdoc">N-dimensional Vector</div><div class="ttdef"><b>Definition</b> Types.h:11</div></div>
 <div class="ttc" id="astruct_ray_html"><div class="ttname"><a href="struct_ray.html">Ray</a></div><div class="ttdoc">Ray representation, P(t) = origin + direction * t.</div><div class="ttdef"><b>Definition</b> Ray.h:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

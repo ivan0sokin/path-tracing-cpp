@@ -60,6 +60,7 @@ private:
 };
 
 namespace std {
+    //! Hash for Vertex
     template<>
     struct hash<Mesh::Vertex> {
         constexpr size_t operator()(const Mesh::Vertex &v) const noexcept {

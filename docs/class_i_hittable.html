@@ -90,11 +90,11 @@ Inheritance diagram for IHittable:</div>
  <div class="center">
   <img src="class_i_hittable.png" usemap="#IHittable_map" alt=""/>
   <map id="IHittable_map" name="IHittable_map">
-<area href="class_non_hittable.html" title="Hittable object that cannot be hit." alt="NonHittable" shape="rect" coords="0,56,106,80"/>
-<area href="class_polygon.html" title="Slightly differs from Triangle. It is connected with mesh and stores its face index." alt="Polygon" shape="rect" coords="116,56,222,80"/>
-<area href="class_shapes_1_1_box.html" alt="Shapes::Box" shape="rect" coords="232,56,338,80"/>
-<area href="class_shapes_1_1_sphere.html" alt="Shapes::Sphere" shape="rect" coords="348,56,454,80"/>
-<area href="class_shapes_1_1_triangle.html" alt="Shapes::Triangle" shape="rect" coords="464,56,570,80"/>
+<area href="class_non_hittable.html" title="IHittable that cannot be hit." alt="NonHittable" shape="rect" coords="0,56,106,80"/>
+<area href="class_polygon.html" title="Primitive element of Mesh." alt="Polygon" shape="rect" coords="116,56,222,80"/>
+<area href="class_shapes_1_1_box.html" title="Axis aligned parallelepiped. Consists of 12 triangles." alt="Shapes::Box" shape="rect" coords="232,56,338,80"/>
+<area href="class_shapes_1_1_sphere.html" title="Sphere class. Holds information about its center, radius and material." alt="Shapes::Sphere" shape="rect" coords="348,56,454,80"/>
+<area href="class_shapes_1_1_triangle.html" title="Primitive shape. Holds vertices and material." alt="Shapes::Triangle" shape="rect" coords="464,56,570,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -109,25 +109,185 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>IHittable</b> (<
 <tr class="memitem:a6c41d814cbb71e73cf408b28cb909e42" id="r_a6c41d814cbb71e73cf408b28cb909e42"><td class="memItemLeft" align="right" valign="top"><a id="a6c41d814cbb71e73cf408b28cb909e42" name="a6c41d814cbb71e73cf408b28cb909e42"></a>
 constexpr <a class="el" href="class_i_hittable.html">IHittable</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_i_hittable.html">IHittable</a> &amp;)=default</td></tr>
 <tr class="separator:a6c41d814cbb71e73cf408b28cb909e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85e6c385a8249a2e0b34d92a61bbcdb3" id="r_a85e6c385a8249a2e0b34d92a61bbcdb3"><td class="memItemLeft" align="right" valign="top"><a id="a85e6c385a8249a2e0b34d92a61bbcdb3" name="a85e6c385a8249a2e0b34d92a61bbcdb3"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>Hit</b> (const <a class="el" href="struct_ray.html">Ray</a> &amp;ray, float tMin, float tMax, <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;payload) const noexcept=0</td></tr>
+<tr class="memitem:a85e6c385a8249a2e0b34d92a61bbcdb3" id="r_a85e6c385a8249a2e0b34d92a61bbcdb3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85e6c385a8249a2e0b34d92a61bbcdb3">Hit</a> (const <a class="el" href="struct_ray.html">Ray</a> &amp;ray, float tMin, float tMax, <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;payload) const noexcept=0</td></tr>
+<tr class="memdesc:a85e6c385a8249a2e0b34d92a61bbcdb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Ray-IHittable intersection. Should return true if hit.  <br /></td></tr>
 <tr class="separator:a85e6c385a8249a2e0b34d92a61bbcdb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0ac1369196f25d982f8505132e78ef8" id="r_aa0ac1369196f25d982f8505132e78ef8"><td class="memItemLeft" align="right" valign="top"><a id="aa0ac1369196f25d982f8505132e78ef8" name="aa0ac1369196f25d982f8505132e78ef8"></a>
-virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetCentroid</b> () const noexcept=0</td></tr>
+<tr class="memitem:aa0ac1369196f25d982f8505132e78ef8" id="r_aa0ac1369196f25d982f8505132e78ef8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0ac1369196f25d982f8505132e78ef8">GetCentroid</a> () const noexcept=0</td></tr>
+<tr class="memdesc:aa0ac1369196f25d982f8505132e78ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns centroid of geometric shape. Centroid is mass center.  <br /></td></tr>
 <tr class="separator:aa0ac1369196f25d982f8505132e78ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94ce858493f2f710d638f0bb18e005c4" id="r_a94ce858493f2f710d638f0bb18e005c4"><td class="memItemLeft" align="right" valign="top"><a id="a94ce858493f2f710d638f0bb18e005c4" name="a94ce858493f2f710d638f0bb18e005c4"></a>
-virtual <a class="el" href="struct_a_a_b_b.html">AABB</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetBoundingBox</b> () const noexcept=0</td></tr>
+<tr class="memitem:a94ce858493f2f710d638f0bb18e005c4" id="r_a94ce858493f2f710d638f0bb18e005c4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_a_a_b_b.html">AABB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94ce858493f2f710d638f0bb18e005c4">GetBoundingBox</a> () const noexcept=0</td></tr>
+<tr class="memdesc:a94ce858493f2f710d638f0bb18e005c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="struct_a_a_b_b.html" title="Axis aligned bounding box, structure used to make faster ray-model intersections.">AABB</a> of the shape. It must contain entire shape.  <br /></td></tr>
 <tr class="separator:a94ce858493f2f710d638f0bb18e005c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6c3dc6275f194eef0549bd7de33aebf" id="r_ab6c3dc6275f194eef0549bd7de33aebf"><td class="memItemLeft" align="right" valign="top"><a id="ab6c3dc6275f194eef0549bd7de33aebf" name="ab6c3dc6275f194eef0549bd7de33aebf"></a>
-virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SampleUniform</b> (const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector2f</a> &amp;sample) const noexcept=0</td></tr>
+<tr class="memitem:ab6c3dc6275f194eef0549bd7de33aebf" id="r_ab6c3dc6275f194eef0549bd7de33aebf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6c3dc6275f194eef0549bd7de33aebf">SampleUniform</a> (const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector2f</a> &amp;sample) const noexcept=0</td></tr>
+<tr class="memdesc:ab6c3dc6275f194eef0549bd7de33aebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns point on surface. Should uniformly sample surface.  <br /></td></tr>
 <tr class="separator:ab6c3dc6275f194eef0549bd7de33aebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0588f29f3f634ff56500589ef7881b3b" id="r_a0588f29f3f634ff56500589ef7881b3b"><td class="memItemLeft" align="right" valign="top"><a id="a0588f29f3f634ff56500589ef7881b3b" name="a0588f29f3f634ff56500589ef7881b3b"></a>
-virtual float&#160;</td><td class="memItemRight" valign="bottom"><b>GetSurfaceArea</b> () const noexcept=0</td></tr>
+<tr class="memitem:a0588f29f3f634ff56500589ef7881b3b" id="r_a0588f29f3f634ff56500589ef7881b3b"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0588f29f3f634ff56500589ef7881b3b">GetSurfaceArea</a> () const noexcept=0</td></tr>
+<tr class="memdesc:a0588f29f3f634ff56500589ef7881b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns surface area of shape.  <br /></td></tr>
 <tr class="separator:a0588f29f3f634ff56500589ef7881b3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstraction for hittable object. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a94ce858493f2f710d638f0bb18e005c4" name="a94ce858493f2f710d638f0bb18e005c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94ce858493f2f710d638f0bb18e005c4">&#9670;&#160;</a></span>GetBoundingBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_a_a_b_b.html">AABB</a> IHittable::GetBoundingBox </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns <a class="el" href="struct_a_a_b_b.html" title="Axis aligned bounding box, structure used to make faster ray-model intersections.">AABB</a> of the shape. It must contain entire shape. </p>
+
+<p>Implemented in <a class="el" href="class_shapes_1_1_box.html#a7b54991e592800713a8d754cf9bd483b">Shapes::Box</a>, <a class="el" href="class_non_hittable.html#a90fe0f2b545c290d5f0ed995c33b5c8c">NonHittable</a>, <a class="el" href="class_polygon.html#a13d2640b2666513b834d2ba9809f2d15">Polygon</a>, <a class="el" href="class_shapes_1_1_sphere.html#abdd66ccf2232dae260a10a9c80ec5135">Shapes::Sphere</a>, and <a class="el" href="class_shapes_1_1_triangle.html#af67f2892cd6aefd4536cc1575ea8dbb8">Shapes::Triangle</a>.</p>
+
+</div>
+</div>
+<a id="aa0ac1369196f25d982f8505132e78ef8" name="aa0ac1369196f25d982f8505132e78ef8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0ac1369196f25d982f8505132e78ef8">&#9670;&#160;</a></span>GetCentroid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> IHittable::GetCentroid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns centroid of geometric shape. Centroid is mass center. </p>
+
+<p>Implemented in <a class="el" href="class_shapes_1_1_box.html#ac8adb37d5ba4fddf3dee603eec17408b">Shapes::Box</a>, <a class="el" href="class_non_hittable.html#a355773bd874c8d7627cec448f3afcb9e">NonHittable</a>, <a class="el" href="class_polygon.html#a4a00342d0d47bf2b3898ea7e98f8a2b3">Polygon</a>, <a class="el" href="class_shapes_1_1_sphere.html#ad0d15eb01d9d4f8aaa60d2d15f5b8234">Shapes::Sphere</a>, and <a class="el" href="class_shapes_1_1_triangle.html#a0ccf6ccb76b1d85dc1da2e3643237391">Shapes::Triangle</a>.</p>
+
+</div>
+</div>
+<a id="a0588f29f3f634ff56500589ef7881b3b" name="a0588f29f3f634ff56500589ef7881b3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0588f29f3f634ff56500589ef7881b3b">&#9670;&#160;</a></span>GetSurfaceArea()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual float IHittable::GetSurfaceArea </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns surface area of shape. </p>
+
+<p>Implemented in <a class="el" href="class_shapes_1_1_box.html#a5d0a3a73496eda63d8f68e35e7efda97">Shapes::Box</a>, <a class="el" href="class_non_hittable.html#aa67cfd3f04a63925008773107380d8fd">NonHittable</a>, <a class="el" href="class_polygon.html#a7a9bb0690e0f2197b150d15142d394c5">Polygon</a>, <a class="el" href="class_shapes_1_1_sphere.html#a564fcb8c9262bbaf639ef0334870317b">Shapes::Sphere</a>, and <a class="el" href="class_shapes_1_1_triangle.html#a85c44b1ba48f1a94e2c4bd9dc48e714f">Shapes::Triangle</a>.</p>
+
+</div>
+</div>
+<a id="a85e6c385a8249a2e0b34d92a61bbcdb3" name="a85e6c385a8249a2e0b34d92a61bbcdb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e6c385a8249a2e0b34d92a61bbcdb3">&#9670;&#160;</a></span>Hit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool IHittable::Hit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ray</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tMin</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tMax</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>payload</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs Ray-IHittable intersection. Should return true if hit. </p>
+
+<p>Implemented in <a class="el" href="class_shapes_1_1_box.html#a4f72e1031e3bf2198ad498e812e272cb">Shapes::Box</a>, <a class="el" href="class_non_hittable.html#a031701f76b550c59d3685d78cdc9247a">NonHittable</a>, <a class="el" href="class_polygon.html#a9e155504c11bcac1a8ebf845b6dddce6">Polygon</a>, <a class="el" href="class_shapes_1_1_sphere.html#a69ef0fe8d31756d9d11d54120ba161d8">Shapes::Sphere</a>, and <a class="el" href="class_shapes_1_1_triangle.html#a1c84e67c958e2c121004662c90b4ecf9">Shapes::Triangle</a>.</p>
+
+</div>
+</div>
+<a id="ab6c3dc6275f194eef0549bd7de33aebf" name="ab6c3dc6275f194eef0549bd7de33aebf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c3dc6275f194eef0549bd7de33aebf">&#9670;&#160;</a></span>SampleUniform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> IHittable::SampleUniform </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector2f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>sample</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns point on surface. Should uniformly sample surface. </p>
+
+<p>Implemented in <a class="el" href="class_shapes_1_1_box.html#a884b091e2d89378b32a942ff66719c83">Shapes::Box</a>, <a class="el" href="class_non_hittable.html#a6d2bd2b9a253334316c87d957b834e85">NonHittable</a>, <a class="el" href="class_polygon.html#a030cbd0302392b2e87c3324de2290354">Polygon</a>, <a class="el" href="class_shapes_1_1_sphere.html#a7ea10d6d49cce8976c0bc172de4ff9cb">Shapes::Sphere</a>, and <a class="el" href="class_shapes_1_1_triangle.html#af05bc7dd2a111b9855945b1254e126d5">Shapes::Triangle</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/hittable/<a class="el" href="_i_hittable_8h_source.html">IHittable.h</a></li>
 </ul>
 </div><!-- contents -->

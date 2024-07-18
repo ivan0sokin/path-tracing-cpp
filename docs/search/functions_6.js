@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hit_0',['Hit',['../class_b_l_a_s.html#a688db55e5b46c95f26a2361f1a0a3fb6',1,'BLAS::Hit()'],['../class_b_v_h.html#ad85f96670497d708bf815e1de65abe70',1,'BVH::Hit()'],['../class_t_l_a_s.html#aa2719ebf6e0a562e3445e812815bee29',1,'TLAS::Hit()']]]
+  ['hit_0',['Hit',['../class_b_l_a_s.html#a688db55e5b46c95f26a2361f1a0a3fb6',1,'BLAS::Hit()'],['../class_b_v_h.html#ad85f96670497d708bf815e1de65abe70',1,'BVH::Hit()'],['../class_t_l_a_s.html#aa2719ebf6e0a562e3445e812815bee29',1,'TLAS::Hit()'],['../class_shapes_1_1_box.html#a4f72e1031e3bf2198ad498e812e272cb',1,'Shapes::Box::Hit()'],['../class_i_hittable.html#a85e6c385a8249a2e0b34d92a61bbcdb3',1,'IHittable::Hit()'],['../class_non_hittable.html#a031701f76b550c59d3685d78cdc9247a',1,'NonHittable::Hit()'],['../class_polygon.html#a9e155504c11bcac1a8ebf845b6dddce6',1,'Polygon::Hit()'],['../class_shapes_1_1_sphere.html#a69ef0fe8d31756d9d11d54120ba161d8',1,'Shapes::Sphere::Hit()'],['../class_shapes_1_1_triangle.html#a1c84e67c958e2c121004662c90b4ecf9',1,'Shapes::Triangle::Hit()']]]
 ];
