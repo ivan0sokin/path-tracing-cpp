@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "Utilities.hpp"
-#include "BXDF.h"
+#include "sampling/BXDF.h"
 
 #include <vector>
 #include <thread>
