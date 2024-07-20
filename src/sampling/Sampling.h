@@ -78,9 +78,8 @@ namespace Sampling {
     constexpr Math::Vector3f SampleSpecularBRDF(float D, float G, const Math::Vector3f &F, float NdotV, float NdotL) noexcept {        
         Math::Vector3f nominator = D * G * F;
         float denominator = 4.f * NdotV * NdotL + 0.001f;
-        Math::Vector3f specularBRDF = nominator / denominator;
         
-        return specularBRDF;
+        return nominator / denominator;
     }
 
     constexpr Math::Vector3f SampleDiffuseBRDF(const Math::Vector3f &albedo) noexcept {
