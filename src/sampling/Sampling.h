@@ -47,21 +47,21 @@ namespace Sampling {
         NdotH = Math::Max(NdotH, 0.f);
         float NdotH2 = NdotH * NdotH;
 
-        float nom = a2;
-        float denom = (NdotH2 * (a2 - 1.f) + 1.f);
-        denom = Math::Constants::Pi<float> * denom * denom;
+        float nominator = a2;
+        float denominator = (NdotH2 * (a2 - 1.f) + 1.f);
+        denominator = Math::Constants::Pi<float> * denominator * denominator;
 
-        return nom / denom;
+        return nominator / denominator;
     }
 
     constexpr float GeometrySchlickGGX(float roughness, float NdotV) noexcept {
         float r = (roughness + 1.f);
         float k = (r * r) / 8.f;
 
-        float nom = NdotV;
-        float denom = NdotV * (1.f - k) + k;
+        float nominator = NdotV;
+        float denominator = NdotV * (1.f - k) + k;
 
-        return nom / denom;
+        return nominator / denominator;
     }
 
     constexpr float GeometrySmith(float roughness, float NdotV, float NdotL) noexcept {
