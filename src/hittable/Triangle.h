@@ -70,8 +70,8 @@ namespace Shapes {
 
         //! Returns AABB of Triangle with offset of 0.01
         constexpr AABB GetBoundingBox() const noexcept override {
-            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.01f,
-                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.01f);
+            return AABB(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])),
+                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])));
         }
 
         //! Samples Triangle surface uniformly

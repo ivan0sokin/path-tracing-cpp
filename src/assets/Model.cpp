@@ -5,15 +5,17 @@ Model::Model(const std::filesystem::path &pathToFile, const std::filesystem::pat
     m_PathToFile(pathToFile), m_MaterialDirectory(materialDirectory), m_Meshes(std::move(meshes)), m_Materials(std::move(materials)) {
     m_Polygons.reserve(totalFaceCount);
     for (int meshIndex = 0; meshIndex < static_cast<int>(m_Meshes.size()); ++meshIndex) {
-        const auto &mesh = m_Meshes[meshIndex];
+        auto mesh = m_Meshes[meshIndex];
 
         int faceCount = mesh->GetFaceCount();
         for (int faceIndex = 0; faceIndex < faceCount; ++faceIndex) {
-            m_Polygons.emplace_back(this, meshIndex, faceIndex);
+            m_Polygons.emplace_back(this, mesh, faceIndex);
         }
     }
 
     std::vector<IHittable*> hittables;
+    hittables.reserve(m_Polygons.size());
+    
     for (auto &polygon : m_Polygons) {
         hittables.push_back(&polygon);
     }

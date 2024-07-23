@@ -53,7 +53,7 @@ struct AABB {
         tMin = Math::Max(tMin, Math::MaxComponent(t0));
         tMax = Math::Min(tMax, Math::MinComponent(t1));
 
-        if (tMax <= tMin) {
+        if (tMax < tMin) {
             return Math::Constants::Infinity<float>;
         }
 

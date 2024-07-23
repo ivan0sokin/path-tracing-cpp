@@ -24,7 +24,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
     std::vector<tinyobj::material_t> materials;
     Result result;
     tinyobj::LoadObj(&attrib, &shapes, &materials, &result.warning, &result.error, pathToFile.string().c_str(), materialDirectory.string().c_str());
-    
+
     if (result.IsFailure()) {
         return {nullptr, result};
     }
@@ -49,7 +49,7 @@ std::pair<ModelInstance*, AssetLoader::Result> AssetLoader::LoadOBJ(const std::f
 
         meshes.push_back(ProcessMesh(attrib, mesh));
     }
-    
+
     Model *model = new Model(pathToFile, materialDirectory, std::move(meshes), std::move(pbrMaterials), totalFaceCount);
 
     int modelIndex = static_cast<int>(m_Models.size());
@@ -125,7 +125,7 @@ Texture* AssetLoader::LoadTexture(const std::filesystem::path &pathToTexture) no
     const int DESIRED_CHANNELS = 3;
     int width, height, channels;
     unsigned char *textureDataInBytes = stbi_load(pathToTexture.string().c_str(), &width, &height, &channels, DESIRED_CHANNELS);
-    
+
     printf("%s: %dx%d with %d channels\n", pathToTexture.string().c_str(), width, height, channels);
 
     Texture *texture = new Texture(textureDataInBytes, width, height, DESIRED_CHANNELS);
