@@ -37,36 +37,45 @@ namespace Sampling {
         return Math::Normalize(tangent * H.x + bitangent * H.y + N * H.z);
     }
 
-    constexpr float GetSamplingGGXPDF(float NDF, float NdotH, float VdotH) noexcept {
-        return NDF * NdotH / (4.f * VdotH);
+    constexpr float GetSamplingGGXPDF(float D, float NdotH, float VdotH) noexcept {
+        return D * NdotH / (4.f * VdotH);
     };
 
     constexpr float DistributionGGX(float roughness, float NdotH) noexcept {
-        float a = roughness * roughness;
-        float a2 = a * a;
-        NdotH = Math::Max(NdotH, 0.f);
+        float alpha = roughness * roughness;
+        float alphaSquared = alpha * alpha;
+
+        NdotH = Math::Saturate(NdotH);
         float NdotH2 = NdotH * NdotH;
 
-        float nominator = a2;
-        float denominator = (NdotH2 * (a2 - 1.f) + 1.f);
+        float nominator = alphaSquared;
+        float denominator = (NdotH2 * (alphaSquared - 1.f) + 1.f);
         denominator = Math::Constants::Pi<float> * denominator * denominator;
 
         return nominator / denominator;
     }
 
-    constexpr float GeometrySchlickGGX(float roughness, float NdotV) noexcept {
-        float r = (roughness + 1.f);
-        float k = (r * r) / 8.f;
+    constexpr float ComputeDirectFactor(float roughness) noexcept {
+        float r = roughness + 1.f;
+        return (r * r) / 8.f;
+    }
 
-        float nominator = NdotV;
-        float denominator = NdotV * (1.f - k) + k;
+    constexpr float ComputeIBLFactor(float roughness) noexcept {
+        return roughness * roughness * 0.5f;
+    }
+
+    constexpr float GeometrySchlickGGX(float roughness, float dot) noexcept {
+        float k = ComputeIBLFactor(roughness);
+
+        float nominator = dot;
+        float denominator = dot * (1.f - k) + k;
 
         return nominator / denominator;
     }
 
     constexpr float GeometrySmith(float roughness, float NdotV, float NdotL) noexcept {
-        float ggx2 = GeometrySchlickGGX(roughness, NdotV);
-        float ggx1 = GeometrySchlickGGX(roughness, NdotL);
+        float ggx1 = GeometrySchlickGGX(roughness, NdotV);
+        float ggx2 = GeometrySchlickGGX(roughness, NdotL);
 
         return ggx1 * ggx2;
     }
@@ -75,14 +84,16 @@ namespace Sampling {
         return F0 + (1.f - F0) * Math::Pow(1.f - cosTheta, 5.f);
     }
 
-    constexpr Math::Vector3f SampleSpecularBRDF(float D, float G, const Math::Vector3f &F, float NdotV, float NdotL) noexcept {        
+    constexpr Math::Vector3f SampleCookTorranceBRDF(float D, float G, const Math::Vector3f &F, float NdotV, float NdotL) noexcept {        
+        const float BIAS = 0.001f; 
+        
         Math::Vector3f nominator = D * G * F;
-        float denominator = 4.f * NdotV * NdotL + 0.001f;
+        float denominator = 4.f * NdotV * NdotL + BIAS;
         
         return nominator / denominator;
     }
 
-    constexpr Math::Vector3f SampleDiffuseBRDF(const Math::Vector3f &albedo) noexcept {
+    constexpr Math::Vector3f SampleLambertianBRDF(const Math::Vector3f &albedo) noexcept {
         return albedo * Math::Constants::InversePi<float>;
     }
 }

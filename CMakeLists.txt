@@ -23,7 +23,7 @@ set(SOURCES src/Renderer.cpp
             src/image/ImageSaver.cpp
             src/Application.cpp
             src/Camera.cpp
-            src/sampling/BXDF.cpp
+            src/sampling/BSDF.cpp
             src/assets/Model.cpp
             src/assets/ModelInstance.cpp
             src/assets/AssetLoader.cpp

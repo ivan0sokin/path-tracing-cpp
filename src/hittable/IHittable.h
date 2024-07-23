@@ -11,10 +11,10 @@ class IHittable {
 public:
     constexpr IHittable() = default;
     constexpr IHittable(const IHittable&) = default;
+    constexpr virtual ~IHittable() = default;
+
     constexpr IHittable(IHittable&&) = default;
     constexpr IHittable& operator=(const IHittable&) = default;
-
-    constexpr virtual ~IHittable() = default;
 
     //! Performs Ray-IHittable intersection. Should return true if hit
     virtual bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept = 0;

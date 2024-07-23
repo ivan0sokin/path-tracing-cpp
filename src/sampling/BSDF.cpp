@@ -1,12 +1,12 @@
-#include "BXDF.h"
+#include "BSDF.h"
 #include "../Utilities.hpp"
 #include "Sampling.h"
 
-Math::Vector3f BXDF::Sample(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
+Math::Vector3f BSDF::Sample(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     return SampleBRDF(ray, payload, throughput);
 }
 
-Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
+Math::Vector3f BSDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     Math::Vector3f albedo = m_Material->textures[TextureIndex::Albedo]->PickValue(payload.texcoord);
     float metallic = m_Material->textures[TextureIndex::Metallic]->PickValue(payload.texcoord).r;
     float specular = m_Material->textures[TextureIndex::Specular]->PickValue(payload.texcoord).r;
@@ -37,18 +37,18 @@ Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math:
     Math::Vector3f F0(0.08f, 0.08f, 0.08f);
     F0 = Math::Lerp(F0 * specular, albedo, metallic);
 
-    float NDF = Sampling::DistributionGGX(roughness, NdotH);
+    float D = Sampling::DistributionGGX(roughness, NdotH);
     float G = Sampling::GeometrySmith(roughness, NdotV, NdotL);
-    Math::Vector3f F = Sampling::FresnelSchlick(Math::Max(Math::Dot(H, V), 0.f), F0);
+    Math::Vector3f F = Sampling::FresnelSchlick(Math::Saturate(Math::Dot(H, V)), F0);
 
     Math::Vector3f kSpecular = F;
     Math::Vector3f kDiffuse = 1.f - kSpecular;
     kDiffuse *= 1.0 - metallic;
 
-    Math::Vector3f specularBRDF = Sampling::SampleSpecularBRDF(NDF, G, F, NdotV, NdotL);
-    float specularPDF = Sampling::GetSamplingGGXPDF(NDF, Math::Abs(NdotH), VdotH);
+    Math::Vector3f specularBRDF = Sampling::SampleCookTorranceBRDF(D, G, F, NdotV, NdotL);
+    float specularPDF = Sampling::GetSamplingGGXPDF(D, Math::Abs(NdotH), VdotH);
     
-    Math::Vector3f diffuseBRDF = Sampling::SampleDiffuseBRDF(albedo);
+    Math::Vector3f diffuseBRDF = Sampling::SampleLambertianBRDF(albedo);
     float diffusePDF = Sampling::GetSamplingHemisphereCosinePDF(NdotL);
 
     Math::Vector3f totalBRDF = (diffuseBRDF * kDiffuse + specularBRDF) * NdotL;
@@ -61,6 +61,6 @@ Math::Vector3f BXDF::SampleBRDF(const Ray &ray, const HitPayload &payload, Math:
     return reflectionDirection;
 }
 
-Math::Vector3f BXDF::SampleBSDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
+Math::Vector3f BSDF::SampleBTDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept {
     return Math::Vector3f();
 }

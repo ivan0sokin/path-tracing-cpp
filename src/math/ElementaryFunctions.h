@@ -2,6 +2,7 @@
 #define _ELEMENTARY_FUNCTIONS_H
 
 #include "Types.h"
+#include "Constants.h"
 
 #include <cmath>
 
@@ -165,25 +166,25 @@ namespace Math {
     }
 
     template<typename T>
+    constexpr T Saturate(T value) noexcept {
+        return Clamp(value, Constants::Zero<T>, Constants::One<T>);
+    }
+
+    template<typename T, std::size_t N>
+    constexpr Types::Vector<T, N> Saturate(const Types::Vector<T, N> &v) noexcept {
+        return Clamp(v, Constants::Zero<T>, Constants::One<T>);
+    }
+
+    template<typename T>
     constexpr T Lerp(T a, T b, T t) noexcept {
-        return a * (static_cast<T>(1) - t) + b * t;
+        return a * (Constants::One<T> - t) + b * t;
     }
 
-    template<typename T>
-    constexpr Types::Vector<T, 2> Lerp(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b, T t) noexcept {
-        return a * (static_cast<T>(1) - t) + b * t;
+    template<typename T, std::size_t N>
+    constexpr Types::Vector<T, N> Lerp(const Types::Vector<T, N> &a, const Types::Vector<T, N> &b, T t) noexcept {
+        return a * (Constants::One<T> - t) + b * t;
     }
 
-    template<typename T>
-    constexpr Types::Vector<T, 3> Lerp(const Types::Vector<T, 3> &a, const Types::Vector<T, 3> &b, T t) noexcept {
-        return a * (static_cast<T>(1) - t) + b * t;
-    }
-
-    template<typename T>
-    constexpr Types::Vector<T, 4> Lerp(const Types::Vector<T, 4> &a, const Types::Vector<T, 4> &b, T t) noexcept {
-        return a * (static_cast<T>(1) - t) + b * t;
-    }
-    
     template<typename T>
     constexpr T Sqrt(T value) noexcept {
         return std::sqrt(value);

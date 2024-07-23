@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "Utilities.hpp"
-#include "sampling/BXDF.h"
+#include "sampling/BSDF.h"
 
 #include <vector>
 #include <thread>
@@ -189,8 +189,8 @@ Math::Vector4f Renderer::PixelProgram(int i, int j) const noexcept {
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BXDF bxdf(material);
-        auto direction = bxdf.Sample(ray, payload, throughput);
+        BSDF bsdf(material);
+        auto direction = bsdf.Sample(ray, payload, throughput);
 
         ray.origin = Math::TransformPoint(payload.transform, hitPoint);
         ray.direction = Math::TransformVector(payload.transform, direction);
@@ -258,8 +258,8 @@ Math::Vector4f Renderer::AcceleratedPixelProgram(int i, int j) const noexcept {
             light += throughput * lightSource.Sample(lightRay, payload, lightHitPayload, distance, distanceSquared);
         }
 
-        BXDF bxdf(material);
-        auto direction = bxdf.Sample(ray, payload, throughput);
+        BSDF bsdf(material);
+        auto direction = bsdf.Sample(ray, payload, throughput);
 
         ray.origin = Math::TransformPoint(payload.transform, hitPoint);
         ray.direction = Math::TransformVector(payload.transform, direction);
