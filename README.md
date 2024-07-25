@@ -53,7 +53,7 @@ $$
 Lets use $\phi$ and $\theta$ for spherical coordinates in unit hemisphere $\Omega$, so $d\omega_\Psi$ = $\sin\left( \theta \right) d\theta d\phi$.
 
 $$
-\int\limits_\Omega \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi = \int\limits_{\phi=0}^{2\pi} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( \theta \right) \cos\left( \theta \right) d\theta d\phi = \\ = \int\limits_{\phi=0}^{2\pi} d\phi \times \dfrac{1}{2} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( 2\theta \right) d\theta = \phi \Big|_{\phi = 0}^{2\pi} \times \left( -\dfrac{1}{4}\cos\left( 2\theta \right) \right) \Big|_{\theta = 0}^{\frac{\pi}{2}}
+\int\limits_\Omega \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi = \int\limits_{\phi=0}^{2\pi} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( \theta \right) \cos\left( \theta \right) d\theta d\phi = \\ = \int\limits_{\phi=0}^{2\pi} d\phi \times \dfrac{1}{2} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( 2\theta \right) d\theta 
 $$
 
 # Build
