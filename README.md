@@ -25,13 +25,17 @@ Consider all vectors are unit.
 
 ## Monte Carlo integration
 
-[Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) tells us that integral with limits $a$ and $b$ can be computed as an average of $N$ samples multipled by length of segment $\left(a, b\right)$: $$\int\limits_a^b f(x)dx = \left(b - a\right)\dfrac{1}{N} \sum\limits_{i=1}^{N} f(x)$$
+[Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) tells us that integral with limits $a$ and $b$ can be computed as an average of $N$ samples multipled by length of segment $\left(a, b\right)$:
+
+$$\int\limits_a^b f(x)dx = \left(b - a\right)\dfrac{1}{N} \sum\limits_{i=1}^{N} f(x)$$
 
 Computers can only approximate rendering equation integral. I used Monte Carlo technique to estimate light emission value.
 
 ## BRDF
 
-BRDF stands for Bidirectional reflectance distribution function $f_r$. It tells us what how light is being reflected of a surface. According to conservation of energy law we assume that: $$\rho = \int\limits_\Omega f_r\left( \vec{X}, \omega_\Psi, \omega_\Theta \right) \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi <= 1$$
+BRDF stands for Bidirectional reflectance distribution function $f_r$. It tells us what how light is being reflected of a surface. According to conservation of energy law we assume that:
+
+$$\rho = \int\limits_\Omega f_r\left( \vec{X}, \omega_\Psi, \omega_\Theta \right) \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi <= 1$$
 
 $\rho$ stands for albedo, i.e. whiteness of a surface, which is amount of light being reflected of a surface.
 
@@ -49,8 +53,7 @@ $$
 Lets use $\phi$ and $\theta$ for spherical coordinates in unit hemisphere $\Omega$, so $d\omega_\Psi$ = $\sin\left( \theta \right) d\theta d\phi$.
 
 $$
-\int\limits_\Omega \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi = \int\limits_{\phi=0}^{2\pi} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( \theta \right) \cos\left( \theta \right) d\theta d\phi = \\ = \int\limits_{\phi=0}^{2\pi} d\phi \times \dfrac{1}{2} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( 2\theta \right) d\theta = \phi \Big|_{\phi = 0}^{2\pi} \times \left( -\dfrac{1}{4}\cos\left( 2\theta \right) \right) \Big|_{\theta = 0}^{\frac{\pi}{2}} = \\ = 2\pi \times \dfrac{2}{4} = \pi 
-\implies f_{Lambertian} = \dfrac{\rho}{\pi}
+\int\limits_\Omega \left( \vec{\Psi} \cdot \vec{N} \right) d\omega_\Psi = \int\limits_{\phi=0}^{2\pi} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( \theta \right) \cos\left( \theta \right) d\theta d\phi = \\ = \int\limits_{\phi=0}^{2\pi} d\phi \times \dfrac{1}{2} \int\limits_{\theta=0}^{\frac{\pi}{2}} \sin\left( 2\theta \right) d\theta = \phi \Big|_{\phi = 0}^{2\pi} \times \left( -\dfrac{1}{4}\cos\left( 2\theta \right) \right) \Big|_{\theta = 0}^{\frac{\pi}{2}} = \\ = 2\pi \times \dfrac{2}{4} = \pi \implies f_{Lambertian} = \dfrac{\rho}{\pi}
 $$
 
 # Build
