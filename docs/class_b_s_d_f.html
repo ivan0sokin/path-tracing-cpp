@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Path tracing: Path Tracing</title>
+<title>Path tracing: BSDF Class Reference</title>
 <link rel="icon" href="icon.png" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -50,7 +50,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -72,15 +71,37 @@ $(function() {
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Path Tracing </div></div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_b_s_d_f-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">BSDF Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__m_a_i_n_p_a_g_e"></a> <img src="https://github.com/ivan0sokin/path-tracing-cpp/blob/master/illustrations/4k.png?raw=true" alt="High resolution" width="65%" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-<a href="https://github.com/ivan0sokin/path-tracing-cpp/">GitHub repository</a></h1>
-</div></div><!-- PageDoc -->
-<a href="doxygen_crawl.html"/>
+
+<p>Bidirectional scattering distribution function class.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_b_s_d_f_8h_source.html">BSDF.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a503815ea28489a8d781549bdae5c53be" id="r_a503815ea28489a8d781549bdae5c53be"><td class="memItemLeft" align="right" valign="top"><a id="a503815ea28489a8d781549bdae5c53be" name="a503815ea28489a8d781549bdae5c53be"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>BSDF</b> (const <a class="el" href="struct_material.html">Material</a> *material) noexcept</td></tr>
+<tr class="memdesc:a503815ea28489a8d781549bdae5c53be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates <a class="el" href="class_b_s_d_f.html" title="Bidirectional scattering distribution function class.">BSDF</a> based on passed material. <br /></td></tr>
+<tr class="separator:a503815ea28489a8d781549bdae5c53be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a901f6fba26a37868bb383f7559860f" id="r_a6a901f6fba26a37868bb383f7559860f"><td class="memItemLeft" align="right" valign="top"><a id="a6a901f6fba26a37868bb383f7559860f" name="a6a901f6fba26a37868bb383f7559860f"></a>
+<a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Sample</b> (const <a class="el" href="struct_ray.html">Ray</a> &amp;ray, const <a class="el" href="struct_hit_payload.html">HitPayload</a> &amp;payload, <a class="el" href="struct_math_1_1_types_1_1_vector.html">Math::Vector3f</a> &amp;throughput) noexcept</td></tr>
+<tr class="memdesc:a6a901f6fba26a37868bb383f7559860f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns direction of scattered ray and modifies throughput. <br /></td></tr>
+<tr class="separator:a6a901f6fba26a37868bb383f7559860f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Bidirectional scattering distribution function class. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
+<li>src/sampling/<a class="el" href="_b_s_d_f_8h_source.html">BSDF.h</a></li>
+<li>src/sampling/<b>BSDF.cpp</b></li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -184,7 +184,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        }</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        std::shuffle(m_BLAS.begin(), m_BLAS.end(), Utilities::s_RandomNumberGenerator);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        std::shuffle(m_BLAS.begin() + low, m_BLAS.begin() + high, Utilities::s_RandomNumberGenerator);</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordtype">int</span> leftIndex = ++usedNodes;</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordtype">int</span> rightIndex = ++usedNodes;</div>

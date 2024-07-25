@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sample_0',['Sample',['../class_light.html#a825912082123457b823d2ac6c17778a6',1,'Light::Sample()'],['../class_b_x_d_f.html#a1da53b6f193fd9d49fcbfd5491585b06',1,'BXDF::Sample()']]],
+  ['sample_0',['Sample',['../class_light.html#a825912082123457b823d2ac6c17778a6',1,'Light::Sample()'],['../class_b_s_d_f.html#a6a901f6fba26a37868bb383f7559860f',1,'BSDF::Sample()']]],
   ['sampleuniform_1',['SampleUniform',['../class_shapes_1_1_box.html#a884b091e2d89378b32a942ff66719c83',1,'Shapes::Box::SampleUniform()'],['../class_i_hittable.html#ab6c3dc6275f194eef0549bd7de33aebf',1,'IHittable::SampleUniform()'],['../class_non_hittable.html#a6d2bd2b9a253334316c87d957b834e85',1,'NonHittable::SampleUniform()'],['../class_polygon.html#a030cbd0302392b2e87c3324de2290354',1,'Polygon::SampleUniform()'],['../class_shapes_1_1_sphere.html#a7ea10d6d49cce8976c0bc172de4ff9cb',1,'Shapes::Sphere::SampleUniform()'],['../class_shapes_1_1_triangle.html#af05bc7dd2a111b9855945b1254e126d5',1,'Shapes::Triangle::SampleUniform()']]],
   ['save_2',['Save',['../class_image_saver.html#a608fc63eb06269f8e2e2837aaa28da8d',1,'ImageSaver']]],
   ['scene_3',['Scene',['../struct_scene.html',1,'']]],

@@ -160,8 +160,8 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="foldopen" id="foldopen00072" data-start="{" data-end="}">
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="class_shapes_1_1_triangle.html#af67f2892cd6aefd4536cc1575ea8dbb8">   72</a></span>        <span class="keyword">constexpr</span> <a class="code hl_struct" href="struct_a_a_b_b.html">AABB</a> <a class="code hl_function" href="class_shapes_1_1_triangle.html#af67f2892cd6aefd4536cc1575ea8dbb8">GetBoundingBox</a>() const noexcept<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_a_a_b_b.html">AABB</a>(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])) - 0.01f,</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])) + 0.01f);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_a_a_b_b.html">AABB</a>(Math::Min(vertices[0], Math::Min(vertices[1], vertices[2])),</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                        Math::Max(vertices[0], Math::Max(vertices[1], vertices[2])));</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
 </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
