@@ -95,7 +95,7 @@ private:
             return;
         }
 
-        std::shuffle(m_BLAS.begin(), m_BLAS.end(), Utilities::s_RandomNumberGenerator);
+        std::shuffle(m_BLAS.begin() + low, m_BLAS.begin() + high, Utilities::s_RandomNumberGenerator);
 
         int leftIndex = ++usedNodes;
         int rightIndex = ++usedNodes;
