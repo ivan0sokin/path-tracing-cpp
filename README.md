@@ -114,7 +114,10 @@ Where $\alpha$ is function of roughenss (I used $\alpha = roughness^2$)
 For Geometry factor I used Smith:
 
 $$
-G_{Smith}\left( \vec{\Psi}, \vec{\Theta}, \vec{N} \right) = G_{Schlick-Beckmann}\left(\vec{\Psi}, \vec{N}\right) \times G_{Schlick-Beckmann}\left(\vec{\Theta}, \vec{N} \right) \\
+G_{Smith}\left( \vec{\Psi}, \vec{\Theta}, \vec{N} \right) = G_{Schlick-Beckmann}\left(\vec{\Psi}, \vec{N}\right) \times G_{Schlick-Beckmann}\left(\vec{\Theta}, \vec{N} \right)
+$$
+
+$$
 G_{Schlick-Beckmann}\left(\vec{T}, \vec{N} \right) = \dfrac{ \left( \vec{N} \cdot \vec{T} \right) }{ \left( \vec{N} \cdot \vec{T} \right) \left( 1 - k \right) + k }
 $$
 
