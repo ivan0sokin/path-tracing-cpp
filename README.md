@@ -73,11 +73,15 @@ Let's define some physical concepts:
 + Radiance $L = \dfrac{d^2\Phi}{dA d\omega \cos(\theta)}$ expressed in $\dfrac{\text{W}}{\text{m}^2 \text{ sr} }$
 + Irradiance of the surface $E = \dfrac{d\Phi}{dA}$ expressed in $\dfrac{\text{W}}{\text{m}^2 }$
 
-Consider all radiant flux is reflected of a surface, so $d^2\Phi_\Psi = d^2\Phi_\Theta$
+Consider all radiant flux is reflected of a surface, so $d^2\Phi_\Theta = d^2\Phi_\Psi$
 
 $$
-L_\Psi = \dfrac{d^2 \Phi_\Psi}{dA_\perp d\omega_\Psi} \implies d^2 \Phi_\Psi = L_\Psi dA_\perp d\omega_\Psi = L_\Psi f_a D_N\left( \vec{H} \right) dA \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_H d\omega_\Psi \\
+L_\Psi = \dfrac{d^2 \Phi_\Psi}{dA_\perp d\omega_\Psi} \implies d^2 \Phi_\Psi = L_\Psi dA_\perp d\omega_\Psi = L_\Psi f_a D_N\left( \vec{H} \right) dA \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_H d\omega_\Psi
+$$
+
+$$
 L_\Theta = \dfrac{d^2 \Phi_\Theta}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{d^2 \Phi_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) dA \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_H d\omega_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \\
+
 = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_\Psi}{\left( \vec{\Theta} \cdot \vec{N} \right)} \times \dfrac{d\omega_H}{d\omega_\Theta}
 $$
 
@@ -85,7 +89,10 @@ In spherical coordinates $\phi$ and $\theta$ we have that $d\omega_H = \sin\left
 
 $$
 L_\Theta = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_\Psi}{\left( \vec{\Theta} \cdot \vec{N} \right)} \times \dfrac{1}{4 \left( \vec{\Psi} \cdot \vec{H} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) d\omega_\Psi}{4 \left( \vec{\Theta} \cdot \vec{N} \right)} \\
-E_\Psi = \dfrac{d\Phi_\Psi}{dA} = L_\Psi d\omega_\Psi \left( \vec{\Psi} \cdot \vec{N} \right) \\
+E_\Psi = \dfrac{d\Phi_\Psi}{dA} = L_\Psi d\omega_\Psi \left( \vec{\Psi} \cdot \vec{N} \right)
+$$
+
+$$
 f_{Cook-Torrance} = \dfrac{L_\Theta}{E_\Psi} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) d\omega_\Psi}{L_\Psi d\omega_\Psi \left( \vec{\Psi} \cdot \vec{N} \right) 4 \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{f_a D_N\left( \vec{H} \right)}{ 4 \left( \vec{\Psi} \cdot \vec{N} \right) \left( \vec{\Theta} \cdot \vec{N} \right)}
 $$
 
