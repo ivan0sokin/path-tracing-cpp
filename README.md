@@ -80,8 +80,10 @@ L_\Psi = \dfrac{d^2 \Phi_\Psi}{dA_\perp d\omega_\Psi} \implies d^2 \Phi_\Psi = L
 $$
 
 $$
-L_\Theta = \dfrac{d^2 \Phi_\Theta}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{d^2 \Phi_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) dA \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_H d\omega_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \\
+L_\Theta = \dfrac{d^2 \Phi_\Theta}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{d^2 \Phi_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) dA \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_H d\omega_\Psi}{dA d\omega_\Theta \left( \vec{\Theta} \cdot \vec{N} \right)} =
+$$
 
+$$
 = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_\Psi}{\left( \vec{\Theta} \cdot \vec{N} \right)} \times \dfrac{d\omega_H}{d\omega_\Theta}
 $$
 
