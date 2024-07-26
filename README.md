@@ -109,6 +109,7 @@ $$
 Where $\alpha$ is function of roughenss (I used $\alpha = roughness^2$) 
 
 For Geometry factor I used Smith:
+
 $$
 G_{Smith}\left( \vec{\Psi}, \vec{\Theta}, \vec{N} \right) = G_{Schlick-Beckmann}\left(\vec{\Psi}, \vec{N}\right) \times G_{Schlick-Beckmann}\left(\vec{\Theta}, \vec{N} \right) \\
 G_{Schlick-Beckmann}\left(\vec{T}, \vec{N} \right) = \dfrac{ \left( \vec{N} \cdot \vec{T} \right) }{ \left( \vec{N} \cdot \vec{T} \right) \left( 1 - k \right) + k }
@@ -117,6 +118,7 @@ $$
 Where $k$ is $\dfrac{\alpha}{2}$.
 
 Good approximation for Fresnel effect contribution is given by Schlick:
+
 $$
 F_{Schlick} = F_0 + \left( 1 - F_0 \right)\left( 1 - \left( \vec{\Theta} \cdot \vec{N} \right) \right)^5
 $$
