@@ -90,7 +90,10 @@ $$
 In spherical coordinates $\phi$ and $\theta$ we have that $d\omega_H = \sin\left( \theta \right) d\theta d\phi$ and $d\omega_\Theta = \sin\left( 2\theta \right) 2d\theta d\phi = 4\sin\left( \theta \right)\cos\left( \theta \right) d\theta d\phi$, so $\dfrac{d\omega_H}{d\omega_\Theta} = \dfrac{1}{4\cos\left( \theta \right)} = \dfrac{1}{4 \left( \vec{\Psi} \cdot \vec{H} \right)}$.
 
 $$
-L_\Theta = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_\Psi}{\left( \vec{\Theta} \cdot \vec{N} \right)} \times \dfrac{1}{4 \left( \vec{\Psi} \cdot \vec{H} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) d\omega_\Psi}{4 \left( \vec{\Theta} \cdot \vec{N} \right)} \\
+L_\Theta = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) \left( \vec{\Psi} \cdot \vec{H} \right) d\omega_\Psi}{\left( \vec{\Theta} \cdot \vec{N} \right)} \times \dfrac{1}{4 \left( \vec{\Psi} \cdot \vec{H} \right)} = \dfrac{L_\Psi f_a D_N\left( \vec{H} \right) d\omega_\Psi}{4 \left( \vec{\Theta} \cdot \vec{N} \right)}
+$$
+
+$$
 E_\Psi = \dfrac{d\Phi_\Psi}{dA} = L_\Psi d\omega_\Psi \left( \vec{\Psi} \cdot \vec{N} \right)
 $$
 
