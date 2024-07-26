@@ -160,11 +160,12 @@ return light
 
 # 🔨 Build
 
-For successful build you need only C++ compiler with supported C++20 standard.
+For successful build you need only C++ compiler with supported C++20 standard and some makefile generator.
 
 ```bash
 git clone https://github.com/ivan0sokin/path-tracing-cpp/
 cd path-tracing-cpp
+cmake -G "Your Generator" .
 cmake --build .
 ```
 
