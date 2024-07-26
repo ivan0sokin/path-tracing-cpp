@@ -131,7 +131,11 @@ $$
 
 ### Mixed BRDF
 
-When material is not fully rough and not enough reflective we mix BRDFs in a way that: $f_r = f_{diffuse} \left( 1 - F \right) * f_{specular} * F$. In my case specular BRDF has Fresnel factor already, so total BRDF is: $$f_r = f_{Lambertian} * \left( 1 - F \right) + f_{Cook-Torrance}$$
+When material is not fully rough and not enough reflective we mix BRDFs in a way that: $f_r = f_{diffuse} \left( 1 - F \right) * f_{specular} * F$. In my case specular BRDF has Fresnel factor already, so total BRDF is:
+
+$$
+f_r = f_{Lambertian} * \left( 1 - F \right) + f_{Cook-Torrance}
+$$
 
 ## Path Tracing algorithm
 
