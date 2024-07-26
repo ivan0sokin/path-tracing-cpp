@@ -101,6 +101,7 @@ $$
 $f_a D_N\left( \vec{H} \right)$ is area density distribution function.
 
 For normal distribution function $D$ I used GGX version:
+
 $$
 D_{GGX}\left( \vec{H} \right) = \dfrac{\alpha^2}{\pi \left( 1 + \left( \vec{N} \cdot \vec{H} \right)^2 \left( \alpha^2 - 1 \right) \right)}
 $$
