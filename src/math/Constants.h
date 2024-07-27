@@ -1,8 +1,8 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
 
-#include <numeric>
 #include <numbers>
+#include <limits>
 
 namespace Math {
     namespace Constants {
@@ -14,7 +14,7 @@ namespace Math {
         template<typename T> constexpr static T InverseHalfCircumferenceInDegrees = static_cast<T>(1) / HalfCircumferenceInDegrees<T>;
         template<typename T> constexpr static T HalfCircumferenceInRadians = Pi<T>;
         template<typename T> constexpr static T InverseHalfCircumferenceInRadians = InversePi<T>;
-    
+
         template<typename T> constexpr static T Epsilon = std::numeric_limits<T>::epsilon();
         template<typename T> constexpr static T Infinity = std::numeric_limits<T>::infinity();
 

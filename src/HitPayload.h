@@ -1,7 +1,7 @@
 #ifndef _HIT_PAYLOAD_H
 #define _HIT_PAYLOAD_H
 
-#include "math/Math.h"
+#include "math/LAMath.h"
 #include "Material.h"
 #include "Ray.h"
 

@@ -1,7 +1,6 @@
 #ifndef _AABB_H
 #define _AABB_H
 
-#include "../math/Math.h"
 #include "../Ray.h"
 
 //! Axis aligned bounding box, structure used to make faster ray-model intersections
@@ -41,7 +40,7 @@ struct AABB {
         if (inverseDirection.x < 0.f) {
             std::swap(t0.x, t1.x);
         }
-        
+
         if (inverseDirection.y < 0.f) {
             std::swap(t0.y, t1.y);
         }

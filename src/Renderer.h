@@ -6,7 +6,6 @@
 #include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
-#include "math/Math.h"
 #include "Material.h"
 #include "Light.h"
 #include "acceleration/TLAS.h"
@@ -18,7 +17,7 @@
 class Renderer {
 public:
     Renderer() = delete;
-    
+
     //! Creates renderer with given width and height
     Renderer(int width, int height) noexcept;
 
@@ -84,7 +83,7 @@ public:
     constexpr int& RayDepth() noexcept {
         return m_RayDepth;
     }
-    
+
     //! Returns reference to gamma. GUI convinience
     constexpr float& Gamma() noexcept {
         return m_Gamma;

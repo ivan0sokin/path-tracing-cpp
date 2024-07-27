@@ -1,7 +1,7 @@
 #ifndef _RAY_H
 #define _RAY_H
 
-#include "math/Math.h"
+#include "math/LAMath.h"
 
 //! Ray representation, P(t) = origin + direction * t
 struct Ray {

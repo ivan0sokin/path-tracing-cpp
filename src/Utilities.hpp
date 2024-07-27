@@ -4,7 +4,7 @@
 #include <chrono>
 #include <random>
 
-#include "math/Math.h"
+#include "math/LAMath.h"
 
 namespace Utilities {
 	inline static uint32_t s_RandomEngineState = std::chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -24,7 +24,7 @@ namespace Utilities {
 
 	inline float RandomFloatInNegativeHalfToHalf() noexcept {
 		return RandomFloatInZeroToOne() - 0.5f;
-	} 
+	}
 
 	inline float RandomFloatInNegativeToOne() noexcept {
 		return RandomFloatInZeroToOne() * 2.f - 1.f;

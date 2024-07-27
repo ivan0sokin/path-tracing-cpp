@@ -1,9 +1,8 @@
+#include <filesystem>
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "AssetLoader.h"
 
 #include "../../stb-master/stb_image.h"
-
-#include <unordered_map>
 
 AssetLoader::AssetLoader() noexcept {
     m_LoadingProperties.generateSmoothNormals = true;
@@ -77,14 +76,16 @@ Material AssetLoader::ProcessMaterial(const tinyobj::material_t &material, int i
     resultMaterial.textures[TextureIndex::Roughness] = new Texture(Math::Vector3f(0.5f));
     resultMaterial.textures[TextureIndex::Specular] = new Texture(Math::Vector3f(0.f));
     resultMaterial.index = index;
-    
-    const std::array<std::string, 5> textureNames = {
+
+    std::array<std::string, 5> textureNames = {
         material.diffuse_texname,
         material.reflection_texname,
         material.specular_texname,
         material.specular_highlight_texname,
         material.bump_texname
     };
+
+    FixTextureNames(textureNames);
 
     for (int i = 0; i < static_cast<int>(textureNames.size()); ++i) {
         const auto &textureName = textureNames[i];
@@ -93,14 +94,14 @@ Material AssetLoader::ProcessMaterial(const tinyobj::material_t &material, int i
             continue;
         }
 
-        std::filesystem::path pathToTexture = materialDirectory / std::filesystem::path(textureName);
-        std::string absolutePathToTexture = std::filesystem::absolute(pathToTexture).string();
+        std::filesystem::path pathToTexture = materialDirectory / textureName;
+        std::string absolutePathToTexture = std::filesystem::absolute(pathToTexture).generic_string();
 
         Texture *texture = nullptr;
 
         auto it = m_Textures.find(absolutePathToTexture);
         if (it != m_Textures.cend()) {
-            texture = it->second;                
+            texture = it->second;
         } else {
             texture = LoadTexture(pathToTexture);
             m_TextureAbsolutePaths.back().push_back(absolutePathToTexture);
@@ -121,12 +122,18 @@ Material AssetLoader::ProcessMaterial(const tinyobj::material_t &material, int i
     return resultMaterial;
 }
 
+void AssetLoader::FixTextureNames(std::span<std::string> names) noexcept {
+    for (auto &name : names) {
+        std::replace(name.begin(), name.end(), '\\', '/');
+    }
+}
+
 Texture* AssetLoader::LoadTexture(const std::filesystem::path &pathToTexture) noexcept {
     const int DESIRED_CHANNELS = 3;
     int width, height, channels;
-    unsigned char *textureDataInBytes = stbi_load(pathToTexture.string().c_str(), &width, &height, &channels, DESIRED_CHANNELS);
+    unsigned char *textureDataInBytes = stbi_load(pathToTexture.generic_string().c_str(), &width, &height, &channels, DESIRED_CHANNELS);
 
-    printf("%s: %dx%d with %d channels\n", pathToTexture.string().c_str(), width, height, channels);
+    printf("%s: %dx%d with %d channels\n", pathToTexture.generic_string().c_str(), width, height, channels);
 
     Texture *texture = new Texture(textureDataInBytes, width, height, DESIRED_CHANNELS);
 
@@ -192,7 +199,7 @@ Mesh* AssetLoader::ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::m
 
 Mesh::Vertex AssetLoader::ProcessVertex(const tinyobj::attrib_t &attrib, const tinyobj::index_t &index) noexcept {
     Mesh::Vertex vertex;
-    
+
     if (!attrib.vertices.empty()) {
         vertex.position = {
             attrib.vertices[3 * index.vertex_index + 0],
@@ -215,7 +222,7 @@ Mesh::Vertex AssetLoader::ProcessVertex(const tinyobj::attrib_t &attrib, const t
             1.f - attrib.texcoords[2 * index.texcoord_index + 1]
         };
     }
-    
+
     return vertex;
 }
 
@@ -279,7 +286,7 @@ void AssetLoader::GenerateTangents(std::vector<Mesh::Vertex> &vertices, const st
         tangent.x = inverseDeterminant * (dt2.y * dp1.x - dt1.y * dp2.x);
         tangent.y = inverseDeterminant * (dt2.y * dp1.y - dt1.y * dp2.y);
         tangent.z = inverseDeterminant * (dt2.y * dp1.z - dt1.y * dp2.z);
-    
+
         v0.tangent += tangent;
         v1.tangent += tangent;
         v2.tangent += tangent;
@@ -304,7 +311,7 @@ void AssetLoader::UnloadModel(int modelIndex) noexcept {
     if (modelIndex >= static_cast<int>(m_Models.size())) {
         return;
     }
-    
+
     if (m_Models[modelIndex] != nullptr) {
         delete m_Models[modelIndex];
         m_Models[modelIndex] = nullptr;

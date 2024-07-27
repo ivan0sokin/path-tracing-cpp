@@ -1,7 +1,7 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
-#include "math/Math.h"
+#include "math/LAMath.h"
 
 #include <vector>
 #include <span>
@@ -26,7 +26,7 @@ public:
     constexpr std::span<const Math::Vector3f> GetRayDirections() const noexcept {
         return m_RayDirections;
     }
- 
+
     //! Returns position of Camera
     constexpr Math::Vector3f GetPosition() const noexcept {
         return m_Position;

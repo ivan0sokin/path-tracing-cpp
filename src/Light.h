@@ -2,9 +2,6 @@
 #define _LIGHT_H
 
 #include "hittable/IHittable.h"
-#include "math/Math.h"
-#include "Ray.h"
-#include "HitPayload.h"
 
 //! Class that samples lights directly
 class Light {
@@ -23,9 +20,9 @@ public:
         if (Math::Abs(lightHitPayload.t - distance) > distanceEpsilon) {
             return Math::Vector3f(0.f);
         }
-        
+
         float pdf = distanceSquared / (Math::Dot(lightHitPayload.normal, -lightRay.direction) * m_Object->GetSurfaceArea());
-        
+
         constexpr float pdfEpsilon = 0.01f;
         if (pdf <= pdfEpsilon) {
             return Math::Vector3f(0.f);

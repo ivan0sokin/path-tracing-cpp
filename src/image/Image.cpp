@@ -1,9 +1,14 @@
 #include "Image.h"
+
+#ifdef _WIN32
 #include <gl/gl.h>
+#elif __linux__
+#include <GL/gl.h>
+#endif
 
 Image::Image(int width, int height) noexcept :
     m_Data(new std::uint32_t[width * height]), m_Width(width), m_Height(height) {
-    
+
     glGenTextures(1, &m_Descriptor);
     glBindTexture(GL_TEXTURE_2D, m_Descriptor);
 
@@ -17,7 +22,7 @@ Image::Image(int width, int height) noexcept :
 
 Image::~Image() noexcept {
     if (m_Data != nullptr) {
-        delete m_Data;
+        delete[] m_Data;
     }
 
     glDeleteTextures(1, &m_Descriptor);

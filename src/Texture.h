@@ -1,7 +1,7 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
-#include "math/Math.h"
+#include "math/LAMath.h"
 
 #include <vector>
 #include <span>

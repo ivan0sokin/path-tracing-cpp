@@ -1,7 +1,7 @@
 #ifndef _MESH_H
 #define _MESH_H
 
-#include "../math/Math.h"
+#include "../math/LAMath.h"
 
 #include <vector>
 #include <span>
@@ -28,7 +28,7 @@ public:
     };
 
     //! Constructs Mesh from moved vector of vertices, indices and materialIndices
-    inline Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept : 
+    inline Mesh(std::vector<Vertex> &&vertices, std::vector<int> &&indices, std::vector<int> &&materialIndices) noexcept :
         m_Vertices(std::move(vertices)), m_Indices(std::move(indices)), m_MaterialIndices(std::move(materialIndices)) {}
 
     inline ~Mesh() noexcept = default;

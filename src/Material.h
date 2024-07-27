@@ -5,7 +5,7 @@
 #include <cstdint>
 
 #include "Texture.h"
-#include "math/Math.h"
+#include "math/LAMath.h"
 
 //! This namespace is used for indexing textures by name
 namespace TextureIndex {
@@ -32,7 +32,7 @@ struct Material {
     constexpr Material() noexcept :
         textures{nullptr, nullptr, nullptr, nullptr, nullptr}, emissionPower(0.f), index(-1) {}
 
-    //! Returns emmision of material 
+    //! Returns emmision of material
     inline Math::Vector3f GetEmission(const Math::Vector2f &texcoords) const noexcept {
         return textures[TextureIndex::Albedo]->PickValue(texcoords) * emissionPower;
     }

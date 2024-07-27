@@ -60,9 +60,11 @@ public:
     std::pair<ModelInstance*, Result> LoadOBJ(const std::filesystem::path &pathToFile, const std::filesystem::path &materialDirectory) noexcept;
 
 private:
-    Texture* LoadTexture(const std::filesystem::path &pathToTexture) noexcept;
-
     Material ProcessMaterial(const tinyobj::material_t &material, int index, const std::filesystem::path &materialDirectory) noexcept;
+
+    void FixTextureNames(std::span<std::string> names) noexcept;
+
+    Texture* LoadTexture(const std::filesystem::path &pathToTexture) noexcept;
 
     Mesh* ProcessMesh(const tinyobj::attrib_t &attrib, const tinyobj::mesh_t &mesh) noexcept;
 
@@ -84,7 +86,7 @@ private:
     std::vector<std::vector<std::string>> m_TextureAbsolutePaths;
 
     std::unordered_map<std::string, Texture*> m_Textures;
-    
+
     LoadingProperties m_LoadingProperties;
 
 protected:

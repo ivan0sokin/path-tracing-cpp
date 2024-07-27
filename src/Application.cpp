@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "Utilities.hpp"
 #include "Timer.h"
 
 #include "../imgui-docking/imgui.h"
@@ -15,7 +14,6 @@
 #endif
 
 #include <iostream>
-#include <chrono>
 #include <fstream>
 
 Application::Application(int windowWidth, int windowHeight) noexcept :
@@ -54,7 +52,7 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
 
     m_AccelerationStructure = nullptr;
     m_ObjectsBLAS = nullptr;
-    
+
     m_NonHittable = new NonHittable();
     std::array<IHittable*, 1> m_NonHittableArray = {m_NonHittable};
     m_NonHittableBLAS = new BLAS(new BVH(m_NonHittableArray));
@@ -163,7 +161,7 @@ void Application::MainLoop() noexcept {
 
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
-        
+
         int display_w, display_h;
         glfwGetFramebufferSize(m_Window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
@@ -171,7 +169,7 @@ void Application::MainLoop() noexcept {
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        
+
         glfwSwapBuffers(m_Window);
     }
 }
@@ -212,11 +210,11 @@ void Application::OnUpdate() noexcept {
         }
     }
     ImGui::End();
-    
+
     ImGui::SetNextWindowPos({viewport->WorkPos.x + viewport->WorkSize.x * 0.7f, viewport->WorkPos.y});
     ImGui::SetNextWindowSize({viewport->WorkSize.x * 0.3f, viewport->WorkSize.y});
     ImGui::SetNextWindowViewport(viewport->ID);
-    
+
     ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar);
     {
         m_LastID = 0;
@@ -239,7 +237,7 @@ void Application::OnUpdate() noexcept {
 
         if (ImGui::Button("Reset", {viewport->WorkSize.x * 0.05f, viewport->WorkSize.y * 0.1f}) || m_Renderer.Accumulate()) {
             m_Scene.camera.ComputeRayDirections();
-            
+
             m_LastRenderTime = Timer::MeasureInMillis([this](){
                 if (m_Renderer.Accelerate()) {
                     m_Renderer.Render(m_Scene.camera, m_AccelerationStructure, m_Lights, m_Scene.materials);
@@ -359,7 +357,7 @@ void Application::ProcessSpheresCollapsingHeader() noexcept {
             m_SomeObjectChanged = true;
             m_SomeGeometryChanged = true;
         }
-        
+
         if (ImGui::InputFloat("Radius", Math::ValuePointer(m_AddSphere.radius))) {
             m_AddSphere = Shapes::Sphere(m_AddSphere.center, m_AddSphere.radius, m_AddSphere.material);
         }
@@ -388,7 +386,7 @@ void Application::ProcessTrianglesCollapsingHeader() noexcept {
 
             Shapes::Triangle &triangle = m_Scene.triangles[i];
             ImGui::Text("Triangle %d:", i);
-            
+
             if (ImGui::Button("Delete")) {
                 deleteIndex = i;
             }
@@ -420,7 +418,7 @@ void Application::ProcessTrianglesCollapsingHeader() noexcept {
             m_SomeObjectChanged = true;
             m_SomeGeometryChanged = true;
         }
-        
+
         if (ImGui::InputFloat3("Vertex 0", Math::ValuePointer(m_AddTriangle.vertices[0]))) {
             m_AddTriangle = Shapes::Triangle(m_AddTriangle.vertices[0], m_AddTriangle.vertices[1], m_AddTriangle.vertices[2], m_AddTriangle.material);
         }
@@ -483,7 +481,7 @@ void Application::ProcessBoxesCollapsingHeader() noexcept {
             m_SomeObjectChanged = true;
             m_SomeGeometryChanged = true;
         }
-        
+
         if (ImGui::InputFloat3("First corner", Math::ValuePointer(m_AddBox.min))) {
             m_AddBox = Shapes::Box(m_AddBox.min, m_AddBox.max, m_AddBox.material);
         }
@@ -519,11 +517,11 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             }
 
             auto modelInstance = m_Scene.modelInstances[i];
-            
+
             if (ImGui::Button("Clone")) {
                 cloneIndex = i;
             }
-            
+
             if (ImGui::InputFloat3("Translation", Math::ValuePointer(modelInstance->Translation()))) {
                 modelInstance->UpdateTransform();
                 m_SomeGeometryChanged = true;
@@ -547,7 +545,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
                 modelInstance = instance;
                 result = res;
             });
-            
+
             if (!result.warning.empty()) {
                 std::cout << "Warnings occured while loading model " << m_ModelFilePath << " with material directory: " << m_MaterialDirectory << ": " << result.warning << '\n';
             }
@@ -562,7 +560,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
                 m_SomeGeometryChanged = true;
             }
         }
-        
+
         ImGui::InputText("Path (.obj)", m_ModelFilePath, c_AnyInputFilePathLength);
         ImGui::InputText("Material folder", m_MaterialDirectory, c_AnyInputFilePathLength);
 
@@ -571,7 +569,7 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
         if (deleteIndex >= 0) {
             delete m_Scene.modelInstances[deleteIndex];
             m_Scene.modelInstances.erase(m_Scene.modelInstances.cbegin() + deleteIndex);
- 
+
             m_SomeObjectChanged = true;
             m_SomeGeometryChanged = true;
         }
@@ -603,7 +601,7 @@ void Application::ProcessMaterialsCollapsingHeader() noexcept {
             ImGui::InputFloat("Metallic", material.textures[TextureIndex::Metallic]->GetData());
             ImGui::InputFloat("Roughness", material.textures[TextureIndex::Roughness]->GetData());
             ImGui::InputFloat("Specular", material.textures[TextureIndex::Specular]->GetData());
-            
+
             // ImGui::InputFloat("Transparency", &material.transparency);
             // ImGui::InputFloat("Refraction", &material.refractionIndex);
 
@@ -663,7 +661,7 @@ void Application::LoadSceneFromFile(const std::filesystem::path &pathToFile) noe
 
     UpdateObjects();
     UpdateLights();
-    UpdateTLAS();    
+    UpdateTLAS();
 }
 
 void Application::UpdateTLAS() noexcept {
@@ -738,7 +736,7 @@ void Application::UpdateObjects() noexcept {
 
 void Application::UpdateLights() noexcept {
     m_Lights.clear();
-    
+
     for (auto &sphere : m_Scene.spheres) {
         if (sphere.material->emissionPower > 0.f) {
             m_Lights.emplace_back(&sphere);

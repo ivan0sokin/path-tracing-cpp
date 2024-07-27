@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _LAMATH_H
+#define _LAMATH_H
 
 #include "Types.h"
 #include "Vector2.h"

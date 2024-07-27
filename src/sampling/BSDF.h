@@ -1,10 +1,7 @@
 #ifndef _BSDF_H
 #define _BSDF_H
 
-#include "../Material.h"
-#include "../Ray.h"
 #include "../HitPayload.h"
-#include "../math/Math.h"
 
 //! Bidirectional scattering distribution function class
 class BSDF {
@@ -18,7 +15,7 @@ public:
 
 private:
     Math::Vector3f SampleBRDF(const Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
-    
+
     Math::Vector3f SampleBTDF(Ray &ray, const HitPayload &payload, Math::Vector3f &throughput) noexcept;
 
 private:

@@ -13,6 +13,6 @@ int main(int argc, char **argv) {
     }
 
     Application application(width, height);
-    
+
     return application.Run();
 }

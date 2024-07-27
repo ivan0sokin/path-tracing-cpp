@@ -30,9 +30,17 @@ set(SOURCES src/Renderer.cpp
             src/hittable/Polygon.cpp
             src/Entrypoint.cpp)
 
+set(LIBS glfw3)
+
+if (WIN32)
+list(APPEND LIBS opengl32)
+elseif (UNIX)
+list(APPEND LIBS GL)
+endif (WIN32)
+
 add_executable(ptrace ${SOURCES} ${IMGUI_SOURCES})
 target_include_directories(ptrace PRIVATE ${IMGUI_DIR} ${GLFW_INCLUDE_DIR})
 target_link_directories(ptrace PRIVATE ${GLFW_LIB_DIR})
-target_link_libraries(ptrace PRIVATE glfw3 opengl32)
+target_link_libraries(ptrace PRIVATE ${LIBS})
 
 set(PTRACE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)

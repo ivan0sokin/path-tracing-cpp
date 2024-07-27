@@ -1,14 +1,14 @@
 #ifndef _SAMPLING_H
 #define _SAMPLING_H
 
-#include "../math/Math.h"
+#include "../math/LAMath.h"
 
 namespace Sampling {
     constexpr Math::Vector3f SampleHemisphereCosine(const Math::Vector3f &N, const Math::Vector2f &random) noexcept {
         float cosTheta = Math::Pow(random.x, 1.f / (1.f + 1.f));
 		float sinTheta = Math::Sqrt(1.f - cosTheta * cosTheta);
 		float phi = Math::Constants::Tau<float> * random.y;
-		
+
 		Math::Vector3f localDirection(Math::Cos(phi) * sinTheta, Math::Sin(phi) * sinTheta, cosTheta);
 
 		return Math::Normalize(localDirection * Math::GenerateTangentSpace(N));
@@ -84,12 +84,12 @@ namespace Sampling {
         return F0 + (1.f - F0) * Math::Pow(1.f - cosTheta, 5.f);
     }
 
-    constexpr Math::Vector3f SampleCookTorranceBRDF(float D, float G, const Math::Vector3f &F, float NdotV, float NdotL) noexcept {        
-        const float BIAS = 0.001f; 
-        
+    constexpr Math::Vector3f SampleCookTorranceBRDF(float D, float G, const Math::Vector3f &F, float NdotV, float NdotL) noexcept {
+        const float BIAS = 0.001f;
+
         Math::Vector3f nominator = D * G * F;
         float denominator = 4.f * NdotV * NdotL + BIAS;
-        
+
         return nominator / denominator;
     }
 
