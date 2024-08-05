@@ -72,8 +72,8 @@ private:
     double m_TotalRenderTime;
     double m_LastRenderTime;
 
-    char *m_SaveImageFilePath;
-    char *m_SceneFilePath;
+    std::string m_SaveImageFilePath;
+    std::string m_SceneFilePath;
 
     Scene m_Scene;
     Renderer m_Renderer;
@@ -97,8 +97,8 @@ private:
     Shapes::Sphere m_AddSphere;
     Shapes::Triangle m_AddTriangle;
     Shapes::Box m_AddBox;
-    char *m_ModelFilePath;
-    char *m_MaterialDirectory;
+    std::string m_ModelFilePath;
+    std::string m_MaterialDirectory;
 
     int m_AddSphereMaterialIndex;
     int m_AddTriangleMaterialIndex;

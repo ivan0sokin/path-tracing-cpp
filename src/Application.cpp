@@ -20,16 +20,11 @@ Application::Application(int windowWidth, int windowHeight) noexcept :
     m_InitialWindowWidth(windowWidth), m_InitialWindowHeight(windowHeight),
     m_LastViewportWidth(-1), m_LastViewportHeight(-1),
     m_Renderer(windowWidth, windowHeight),
-    m_TotalRenderTime(0.f), m_LastRenderTime(0.f) {
-
-    m_SaveImageFilePath = new char[c_AnyInputFilePathLength];
-    m_SceneFilePath = new char[c_AnyInputFilePathLength];
-    m_ModelFilePath = new char[c_AnyInputFilePathLength];
-    m_MaterialDirectory = new char[c_AnyInputFilePathLength];
-    memset(m_SaveImageFilePath, 0, sizeof(m_SaveImageFilePath));
-    memset(m_SceneFilePath, 0, sizeof(m_SceneFilePath));
-    memset(m_ModelFilePath, 0, sizeof(m_ModelFilePath));
-    memset(m_MaterialDirectory, 0, sizeof(m_MaterialDirectory));
+    m_TotalRenderTime(0.f), m_LastRenderTime(0.f),
+    m_SaveImageFilePath(c_AnyInputFilePathLength, '\0'),
+    m_SceneFilePath(c_AnyInputFilePathLength, '\0'),
+    m_ModelFilePath(c_AnyInputFilePathLength, '\0'),
+    m_MaterialDirectory(c_AnyInputFilePathLength, '\0') {
 
     m_AddMaterial.textures[TextureIndex::Albedo] = new Texture(Math::Vector3f(0.f));
     m_AddMaterial.textures[TextureIndex::Metallic] = new Texture(Math::Vector3f(0.f));
@@ -257,13 +252,13 @@ void Application::OnUpdate() noexcept {
             UpdateThemeStyle();
         }
 
-        ImGui::InputText("##save_image", m_SaveImageFilePath, c_AnyInputFilePathLength);
+        ImGui::InputText("##save_image", m_SaveImageFilePath.data(), c_AnyInputFilePathLength);
         ImGui::SameLine();
         if (ImGui::Button("Save image")) {
             ImageSaver(m_Renderer.GetImage()).Save(m_SaveImageFilePath);
         }
 
-        ImGui::InputText("##save_scene", m_SceneFilePath, c_AnyInputFilePathLength);
+        ImGui::InputText("##save_scene", m_SceneFilePath.data(), c_AnyInputFilePathLength);
         if (ImGui::Button("Save scene")) {
             SaveSceneToFile(m_SceneFilePath);
         }
@@ -561,8 +556,8 @@ void Application::ProcessModelsCollapsingHeader() noexcept {
             }
         }
 
-        ImGui::InputText("Path (.obj)", m_ModelFilePath, c_AnyInputFilePathLength);
-        ImGui::InputText("Material folder", m_MaterialDirectory, c_AnyInputFilePathLength);
+        ImGui::InputText("Path (.obj)", m_ModelFilePath.data(), c_AnyInputFilePathLength);
+        ImGui::InputText("Material folder", m_MaterialDirectory.data(), c_AnyInputFilePathLength);
 
         ImGui::PopID();
 
