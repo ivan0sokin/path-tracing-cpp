@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['scene_0',['Scene',['../struct_scene.html',1,'']]],
-  ['sphere_1',['Sphere',['../class_shapes_1_1_sphere.html',1,'Shapes']]]
+  ['scene_150',['Scene',['../structScene.html',1,'']]],
+  ['sphere_151',['Sphere',['../classShapes_1_1Sphere.html',1,'Shapes']]]
 ];

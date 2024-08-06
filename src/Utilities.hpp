@@ -57,33 +57,6 @@ namespace Utilities {
 		return Math::Normalize(RandomInUnitSphere());
 	}
 
-	constexpr float InverseSqrtFast(float x) {
-		constexpr float threeHalfs = 1.5f;
-
-		float halfX = x * 0.5f;
-		uint32_t i = *(uint32_t*)&x;
-		i = 0x5f3759df - (i >> 1);
-
-		x = *(float*)&i;
-		x = x * (threeHalfs - halfX * x * x);
-
-		return x;
-	}
-
-	inline Math::Vector3f RandomUnitVectorFast() noexcept {
-		Math::Vector3f v = RandomInUnitSphere();
-		return v * InverseSqrtFast(Math::Dot(v, v));
-	}
-
-	inline Math::Vector3f RandomInHemisphereFast(const Math::Vector3f &normal) {
-    	Math::Vector3f randomUnitVector = RandomUnitVectorFast();
-		if (Math::Dot(randomUnitVector, normal) < 0.f) {
-			return -randomUnitVector;
-		}
-
-		return randomUnitVector;
-	}
-
 	inline Math::Vector3f RandomCosineDirection() {
 		float r1 = RandomFloatInZeroToOne();
 		float r2 = RandomFloatInZeroToOne();
@@ -96,19 +69,6 @@ namespace Utilities {
 		float z = sqrt(1.f - r2);
 
 		return {x, y, z};
-	}
-
-	constexpr uint32_t AsUint(float x) {
-		return *(uint32_t*)&x;
-	}
-
-	constexpr float AsFloat(uint32_t x) {
-		return *(float*)&x;
-	}
-
-	constexpr float PowFast(float x, float exp) {
-		constexpr float oneAsUint = 0x3f800000u;
-		return AsFloat(int(exp * (AsUint(x) - oneAsUint)) + oneAsUint);
 	}
 
 	constexpr bool AlmostZero(const Math::Vector3f &v) {
@@ -130,15 +90,6 @@ namespace Utilities {
 			Math::Pow(color.r, inverseGamma),
 			Math::Pow(color.g, inverseGamma),
 			Math::Pow(color.b, inverseGamma),
-			color.a
-		};
-	}
-
-	constexpr Math::Vector4f CorrectGammaFast(const Math::Vector4f &color, float inverseGamma) {
-		return {
-			PowFast(color.r, inverseGamma),
-			PowFast(color.g, inverseGamma),
-			PowFast(color.b, inverseGamma),
 			color.a
 		};
 	}

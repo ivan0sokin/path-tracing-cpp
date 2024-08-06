@@ -1,7 +1,7 @@
-prefix=C:/Program Files (x86)/path_tracing
+prefix=/usr/local
 exec_prefix=${prefix}
-includedir=C:/Program Files (x86)/path_tracing/include
-libdir=C:/Program Files (x86)/path_tracing/lib
+includedir=/usr/local/include
+libdir=/usr/local/lib
 
 Name: GLFW
 Description: A multi-platform library for OpenGL, window and input
@@ -9,5 +9,5 @@ Version: 3.4.0
 URL: https://www.glfw.org/
 Requires.private: 
 Libs: -L${libdir} -lglfw3
-Libs.private:  -lgdi32
+Libs.private:  -lrt -lm -ldl
 Cflags: -I${includedir}

@@ -3,7 +3,6 @@
 
 #include "image/Image.h"
 #include "Camera.h"
-#include "Scene.h"
 #include "HitPayload.h"
 #include "Ray.h"
 #include "Material.h"
