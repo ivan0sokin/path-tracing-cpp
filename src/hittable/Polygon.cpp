@@ -36,6 +36,11 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
         return false;
     }    
 
+    Math::Vector3f p = ray.origin + ray.direction * t;
+
+    std::array<Math::Vector3f, 3> pointToVertices = {p0 - p, p1 - p, p2 - p};
+    auto [u0, u1, u2] = ComputeBarycentrics(std::span{pointToVertices});
+
     auto n0 = vertices[indices[3 * m_FaceIndex + 0]].normal;
     auto n1 = vertices[indices[3 * m_FaceIndex + 1]].normal;
     auto n2 = vertices[indices[3 * m_FaceIndex + 2]].normal;
@@ -44,17 +49,12 @@ bool Polygon::Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) c
     n1 = Math::Dot(ray.direction, n1) > Math::Constants::Epsilon<float> ? -n1 : n1;
     n2 = Math::Dot(ray.direction, n2) > Math::Constants::Epsilon<float> ? -n2 : n2;
 
+    payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
+    
     const auto &t0 = vertices[indices[3 * m_FaceIndex + 0]].texcoord;
     const auto &t1 = vertices[indices[3 * m_FaceIndex + 1]].texcoord;
     const auto &t2 = vertices[indices[3 * m_FaceIndex + 2]].texcoord;
 
-    Math::Vector3f p = ray.origin + ray.direction * t;
-
-    float u0 = Math::Length(Math::Cross(p1 - p, p2 - p)) / Math::Length(Math::Cross(p1 - p0, p2 - p0));
-    float u1 = Math::Length(Math::Cross(p0 - p, p2 - p)) / Math::Length(Math::Cross(p1 - p0, p2 - p0));
-    float u2 = 1.f - u1 - u0;
-
-    payload.normal = Math::Normalize(n0 * u0 + n1 * u1 + n2 * u2);
     payload.texcoord = t0 * u0 + t1 * u1 + t2 * u2;
 
     auto materials = m_Model->GetMaterials();

@@ -4,6 +4,9 @@
 #include "Types.h"
 #include "ElementaryFunctions.h"
 
+#include <span>
+#include <utility>
+
 namespace Math {
     template<typename T>
     constexpr T Dot(const Types::Vector<T, 2> &a, const Types::Vector<T, 2> &b) noexcept {
@@ -78,12 +81,12 @@ namespace Math {
     }
 
     template<typename T>
-    constexpr Types::Vector<T, 3> Reflect(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n) {
+    constexpr Types::Vector<T, 3> Reflect(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n) noexcept {
         return i - static_cast<T>(2) * Math::Dot(n, i) * n;
     }
 
     template<typename T>
-    constexpr Types::Vector<T, 3> Refract(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n, float eta) {
+    constexpr Types::Vector<T, 3> Refract(const Types::Vector<T, 3> &i, const Types::Vector<T, 3> &n, float eta) noexcept {
         float k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - Math::Dot(n, i) * Math::Dot(n, i));
         if (k < static_cast<T>(0)) {
             return Types::Vector<T, 3>(0.f);

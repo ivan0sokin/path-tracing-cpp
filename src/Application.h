@@ -104,9 +104,9 @@ private:
     int m_AddTriangleMaterialIndex;
     int m_AddBoxMaterialIndex;
 
-    constexpr static const char *c_WindowTitle = "Path Tracing";
-    constexpr static const char *c_DefaultScenePath = "assets/dft2.scn";
-    constexpr static const char *c_DebugScenePath = "assets/cup.scn";
+    constexpr static std::string_view c_WindowTitle = "Path Tracing";
+    constexpr static std::string_view c_DefaultScenePath = "assets/dft2.scn";
+    constexpr static std::string_view c_DebugScenePath = "assets/cup.scn";
     constexpr static int c_AnyInputFilePathLength = 128;
 };
 

@@ -18,7 +18,8 @@ public:
 
         m_Centroid = (p0 + p1 + p2) * Math::Constants::OneThird<float>;
         m_AABB = AABB(Math::Min(p0, Math::Min(p1, p2)), Math::Max(p0, Math::Max(p1, p2)));
-        m_SurfaceArea = Math::Length(Math::Cross(p1 - p0, p2 - p0)) * 0.5f;
+        m_TwiceSurfaceArea = Math::Length(Math::Cross(p1 - p0, p2 - p0));
+        m_SurfaceArea = m_TwiceSurfaceArea * 0.5f;
         m_Edges[0] = p1 - p0;
         m_Edges[1] = p2 - p0;
     }
@@ -58,12 +59,20 @@ public:
     }
 
 private:
+    constexpr std::tuple<float, float, float> ComputeBarycentrics(std::span<const Math::Vector3f> pointToVertices) const noexcept {
+        float u0 = Math::Length(Math::Cross(pointToVertices[1], pointToVertices[2])) / m_TwiceSurfaceArea;
+        float u1 = Math::Length(Math::Cross(pointToVertices[0], pointToVertices[2])) / m_TwiceSurfaceArea;
+        return {u0, u1, 1.f - u0 - u1}; 
+    }
+
+private:
     const Model *m_Model;
     const Mesh *m_Mesh;
     int m_FaceIndex;
 
     Math::Vector3f m_Centroid;
     AABB m_AABB;
+    float m_TwiceSurfaceArea;
     float m_SurfaceArea;
     Math::Vector3f m_Edges[2];
 };

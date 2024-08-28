@@ -61,6 +61,7 @@ Application::~Application() noexcept {
     }
 
     if (m_ObjectsBLAS != nullptr) {
+        delete m_ObjectsBLAS->GetBVH();
         delete m_ObjectsBLAS;
     }
 
@@ -81,23 +82,23 @@ int Application::Run() noexcept {
     }
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
-    const char* glsl_version = "#version 100";
+    std::string_view glsl_version = "#version 100";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 #elif defined(__APPLE__)
-    const char* glsl_version = "#version 150";
+    std::string_view glsl_version = "#version 150";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #else
-    const char* glsl_version = "#version 130";
+    std::string_view glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 #endif
 
-    m_Window = glfwCreateWindow(m_InitialWindowWidth, m_InitialWindowHeight, c_WindowTitle, nullptr, nullptr);
+    m_Window = glfwCreateWindow(m_InitialWindowWidth, m_InitialWindowHeight, c_WindowTitle.data(), nullptr, nullptr);
     if (m_Window == nullptr) {
         std::cerr << "Failed to create window\n";
         return -1;
@@ -118,7 +119,7 @@ int Application::Run() noexcept {
     UpdateThemeStyle();
 
     ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
+    ImGui_ImplOpenGL3_Init(glsl_version.data());
 
     MainLoop();
 
