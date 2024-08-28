@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['empty_0',['Empty',['../struct_a_a_b_b.html#a57007ca50af6db45130f5d24c6991d41',1,'AABB']]]
+  ['empty_16',['Empty',['../structAABB.html#a33d0698e374897d0157b7bb19cfb1bd1',1,'AABB']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['deserialize_0',['Deserialize',['../struct_scene.html#afb2077d341ca179c79c243742d8f583c',1,'Scene']]],
-  ['direction_1',['direction',['../struct_ray.html#a32df584151ce19edb6cba1879bda747a',1,'Ray']]]
+  ['deserialize_14',['Deserialize',['../structScene.html#a0e9ff45d2e2bee6dc00a12e419ad80f5',1,'Scene']]],
+  ['direction_15',['direction',['../structRay.html#a32df584151ce19edb6cba1879bda747a',1,'Ray']]]
 ];

@@ -1,9 +1,6 @@
 #ifndef _MATERIAL_H
 #define _MATERIAL_H
 
-#include <vector>
-#include <cstdint>
-
 #include "Texture.h"
 #include "math/LAMath.h"
 
