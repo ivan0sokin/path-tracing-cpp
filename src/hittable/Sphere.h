@@ -6,7 +6,7 @@
 //! This namespace contains primitive geometric shapes
 namespace Shapes {
     //! Sphere class. Holds information about its center, radius and material
-    class Sphere : public IHittable {
+    class Sphere final : public IHittable {
     public:
         Math::Vector3f center;
         float radius, radiusSquared, inverseRadius;
@@ -22,12 +22,12 @@ namespace Shapes {
         //! Performs Ray-Sphere intersection. Returns true if hit
         constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
             Math::Vector3f centerToOrigin = ray.origin - center;
-        
+
             float a = Math::Dot(ray.direction, ray.direction);
             float k = Math::Dot(centerToOrigin, ray.direction);
             float c = Math::Dot(centerToOrigin, centerToOrigin) - radiusSquared;
             float discriminant = k * k - a * c;
-            
+
             if (discriminant < 0.f) {
                 return false;
             }
@@ -42,7 +42,7 @@ namespace Shapes {
                     return false;
                 }
             }
-            
+
             payload.t = t;
             payload.normal = (ray.origin + ray.direction * t - center) * inverseRadius;
             payload.material = material;
@@ -59,7 +59,7 @@ namespace Shapes {
         constexpr AABB GetBoundingBox() const noexcept override {
             return AABB(center - radius, center + radius);
         }
-        
+
         //! Samples Sphere surface uniformly. Returns point on surface
         constexpr Math::Vector3f SampleUniform(const Math::Vector2f &sample) const noexcept override {
             float z = 1.f - 2.f * sample.x;

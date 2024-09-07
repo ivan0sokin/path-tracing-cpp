@@ -5,7 +5,7 @@
 #include "Triangle.h"
 
 //! Primitive element of Mesh
-class Polygon : public IHittable {
+class Polygon final : public IHittable {
 public:
     constexpr Polygon(const Model *model, const Mesh *mesh, int faceIndex) noexcept :
         m_Model(model), m_Mesh(mesh), m_FaceIndex(faceIndex) {
@@ -62,7 +62,7 @@ private:
     constexpr std::tuple<float, float, float> ComputeBarycentrics(std::span<const Math::Vector3f> pointToVertices) const noexcept {
         float u0 = Math::Length(Math::Cross(pointToVertices[1], pointToVertices[2])) / m_TwiceSurfaceArea;
         float u1 = Math::Length(Math::Cross(pointToVertices[0], pointToVertices[2])) / m_TwiceSurfaceArea;
-        return {u0, u1, 1.f - u0 - u1}; 
+        return {u0, u1, 1.f - u0 - u1};
     }
 
 private:

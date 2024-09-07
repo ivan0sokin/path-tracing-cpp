@@ -4,10 +4,10 @@
 #include "IHittable.h"
 
 //! IHittable that cannot be hit
-class NonHittable : public IHittable {
+class NonHittable final : public IHittable {
 public:
     constexpr NonHittable() noexcept = default;
-    
+
     //! Performs no hit. Returns false
     constexpr bool Hit(const Ray &ray, float tMin, float tMax, HitPayload &payload) const noexcept override {
         return false;

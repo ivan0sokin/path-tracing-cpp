@@ -8,7 +8,7 @@
 
 namespace Shapes {
     //! Primitive shape. Holds vertices and material
-    class Triangle : public IHittable {
+    class Triangle final : public IHittable {
     public:
         Math::Vector3f vertices[3];
         Math::Vector3f edges[2];
@@ -86,7 +86,7 @@ namespace Shapes {
         //! Returns Triangle surface area
         constexpr float GetSurfaceArea() const noexcept override {
             return Math::Length(Math::Cross(edges[0], edges[1])) * 0.5f;
-        }   
+        }
     };
 }
 
