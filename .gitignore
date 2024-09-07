@@ -21,3 +21,4 @@ imgui.ini
 CMakeDoxyfile.in
 CMakeDoxygenDefaults.cmake
 ptrace
+.cache
